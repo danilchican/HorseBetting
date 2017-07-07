@@ -5,10 +5,24 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+/**
+ * This class is a wrapper of standard Connection.
+ *
+ * @author Vladislav Danilchik
+ * @see Connection
+ */
 public class ProxyConnection implements Connection {
 
+    /**
+     * Wrapped connection.
+     */
     private Connection connection;
 
+    /**
+     * ProxyConnection constructor.
+     *
+     * @param connection
+     */
     ProxyConnection(Connection connection) {
         this.connection = connection;
     }
