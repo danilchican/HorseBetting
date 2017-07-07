@@ -49,10 +49,10 @@ public class ConnectionPool {
      * Default constructor.
      */
     private ConnectionPool() {
-        Properties props = dbManager.getProps();
-
         dbManager = new DatabaseManager();
         dbManager.registerDriver();
+
+        Properties props = dbManager.getProps();
 
         final int poolSize = dbManager.getPoolSize();
         String dbUrl = dbManager.getURL();
@@ -140,5 +140,6 @@ public class ConnectionPool {
         }
 
         dbManager.deregisterDrivers();
+        LOGGER.log(Level.INFO, "ConnectionPool closed!");
     }
 }
