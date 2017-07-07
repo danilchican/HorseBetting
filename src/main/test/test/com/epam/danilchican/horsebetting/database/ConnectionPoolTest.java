@@ -18,8 +18,8 @@ public class ConnectionPoolTest {
     }
 
     @Test
-    public void obtainConnection() throws Exception {
-        Connection connection = connectionPool.fetchConnection();
+    public void fetchConnection() throws Exception {
+        ProxyConnection connection = connectionPool.fetchConnection();
         assertNotNull(connection);
     }
 
@@ -41,6 +41,14 @@ public class ConnectionPoolTest {
 
     @Test
     public void closePool() throws Exception {
+        ProxyConnection connection = connectionPool.fetchConnection();
+
+        try {
+            connectionPool.releaseConnection(connection);
+        } catch (Throwable t) {
+            fail(t.getMessage());
+        }
+
         connectionPool.close();
     }
 }

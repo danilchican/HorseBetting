@@ -33,6 +33,11 @@ public class DatabaseManager {
     private static final int DEFAULT_DB_POOL_SIZE = 10;
 
     /**
+     * Properties file dir.
+     */
+    private static final String BUNDLE_ENVIRONMENT_DIR = "config";
+
+    /**
      * Properties file name.
      */
     private static final String BUNDLE_ENVIRONMENT_NAME = "env";
@@ -46,7 +51,7 @@ public class DatabaseManager {
      * Default constructor with getting bundle.
      */
     DatabaseManager() {
-        dbBundle = ResourceBundle.getBundle(BUNDLE_ENVIRONMENT_NAME);
+        dbBundle = ResourceBundle.getBundle(BUNDLE_ENVIRONMENT_DIR + "/" + BUNDLE_ENVIRONMENT_NAME);
     }
 
     /**
