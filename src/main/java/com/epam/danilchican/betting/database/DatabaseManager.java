@@ -54,7 +54,7 @@ public class DatabaseManager {
      *
      * @return props
      */
-    Properties getDatabaseProps() {
+    Properties getProps() {
         Properties props = new Properties();
         String propName = "";
 
