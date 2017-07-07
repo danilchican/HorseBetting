@@ -1,0 +1,20 @@
+@font-face {
+	font-family: "RobotoRegular";
+	src: url("../fonts/Roboto/RobotoRegular.ttf") format("truetype");
+	font-style: normal;
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: "HelveticaNeueCyrBold";
+	src: url("../fonts/Helvetica-Neue-Cyr/HelveticaNeueCyr-Bold.otf") format("truetype");
+	font-style: normal;
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: "HelveticaNeueCyrRoman";
+	src: url("../fonts/Helvetica-Neue-Cyr/HelveticaNeueCyr-Roman.otf") format("truetype");
+	font-style: normal;
+	font-weight: normal;
+}
