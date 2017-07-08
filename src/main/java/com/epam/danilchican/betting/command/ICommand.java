@@ -2,6 +2,11 @@ package com.epam.danilchican.betting.command;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Base interface for all commands.
+ *
+ * @author Vladislav Danilchik <danilchican@mail.ru>
+ */
 public interface ICommand {
 
     /**

@@ -4,6 +4,11 @@ import com.epam.danilchican.betting.command.ICommand;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The Invoker for all commands.
+ *
+ * @author Vladislav Danilchik <danilchican@mail.ru>
+ */
 public class Invoker {
 
     /**
@@ -12,7 +17,7 @@ public class Invoker {
     private ICommand command;
 
     /**
-     * Set command by constructor param.
+     * Constructor.
      *
      * @param command
      */
