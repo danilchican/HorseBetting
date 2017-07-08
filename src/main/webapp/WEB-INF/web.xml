@@ -9,4 +9,8 @@
         <param-name>uploads.location</param-name>
         <param-value>D:\VLAD\EPAM\Проект\HorseBettingProject\src\main\webapp\uploads</param-value>
     </context-param>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/jsp/errors/404.jsp</location>
+    </error-page>
 </web-app>
