@@ -30,7 +30,7 @@ public class Invoker {
      * Invoke command execution.
      *
      * @param request
-     * @return requestHandler
+     * @return request content
      * @see RequestContent
      */
     public RequestContent invoke(HttpServletRequest request) {
