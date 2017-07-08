@@ -1,6 +1,7 @@
 package com.epam.danilchican.betting.invoker;
 
 import com.epam.danilchican.betting.command.ICommand;
+import com.epam.danilchican.betting.request.RequestHandler;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,9 +30,10 @@ public class Invoker {
      * Invoke command execution.
      *
      * @param request
+     * @return requestHandler
      * @see HttpServletRequest
      */
-    public void invoke(HttpServletRequest request) {
-        command.execute(request);
+    public RequestHandler invoke(HttpServletRequest request) {
+        return command.execute(request);
     }
 }

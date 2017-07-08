@@ -1,5 +1,7 @@
 package com.epam.danilchican.betting.command;
 
+import com.epam.danilchican.betting.request.RequestHandler;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -14,6 +16,7 @@ public interface ICommand {
      *
      * @param request
      * @see HttpServletRequest
+     * @see RequestHandler
      */
-    void execute(HttpServletRequest request);
+    RequestHandler execute(HttpServletRequest request);
 }
