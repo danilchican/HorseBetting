@@ -53,7 +53,7 @@ public class RequestContent {
         this.requestParameters.putAll(paramsMap);
         LOGGER.log(Level.INFO, "Request params saved.");
 
-        while(requestAttrNames.hasMoreElements()) {
+        while (requestAttrNames.hasMoreElements()) {
             String attrName = requestAttrNames.nextElement();
             Object attrValue = request.getAttribute(attrName);
 
@@ -62,7 +62,7 @@ public class RequestContent {
 
         LOGGER.log(Level.INFO, "Request attributes saved.");
 
-        while(sessionAttrNames.hasMoreElements()) {
+        while (sessionAttrNames.hasMoreElements()) {
             String attrName = sessionAttrNames.nextElement();
             Object attrValue = session.getAttribute(attrName);
 
@@ -78,6 +78,23 @@ public class RequestContent {
      * @param request
      */
     public void insertAttributes(HttpServletRequest request) {
-        // implement method
+
+        /* CHECK IF ITS RIGHT! */
+
+        for (Map.Entry<String, Object> entry : requestAttributes.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            request.setAttribute(key, value);
+        }
+
+        for (Map.Entry<String, Object> entry : sessionAttributes.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            request.getSession().setAttribute(key, value);
+        }
+
+        request.getParameterMap().putAll(requestParameters);
     }
 }
