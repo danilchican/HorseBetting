@@ -3,6 +3,6 @@
 <html>
     <head></head>
     <body>
-        <jsp:forward page="${pageContext.request.contextPath}/jsp/index.jsp"/>
+        <jsp:forward page="${pageContext.request.contextPath}/jsp/welcome.jsp"/>
     </body>
 </html>
