@@ -21,7 +21,7 @@ public class URIFilter implements Filter {
     /**
      * Index page command value.
      */
-    private static final String INDEX_PAGE_COMMAND_VALUE = "index.page";
+    private static final String INDEX_PAGE_COMMAND_VALUE = "index";
 
     /**
      * URI regular expression.

@@ -1,6 +1,5 @@
 package com.epam.danilchican.betting.filter;
 
-import com.epam.danilchican.betting.util.ConfigApp;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
