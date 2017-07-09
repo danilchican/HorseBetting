@@ -3,9 +3,9 @@ package com.epam.danilchican.betting.command;
 import com.epam.danilchican.betting.exception.CommandTypeNotFoundException;
 
 public enum CommandType {
-    INDEX_PAGE("index_page", new IndexPageCommand()),
-    AUTH_LOGIN("auth_login", new AuthCommand()),
-    AUTH_REGISTER("auth_register", new RegisterCommand());
+    INDEX_PAGE("index.page", new IndexPageCommand()),
+    AUTH_LOGIN("auth.login", new AuthCommand()),
+    AUTH_REGISTER("auth.register", new RegisterCommand());
 
     String commandValue;
     ICommand command;

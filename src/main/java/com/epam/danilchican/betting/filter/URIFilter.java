@@ -21,7 +21,7 @@ public class URIFilter implements Filter {
     /**
      * Index page command value.
      */
-    private static final String INDEX_PAGE_COMMAND_VALUE = "index_page";
+    private static final String INDEX_PAGE_COMMAND_VALUE = "index.page";
 
     /**
      * URI regular expression.
@@ -44,7 +44,7 @@ public class URIFilter implements Filter {
 
             uri = (uri.length() == 1 && uri.startsWith("/"))
                     ? INDEX_PAGE_COMMAND_VALUE :
-                    uri.substring(1, uri.length()).replace('/', '_').toLowerCase();
+                    uri.substring(1, uri.length()).replace('/', '.').toLowerCase();
 
             LOGGER.log(Level.DEBUG, "urlQuery: " + urlQuery);
             LOGGER.log(Level.DEBUG, "Command uri: " + uri);
