@@ -29,10 +29,10 @@ public class RouteFilter implements Filter {
         String url = request.getRequestURI();
         String queryString = request.getQueryString();
 
-        String uri = url + ((queryString != null) ? ("?" + queryString) : "");
-        req.setAttribute("uriAddress", uri);
+        String urlQuery = url + ((queryString != null) ? ("?" + queryString) : "");
+        req.setAttribute("urlQuery", urlQuery);
 
-        LOGGER.log(Level.DEBUG, "RouteFilter has worked. URI: " + uri);
+        LOGGER.log(Level.DEBUG, "RouteFilter has worked. urlQuery: " + urlQuery);
         chain.doFilter(req, resp);
     }
 

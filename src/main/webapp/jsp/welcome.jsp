@@ -3,6 +3,6 @@
 <template:app>
     <div class="container">
         <h1>Главная</h1>
-        <p>${uriChunks}</p>
+        <p>${command}</p>
     </div>
 </template:app>

@@ -1,6 +1,5 @@
 package com.epam.danilchican.betting.filter;
 
-import com.epam.danilchican.betting.util.parser.URIParser;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,7 +9,6 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
 @WebFilter(filterName = "URIFilter", servletNames = {"MainController"}, urlPatterns = {"/*"})
 public class URIFilter implements Filter {
@@ -19,6 +17,11 @@ public class URIFilter implements Filter {
      * Logger to write logs.
      */
     private static final Logger LOGGER = LogManager.getLogger();
+
+    /**
+     * Index page command value.
+     */
+    private static final String INDEX_PAGE_COMMAND_VALUE = "index_page";
 
     /**
      * URI regular expression.
@@ -31,22 +34,28 @@ public class URIFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
-        HttpServletResponse res = (HttpServletResponse) resp;
+        HttpServletResponse response = (HttpServletResponse) resp;
+        HttpServletRequest request = (HttpServletRequest) req;
 
-        URIParser parser = new URIParser();
+        String urlQuery = String.valueOf(req.getAttribute("urlQuery"));
 
-        String uri = String.valueOf(req.getAttribute("uriAddress"));
-        LOGGER.log(Level.DEBUG, "URI: " + uri);
+        if (urlQuery.matches(URI_REGEX)) {
+            String uri = request.getRequestURI();
 
-        if(uri.matches(URI_REGEX)) {
-            ArrayList<String> uriChunks = parser.parseURI(uri);
-            req.setAttribute("uriChunks", uriChunks);
+            uri = (uri.length() == 1 && uri.startsWith("/"))
+                    ? INDEX_PAGE_COMMAND_VALUE :
+                    uri.substring(1, uri.length()).replace('/', '_').toLowerCase();
+
+            LOGGER.log(Level.DEBUG, "urlQuery: " + urlQuery);
+            LOGGER.log(Level.DEBUG, "Command uri: " + uri);
+
+            req.setAttribute("command", uri);
 
             LOGGER.log(Level.DEBUG, "URIFilter has worked.");
             chain.doFilter(req, resp);
         } else {
             LOGGER.log(Level.DEBUG, "404 error page.");
-            res.sendError(404);
+            response.sendError(404);
         }
     }
 
