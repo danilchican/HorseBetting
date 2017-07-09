@@ -3,5 +3,6 @@
 <t:app>
     <div class="container">
         <h1>Главная</h1>
+        <p>${uriChunks}</p>
     </div>
 </t:app>
