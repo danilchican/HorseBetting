@@ -1,5 +1,6 @@
 package com.epam.danilchican.betting.database;
 
+import com.epam.danilchican.betting.util.ConfigApp;
 import com.mysql.jdbc.Driver;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -33,16 +34,6 @@ public class DatabaseManager {
     private static final int DEFAULT_DB_POOL_SIZE = 10;
 
     /**
-     * Properties file dir.
-     */
-    private static final String BUNDLE_ENVIRONMENT_DIR = "config";
-
-    /**
-     * Properties file name.
-     */
-    private static final String BUNDLE_ENVIRONMENT_NAME = "env";
-
-    /**
      * Resource bundle for retrieving database settings.
      */
     private ResourceBundle dbBundle;
@@ -51,7 +42,7 @@ public class DatabaseManager {
      * Default constructor with getting bundle.
      */
     DatabaseManager() {
-        dbBundle = ResourceBundle.getBundle(BUNDLE_ENVIRONMENT_DIR + "/" + BUNDLE_ENVIRONMENT_NAME);
+        dbBundle = ResourceBundle.getBundle(ConfigApp.BUNDLE_ENVIRONMENT_DIR + "/" + ConfigApp.BUNDLE_ENVIRONMENT_NAME);
     }
 
     /**
