@@ -38,7 +38,7 @@ public class URIFilter implements Filter {
         String uri = String.valueOf(req.getAttribute("uriAddress"));
         LOGGER.log(Level.DEBUG, "URI: " + uri);
 
-        if(uri.matches(URI_REGEX) || uri.startsWith("/assets")) {
+        if(uri.matches(URI_REGEX)) {
             ArrayList<String> uriChunks = parser.parseURI(uri);
 
             req.setAttribute("uriChunks", uriChunks);
