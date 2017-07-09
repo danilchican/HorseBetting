@@ -47,7 +47,7 @@ public class URIFilter implements Filter {
             chain.doFilter(req, resp);
         } else {
             LOGGER.log(Level.DEBUG, "404 error page.");
-            res.sendRedirect("/error");
+            res.sendError(404);
         }
     }
 
