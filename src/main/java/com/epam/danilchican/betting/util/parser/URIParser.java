@@ -19,7 +19,7 @@ public class URIParser {
      * Page chunk regular expression.
      * Take only chunk without any GET params.
      */
-    private static final String PAGE_CHUNK_REGEX = "(\\/[a-z\\-\\d]+)";
+    private static final String PAGE_CHUNK_REGEX = "(\\/[\\w\\-]+)";
 
     /**
      * Parse uri to chunk array list.

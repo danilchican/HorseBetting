@@ -1,5 +1,6 @@
 package com.epam.danilchican.betting.filter;
 
+import com.epam.danilchican.betting.util.ConfigApp;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,9 +25,14 @@ public class RouteFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
-        req.setAttribute("uriAddress", request.getRequestURI());
 
-        LOGGER.log(Level.DEBUG, "RouteFilter has worked.");
+        String url = request.getRequestURI();
+        String queryString = request.getQueryString();
+
+        String uri = url + ((queryString != null) ? ("?" + queryString) : "");
+        req.setAttribute("uriAddress", uri);
+
+        LOGGER.log(Level.DEBUG, "RouteFilter has worked. URI: " + uri);
         chain.doFilter(req, resp);
     }
 

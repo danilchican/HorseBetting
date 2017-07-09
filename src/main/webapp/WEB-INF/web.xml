@@ -13,4 +13,8 @@
         <error-code>404</error-code>
         <location>/jsp/errors/404.jsp</location>
     </error-page>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/assets/*</url-pattern>
+    </servlet-mapping>
 </web-app>
