@@ -40,7 +40,6 @@ public class URIFilter implements Filter {
 
         if(uri.matches(URI_REGEX)) {
             ArrayList<String> uriChunks = parser.parseURI(uri);
-
             req.setAttribute("uriChunks", uriChunks);
 
             LOGGER.log(Level.DEBUG, "URIFilter has worked.");

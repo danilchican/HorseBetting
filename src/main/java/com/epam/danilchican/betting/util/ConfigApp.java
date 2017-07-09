@@ -33,6 +33,8 @@ public class ConfigApp {
      * Default app variables.
      */
     private static final String DEFAULT_APP_URL = "http://localhost:8080";
+    private static final String DEFAULT_APP_NAME = "No Name App";
+    private static final String DEFAULT_APP_LOCALE = "ru";
 
     /**
      * Default constructor with getting bundle.
@@ -47,15 +49,41 @@ public class ConfigApp {
      * @return website url
      */
     public String findURL() {
-        String propName = "";
+        return retrievePropValue("APP_URL", DEFAULT_APP_URL);
+    }
 
+    /**
+     * Find application name from properties file.
+     *
+     * @return application name
+     */
+    public String findAppName() {
+        return retrievePropValue("APP_NAME", DEFAULT_APP_NAME);
+    }
+
+    /**
+     * Find locale from properties file.
+     *
+     * @return locale
+     */
+    public String findLocale() {
+        return retrievePropValue("APP_LOCALE", DEFAULT_APP_LOCALE);
+    }
+
+    /**
+     * Retrieve property value.
+     *
+     * @param propName
+     * @param defaultValue
+     * @return property value
+     */
+    private String retrievePropValue(String propName, String defaultValue) {
         try {
-            propName = "APP_URL";
             return dbBundle.getString(propName);
         } catch (MissingResourceException e) {
             LOGGER.log(Level.ERROR, "Can't find " + propName + " prop", e);
         }
 
-        return DEFAULT_APP_URL;
+        return defaultValue;
     }
 }
