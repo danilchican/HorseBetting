@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(filterName = "URIFilter", servletNames = {"MainController"}, urlPatterns = {"/*"})
+@WebFilter(filterName = "URIFilter", urlPatterns = "/*")
 public class URIFilter implements Filter {
 
     /**
@@ -38,6 +38,11 @@ public class URIFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
 
         String urlQuery = String.valueOf(req.getAttribute("urlQuery"));
+
+        if(urlQuery.startsWith("/assets")) {
+            chain.doFilter(req, resp);
+            return;
+        }
 
         if (urlQuery.matches(URI_REGEX)) {
             String uri = request.getRequestURI();
