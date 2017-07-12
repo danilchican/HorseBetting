@@ -10,18 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(filterName = "URIFilter", urlPatterns = "/*")
+@WebFilter(filterName = "URIFilter", urlPatterns = "/*", servletNames = "MainController")
 public class URIFilter implements Filter {
 
     /**
      * Logger to write logs.
      */
     private static final Logger LOGGER = LogManager.getLogger();
-
-    /**
-     * Index page command value.
-     */
-    private static final String INDEX_PAGE_COMMAND_VALUE = "index";
 
     /**
      * URI regular expression.
@@ -35,8 +30,6 @@ public class URIFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         HttpServletResponse response = (HttpServletResponse) resp;
-        HttpServletRequest request = (HttpServletRequest) req;
-
         String urlQuery = String.valueOf(req.getAttribute("urlQuery"));
 
         if(urlQuery.startsWith("/assets")) {
@@ -45,17 +38,6 @@ public class URIFilter implements Filter {
         }
 
         if (urlQuery.matches(URI_REGEX)) {
-            String uri = request.getRequestURI();
-
-            uri = (uri.length() == 1 && uri.startsWith("/"))
-                    ? INDEX_PAGE_COMMAND_VALUE :
-                    uri.substring(1, uri.length()).replace('/', '.').toLowerCase();
-
-            LOGGER.log(Level.DEBUG, "urlQuery: " + urlQuery);
-            LOGGER.log(Level.DEBUG, "Command uri: " + uri);
-
-            req.setAttribute("command", uri);
-
             LOGGER.log(Level.DEBUG, "URIFilter has worked.");
             chain.doFilter(req, resp);
         } else {

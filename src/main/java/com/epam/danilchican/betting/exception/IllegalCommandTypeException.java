@@ -2,14 +2,14 @@ package com.epam.danilchican.betting.exception;
 
 import java.security.PrivilegedActionException;
 
-public class CommandTypeNotFoundException extends Exception {
+public class IllegalCommandTypeException extends Exception {
 
     /**
      * Constructs a new exception with {@code null} as its detail message.
      * The cause is not initialized, and may subsequently be initialized by a
      * call to {@link #initCause}.
      */
-    public CommandTypeNotFoundException() {
+    public IllegalCommandTypeException() {
     }
 
     /**
@@ -20,7 +20,7 @@ public class CommandTypeNotFoundException extends Exception {
      * @param message the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
-    public CommandTypeNotFoundException(String message) {
+    public IllegalCommandTypeException(String message) {
         super(message);
     }
 
@@ -37,7 +37,7 @@ public class CommandTypeNotFoundException extends Exception {
      *                permitted, and indicates that the cause is nonexistent or
      *                unknown.)
      */
-    public CommandTypeNotFoundException(String message, Throwable cause) {
+    public IllegalCommandTypeException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -54,7 +54,7 @@ public class CommandTypeNotFoundException extends Exception {
      *              permitted, and indicates that the cause is nonexistent or
      *              unknown.)
      */
-    public CommandTypeNotFoundException(Throwable cause) {
+    public IllegalCommandTypeException(Throwable cause) {
         super(cause);
     }
 
@@ -71,7 +71,7 @@ public class CommandTypeNotFoundException extends Exception {
      * @param writableStackTrace whether or not the stack trace should
      *                           be writable
      */
-    public CommandTypeNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public IllegalCommandTypeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

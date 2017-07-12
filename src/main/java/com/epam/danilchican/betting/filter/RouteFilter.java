@@ -9,7 +9,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@WebFilter(filterName = "RouteFilter", urlPatterns = "/*")
+@WebFilter(filterName = "RouteFilter", urlPatterns = "/*", servletNames = "MainController")
 public class RouteFilter implements Filter {
 
     /**
@@ -31,7 +31,7 @@ public class RouteFilter implements Filter {
         String urlQuery = url + ((queryString != null) ? ("?" + queryString) : "");
         req.setAttribute("urlQuery", urlQuery);
 
-        LOGGER.log(Level.DEBUG, "RouteFilter has worked. urlQuery: " + urlQuery);
+        LOGGER.log(Level.DEBUG, "RouteFilter has worked: urlQuery = " + urlQuery);
         chain.doFilter(req, resp);
     }
 

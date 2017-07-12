@@ -1,6 +1,6 @@
 package com.epam.danilchican.betting.command;
 
-import com.epam.danilchican.betting.exception.CommandTypeNotFoundException;
+import com.epam.danilchican.betting.exception.IllegalCommandTypeException;
 
 public enum CommandType {
     INDEX_PAGE("index", new IndexPageCommand()),
@@ -45,13 +45,13 @@ public enum CommandType {
      * @param tag
      * @return
      */
-    public static CommandType findByTag(String tag) throws CommandTypeNotFoundException {
+    public static CommandType findByTag(String tag) throws IllegalCommandTypeException {
         for (CommandType type : CommandType.values()) {
             if (tag.equals(type.getValue())) {
                 return type;
             }
         }
 
-        throw new CommandTypeNotFoundException("Illegal command[" + tag + "].");
+        throw new IllegalCommandTypeException("Illegal command[" + tag + "].");
     }
 }
