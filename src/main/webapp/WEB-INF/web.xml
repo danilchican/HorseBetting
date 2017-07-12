@@ -13,4 +13,14 @@
         <error-code>404</error-code>
         <location>/jsp/errors/404.jsp</location>
     </error-page>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/assets/*</url-pattern>
+    </servlet-mapping>
+    <jsp-config>
+        <taglib>
+            <taglib-uri>customtags</taglib-uri>
+            <taglib-location>/WEB-INF/custom_tag.tld</taglib-location>
+        </taglib>
+    </jsp-config>
 </web-app>

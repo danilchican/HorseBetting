@@ -9,7 +9,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@WebFilter(filterName = "RouteFilter", urlPatterns = "/*", servletNames = "MainController")
+@WebFilter(filterName = "RouteFilter", urlPatterns = "/*")
 public class RouteFilter implements Filter {
 
     /**

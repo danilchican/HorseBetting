@@ -1,8 +1,10 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
-<%@ taglib tagdir="/WEB-INF/tags" prefix="template" %>
-<template:app>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="layout" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
+<layout:app>
     <div class="container">
         <h1>Главная</h1>
-        <p>${command}</p>
+        <p>Command: ${command}</p>
+        <p><ctg:info-time/></p>
     </div>
-</template:app>
+</layout:app>

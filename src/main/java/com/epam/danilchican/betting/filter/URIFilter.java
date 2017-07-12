@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(filterName = "URIFilter", urlPatterns = "/*", servletNames = "MainController")
+@WebFilter(filterName = "URIFilter", urlPatterns = "/*")
 public class URIFilter implements Filter {
 
     /**
@@ -34,10 +34,7 @@ public class URIFilter implements Filter {
 
         if(urlQuery.startsWith("/assets")) {
             chain.doFilter(req, resp);
-            return;
-        }
-
-        if (urlQuery.matches(URI_REGEX)) {
+        } else if (urlQuery.matches(URI_REGEX)) {
             LOGGER.log(Level.DEBUG, "URIFilter has worked.");
             chain.doFilter(req, resp);
         } else {
