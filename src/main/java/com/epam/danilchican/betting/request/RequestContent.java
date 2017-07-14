@@ -18,10 +18,9 @@ public class RequestContent {
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
-     * Request attributes and parameters.
+     * Request attributes.
      */
     private HashMap<String, Object> requestAttributes;
-    private HashMap<String, String[]> requestParameters;
 
     /**
      * Session attributes.
@@ -33,7 +32,6 @@ public class RequestContent {
      */
     public RequestContent() {
         this.requestAttributes = new HashMap<>();
-        this.requestParameters = new HashMap<>();
 
         this.sessionAttributes = new HashMap<>();
     }
@@ -44,14 +42,10 @@ public class RequestContent {
      * @param request
      */
     public void extractValues(HttpServletRequest request) {
-        Map<String, String[]> paramsMap = request.getParameterMap();
         Enumeration<String> requestAttrNames = request.getAttributeNames();
 
         HttpSession session = request.getSession();
         Enumeration<String> sessionAttrNames = session.getAttributeNames();
-
-        this.requestParameters.putAll(paramsMap);
-        LOGGER.log(Level.INFO, "Request params saved.");
 
         while (requestAttrNames.hasMoreElements()) {
             String attrName = requestAttrNames.nextElement();
@@ -77,10 +71,7 @@ public class RequestContent {
      *
      * @param request
      */
-    public void insertAttributes(HttpServletRequest request) {
-
-        /* CHECK IF ITS RIGHT! */
-
+    public void insertValues(HttpServletRequest request) {
         for (Map.Entry<String, Object> entry : requestAttributes.entrySet()) {
             String key = entry.getKey();
             Object value = entry.getValue();
@@ -94,8 +85,6 @@ public class RequestContent {
 
             request.getSession().setAttribute(key, value);
         }
-
-        request.getParameterMap().putAll(requestParameters);
     }
 
     /**
@@ -106,5 +95,24 @@ public class RequestContent {
      */
     public Object findRequestAttribute(String key) {
         return this.requestAttributes.get(key);
+    }
+
+    /**
+     * Remove attribute from request by key.
+     *
+     * @param key
+     */
+    public void removeRequestAttribute(String key) {
+        this.requestAttributes.remove(key);
+    }
+
+    /**
+     * Insert new attribute to request.
+     *
+     * @param key
+     * @param value
+     */
+    public void insertRequestAttribute(String key, Object value) {
+        this.requestAttributes.put(key, value);
     }
 }

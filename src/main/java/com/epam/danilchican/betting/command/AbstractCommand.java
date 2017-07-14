@@ -17,6 +17,11 @@ public abstract class AbstractCommand {
     private AbstractReceiver receiver;
 
     /**
+     *
+     */
+    public static String COMMAND_INSTANCE_NAME = "commandName";
+
+    /**
      * Constructor.
      *
      * @param receiver
@@ -41,7 +46,7 @@ public abstract class AbstractCommand {
      * @see RequestContent
      */
     public void execute(RequestContent request) throws IllegalCommandTypeException {
-        String commandName = String.valueOf(request.findRequestAttribute("command"));
+        String commandName = String.valueOf(request.findRequestAttribute(COMMAND_INSTANCE_NAME));
 
         receiver.action(CommandType.findByTag(commandName), request);
     }

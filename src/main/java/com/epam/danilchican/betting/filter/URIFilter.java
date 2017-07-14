@@ -31,6 +31,7 @@ public class URIFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         HttpServletResponse response = (HttpServletResponse) resp;
         String urlQuery = String.valueOf(req.getAttribute("urlQuery"));
+        req.removeAttribute("urlQuery");
 
         if(urlQuery.startsWith("/assets")) {
             chain.doFilter(req, resp);

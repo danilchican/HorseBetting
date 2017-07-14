@@ -15,6 +15,11 @@ public class Router {
     private RouteType type;
 
     /**
+     * Router instance name.
+     */
+    public static String ROUTER_INSTANCE_NAME = "routerInstance";
+
+    /**
      * Constructor.
      *
      * @param route
@@ -41,5 +46,10 @@ public class Router {
      */
     public RouteType getType() {
         return type;
+    }
+
+    @Override
+    public String toString() {
+        return "Router{" + "route='" + route + '\'' + ", type=" + type + '}';
     }
 }
