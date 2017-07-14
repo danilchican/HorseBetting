@@ -1,33 +1,38 @@
 package com.epam.danilchican.betting.command;
 
 import com.epam.danilchican.betting.exception.IllegalCommandTypeException;
+import com.epam.danilchican.betting.receiver.PageReceiver;
 import com.epam.danilchican.betting.receiver.UserReceiver;
 import com.epam.danilchican.betting.request.RequestContent;
 
 public enum CommandType {
-    INDEX_PAGE("index", new IndexPageCommand(new UserReceiver())) {
-
+    INDEX_PAGE("index", new IndexPageCommand(new PageReceiver())) {
         @Override
         public void doReceiver(RequestContent content) {
-            //..
+            ((PageReceiver) getCommand().getReceiver()).presentIndexPage(content);
         }
     },
     AUTH_LOGIN("auth.login", new AuthCommand(new UserReceiver())) {
-
         @Override
         public void doReceiver(RequestContent content) {
             //..
         }
     },
     AUTH_REGISTER("auth.register", new RegisterCommand(new UserReceiver())) {
-
         @Override
         public void doReceiver(RequestContent content) {
             //..
         }
     };
 
-    String commandValue;
+    /**
+     * Command name.
+     */
+    String commandName;
+
+    /**
+     * Command type instance.
+     */
     AbstractCommand command;
 
     /**
@@ -37,7 +42,7 @@ public enum CommandType {
      * @param command
      */
     CommandType(String value, AbstractCommand command) {
-        this.commandValue = value;
+        this.commandName = value;
         this.command = command;
     }
 
@@ -47,7 +52,7 @@ public enum CommandType {
      * @return
      */
     public String getValue() {
-        return commandValue;
+        return commandName;
     }
 
     /**

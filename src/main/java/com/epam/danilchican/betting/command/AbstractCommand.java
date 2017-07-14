@@ -26,12 +26,21 @@ public abstract class AbstractCommand {
     }
 
     /**
+     * Get command receiver.
+     *
+     * @return receiver
+     */
+    public AbstractReceiver getReceiver() {
+        return receiver;
+    }
+
+    /**
      * Execute command with request.
      *
      * @param request
      * @see RequestContent
      */
-    public final void execute(RequestContent request) throws IllegalCommandTypeException {
+    public void execute(RequestContent request) throws IllegalCommandTypeException {
         String commandName = String.valueOf(request.findRequestAttribute("command"));
 
         receiver.action(CommandType.findByTag(commandName), request);
