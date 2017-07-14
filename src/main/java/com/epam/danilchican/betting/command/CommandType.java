@@ -6,19 +6,19 @@ import com.epam.danilchican.betting.receiver.UserReceiver;
 import com.epam.danilchican.betting.request.RequestContent;
 
 public enum CommandType {
-    INDEX_PAGE("index", new IndexPageCommand(new PageReceiver())) {
+    INDEX_PAGE("index::get", new IndexPageCommand(new PageReceiver())) {
         @Override
         public void doReceiver(RequestContent content) {
             ((PageReceiver) getCommand().getReceiver()).presentIndexPage(content);
         }
     },
-    AUTH_LOGIN("auth.login", new AuthCommand(new UserReceiver())) {
+    AUTH_LOGIN("auth.login::get", new AuthCommand(new UserReceiver())) {
         @Override
         public void doReceiver(RequestContent content) {
             //..
         }
     },
-    AUTH_REGISTER("auth.register", new RegisterCommand(new UserReceiver())) {
+    AUTH_REGISTER("auth.register::get", new RegisterCommand(new UserReceiver())) {
         @Override
         public void doReceiver(RequestContent content) {
             //..

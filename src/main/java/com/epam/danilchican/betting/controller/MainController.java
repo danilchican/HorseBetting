@@ -72,6 +72,8 @@ public class MainController extends HttpServlet {
                 ? INDEX_PAGE_COMMAND_VALUE :
                 uri.substring(1, uri.length()).replace('/', '.').toLowerCase();
 
+        commandName += "::" + request.getMethod().toLowerCase();
+
         request.setAttribute(COMMAND_INSTANCE_NAME, commandName);
         LOGGER.log(Level.DEBUG, COMMAND_INSTANCE_NAME + ": " + commandName);
 
