@@ -1,14 +1,34 @@
 package com.epam.danilchican.betting.command;
 
 import com.epam.danilchican.betting.exception.IllegalCommandTypeException;
+import com.epam.danilchican.betting.receiver.UserReceiver;
+import com.epam.danilchican.betting.request.RequestContent;
 
 public enum CommandType {
-    INDEX_PAGE("index", new IndexPageCommand()),
-    AUTH_LOGIN("auth.login", new AuthCommand()),
-    AUTH_REGISTER("auth.register", new RegisterCommand());
+    INDEX_PAGE("index", new IndexPageCommand(new UserReceiver())) {
+
+        @Override
+        public void doReceiver(RequestContent content) {
+            //..
+        }
+    },
+    AUTH_LOGIN("auth.login", new AuthCommand(new UserReceiver())) {
+
+        @Override
+        public void doReceiver(RequestContent content) {
+            //..
+        }
+    },
+    AUTH_REGISTER("auth.register", new RegisterCommand(new UserReceiver())) {
+
+        @Override
+        public void doReceiver(RequestContent content) {
+            //..
+        }
+    };
 
     String commandValue;
-    ICommand command;
+    AbstractCommand command;
 
     /**
      * Constructor with value & command.
@@ -16,7 +36,7 @@ public enum CommandType {
      * @param value
      * @param command
      */
-    CommandType(String value, ICommand command) {
+    CommandType(String value, AbstractCommand command) {
         this.commandValue = value;
         this.command = command;
     }
@@ -35,9 +55,16 @@ public enum CommandType {
      *
      * @return
      */
-    public ICommand getCurrentCommand() {
+    public AbstractCommand getCommand() {
         return command;
     }
+
+    /**
+     * Execute receiver.
+     *
+     * @param content
+     */
+    public abstract void doReceiver(RequestContent content);
 
     /**
      * Get device connection type by tag name.

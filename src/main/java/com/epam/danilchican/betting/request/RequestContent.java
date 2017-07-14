@@ -97,4 +97,14 @@ public class RequestContent {
 
         request.getParameterMap().putAll(requestParameters);
     }
+
+    /**
+     * Find request attribute value.
+     *
+     * @param key
+     * @return
+     */
+    public Object findRequestAttribute(String key) {
+        return this.requestAttributes.get(key);
+    }
 }

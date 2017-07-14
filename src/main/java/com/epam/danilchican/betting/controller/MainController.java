@@ -1,7 +1,7 @@
 package com.epam.danilchican.betting.controller;
 
 import com.epam.danilchican.betting.command.CommandType;
-import com.epam.danilchican.betting.command.ICommand;
+import com.epam.danilchican.betting.command.AbstractCommand;
 import com.epam.danilchican.betting.exception.IllegalCommandTypeException;
 import com.epam.danilchican.betting.request.RequestContent;
 import org.apache.logging.log4j.Level;
@@ -50,12 +50,13 @@ public class MainController extends HttpServlet {
 
         try {
             CommandType commandType = CommandType.findByTag(commandValue);
-            ICommand command = commandType.getCurrentCommand();
+            AbstractCommand command = commandType.getCommand();
 
             RequestContent requestContent = new RequestContent();
             requestContent.extractValues(request);
 
-            requestContent = command.execute(requestContent);
+            command.execute(requestContent);
+
             request.getRequestDispatcher("/jsp/welcome.jsp").forward(request, response);
         } catch (IllegalCommandTypeException e) {
             LOGGER.log(Level.ERROR, "Command[" + commandValue + "] not found!");

@@ -1,11 +1,15 @@
 package com.epam.danilchican.betting.command;
 
-import com.epam.danilchican.betting.request.RequestContent;
+import com.epam.danilchican.betting.receiver.AbstractReceiver;
 
-public class AuthCommand implements ICommand {
+public class AuthCommand extends AbstractCommand {
 
-    @Override
-    public RequestContent execute(RequestContent request) {
-        return null;
+    /**
+     * Constructor.
+     *
+     * @param receiver
+     */
+    public AuthCommand(AbstractReceiver receiver) {
+        super(receiver);
     }
 }

@@ -1,16 +1,15 @@
 package com.epam.danilchican.betting.command;
 
-import com.epam.danilchican.betting.request.RequestContent;
+import com.epam.danilchican.betting.receiver.AbstractReceiver;
 
-public class IndexPageCommand implements ICommand {
+public class IndexPageCommand extends AbstractCommand {
+
     /**
-     * Execute command with request.
+     * Constructor.
      *
-     * @param request
-     * @see RequestContent
+     * @param receiver
      */
-    @Override
-    public RequestContent execute(RequestContent request) {
-        return null;
+    public IndexPageCommand(AbstractReceiver receiver) {
+        super(receiver);
     }
 }
