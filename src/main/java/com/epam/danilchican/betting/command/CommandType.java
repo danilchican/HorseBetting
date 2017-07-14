@@ -84,6 +84,6 @@ public enum CommandType {
             }
         }
 
-        throw new IllegalCommandTypeException("Illegal command[" + tag + "].");
+        throw new IllegalCommandTypeException("Command[" + tag + "] not found.");
     }
 }
