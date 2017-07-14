@@ -31,7 +31,7 @@ public class MainController extends HttpServlet {
     /**
      * Index page command value.
      */
-    private static final String INDEX_PAGE_COMMAND_VALUE = "index";
+    private static final String INDEX_PAGE_COMMAND_VALUE = "index::get";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -68,12 +68,15 @@ public class MainController extends HttpServlet {
     private AbstractCommand initCommand(HttpServletRequest request) throws IllegalCommandTypeException {
         String uri = request.getRequestURI();
 
+        /* Generate the main part of command name */
         String commandName = (uri.length() == 1 && uri.startsWith("/"))
                 ? INDEX_PAGE_COMMAND_VALUE :
                 uri.substring(1, uri.length()).replace('/', '.').toLowerCase();
 
+        /* Add second part called 'method' of the request */
         commandName += "::" + request.getMethod().toLowerCase();
 
+        /* Set attribute to init command */
         request.setAttribute(COMMAND_INSTANCE_NAME, commandName);
         LOGGER.log(Level.DEBUG, COMMAND_INSTANCE_NAME + ": " + commandName);
 
