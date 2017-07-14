@@ -34,11 +34,12 @@ public class IndexPageCommand extends AbstractCommand {
     @Override
     public void execute(RequestContent request) throws IllegalCommandTypeException {
         LOGGER.log(Level.DEBUG, "Processing execute() method of " + this.getClass().getName());
+
         // validation data
         super.execute(request);
 
+        // navigate to page
         Router router = new Router("/jsp/welcome.jsp", RouteType.FORWARD);
         request.insertRequestAttribute(Router.ROUTER_INSTANCE_NAME, router);
-        // navigate to page
     }
 }

@@ -1,12 +1,11 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="layout" %>
-<%@ taglib prefix="ctg" uri="customtags" %>
+
 <layout:app>
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
         <div class="container">
             <h1>Command: ${commandName}</h1>
-            <p><ctg:info-time/></p>
             <p><a class="btn btn-primary btn-lg" role="button">Learn more »</a></p>
         </div>
     </div>

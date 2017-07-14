@@ -10,6 +10,7 @@ public class PageReceiver extends AbstractReceiver {
      * @param content
      */
     public void presentIndexPage(RequestContent content) {
+        this.setPageSubTitle("Главная");
         // calling DAO
         // set data to content
     }
