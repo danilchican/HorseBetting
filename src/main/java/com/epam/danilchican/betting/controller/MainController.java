@@ -47,6 +47,8 @@ public class MainController extends HttpServlet {
         try {
             AbstractCommand command = initCommand(request);
 
+            LOGGER.log(Level.DEBUG, "Initialized command: " + command.getClass().getName());
+
             RequestContent content = new RequestContent();
             content.extractValues(request);
 

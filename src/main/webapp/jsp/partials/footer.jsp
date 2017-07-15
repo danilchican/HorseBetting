@@ -3,7 +3,7 @@
 <div class="container">
     <hr />
     <footer>
-        <p>© Company 2014</p>
+        <p>© Company 2017</p>
     </footer>
 </div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

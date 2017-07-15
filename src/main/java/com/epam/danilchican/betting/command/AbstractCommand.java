@@ -17,7 +17,7 @@ public abstract class AbstractCommand {
     private AbstractReceiver receiver;
 
     /**
-     *
+     * Command name instance.
      */
     public static String COMMAND_INSTANCE_NAME = "commandName";
 

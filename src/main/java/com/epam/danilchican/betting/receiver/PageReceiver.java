@@ -14,4 +14,22 @@ public class PageReceiver extends AbstractReceiver {
         // calling DAO
         // set data to content
     }
+
+    /**
+     * Present login page.
+     *
+     * @param content
+     */
+    public void presentLoginPage(RequestContent content) {
+        this.setPageSubTitle("Авторизация");
+    }
+
+    /**
+     * Present login page.
+     *
+     * @param content
+     */
+    public void presentRegisterPage(RequestContent content) {
+        this.setPageSubTitle("Регистрация");
+    }
 }

@@ -1,5 +1,8 @@
 package com.epam.danilchican.betting.command;
 
+import com.epam.danilchican.betting.command.auth.LoginCommand;
+import com.epam.danilchican.betting.command.auth.LoginPresentCommand;
+import com.epam.danilchican.betting.command.auth.RegisterPresentCommand;
 import com.epam.danilchican.betting.exception.IllegalCommandTypeException;
 import com.epam.danilchican.betting.receiver.PageReceiver;
 import com.epam.danilchican.betting.receiver.UserReceiver;
@@ -12,16 +15,22 @@ public enum CommandType {
             ((PageReceiver) getCommand().getReceiver()).presentIndexPage(content);
         }
     },
-    AUTH_LOGIN("auth.login::get", new AuthCommand(new UserReceiver())) {
+    AUTH_LOGIN("auth.login::get", new LoginPresentCommand(new PageReceiver())) {
         @Override
         public void doReceiver(RequestContent content) {
-            //..
+            ((PageReceiver) getCommand().getReceiver()).presentLoginPage(content);
         }
     },
-    AUTH_REGISTER("auth.register::get", new RegisterCommand(new UserReceiver())) {
+    AUTH_LOGIN_FORM("auth.login::post", new LoginCommand(new UserReceiver())) {
         @Override
         public void doReceiver(RequestContent content) {
-            //..
+            ((UserReceiver) getCommand().getReceiver()).login(content);
+        }
+    },
+    AUTH_REGISTER("auth.register::get", new RegisterPresentCommand(new PageReceiver())) {
+        @Override
+        public void doReceiver(RequestContent content) {
+            ((PageReceiver) getCommand().getReceiver()).presentRegisterPage(content);
         }
     };
 
@@ -72,7 +81,7 @@ public enum CommandType {
     public abstract void doReceiver(RequestContent content);
 
     /**
-     * Get device connection type by tag name.
+     * Get command type by tag name.
      *
      * @param tag
      * @return
