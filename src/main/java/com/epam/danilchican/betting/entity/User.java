@@ -108,4 +108,16 @@ public class User extends Entity {
         // add makeHash(password) util
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", roleId=" + roleId +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                "}";
+    }
 }
