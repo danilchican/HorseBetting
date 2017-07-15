@@ -2,6 +2,7 @@ package com.epam.danilchican.betting.command;
 
 import com.epam.danilchican.betting.command.auth.LoginCommand;
 import com.epam.danilchican.betting.command.auth.LoginPresentCommand;
+import com.epam.danilchican.betting.command.auth.RegisterCommand;
 import com.epam.danilchican.betting.command.auth.RegisterPresentCommand;
 import com.epam.danilchican.betting.exception.IllegalCommandTypeException;
 import com.epam.danilchican.betting.receiver.PageReceiver;
@@ -31,6 +32,12 @@ public enum CommandType {
         @Override
         public void doReceiver(RequestContent content) {
             ((PageReceiver) getCommand().getReceiver()).presentRegisterPage(content);
+        }
+    },
+    AUTH_REGISTER_FORM("auth.register::post", new RegisterCommand(new UserReceiver())) {
+        @Override
+        public void doReceiver(RequestContent content) {
+            ((UserReceiver) getCommand().getReceiver()).register(content);
         }
     };
 
