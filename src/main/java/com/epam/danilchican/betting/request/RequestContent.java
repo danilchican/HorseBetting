@@ -28,10 +28,16 @@ public class RequestContent {
     private HashMap<String, Object> sessionAttributes;
 
     /**
+     * Request parameters.
+     */
+    private HashMap<String, String> requestParameters;
+
+    /**
      * Default constructor.
      */
     public RequestContent() {
         this.requestAttributes = new HashMap<>();
+        this.requestParameters = new HashMap<>();
 
         this.sessionAttributes = new HashMap<>();
     }
@@ -43,9 +49,17 @@ public class RequestContent {
      */
     public void extractValues(HttpServletRequest request) {
         Enumeration<String> requestAttrNames = request.getAttributeNames();
+        Enumeration paramNames = request.getParameterNames();
 
         HttpSession session = request.getSession();
         Enumeration<String> sessionAttrNames = session.getAttributeNames();
+
+        while (paramNames.hasMoreElements()) {
+            String paramName = (String) paramNames.nextElement();
+            requestParameters.put(paramName, request.getParameter(paramName));
+        }
+
+        LOGGER.log(Level.INFO, "Request params saved.");
 
         while (requestAttrNames.hasMoreElements()) {
             String attrName = requestAttrNames.nextElement();
@@ -114,5 +128,15 @@ public class RequestContent {
      */
     public void insertRequestAttribute(String key, Object value) {
         this.requestAttributes.put(key, value);
+    }
+
+    /**
+     * Find parameter in request parameters map.
+     *
+     * @param paramName
+     * @return param value
+     */
+    public String findParameter(String paramName) {
+        return this.requestParameters.get(paramName);
     }
 }

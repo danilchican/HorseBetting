@@ -1,6 +1,7 @@
 package com.epam.danilchican.betting.receiver;
 
 import com.epam.danilchican.betting.command.CommandType;
+import com.epam.danilchican.betting.exception.ReceiverException;
 import com.epam.danilchican.betting.request.RequestContent;
 
 public abstract class AbstractReceiver {
@@ -15,7 +16,7 @@ public abstract class AbstractReceiver {
      * @param type
      * @param content
      */
-    public final void action(CommandType type, RequestContent content) {
+    public final void action(CommandType type, RequestContent content) throws ReceiverException {
         type.doReceiver(content);
         setDefaultContentAttributes(content);
     }
