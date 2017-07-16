@@ -1,9 +1,12 @@
 package com.epam.danilchican.betting.entity;
 
+import com.epam.danilchican.betting.util.HashManager;
+
 public class User extends Entity {
 
     private int id;
     private int roleId;
+
     private String name;
     private String email;
     private String password;
@@ -105,8 +108,7 @@ public class User extends Entity {
      * @param password
      */
     public void setPassword(String password) {
-        // add makeHash(password) util
-        this.password = password;
+        this.password = HashManager.make(password);
     }
 
     @Override

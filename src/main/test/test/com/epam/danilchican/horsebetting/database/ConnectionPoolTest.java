@@ -4,8 +4,6 @@ import com.epam.danilchican.betting.database.ConnectionPool;
 import com.epam.danilchican.betting.database.ProxyConnection;
 import org.junit.*;
 
-import java.sql.Connection;
-
 import static org.junit.Assert.*;
 
 public class ConnectionPoolTest {
