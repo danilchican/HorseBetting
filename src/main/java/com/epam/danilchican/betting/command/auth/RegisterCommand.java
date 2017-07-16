@@ -46,7 +46,7 @@ public class RegisterCommand extends AbstractCommand {
             router = new Router("/", RouteType.REDIRECT);
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e);
-            router = new Router("/jsp/auth/register.jsp", RouteType.FORWARD);
+            router = new Router("/auth/register", RouteType.REDIRECT);
         }
 
         request.insertRequestAttribute(Router.ROUTER_INSTANCE_NAME, router);

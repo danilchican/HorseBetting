@@ -121,6 +121,15 @@ public class RequestContent {
     }
 
     /**
+     * Remove attribute from session by key.
+     *
+     * @param key
+     */
+    public void removeSessionAttribute(String key) {
+        this.sessionAttributes.remove(key);
+    }
+
+    /**
      * Insert new attribute to request.
      *
      * @param key
@@ -128,6 +137,16 @@ public class RequestContent {
      */
     public void insertRequestAttribute(String key, Object value) {
         this.requestAttributes.put(key, value);
+    }
+
+    /**
+     * Insert new attribute to session.
+     *
+     * @param key
+     * @param value
+     */
+    public void insertSessionAttribute(String key, Object value) {
+        this.sessionAttributes.put(key, value);
     }
 
     /**

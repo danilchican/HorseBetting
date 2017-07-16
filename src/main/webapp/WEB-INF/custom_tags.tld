@@ -24,5 +24,15 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
+    <tag>
+        <name>pageErrors</name>
+        <tag-class>com.epam.danilchican.betting.tag.SessionErrorsTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>errors</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
 
 </taglib>

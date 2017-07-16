@@ -3,6 +3,7 @@
 
 <layout:app>
     <div class="container">
+        <jsp:include page="${pageContext.request.contextPath}/jsp/errors/show.jsp"/>
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
@@ -12,7 +13,7 @@
                             <div class="form-group">
                                 <label for="name" class="col-md-4 control-label">Name</label>
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control" name="name" required autofocus>
+                                    <input id="name" type="text" class="form-control" name="name" autofocus>
                                 </div>
                             </div>
 
