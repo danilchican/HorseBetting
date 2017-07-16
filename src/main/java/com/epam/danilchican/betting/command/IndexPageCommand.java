@@ -1,6 +1,7 @@
 package com.epam.danilchican.betting.command;
 
 import com.epam.danilchican.betting.exception.IllegalCommandTypeException;
+import com.epam.danilchican.betting.exception.ReceiverException;
 import com.epam.danilchican.betting.receiver.AbstractReceiver;
 import com.epam.danilchican.betting.request.RequestContent;
 import com.epam.danilchican.betting.type.RouteType;
@@ -33,13 +34,19 @@ public class IndexPageCommand extends AbstractCommand {
      */
     @Override
     public void execute(RequestContent request) throws IllegalCommandTypeException {
-        LOGGER.log(Level.DEBUG, "Processing execute() method of " + this.getClass().getName());
+        LOGGER.log(Level.DEBUG, "Execute() method of " + this.getClass().getName());
 
-        // validation data
-        super.execute(request);
+        String commandName = String.valueOf(request.findRequestAttribute(COMMAND_INSTANCE_NAME));
+        Router router;
 
-        // navigate to page
-        Router router = new Router("/jsp/welcome.jsp", RouteType.FORWARD);
+        try {
+            receiver.action(CommandType.findByTag(commandName), request);
+            router = new Router("/jsp/welcome.jsp", RouteType.FORWARD);
+        } catch (ReceiverException e) {
+            LOGGER.log(Level.ERROR, e);
+            router = new Router("/", RouteType.REDIRECT);
+        }
+
         request.insertRequestAttribute(Router.ROUTER_INSTANCE_NAME, router);
     }
 }

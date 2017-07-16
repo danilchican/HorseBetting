@@ -1,6 +1,7 @@
 package com.epam.danilchican.betting.command;
 
 import com.epam.danilchican.betting.exception.IllegalCommandTypeException;
+import com.epam.danilchican.betting.exception.ReceiverException;
 import com.epam.danilchican.betting.receiver.AbstractReceiver;
 import com.epam.danilchican.betting.request.RequestContent;
 
@@ -14,7 +15,7 @@ public abstract class AbstractCommand {
     /**
      * Command receiver.
      */
-    private AbstractReceiver receiver;
+    protected AbstractReceiver receiver;
 
     /**
      * Command name instance.
@@ -45,9 +46,5 @@ public abstract class AbstractCommand {
      * @param request
      * @see RequestContent
      */
-    public void execute(RequestContent request) throws IllegalCommandTypeException {
-        String commandName = String.valueOf(request.findRequestAttribute(COMMAND_INSTANCE_NAME));
-
-        receiver.action(CommandType.findByTag(commandName), request);
-    }
+    public abstract void execute(RequestContent request) throws IllegalCommandTypeException;
 }

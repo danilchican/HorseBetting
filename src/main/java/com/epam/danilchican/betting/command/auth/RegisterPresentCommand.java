@@ -1,7 +1,9 @@
 package com.epam.danilchican.betting.command.auth;
 
 import com.epam.danilchican.betting.command.AbstractCommand;
+import com.epam.danilchican.betting.command.CommandType;
 import com.epam.danilchican.betting.exception.IllegalCommandTypeException;
+import com.epam.danilchican.betting.exception.ReceiverException;
 import com.epam.danilchican.betting.receiver.AbstractReceiver;
 import com.epam.danilchican.betting.request.RequestContent;
 import com.epam.danilchican.betting.type.RouteType;
@@ -36,9 +38,17 @@ public class RegisterPresentCommand extends AbstractCommand {
     public void execute(RequestContent request) throws IllegalCommandTypeException {
         LOGGER.log(Level.INFO, "Processing execute() method of " + this.getClass().getName());
 
-        super.execute(request);
+        String commandName = String.valueOf(request.findRequestAttribute(COMMAND_INSTANCE_NAME));
+        Router router;
 
-        Router router = new Router("/jsp/auth/register.jsp", RouteType.FORWARD);
+        try {
+            receiver.action(CommandType.findByTag(commandName), request);
+            router = new Router("/jsp/auth/register.jsp", RouteType.FORWARD);
+        } catch (ReceiverException e) {
+            LOGGER.log(Level.ERROR, e);
+            router = new Router("/jsp/errors/404.jsp", RouteType.FORWARD);
+        }
+
         request.insertRequestAttribute(Router.ROUTER_INSTANCE_NAME, router);
     }
 }
