@@ -24,6 +24,9 @@ public class UserReceiver extends AbstractReceiver {
     public void register(RequestContent content) throws ReceiverException {
         LOGGER.log(Level.INFO, "Execution register() method: " + this.getClass().getName());
 
+        this.setPageSubTitle("Регистрация");
+        super.setDefaultContentAttributes(content);
+
         String name = String.valueOf(content.findParameter("name"));
         String email = String.valueOf(content.findParameter("email"));
         String password = String.valueOf(content.findParameter("password"));
@@ -33,6 +36,7 @@ public class UserReceiver extends AbstractReceiver {
 
         try (UserDAO userDAO = new UserDAO()) {
             User user = new User();
+
             user.setEmail(email);
             user.setName(name);
             user.setPassword(password);

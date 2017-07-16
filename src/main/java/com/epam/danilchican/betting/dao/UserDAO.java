@@ -14,7 +14,7 @@ public class UserDAO extends AbstractDAO<User> {
     private static final Logger LOGGER = LogManager.getLogger();
 
 
-    private static final String SQL_ADD_USER_QUERY = "INSERT INTO `users` SET `name`=?, `email`=?, `password`=?, `role_id`=?;";
+    private static final String SQL_ADD_USER_QUERY = "INSERT INTO `users` (name, email, password, role_id) VALUES (?,?,?,?);";
 
     /**
      * Find all entities.

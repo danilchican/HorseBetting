@@ -11,8 +11,7 @@ public class PageReceiver extends AbstractReceiver {
      */
     public void presentIndexPage(RequestContent content) {
         this.setPageSubTitle("Главная");
-        // calling DAO
-        // set data to content
+        this.setDefaultContentAttributes(content);
     }
 
     /**
@@ -22,6 +21,7 @@ public class PageReceiver extends AbstractReceiver {
      */
     public void presentLoginPage(RequestContent content) {
         this.setPageSubTitle("Авторизация");
+        this.setDefaultContentAttributes(content);
     }
 
     /**
@@ -31,5 +31,6 @@ public class PageReceiver extends AbstractReceiver {
      */
     public void presentRegisterPage(RequestContent content) {
         this.setPageSubTitle("Регистрация");
+        this.setDefaultContentAttributes(content);
     }
 }
