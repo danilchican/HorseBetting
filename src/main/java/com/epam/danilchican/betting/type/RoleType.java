@@ -1,7 +1,7 @@
 package com.epam.danilchican.betting.type;
 
 public enum RoleType {
-    ADMINISTRATOR(1), MODERATOR(2), CLIENT(3);
+    GUEST(0), ADMINISTRATOR(1), MODERATOR(2), CLIENT(3);
 
     /**
      * Role id.
@@ -26,4 +26,19 @@ public enum RoleType {
         return id;
     }
 
+    /**
+     * Get role type by id.
+     *
+     * @param id
+     * @return
+     */
+    public static RoleType findById(int id) {
+        for (RoleType type : RoleType.values()) {
+            if (type.getValue() == id) {
+                return type;
+            }
+        }
+
+        return GUEST;
+    }
 }

@@ -36,14 +36,17 @@ public class UserReceiver extends AbstractReceiver {
         String password = content.findParameter("password");
         String passwordConfirmation = content.findParameter("password_confirmation");
 
-        UserValidator validator = new UserValidator();
         LOGGER.log(Level.DEBUG, "User data[name="
                 + name + ",email="
                 + email + ",password="
                 + password + ", confirmation="
                 + passwordConfirmation);
 
+        UserValidator validator = new UserValidator();
+
         if (validator.validateRegistration(name, email, password, passwordConfirmation)) {
+            User createdUser = null;
+
             try (UserDAO userDAO = new UserDAO()) {
                 User user = new User();
 
@@ -52,22 +55,40 @@ public class UserReceiver extends AbstractReceiver {
                 user.setPassword(password);
                 user.setRole(RoleType.CLIENT);
 
-                userDAO.create(user);
+                createdUser = userDAO.create(user);
             } catch (DatabaseException e) {
                 throw new ReceiverException("Database Error", e);
             }
+
+            this.auth(content, createdUser);
         } else {
             content.insertSessionAttribute("errors", validator.getErrors());
 
             LOGGER.log(Level.DEBUG, "Old inputs:");
 
-            for(Map.Entry<String, String> entry: validator.getOldInput()) {
+            for (Map.Entry<String, String> entry : validator.getOldInput()) {
                 content.insertSessionAttribute(entry.getKey(), entry.getValue());
                 LOGGER.log(Level.DEBUG, entry.getKey() + ": " + entry.getValue());
             }
 
             throw new ReceiverException("Invalid registration data.");
         }
+    }
+
+    /**
+     * Authenticate user in system.
+     *
+     * @param content
+     * @param user
+     * @throws ReceiverException
+     */
+    private void auth(RequestContent content, User user) throws ReceiverException {
+        if(user == null) {
+            throw new ReceiverException("Cannot authenticate user. User is null.");
+        }
+
+        LOGGER.log(Level.DEBUG, "Auth user: " + user);
+        content.insertSessionAttribute("authorized", user.getId());
     }
 
     /**

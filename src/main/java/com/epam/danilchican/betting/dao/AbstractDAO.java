@@ -58,10 +58,10 @@ public abstract class AbstractDAO<T extends Entity> implements AutoCloseable {
      * Create new entity.
      *
      * @param entity
-     * @return boolean
+     * @return T
      * @throws DatabaseException
      */
-    public abstract boolean create(T entity) throws DatabaseException;
+    public abstract T create(T entity) throws DatabaseException;
 
     /**
      * Delete entity by id.

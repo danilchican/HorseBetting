@@ -112,6 +112,15 @@ public class User extends Entity {
         this.password = HashManager.make(password);
     }
 
+    /**
+     * Set user date registration.
+     *
+     * @param createdAt
+     */
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
     @Override
     public String toString() {
         return "User{" +
