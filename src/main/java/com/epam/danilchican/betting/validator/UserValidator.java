@@ -73,11 +73,13 @@ public class UserValidator {
      */
     public boolean validateName(String name) {
         if (name != null) {
-            this.oldInput.put(OldInputFormAttributeTag.PREFIX + "name", name);
+            if (!name.isEmpty()) {
+                this.oldInput.put(OldInputFormAttributeTag.PREFIX + "name", name);
 
-            if (!name.matches(NAME_REGEX)) {
-                this.errors.add("Name must be at least 5 characters as well as contain `_` symbol. The 1st symbol must be [A-Za-z].");
-                return false;
+                if (!name.matches(NAME_REGEX)) {
+                    this.errors.add("Name must be at least 5 characters as well as contain `_` symbol. The 1st symbol must be [A-Za-z].");
+                    return false;
+                }
             }
         }
 
@@ -96,11 +98,13 @@ public class UserValidator {
             return false;
         }
 
-        this.oldInput.put(OldInputFormAttributeTag.PREFIX + "email", email);
+        if (!email.isEmpty()) {
+            this.oldInput.put(OldInputFormAttributeTag.PREFIX + "email", email);
 
-        if (!email.matches(EMAIL_REGEX)) {
-            this.errors.add("Email is invalid.");
-            return false;
+            if (!email.matches(EMAIL_REGEX)) {
+                this.errors.add("Email is invalid.");
+                return false;
+            }
         }
 
         return true;
@@ -118,9 +122,11 @@ public class UserValidator {
             return false;
         }
 
-        if (!password.matches(PASSWORD_REGEX)) {
-            this.errors.add("Your password must be at least 6 characters as well as contain at least one uppercase, one lowercase, and one number.");
-            return false;
+        if (!password.isEmpty()) {
+            if (!password.matches(PASSWORD_REGEX)) {
+                this.errors.add("Your password must be at least 6 characters as well as contain at least one uppercase, one lowercase, and one number.");
+                return false;
+            }
         }
 
         return true;
@@ -134,10 +140,7 @@ public class UserValidator {
      * @return boolean
      */
     public boolean validateConfirmation(String password, String passwordConfirmation) {
-
-        if (password != null
-                && passwordConfirmation != null
-                && password.equals(passwordConfirmation)) {
+        if (password.equals(passwordConfirmation)) {
             return true;
         }
 

@@ -30,10 +30,10 @@ public class UserReceiver extends AbstractReceiver {
         this.setPageSubTitle("Регистрация");
         super.setDefaultContentAttributes(content);
 
-        String name = String.valueOf(content.findParameter("name"));
-        String email = String.valueOf(content.findParameter("email"));
-        String password = String.valueOf(content.findParameter("password"));
-        String passwordConfirmation = String.valueOf(content.findParameter("password_confirmation"));
+        String name = content.findParameter("name");
+        String email = content.findParameter("email");
+        String password = content.findParameter("password");
+        String passwordConfirmation = content.findParameter("password_confirmation");
 
         UserValidator validator = new UserValidator();
         LOGGER.log(Level.DEBUG, "User data[name="
