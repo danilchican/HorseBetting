@@ -22,7 +22,7 @@ public enum CommandType {
     },
     AUTH_LOGIN_FORM("auth.login::post", new LoginCommand(new UserReceiver())) {
         @Override
-        public void doReceiver(RequestContent content) {
+        public void doReceiver(RequestContent content) throws ReceiverException {
             ((UserReceiver) getCommand().getReceiver()).login(content);
         }
     },

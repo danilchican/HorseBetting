@@ -3,6 +3,7 @@ package com.epam.danilchican.betting.dao;
 import com.epam.danilchican.betting.entity.User;
 import com.epam.danilchican.betting.exception.DatabaseException;
 import com.epam.danilchican.betting.type.RoleType;
+import com.epam.danilchican.betting.util.HashManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,6 +19,7 @@ public class UserDAO extends AbstractDAO<User> {
     private static final String SQL_ADD_USER_QUERY = "INSERT INTO `users` (name, email, password, role_id) VALUES (?,?,?,?);";
     private static final String SQL_FIND_USER_BY_EMAIL = "SELECT * FROM `users` WHERE `email`=? LIMIT 1;";
     private static final String SQL_FIND_USER_BY_ID = "SELECT * FROM `users` WHERE `id`=? LIMIT 1;";
+    private static final String SQL_ATTEMPT_AUTH_QUERY = "SELECT * FROM `users` WHERE `email`=? AND `password`=? LIMIT 1;";
 
     /**
      * Find all entities.
@@ -144,6 +146,13 @@ public class UserDAO extends AbstractDAO<User> {
         return null;
     }
 
+    /**
+     * Fill user data by result set.
+     *
+     * @param userData
+     * @return
+     * @throws SQLException
+     */
     private User fillUserData(ResultSet userData) throws SQLException {
         User user = new User();
 
@@ -153,6 +162,35 @@ public class UserDAO extends AbstractDAO<User> {
         user.setEmail(userData.getString("email"));
         user.setPassword(userData.getString("password"));
         user.setCreatedAt(userData.getString("created_at"));
+
+        return user;
+    }
+
+    /**
+     * Attempt user credentials.
+     *
+     * @param email
+     * @param password
+     * @return user instance
+     * @throws DatabaseException
+     */
+    public User attempt(String email, String password) throws DatabaseException {
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        User user = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(SQL_ATTEMPT_AUTH_QUERY);
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, HashManager.make(password));
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                user = fillUserData(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException(e);
+        }
 
         return user;
     }

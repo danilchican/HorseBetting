@@ -57,7 +57,7 @@ public class UserReceiver extends AbstractReceiver {
 
                 createdUser = userDAO.create(user);
             } catch (DatabaseException e) {
-                throw new ReceiverException("Database Error", e);
+                throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
 
             this.auth(content, createdUser);
@@ -83,7 +83,7 @@ public class UserReceiver extends AbstractReceiver {
      * @throws ReceiverException
      */
     private void auth(RequestContent content, User user) throws ReceiverException {
-        if(user == null) {
+        if (user == null) {
             throw new ReceiverException("Cannot authenticate user. User is null.");
         }
 
@@ -96,9 +96,41 @@ public class UserReceiver extends AbstractReceiver {
      *
      * @param content
      */
-    public void login(RequestContent content) {
-        // calling DAO
-        // set data to content
+    public void login(RequestContent content) throws ReceiverException {
+        LOGGER.log(Level.INFO, "Execution login() method: " + this.getClass().getName());
+
+        this.setPageSubTitle("Авторизация");
+        super.setDefaultContentAttributes(content);
+
+        String email = content.findParameter("email");
+        String password = content.findParameter("password");
+
+        LOGGER.log(Level.DEBUG, "User data[name=" + email + ",password=" + password + "]");
+
+        UserValidator validator = new UserValidator();
+
+        if (validator.validateLogin(email, password)) {
+            User createdUser = null;
+
+            try (UserDAO userDAO = new UserDAO()) {
+                createdUser = userDAO.attempt(email, password);
+            } catch (DatabaseException e) {
+                throw new ReceiverException("Database Error: " + e.getMessage() , e);
+            }
+
+            this.auth(content, createdUser);
+        } else {
+            content.insertSessionAttribute("errors", validator.getErrors());
+
+            LOGGER.log(Level.DEBUG, "Old inputs:");
+
+            for (Map.Entry<String, String> entry : validator.getOldInput()) {
+                content.insertSessionAttribute(entry.getKey(), entry.getValue());
+                LOGGER.log(Level.DEBUG, entry.getKey() + ": " + entry.getValue());
+            }
+
+            throw new ReceiverException("Invalid authentication data.");
+        }
     }
 
     /**

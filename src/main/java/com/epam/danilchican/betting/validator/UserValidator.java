@@ -41,7 +41,7 @@ public class UserValidator {
      * @param email
      * @param password
      * @param passwordConfirmation
-     * @return
+     * @return boolean
      */
     public boolean validateRegistration(String name, String email, String password, String passwordConfirmation) {
         boolean isValidate = true;
@@ -59,6 +59,27 @@ public class UserValidator {
         }
 
         if (!validateConfirmation(password, passwordConfirmation)) {
+            isValidate = false;
+        }
+
+        return isValidate;
+    }
+
+    /**
+     * Validate authentication data.
+     *
+     * @param email
+     * @param password
+     * @return boolean
+     */
+    public boolean validateLogin(String email, String password) {
+        boolean isValidate = true;
+
+        if (!validateEmail(email)) {
+            isValidate = false;
+        }
+
+        if (!validatePassword(password)) {
             isValidate = false;
         }
 

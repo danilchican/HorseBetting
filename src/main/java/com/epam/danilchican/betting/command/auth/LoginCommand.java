@@ -46,7 +46,7 @@ public class LoginCommand extends AbstractCommand {
             router = new Router("/", RouteType.REDIRECT);
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e);
-            router = new Router("/auth/login", RouteType.FORWARD);
+            router = new Router("/auth/login", RouteType.REDIRECT);
         }
 
         request.insertRequestAttribute(Router.ROUTER_INSTANCE_NAME, router);
