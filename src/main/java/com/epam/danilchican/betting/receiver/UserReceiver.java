@@ -10,6 +10,8 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Map;
+
 public class UserReceiver extends AbstractReceiver {
 
     /**
@@ -55,6 +57,14 @@ public class UserReceiver extends AbstractReceiver {
             }
         } else {
             content.insertSessionAttribute("errors", validator.getErrors());
+
+            LOGGER.log(Level.DEBUG, "Old inputs:");
+
+            for(Map.Entry<String, String> entry: validator.getOldInput()) {
+                content.insertSessionAttribute(entry.getKey(), entry.getValue());
+                LOGGER.log(Level.DEBUG, entry.getKey() + ": " + entry.getValue());
+            }
+
             throw new ReceiverException("Invalid registration data.");
         }
     }

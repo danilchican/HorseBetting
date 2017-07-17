@@ -1,5 +1,6 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="layout" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 
 <layout:app>
     <div class="container">
@@ -13,14 +14,14 @@
                             <div class="form-group">
                                 <label for="name" class="col-md-4 control-label">Name</label>
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control" name="name" autofocus>
+                                    <input id="name" type="text" class="form-control" value="<ctg:oldInputFormAttribute name="name" />" name="name" autofocus>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="email" class="col-md-4 control-label">E-Mail Address</label>
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" name="email" required>
+                                    <input id="email" type="email" class="form-control" name="email" value="<ctg:oldInputFormAttribute name="email" />" required>
                                 </div>
                             </div>
 

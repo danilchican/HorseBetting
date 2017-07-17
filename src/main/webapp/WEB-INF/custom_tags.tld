@@ -34,5 +34,15 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
+    <tag>
+        <name>oldInputFormAttribute</name>
+        <tag-class>com.epam.danilchican.betting.tag.OldInputFormAttributeTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
 
 </taglib>

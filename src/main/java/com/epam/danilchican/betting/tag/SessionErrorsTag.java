@@ -27,11 +27,6 @@ public class SessionErrorsTag extends TagSupport {
     private ArrayList<String> errors;
 
     /**
-     * Http session instance.
-     */
-    private HttpSession session;
-
-    /**
      * Set session errors.
      *
      * @param errors
@@ -43,8 +38,7 @@ public class SessionErrorsTag extends TagSupport {
     @Override
     public int doStartTag() throws JspException {
         HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
-        this.session = request.getSession();
-        LOGGER.log(Level.DEBUG, "Session received!");
+        HttpSession session = request.getSession();
 
         LOGGER.log(Level.DEBUG, "Tag Errors:");
         LOGGER.log(Level.DEBUG, Arrays.toString(errors.toArray()));
@@ -52,16 +46,16 @@ public class SessionErrorsTag extends TagSupport {
         try {
             StringBuilder outerHtml = new StringBuilder();
             outerHtml.append("<h3>Errors:</h3>");
-            outerHtml.append("<div class=\"row\">");
+            outerHtml.append("<div class=\"ul\">");
 
             for (String error : errors) {
-                outerHtml.append("<p>");
+                outerHtml.append("<li>");
                 outerHtml.append(error);
-                outerHtml.append("</p>");
+                outerHtml.append("</li>");
             }
 
-            outerHtml.append("</div>");
-            this.session.removeAttribute("errors");
+            outerHtml.append("</ul><br/>");
+            session.removeAttribute("errors");
 
             JspWriter out = pageContext.getOut();
             out.write(outerHtml.toString());

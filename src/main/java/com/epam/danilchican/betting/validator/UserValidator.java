@@ -1,6 +1,11 @@
 package com.epam.danilchican.betting.validator;
 
+import com.epam.danilchican.betting.tag.OldInputFormAttributeTag;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class UserValidator {
 
@@ -8,6 +13,11 @@ public class UserValidator {
      * List of errors.
      */
     private ArrayList<String> errors;
+
+    /**
+     * Old input from data.
+     */
+    private HashMap<String, String> oldInput;
 
     /**
      * Regular expressions for variables.
@@ -21,6 +31,7 @@ public class UserValidator {
      */
     public UserValidator() {
         this.errors = new ArrayList<>();
+        this.oldInput = new HashMap<>();
     }
 
     /**
@@ -62,6 +73,8 @@ public class UserValidator {
      */
     public boolean validateName(String name) {
         if (name != null) {
+            this.oldInput.put(OldInputFormAttributeTag.PREFIX + "name", name);
+
             if (!name.matches(NAME_REGEX)) {
                 this.errors.add("Name must be at least 5 characters as well as contain `_` symbol. The 1st symbol must be [A-Za-z].");
                 return false;
@@ -82,6 +95,8 @@ public class UserValidator {
             this.errors.add("Email is required.");
             return false;
         }
+
+        this.oldInput.put(OldInputFormAttributeTag.PREFIX + "email", email);
 
         if (!email.matches(EMAIL_REGEX)) {
             this.errors.add("Email is invalid.");
@@ -137,5 +152,14 @@ public class UserValidator {
      */
     public ArrayList<String> getErrors() {
         return errors;
+    }
+
+    /**
+     * Get old inputs..
+     *
+     * @return errors
+     */
+    public Set<Map.Entry<String, String>> getOldInput() {
+        return oldInput.entrySet();
     }
 }
