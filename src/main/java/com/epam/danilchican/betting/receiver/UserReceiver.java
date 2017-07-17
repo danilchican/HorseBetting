@@ -5,6 +5,7 @@ import com.epam.danilchican.betting.entity.User;
 import com.epam.danilchican.betting.exception.DatabaseException;
 import com.epam.danilchican.betting.exception.ReceiverException;
 import com.epam.danilchican.betting.request.RequestContent;
+import com.epam.danilchican.betting.type.RoleType;
 import com.epam.danilchican.betting.validator.UserValidator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -49,7 +50,7 @@ public class UserReceiver extends AbstractReceiver {
                 user.setEmail(email);
                 user.setName(name);
                 user.setPassword(password);
-                user.setRoleId(1);
+                user.setRole(RoleType.CLIENT);
 
                 userDAO.create(user);
             } catch (DatabaseException e) {

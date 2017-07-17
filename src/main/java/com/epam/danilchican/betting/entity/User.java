@@ -1,5 +1,6 @@
 package com.epam.danilchican.betting.entity;
 
+import com.epam.danilchican.betting.type.RoleType;
 import com.epam.danilchican.betting.util.HashManager;
 
 public class User extends Entity {
@@ -76,12 +77,12 @@ public class User extends Entity {
     }
 
     /**
-     * Set Role id of a User.
+     * Set Role of user.
      *
-     * @param roleId
+     * @param role
      */
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
+    public void setRole(RoleType role) {
+        this.roleId = role.getValue();
     }
 
     /**
