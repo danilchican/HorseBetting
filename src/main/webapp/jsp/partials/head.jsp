@@ -44,8 +44,9 @@
                 <c:choose>
                     <c:when test="${sessionScope.authorized != null}">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Username <b
-                                    class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    ${sessionScope.user.name} <b class="caret"></b>
+                            </a>
                             <ul class="dropdown-menu">
                                 <li><a href="/account">Profile</a></li>
                                 <li><a href="/logout">Logout</a></li>
