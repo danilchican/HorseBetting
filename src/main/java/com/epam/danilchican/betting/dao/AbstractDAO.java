@@ -52,7 +52,7 @@ public abstract class AbstractDAO<T extends Entity> implements AutoCloseable {
      * @param id
      * @return entity
      */
-    public abstract T find(int id);
+    public abstract T find(int id) throws DatabaseException;
 
     /**
      * Create new entity.

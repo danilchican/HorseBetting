@@ -17,6 +17,7 @@ public class UserDAO extends AbstractDAO<User> {
 
     private static final String SQL_ADD_USER_QUERY = "INSERT INTO `users` (name, email, password, role_id) VALUES (?,?,?,?);";
     private static final String SQL_FIND_USER_BY_EMAIL = "SELECT * FROM `users` WHERE `email`=? LIMIT 1;";
+    private static final String SQL_FIND_USER_BY_ID = "SELECT * FROM `users` WHERE `id`=? LIMIT 1;";
 
     /**
      * Find all entities.
@@ -36,8 +37,24 @@ public class UserDAO extends AbstractDAO<User> {
      * @return entity
      */
     @Override
-    public User find(int id) {
-        return null;
+    public User find(int id) throws DatabaseException {
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        User user = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(SQL_FIND_USER_BY_ID);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                user = fillUserData(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException(e);
+        }
+
+        return user;
     }
 
     /**
