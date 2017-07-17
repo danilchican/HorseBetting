@@ -49,7 +49,11 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="/account">Profile</a></li>
-                                <li><a href="/logout">Logout</a></li>
+                                <li>
+                                    <form action="/auth/logout" method="post">
+                                        <button type="submit">Logout</button>
+                                    </form>
+                                </li>
                             </ul>
                         </li>
                     </c:when>

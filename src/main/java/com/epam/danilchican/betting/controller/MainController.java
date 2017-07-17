@@ -46,7 +46,6 @@ public class MainController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             AbstractCommand command = initCommand(request);
-
             LOGGER.log(Level.DEBUG, "Initialized command: " + command.getClass().getName());
 
             RequestContent content = new RequestContent();

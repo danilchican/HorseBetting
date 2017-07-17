@@ -39,12 +39,14 @@ public class LogoutCommand extends AbstractCommand {
         LOGGER.log(Level.INFO, "Processing execute() method of " + this.getClass().getName());
 
         String commandName = String.valueOf(request.findRequestAttribute(COMMAND_INSTANCE_NAME));
-        Router router = new Router("/", RouteType.REDIRECT);
+        Router router;
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);
+            router = new Router("/auth/login", RouteType.REDIRECT);
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e);
+            router = new Router("/", RouteType.REDIRECT);
         }
 
         request.insertRequestAttribute(Router.ROUTER_INSTANCE_NAME, router);

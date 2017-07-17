@@ -115,7 +115,7 @@ public class UserReceiver extends AbstractReceiver {
             try (UserDAO userDAO = new UserDAO()) {
                 createdUser = userDAO.attempt(email, password);
             } catch (DatabaseException e) {
-                throw new ReceiverException("Database Error: " + e.getMessage() , e);
+                throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
 
             this.auth(content, createdUser);
@@ -138,8 +138,29 @@ public class UserReceiver extends AbstractReceiver {
      *
      * @param content
      */
-    public void logout(RequestContent content) {
-        // calling DAO
-        // set data to content
+    public void logout(RequestContent content) throws ReceiverException {
+        LOGGER.log(Level.INFO, "Execution logout() method: " + this.getClass().getName());
+
+        this.setPageSubTitle("Авторизация");
+        super.setDefaultContentAttributes(content);
+
+        Object userObj = content.findSessionAttribute("authorized");
+
+        if (userObj != null) {
+            int userId = Integer.parseInt(String.valueOf(userObj));
+            User user;
+
+            try (UserDAO userDAO = new UserDAO()) {
+                user = userDAO.find(userId);
+            } catch (DatabaseException e) {
+                throw new ReceiverException("Cannot retrieve data about authorized user.", e);
+            }
+
+            if(user == null) {
+              throw new ReceiverException("User not found.");
+            }
+
+            content.removeSessionAttribute("authorized");
+        }
     }
 }

@@ -40,7 +40,7 @@ public enum CommandType {
     },
     AUTH_LOGOUT_FORM("auth.logout::post", new LogoutCommand(new UserReceiver())) {
         @Override
-        public void doReceiver(RequestContent content) {
+        public void doReceiver(RequestContent content) throws ReceiverException {
             ((UserReceiver) getCommand().getReceiver()).logout(content);
         }
     };

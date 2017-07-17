@@ -81,6 +81,20 @@ public class RequestContent {
     }
 
     /**
+     * Remove auth attribute from session.
+     *
+     * @param request
+     */
+    private void checkAuthSession(HttpServletRequest request) {
+        if(this.sessionAttributes.get("authorized") == null) {
+            request.getSession().removeAttribute("authorized");
+            LOGGER.log(Level.DEBUG, "Authorized session attribute removed.");
+        } else {
+            LOGGER.log(Level.DEBUG, "Authorized session attribute exists.");
+        }
+    }
+
+    /**
      * Insert values to maps from request.
      *
      * @param request
@@ -99,6 +113,8 @@ public class RequestContent {
 
             request.getSession().setAttribute(key, value);
         }
+
+        this.checkAuthSession(request);
     }
 
     /**
@@ -109,6 +125,16 @@ public class RequestContent {
      */
     public Object findRequestAttribute(String key) {
         return this.requestAttributes.get(key);
+    }
+
+    /**
+     * Find session attribute value.
+     *
+     * @param key
+     * @return
+     */
+    public Object findSessionAttribute(String key) {
+        return this.sessionAttributes.get(key);
     }
 
     /**
