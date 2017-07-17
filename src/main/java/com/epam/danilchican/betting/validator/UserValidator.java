@@ -33,10 +33,25 @@ public class UserValidator {
      * @return
      */
     public boolean validateRegistration(String name, String email, String password, String passwordConfirmation) {
-        return validateName(name)
-                && validateEmail(email)
-                && validatePassword(password)
-                && validateConfirmation(password, passwordConfirmation);
+        boolean isValidate = true;
+
+        if (!validateName(name)) {
+            isValidate = false;
+        }
+
+        if (!validateEmail(email)) {
+            isValidate = false;
+        }
+
+        if (!validatePassword(password)) {
+            isValidate = false;
+        }
+
+        if (!validateConfirmation(password, passwordConfirmation)) {
+            isValidate = false;
+        }
+
+        return isValidate;
     }
 
     /**
@@ -48,7 +63,7 @@ public class UserValidator {
     public boolean validateName(String name) {
         if (name != null) {
             if (!name.matches(NAME_REGEX)) {
-                this.errors.add("Must be at least 5 characters as well as contain `_` symbol. The 1st symbol must be [A-Za-z].");
+                this.errors.add("Name must be at least 5 characters as well as contain `_` symbol. The 1st symbol must be [A-Za-z].");
                 return false;
             }
         }

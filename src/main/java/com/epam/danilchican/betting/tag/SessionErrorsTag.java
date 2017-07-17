@@ -51,6 +51,7 @@ public class SessionErrorsTag extends TagSupport {
 
         try {
             StringBuilder outerHtml = new StringBuilder();
+            outerHtml.append("<h3>Errors:</h3>");
             outerHtml.append("<div class=\"row\">");
 
             for (String error : errors) {
