@@ -11,7 +11,7 @@
     <uri>http://horsebetting.com/</uri>
     <tag>
         <name>pageTitle</name>
-        <tag-class>com.epam.danilchican.betting.tag.PageTitleTag</tag-class>
+        <tag-class>com.epam.horsebetting.tag.PageTitleTag</tag-class>
         <body-content>scriptless</body-content>
         <attribute>
             <name>title</name>
@@ -26,7 +26,7 @@
     </tag>
     <tag>
         <name>pageErrors</name>
-        <tag-class>com.epam.danilchican.betting.tag.SessionErrorsTag</tag-class>
+        <tag-class>com.epam.horsebetting.tag.SessionErrorsTag</tag-class>
         <body-content>scriptless</body-content>
         <attribute>
             <name>errors</name>
@@ -36,7 +36,7 @@
     </tag>
     <tag>
         <name>oldInputFormAttribute</name>
-        <tag-class>com.epam.danilchican.betting.tag.OldInputFormAttributeTag</tag-class>
+        <tag-class>com.epam.horsebetting.tag.OldInputFormAttributeTag</tag-class>
         <body-content>scriptless</body-content>
         <attribute>
             <name>name</name>
