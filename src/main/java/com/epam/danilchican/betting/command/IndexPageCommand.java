@@ -4,7 +4,6 @@ import com.epam.danilchican.betting.exception.IllegalCommandTypeException;
 import com.epam.danilchican.betting.exception.ReceiverException;
 import com.epam.danilchican.betting.receiver.AbstractReceiver;
 import com.epam.danilchican.betting.request.RequestContent;
-import com.epam.danilchican.betting.type.RouteType;
 import com.epam.danilchican.betting.util.Router;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -41,10 +40,10 @@ public class IndexPageCommand extends AbstractCommand {
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);
-            router = new Router("/jsp/welcome.jsp", RouteType.FORWARD);
+            router = new Router("/jsp/welcome.jsp", Router.RouteType.FORWARD);
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e);
-            router = new Router("/", RouteType.REDIRECT);
+            router = new Router("/", Router.RouteType.REDIRECT);
         }
 
         request.insertRequestAttribute(Router.ROUTER_INSTANCE_NAME, router);

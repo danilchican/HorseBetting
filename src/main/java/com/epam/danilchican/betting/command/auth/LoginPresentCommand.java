@@ -6,7 +6,6 @@ import com.epam.danilchican.betting.exception.IllegalCommandTypeException;
 import com.epam.danilchican.betting.exception.ReceiverException;
 import com.epam.danilchican.betting.receiver.AbstractReceiver;
 import com.epam.danilchican.betting.request.RequestContent;
-import com.epam.danilchican.betting.type.RouteType;
 import com.epam.danilchican.betting.util.Router;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -43,10 +42,10 @@ public class LoginPresentCommand extends AbstractCommand {
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);
-            router = new Router("/jsp/auth/login.jsp", RouteType.FORWARD);
+            router = new Router("/jsp/auth/login.jsp", Router.RouteType.FORWARD);
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e);
-            router = new Router("/jsp/errors/404.jsp", RouteType.FORWARD);
+            router = new Router("/jsp/errors/404.jsp", Router.RouteType.FORWARD);
         }
 
         request.insertRequestAttribute(Router.ROUTER_INSTANCE_NAME, router);

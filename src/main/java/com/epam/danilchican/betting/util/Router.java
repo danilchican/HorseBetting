@@ -1,8 +1,10 @@
 package com.epam.danilchican.betting.util;
 
-import com.epam.danilchican.betting.type.RouteType;
-
 public class Router {
+
+    public enum RouteType {
+        FORWARD, REDIRECT
+    }
 
     /**
      * Route to page.
