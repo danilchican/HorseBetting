@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Locale;
 import java.util.Map;
 
 public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
@@ -164,5 +165,27 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
             content.removeSessionAttribute("authorized");
         }
+    }
+
+    /**
+     * Change locale.
+     *
+     * @param content
+     * @throws ReceiverException
+     */
+    @Override
+    public void changeLocale(RequestContent content) {
+        LOGGER.log(Level.INFO, "Execution changeLocale() method: " + this.getClass().getName());
+        super.setDefaultContentAttributes(content);
+
+        String language = content.findParameter("lang");
+        LOGGER.log(Level.DEBUG, "Received language: " + language);
+
+        Locale locale = (language != null && language.equals("en"))
+                ? new Locale("en", "US")
+                : new Locale("ru", "RU");
+
+        content.insertSessionAttribute("locale", locale);
+        LOGGER.log(Level.INFO, "The new locale was set: " + locale);
     }
 }

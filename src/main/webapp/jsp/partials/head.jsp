@@ -2,7 +2,7 @@
 <%@ taglib prefix="ctg" uri="customtags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<fmt:setLocale value="${sessionScope.locale}" />
+<fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="/localization/lang"/>
 
 <html>
@@ -39,9 +39,9 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/"><fmt:message key="menubar.home" /></a></li>
-                <li><a href="/about"><fmt:message key="menubar.about" /></a></li>
-                <li><a href="/contact"><fmt:message key="menubar.contact" /></a></li>
+                <li class="active"><a href="/"><fmt:message key="menubar.home"/></a></li>
+                <li><a href="/about"><fmt:message key="menubar.about"/></a></li>
+                <li><a href="/contact"><fmt:message key="menubar.contact"/></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <c:choose>
@@ -51,19 +51,33 @@
                                     ${sessionScope.user.name} <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="/dashboard"><fmt:message key="account.adminpanel" /></a></li>
-                                <li><a href="/account"><fmt:message key="account.profile" /></a></li>
+                                <li><a href="/dashboard"><fmt:message key="account.adminpanel"/></a></li>
+                                <li><a href="/account"><fmt:message key="account.profile"/></a></li>
                                 <li>
                                     <form action="/auth/logout" method="post">
-                                        <button type="submit"><fmt:message key="account.logout" /></button>
+                                        <button type="submit"><fmt:message key="account.logout"/></button>
                                     </form>
                                 </li>
                             </ul>
                         </li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="/auth/login"><fmt:message key="menubar.auth.login" /></a></li>
-                        <li><a href="/auth/register"><fmt:message key="menubar.auth.register" /></a></li>
+                        <li>
+                            <!-- Change to Tag -->
+                            <br />
+                            <form action="/locale/change" method="get">
+                                <select name="lang" onchange="this.form.submit()">
+                                    <option value="en"
+                                            <c:if test="${sessionScope.locale.language == 'en'}">selected</c:if>>en
+                                    </option>
+                                    <option value="ru"
+                                            <c:if test="${sessionScope.locale.language == 'ru'}">selected</c:if>>ru
+                                    </option>
+                                </select>
+                            </form>
+                        </li>
+                        <li><a href="/auth/login"><fmt:message key="menubar.auth.login"/></a></li>
+                        <li><a href="/auth/register"><fmt:message key="menubar.auth.register"/></a></li>
                     </c:otherwise>
                 </c:choose>
             </ul>

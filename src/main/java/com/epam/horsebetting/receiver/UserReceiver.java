@@ -26,4 +26,12 @@ public interface UserReceiver {
      * @param content
      */
     void logout(RequestContent content) throws ReceiverException;
+
+    /**
+     * Change locale.
+     *
+     * @param content
+     * @throws ReceiverException
+     */
+    void changeLocale(RequestContent content) throws ReceiverException;
 }

@@ -1,6 +1,7 @@
 package com.epam.horsebetting.command;
 
 import com.epam.horsebetting.command.auth.*;
+import com.epam.horsebetting.command.locale.ChangeLocaleCommand;
 import com.epam.horsebetting.exception.IllegalCommandTypeException;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.impl.PageReceiverImpl;
@@ -42,6 +43,12 @@ public enum CommandType {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {
             ((UserReceiverImpl) getCommand().getReceiver()).logout(content);
+        }
+    },
+    CHANGE_LOCALE("locale.change::get", new ChangeLocaleCommand(new UserReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((UserReceiverImpl) getCommand().getReceiver()).changeLocale(content);
         }
     };
 
