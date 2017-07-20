@@ -1,12 +1,12 @@
 package com.epam.horsebetting.receiver;
 
+import com.epam.horsebetting.dao.impl.UserDAOImpl;
 import com.epam.horsebetting.entity.User;
 import com.epam.horsebetting.exception.DAOException;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.request.RequestContent;
 import com.epam.horsebetting.type.RoleType;
 import com.epam.horsebetting.validator.UserValidator;
-import com.epam.horsebetting.dao.UserDAO;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,7 +47,7 @@ public class UserReceiver extends AbstractReceiver {
         if (validator.validateRegistration(name, email, password, passwordConfirmation)) {
             User createdUser = null;
 
-            try (UserDAO userDAO = new UserDAO()) {
+            try (UserDAOImpl userDAO = new UserDAOImpl()) {
                 User user = new User();
 
                 user.setEmail(email);
@@ -60,7 +60,7 @@ public class UserReceiver extends AbstractReceiver {
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
 
-            this.auth(content, createdUser);
+            this.authenticate(content, createdUser);
         } else {
             content.insertSessionAttribute("errors", validator.getErrors());
 
@@ -82,7 +82,7 @@ public class UserReceiver extends AbstractReceiver {
      * @param user
      * @throws ReceiverException
      */
-    private void auth(RequestContent content, User user) throws ReceiverException {
+    private void authenticate(RequestContent content, User user) throws ReceiverException {
         if (user == null) {
             throw new ReceiverException("Cannot authenticate user. User is null.");
         }
@@ -112,13 +112,13 @@ public class UserReceiver extends AbstractReceiver {
         if (validator.validateLogin(email, password)) {
             User createdUser;
 
-            try (UserDAO userDAO = new UserDAO()) {
+            try (UserDAOImpl userDAO = new UserDAOImpl()) {
                 createdUser = userDAO.attempt(email, password);
             } catch (DAOException e) {
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
 
-            this.auth(content, createdUser);
+            this.authenticate(content, createdUser);
         } else {
             content.insertSessionAttribute("errors", validator.getErrors());
 
@@ -150,7 +150,7 @@ public class UserReceiver extends AbstractReceiver {
             int userId = Integer.parseInt(String.valueOf(userObj));
             User user;
 
-            try (UserDAO userDAO = new UserDAO()) {
+            try (UserDAOImpl userDAO = new UserDAOImpl()) {
                 user = userDAO.find(userId);
             } catch (DAOException e) {
                 throw new ReceiverException("Cannot retrieve data about authorized user.", e);
