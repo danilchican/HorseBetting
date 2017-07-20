@@ -3,45 +3,45 @@ package com.epam.horsebetting.command;
 import com.epam.horsebetting.command.auth.*;
 import com.epam.horsebetting.exception.IllegalCommandTypeException;
 import com.epam.horsebetting.exception.ReceiverException;
-import com.epam.horsebetting.receiver.PageReceiver;
+import com.epam.horsebetting.receiver.impl.PageReceiverImpl;
 import com.epam.horsebetting.request.RequestContent;
-import com.epam.horsebetting.receiver.UserReceiver;
+import com.epam.horsebetting.receiver.impl.UserReceiverImpl;
 
 public enum CommandType {
-    INDEX_PAGE("index::get", new IndexPageCommand(new PageReceiver())) {
+    INDEX_PAGE("index::get", new IndexPageCommand(new PageReceiverImpl())) {
         @Override
         public void doReceiver(RequestContent content) {
-            ((PageReceiver) getCommand().getReceiver()).presentIndexPage(content);
+            ((PageReceiverImpl) getCommand().getReceiver()).presentIndexPage(content);
         }
     },
-    AUTH_LOGIN("auth.login::get", new LoginPresentCommand(new PageReceiver())) {
+    AUTH_LOGIN("auth.login::get", new LoginPresentCommand(new PageReceiverImpl())) {
         @Override
         public void doReceiver(RequestContent content) {
-            ((PageReceiver) getCommand().getReceiver()).presentLoginPage(content);
+            ((PageReceiverImpl) getCommand().getReceiver()).presentLoginPage(content);
         }
     },
-    AUTH_LOGIN_FORM("auth.login::post", new LoginCommand(new UserReceiver())) {
+    AUTH_LOGIN_FORM("auth.login::post", new LoginCommand(new UserReceiverImpl())) {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {
-            ((UserReceiver) getCommand().getReceiver()).login(content);
+            ((UserReceiverImpl) getCommand().getReceiver()).login(content);
         }
     },
-    AUTH_REGISTER("auth.register::get", new RegisterPresentCommand(new PageReceiver())) {
+    AUTH_REGISTER("auth.register::get", new RegisterPresentCommand(new PageReceiverImpl())) {
         @Override
         public void doReceiver(RequestContent content) {
-            ((PageReceiver) getCommand().getReceiver()).presentRegisterPage(content);
+            ((PageReceiverImpl) getCommand().getReceiver()).presentRegisterPage(content);
         }
     },
-    AUTH_REGISTER_FORM("auth.register::post", new RegisterCommand(new UserReceiver())) {
+    AUTH_REGISTER_FORM("auth.register::post", new RegisterCommand(new UserReceiverImpl())) {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {
-            ((UserReceiver) getCommand().getReceiver()).register(content);
+            ((UserReceiverImpl) getCommand().getReceiver()).register(content);
         }
     },
-    AUTH_LOGOUT_FORM("auth.logout::post", new LogoutCommand(new UserReceiver())) {
+    AUTH_LOGOUT_FORM("auth.logout::post", new LogoutCommand(new UserReceiverImpl())) {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {
-            ((UserReceiver) getCommand().getReceiver()).logout(content);
+            ((UserReceiverImpl) getCommand().getReceiver()).logout(content);
         }
     };
 

@@ -10,14 +10,9 @@ import org.apache.logging.log4j.Logger;
 public abstract class AbstractReceiver {
 
     /**
-     * Logger to write logs.
-     */
-    private static final Logger LOGGER = LogManager.getLogger();
-
-    /**
      * Page title.
      */
-    private final String pageTitle = "HorseBetting.com";
+    private static final String PAGE_TITLE = "HorseBetting.com";
 
     /**
      * Page sub title.
@@ -39,10 +34,9 @@ public abstract class AbstractReceiver {
      *
      * @param content
      */
-    void setDefaultContentAttributes(RequestContent content) {
-        content.insertRequestAttribute("pageTitle", pageTitle);
+    public void setDefaultContentAttributes(RequestContent content) {
+        content.insertRequestAttribute("pageTitle", PAGE_TITLE);
         content.insertRequestAttribute("pageSubTitle", pageSubTitle);
-        LOGGER.log(Level.INFO, "Default content attribute were set!");
     }
 
     /**
@@ -50,7 +44,7 @@ public abstract class AbstractReceiver {
      *
      * @param pageSubTitle
      */
-    void setPageSubTitle(String pageSubTitle) {
+    public void setPageSubTitle(String pageSubTitle) {
         this.pageSubTitle = pageSubTitle;
     }
 }
