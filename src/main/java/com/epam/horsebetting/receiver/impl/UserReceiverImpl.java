@@ -38,11 +38,11 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         String password = content.findParameter("password");
         String passwordConfirmation = content.findParameter("password_confirmation");
 
-        LOGGER.log(Level.DEBUG, "User data[name="
-                + name + ",email="
-                + email + ",password="
-                + password + ", confirmation="
-                + passwordConfirmation);
+        LOGGER.log(Level.DEBUG, "User data["
+                + "name=" + name
+                + ",email=" + email
+                + ",password=" + password
+                + ",confirmation=" + passwordConfirmation + "]");
 
         UserValidator validator = new UserValidator();
 
@@ -158,8 +158,8 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
                 throw new ReceiverException("Cannot retrieve data about authorized user.", e);
             }
 
-            if(user == null) {
-              throw new ReceiverException("User not found.");
+            if (user == null) {
+                throw new ReceiverException("User not found.");
             }
 
             content.removeSessionAttribute("authorized");

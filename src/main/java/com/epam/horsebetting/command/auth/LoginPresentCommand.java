@@ -6,6 +6,7 @@ import com.epam.horsebetting.request.RequestContent;
 import com.epam.horsebetting.command.CommandType;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.AbstractReceiver;
+import com.epam.horsebetting.util.PageConfig;
 import com.epam.horsebetting.util.Router;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -38,16 +39,17 @@ public class LoginPresentCommand extends AbstractCommand {
         LOGGER.log(Level.INFO, "Processing execute() method of " + this.getClass().getName());
 
         String commandName = String.valueOf(request.findRequestAttribute(COMMAND_INSTANCE_NAME));
-        Router router;
+        String page;
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);
-            router = new Router("/jsp/auth/login.jsp", Router.RouteType.FORWARD);
+            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.AUTH_LOGIN);
         } catch (ReceiverException e) {
+            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.NOT_FOUND);
             LOGGER.log(Level.ERROR, e);
-            router = new Router("/jsp/errors/404.jsp", Router.RouteType.FORWARD);
         }
 
+        Router router = new Router(page, Router.RouteType.FORWARD);
         request.insertRequestAttribute(Router.ROUTER_INSTANCE_NAME, router);
     }
 }
