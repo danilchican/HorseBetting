@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,11 +34,17 @@ public class RequestContent {
     private HashMap<String, String> requestParameters;
 
     /**
+     * Request headers.
+     */
+    private HashMap<String, String> requestHeaders;
+
+    /**
      * Default constructor.
      */
     public RequestContent() {
         this.requestAttributes = new HashMap<>();
         this.requestParameters = new HashMap<>();
+        this.requestHeaders = new HashMap<>();
 
         this.sessionAttributes = new HashMap<>();
     }
@@ -48,18 +55,16 @@ public class RequestContent {
      * @param request
      */
     public void extractValues(HttpServletRequest request) {
-        Enumeration<String> requestAttrNames = request.getAttributeNames();
-        Enumeration paramNames = request.getParameterNames();
-
         HttpSession session = request.getSession();
-        Enumeration<String> sessionAttrNames = session.getAttributeNames();
+        Enumeration requestParameterNames = request.getParameterNames();
 
-        while (paramNames.hasMoreElements()) {
-            String paramName = (String) paramNames.nextElement();
+        while (requestParameterNames.hasMoreElements()) {
+            String paramName = (String) requestParameterNames.nextElement();
             requestParameters.put(paramName, request.getParameter(paramName));
         }
 
         LOGGER.log(Level.INFO, "Request params saved.");
+        Enumeration<String> requestAttrNames = request.getAttributeNames();
 
         while (requestAttrNames.hasMoreElements()) {
             String attrName = requestAttrNames.nextElement();
@@ -69,6 +74,7 @@ public class RequestContent {
         }
 
         LOGGER.log(Level.INFO, "Request attributes saved.");
+        Enumeration<String> sessionAttrNames = session.getAttributeNames();
 
         while (sessionAttrNames.hasMoreElements()) {
             String attrName = sessionAttrNames.nextElement();
@@ -78,6 +84,16 @@ public class RequestContent {
         }
 
         LOGGER.log(Level.INFO, "Session attributes saved.");
+        Enumeration<String> requestHeaderNames = request.getHeaderNames();
+
+        while (requestHeaderNames.hasMoreElements()) {
+            String headerName = requestHeaderNames.nextElement();
+            String headerValue = request.getHeader(headerName);
+
+            this.requestHeaders.put(headerName, headerValue);
+        }
+
+        LOGGER.log(Level.INFO, "Request headers saved.");
     }
 
     /**
@@ -180,5 +196,15 @@ public class RequestContent {
      */
     public String findParameter(String paramName) {
         return this.requestParameters.get(paramName);
+    }
+
+    /**
+     * Find header in request headers map.
+     *
+     * @param headerName
+     * @return header value
+     */
+    public String findHeader(String headerName) {
+        return this.requestHeaders.get(headerName);
     }
 }
