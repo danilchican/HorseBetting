@@ -14,9 +14,15 @@ public abstract class AbstractReceiver {
      */
     private static final Logger LOGGER = LogManager.getLogger();
 
-    final protected String pageTitle = "HorseBetting.com";
+    /**
+     * Page title.
+     */
+    private final String pageTitle = "HorseBetting.com";
 
-    protected String pageSubTitle;
+    /**
+     * Page sub title.
+     */
+    private String pageSubTitle;
 
     /**
      * Execute receiver action.
@@ -33,7 +39,7 @@ public abstract class AbstractReceiver {
      *
      * @param content
      */
-    public void setDefaultContentAttributes(RequestContent content) {
+    void setDefaultContentAttributes(RequestContent content) {
         content.insertRequestAttribute("pageTitle", pageTitle);
         content.insertRequestAttribute("pageSubTitle", pageSubTitle);
         LOGGER.log(Level.INFO, "Default content attribute were set!");
@@ -44,7 +50,7 @@ public abstract class AbstractReceiver {
      *
      * @param pageSubTitle
      */
-    public void setPageSubTitle(String pageSubTitle) {
+    void setPageSubTitle(String pageSubTitle) {
         this.pageSubTitle = pageSubTitle;
     }
 }

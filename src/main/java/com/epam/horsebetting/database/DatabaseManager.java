@@ -13,7 +13,7 @@ import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-public class DatabaseManager {
+class DatabaseManager {
 
     /**
      * Logger to write logs.
@@ -86,7 +86,7 @@ public class DatabaseManager {
      *
      * @return url
      */
-    public String getURL() {
+    String getURL() {
         String url;
         String propName = "";
 
@@ -145,7 +145,7 @@ public class DatabaseManager {
      *
      * @return pool size
      */
-    public int getPoolSize() {
+    int getPoolSize() {
         String propName = "DB_POOL_SIZE";
         int poolSize;
 

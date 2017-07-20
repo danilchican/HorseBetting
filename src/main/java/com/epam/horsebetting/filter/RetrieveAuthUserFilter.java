@@ -1,6 +1,6 @@
 package com.epam.horsebetting.filter;
 
-import com.epam.horsebetting.exception.DatabaseException;
+import com.epam.horsebetting.exception.DAOException;
 import com.epam.horsebetting.dao.UserDAO;
 import com.epam.horsebetting.entity.User;
 import org.apache.logging.log4j.Level;
@@ -40,7 +40,7 @@ public class RetrieveAuthUserFilter implements Filter {
 
             try (UserDAO userDAO = new UserDAO()) {
                 user = userDAO.find(userId);
-            } catch (DatabaseException e) {
+            } catch (DAOException e) {
                 throw new ServletException("Cannot retrieve data about authorized user.", e);
             }
 

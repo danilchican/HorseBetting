@@ -88,9 +88,6 @@ public class RequestContent {
     private void checkAuthSession(HttpServletRequest request) {
         if(this.sessionAttributes.get("authorized") == null) {
             request.getSession().removeAttribute("authorized");
-            LOGGER.log(Level.DEBUG, "Authorized session attribute removed.");
-        } else {
-            LOGGER.log(Level.DEBUG, "Authorized session attribute exists.");
         }
     }
 

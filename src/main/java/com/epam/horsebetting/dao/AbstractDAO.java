@@ -3,11 +3,11 @@ package com.epam.horsebetting.dao;
 import com.epam.horsebetting.entity.Entity;
 import com.epam.horsebetting.database.ConnectionPool;
 import com.epam.horsebetting.database.ProxyConnection;
-import com.epam.horsebetting.exception.DatabaseException;
-import org.apache.logging.log4j.Level;
+import com.epam.horsebetting.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public abstract class AbstractDAO<T extends Entity> implements AutoCloseable {
@@ -20,7 +20,7 @@ public abstract class AbstractDAO<T extends Entity> implements AutoCloseable {
     /**
      * Used connection.
      */
-    ProxyConnection connection;
+    protected ProxyConnection connection;
 
     /**
      * Default constructor connection.
@@ -42,9 +42,9 @@ public abstract class AbstractDAO<T extends Entity> implements AutoCloseable {
      * Find all entities.
      *
      * @return entity list
-     * @throws DatabaseException
+     * @throws DAOException
      */
-    public abstract List<T> findAll() throws DatabaseException;
+    public abstract List<T> findAll() throws DAOException;
 
     /**
      * Find entity by id.
@@ -52,16 +52,16 @@ public abstract class AbstractDAO<T extends Entity> implements AutoCloseable {
      * @param id
      * @return entity
      */
-    public abstract T find(int id) throws DatabaseException;
+    public abstract T find(int id) throws DAOException;
 
     /**
      * Create new entity.
      *
      * @param entity
      * @return T
-     * @throws DatabaseException
+     * @throws DAOException
      */
-    public abstract T create(T entity) throws DatabaseException;
+    public abstract T create(T entity) throws DAOException;
 
     /**
      * Delete entity by id.
@@ -91,13 +91,13 @@ public abstract class AbstractDAO<T extends Entity> implements AutoCloseable {
      * Closes this resource, relinquishing any underlying resources.
      */
     @Override
-    public void close() {
-        try {
-            if (connection != null) {
+    public void close() throws DAOException {
+        if (connection != null) {
+            try {
                 connection.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
             }
-        } catch (Exception e) {
-            LOGGER.log(Level.ERROR, e);
         }
     }
 }

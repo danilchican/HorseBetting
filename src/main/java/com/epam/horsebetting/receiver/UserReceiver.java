@@ -1,7 +1,7 @@
 package com.epam.horsebetting.receiver;
 
 import com.epam.horsebetting.entity.User;
-import com.epam.horsebetting.exception.DatabaseException;
+import com.epam.horsebetting.exception.DAOException;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.request.RequestContent;
 import com.epam.horsebetting.type.RoleType;
@@ -56,7 +56,7 @@ public class UserReceiver extends AbstractReceiver {
                 user.setRole(RoleType.CLIENT);
 
                 createdUser = userDAO.create(user);
-            } catch (DatabaseException e) {
+            } catch (DAOException e) {
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
 
@@ -114,7 +114,7 @@ public class UserReceiver extends AbstractReceiver {
 
             try (UserDAO userDAO = new UserDAO()) {
                 createdUser = userDAO.attempt(email, password);
-            } catch (DatabaseException e) {
+            } catch (DAOException e) {
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
 
@@ -152,7 +152,7 @@ public class UserReceiver extends AbstractReceiver {
 
             try (UserDAO userDAO = new UserDAO()) {
                 user = userDAO.find(userId);
-            } catch (DatabaseException e) {
+            } catch (DAOException e) {
                 throw new ReceiverException("Cannot retrieve data about authorized user.", e);
             }
 

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSessionListener;
 import java.util.Locale;
 
 @WebListener
-public class InitHttpSessionListener implements HttpSessionListener {
+public class HttpSessionListenerImpl implements HttpSessionListener {
 
     /**
      * Logger to write logs.

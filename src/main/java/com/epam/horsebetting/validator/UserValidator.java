@@ -92,7 +92,7 @@ public class UserValidator {
      * @param name
      * @return boolean
      */
-    public boolean validateName(String name) {
+    private boolean validateName(String name) {
         if (name != null) {
             if (!name.isEmpty()) {
                 this.oldInput.put(OldInputFormAttributeTag.PREFIX + "name", name);
@@ -113,7 +113,7 @@ public class UserValidator {
      * @param email
      * @return boolean
      */
-    public boolean validateEmail(String email) {
+    private boolean validateEmail(String email) {
         if (email == null) {
             this.errors.add("Email is required.");
             return false;
@@ -137,7 +137,7 @@ public class UserValidator {
      * @param password
      * @return boolean
      */
-    public boolean validatePassword(String password) {
+    private boolean validatePassword(String password) {
         if (password == null) {
             this.errors.add("Password is required.");
             return false;
@@ -160,7 +160,7 @@ public class UserValidator {
      * @param passwordConfirmation
      * @return boolean
      */
-    public boolean validateConfirmation(String password, String passwordConfirmation) {
+    private boolean validateConfirmation(String password, String passwordConfirmation) {
         if (password.equals(passwordConfirmation)) {
             return true;
         }

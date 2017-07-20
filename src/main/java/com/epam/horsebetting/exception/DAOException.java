@@ -2,14 +2,14 @@ package com.epam.horsebetting.exception;
 
 import java.security.PrivilegedActionException;
 
-public class DatabaseException extends Exception {
+public class DAOException extends Exception {
 
     /**
      * Constructs a new exception with {@code null} as its detail message.
      * The cause is not initialized, and may subsequently be initialized by a
      * call to {@link #initCause}.
      */
-    public DatabaseException() {
+    public DAOException() {
     }
 
     /**
@@ -20,7 +20,7 @@ public class DatabaseException extends Exception {
      * @param message the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
-    public DatabaseException(String message) {
+    public DAOException(String message) {
         super(message);
     }
 
@@ -37,7 +37,7 @@ public class DatabaseException extends Exception {
      *                permitted, and indicates that the cause is nonexistent or
      *                unknown.)
      */
-    public DatabaseException(String message, Throwable cause) {
+    public DAOException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -54,7 +54,7 @@ public class DatabaseException extends Exception {
      *              permitted, and indicates that the cause is nonexistent or
      *              unknown.)
      */
-    public DatabaseException(Throwable cause) {
+    public DAOException(Throwable cause) {
         super(cause);
     }
 
@@ -71,7 +71,7 @@ public class DatabaseException extends Exception {
      * @param writableStackTrace whether or not the stack trace should
      *                           be writable
      */
-    public DatabaseException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public DAOException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

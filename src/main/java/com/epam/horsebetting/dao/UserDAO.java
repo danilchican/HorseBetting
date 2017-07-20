@@ -1,7 +1,7 @@
 package com.epam.horsebetting.dao;
 
 import com.epam.horsebetting.entity.User;
-import com.epam.horsebetting.exception.DatabaseException;
+import com.epam.horsebetting.exception.DAOException;
 import com.epam.horsebetting.type.RoleType;
 import com.epam.horsebetting.util.HashManager;
 
@@ -12,6 +12,9 @@ import java.util.List;
 
 public class UserDAO extends AbstractDAO<User> {
 
+    /**
+     * SQL queries for UserDAO.
+     */
     private static final String SQL_ADD_USER_QUERY = "INSERT INTO `users` (name, email, password, role_id) VALUES (?,?,?,?);";
     private static final String SQL_FIND_USER_BY_EMAIL = "SELECT * FROM `users` WHERE `email`=? LIMIT 1;";
     private static final String SQL_FIND_USER_BY_ID = "SELECT * FROM `users` WHERE `id`=? LIMIT 1;";
@@ -21,10 +24,10 @@ public class UserDAO extends AbstractDAO<User> {
      * Find all entities.
      *
      * @return entity list
-     * @throws DatabaseException
+     * @throws DAOException
      */
     @Override
-    public List<User> findAll() throws DatabaseException {
+    public List<User> findAll() throws DAOException {
         return null;
     }
 
@@ -35,7 +38,7 @@ public class UserDAO extends AbstractDAO<User> {
      * @return entity
      */
     @Override
-    public User find(int id) throws DatabaseException {
+    public User find(int id) throws DAOException {
         ResultSet resultSet;
         User user = null;
 
@@ -47,7 +50,7 @@ public class UserDAO extends AbstractDAO<User> {
                 user = fillUserData(resultSet);
             }
         } catch (SQLException e) {
-            throw new DatabaseException(e); // add comment as param to constructor.
+            throw new DAOException(e); // add comment as param to constructor.
         }
 
         return user;
@@ -59,7 +62,7 @@ public class UserDAO extends AbstractDAO<User> {
      * @param email
      * @return entity
      */
-    public User findByEmail(String email) throws DatabaseException {
+    public User findByEmail(String email) throws DAOException {
         ResultSet resultSet;
         User user = null;
 
@@ -71,7 +74,7 @@ public class UserDAO extends AbstractDAO<User> {
                 user = fillUserData(resultSet);
             }
         } catch (SQLException e) {
-            throw new DatabaseException(e);
+            throw new DAOException(e);
         }
 
         return user;
@@ -82,10 +85,10 @@ public class UserDAO extends AbstractDAO<User> {
      *
      * @param user
      * @return boolean
-     * @throws DatabaseException
+     * @throws DAOException
      */
     @Override
-    public User create(User user) throws DatabaseException {
+    public User create(User user) throws DAOException {
         User createdUser = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_USER_QUERY)) {
@@ -99,7 +102,7 @@ public class UserDAO extends AbstractDAO<User> {
                 createdUser = findByEmail(user.getEmail());
             }
         } catch (SQLException e) {
-            throw new DatabaseException(e); // add comment to constructor
+            throw new DAOException(e); // add comment to constructor
         }
 
         return createdUser;
@@ -164,9 +167,9 @@ public class UserDAO extends AbstractDAO<User> {
      * @param email
      * @param password
      * @return user instance
-     * @throws DatabaseException
+     * @throws DAOException
      */
-    public User attempt(String email, String password) throws DatabaseException {
+    public User attempt(String email, String password) throws DAOException {
         ResultSet resultSet;
         User user = null;
 
@@ -179,7 +182,7 @@ public class UserDAO extends AbstractDAO<User> {
                 user = fillUserData(resultSet);
             }
         } catch (SQLException e) {
-            throw new DatabaseException(e); // add comment constructor
+            throw new DAOException(e); // add comment constructor
         }
 
         return user;

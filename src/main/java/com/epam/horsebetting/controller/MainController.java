@@ -42,7 +42,7 @@ public class MainController extends HttpServlet {
         processRequest(request, response);
     }
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             AbstractCommand command = initCommand(request);
             LOGGER.log(Level.DEBUG, "Initialized command: " + command.getClass().getName());
@@ -51,7 +51,26 @@ public class MainController extends HttpServlet {
             content.extractValues(request);
 
             command.execute(content);
-            navigateToPage(content, request, response);
+
+            Router router = (Router) content.findRequestAttribute(ROUTER_INSTANCE_NAME);
+
+            if (router == null) {
+                throw new RouteNotFoundException("Cannot find attribute[" + ROUTER_INSTANCE_NAME + "]. " + "Router is null.");
+            }
+
+            LOGGER.log(Level.DEBUG, "Content router: " + router);
+
+            content.removeRequestAttribute(ROUTER_INSTANCE_NAME);
+            content.insertValues(request);
+
+            switch (router.getType()) {
+                case REDIRECT:
+                    response.sendRedirect(getServletContext().getContextPath() + router.getRoute());
+                    break;
+                case FORWARD:
+                    request.getRequestDispatcher(router.getRoute()).forward(request, response);
+                    break;
+            }
         } catch (IllegalCommandTypeException | RouteNotFoundException e) {
             LOGGER.log(Level.ERROR, e.getMessage(), e);
             response.sendError(404);
@@ -82,38 +101,5 @@ public class MainController extends HttpServlet {
 
         CommandType commandType = CommandType.findByTag(commandName);
         return commandType.getCommand();
-    }
-
-    /**
-     * Navigate to page by Router instance.
-     *
-     * @param content
-     * @param request
-     * @param response
-     * @throws RouteNotFoundException
-     * @throws IOException
-     * @throws ServletException
-     */
-    private void navigateToPage(RequestContent content, HttpServletRequest request, HttpServletResponse response)
-            throws RouteNotFoundException, IOException, ServletException {
-        Router router = (Router) content.findRequestAttribute(ROUTER_INSTANCE_NAME);
-
-        if (router == null) {
-            throw new RouteNotFoundException("Cannot find attribute[" + ROUTER_INSTANCE_NAME + "]. " + "Router is null.");
-        }
-
-        LOGGER.log(Level.DEBUG, "Content router: " + router);
-
-        content.removeRequestAttribute(ROUTER_INSTANCE_NAME);
-        content.insertValues(request);
-
-        switch (router.getType()) {
-            case REDIRECT:
-                response.sendRedirect(getServletContext().getContextPath() + router.getRoute());
-                break;
-            case FORWARD:
-                request.getRequestDispatcher(router.getRoute()).forward(request, response);
-                break;
-        }
     }
 }

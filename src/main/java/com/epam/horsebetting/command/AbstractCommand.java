@@ -19,7 +19,7 @@ public abstract class AbstractCommand {
     /**
      * Command name instance.
      */
-    public static String COMMAND_INSTANCE_NAME = "commandName";
+    public static final String COMMAND_INSTANCE_NAME = "commandName";
 
     /**
      * Constructor.

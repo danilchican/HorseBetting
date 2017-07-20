@@ -2,6 +2,9 @@ package com.epam.horsebetting.util;
 
 public class Router {
 
+    /**
+     * Route type.
+     */
     public enum RouteType {
         FORWARD, REDIRECT
     }
@@ -19,7 +22,7 @@ public class Router {
     /**
      * Router instance name.
      */
-    public static String ROUTER_INSTANCE_NAME = "routerInstance";
+    public static final String ROUTER_INSTANCE_NAME = "routerInstance";
 
     /**
      * Constructor.

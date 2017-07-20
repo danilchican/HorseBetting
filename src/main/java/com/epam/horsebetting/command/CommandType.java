@@ -53,7 +53,7 @@ public enum CommandType {
     /**
      * Command type instance.
      */
-    AbstractCommand command;
+    private AbstractCommand command;
 
     /**
      * Constructor with value & command.
