@@ -1,8 +1,5 @@
 package com.epam.horsebetting.filter;
 
-import com.epam.horsebetting.dao.impl.UserDAOImpl;
-import com.epam.horsebetting.exception.DAOException;
-import com.epam.horsebetting.entity.User;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,11 +7,11 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(filterName = "RetrieveAuthUserFilter", urlPatterns = "/*")
-public class RetrieveAuthUserFilter implements Filter {
+public class AccessProfileFilter implements Filter {
 
     /**
      * Logger to write logs.
@@ -28,26 +25,19 @@ public class RetrieveAuthUserFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) resp;
+
         HttpSession session = request.getSession();
-
-        LOGGER.log(Level.DEBUG, "Started getting authorized user info.");
-
         Object userObj = session.getAttribute("authorized");
 
+        LOGGER.log(Level.DEBUG, this.getClass().getName() + " has worked.");
+
         if (userObj != null) {
-            int userId = Integer.parseInt(String.valueOf(userObj));
-            User user = null;
-
-            try (UserDAOImpl userDAO = new UserDAOImpl()) {
-                user = userDAO.find(userId);
-            } catch (DAOException e) {
-                throw new ServletException("Cannot retrieve data about authorized user.", e);
-            }
-
-            session.setAttribute("user", user);
+            chain.doFilter(req, resp);
+        } else {
+            LOGGER.log(Level.DEBUG, "User not authenticated. Redirected to login.");
+            response.sendRedirect("/auth/login");
         }
-
-        chain.doFilter(req, resp);
     }
 
     @Override

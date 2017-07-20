@@ -1,5 +1,8 @@
 package com.epam.horsebetting.filter;
 
+import com.epam.horsebetting.dao.impl.UserDAOImpl;
+import com.epam.horsebetting.exception.DAOException;
+import com.epam.horsebetting.entity.User;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -7,12 +10,10 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(filterName = "AccessAuthPageFilter", urlPatterns = "/profile/*")
-public class AccessAuthPageFilter implements Filter {
+public class AuthUserFilter implements Filter {
 
     /**
      * Logger to write logs.
@@ -26,19 +27,25 @@ public class AccessAuthPageFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
-        HttpServletResponse response = (HttpServletResponse) resp;
-
         HttpSession session = request.getSession();
 
-        LOGGER.log(Level.DEBUG, "Started getting authorized user info. " + this.getClass().getName());
         Object userObj = session.getAttribute("authorized");
 
         if (userObj != null) {
-            chain.doFilter(req, resp);
-        } else {
-            LOGGER.log(Level.DEBUG, "User not authenticated. Redirected to login.");
-            response.sendRedirect("/auth/login");
+            int userId = Integer.parseInt(String.valueOf(userObj));
+            User user;
+
+            try (UserDAOImpl userDAO = new UserDAOImpl()) {
+                user = userDAO.find(userId);
+            } catch (DAOException e) {
+                throw new ServletException("Cannot retrieve data about authorized user.", e);
+            }
+
+            session.setAttribute("user", user);
         }
+
+        LOGGER.log(Level.DEBUG, this.getClass().getName() + " has worked.");
+        chain.doFilter(req, resp);
     }
 
     @Override
