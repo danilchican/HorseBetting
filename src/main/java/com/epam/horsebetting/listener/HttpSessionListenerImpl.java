@@ -19,8 +19,9 @@ public class HttpSessionListenerImpl implements HttpSessionListener {
 
     @Override
     public void sessionCreated(HttpSessionEvent event) {
-        event.getSession().setAttribute("locale", new Locale("ru", "RU"));
-        LOGGER.log(Level.INFO, "Created locale by default: ru_RU");
+        Locale locale = new Locale("ru", "RU");
+        event.getSession().setAttribute("locale", locale);
+        LOGGER.log(Level.INFO, "Created locale by default: " + locale);
     }
 
     @Override

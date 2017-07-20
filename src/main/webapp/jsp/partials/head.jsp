@@ -1,6 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="ctg" uri="customtags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:setLocale value="${sessionScope.locale}" />
+<fmt:setBundle basename="/localization/lang"/>
 
 <html>
 <head>
@@ -36,9 +39,9 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/contact">Contact</a></li>
+                <li class="active"><a href="/"><fmt:message key="menubar.home" /></a></li>
+                <li><a href="/about"><fmt:message key="menubar.about" /></a></li>
+                <li><a href="/contact"><fmt:message key="menubar.contact" /></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <c:choose>
@@ -48,18 +51,19 @@
                                     ${sessionScope.user.name} <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="/account">Profile</a></li>
+                                <li><a href="/dashboard"><fmt:message key="account.adminpanel" /></a></li>
+                                <li><a href="/account"><fmt:message key="account.profile" /></a></li>
                                 <li>
                                     <form action="/auth/logout" method="post">
-                                        <button type="submit">Logout</button>
+                                        <button type="submit"><fmt:message key="account.logout" /></button>
                                     </form>
                                 </li>
                             </ul>
                         </li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="/auth/login">Login</a></li>
-                        <li><a href="/auth/register">Register</a></li>
+                        <li><a href="/auth/login"><fmt:message key="menubar.auth.login" /></a></li>
+                        <li><a href="/auth/register"><fmt:message key="menubar.auth.register" /></a></li>
                     </c:otherwise>
                 </c:choose>
             </ul>
