@@ -64,7 +64,6 @@
                     <c:otherwise>
                         <li>
                             <!-- Change to Tag -->
-                            <br />
                             <form action="/locale/change" method="get">
                                 <select name="lang" onchange="this.form.submit()">
                                     <option value="en"

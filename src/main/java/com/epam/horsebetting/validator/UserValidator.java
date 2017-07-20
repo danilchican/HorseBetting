@@ -93,14 +93,17 @@ public class UserValidator {
      * @return boolean
      */
     private boolean validateName(String name) {
-        if (name != null) {
-            if (!name.isEmpty()) {
-                this.oldInput.put(OldInputFormAttributeTag.PREFIX + "name", name);
+        if (name == null) {
+            this.errors.add("Name is required.");
+            return false;
+        }
 
-                if (!name.matches(NAME_REGEX)) {
-                    this.errors.add("Name must be at least 5 characters as well as contain `_` symbol. The 1st symbol must be [A-Za-z].");
-                    return false;
-                }
+        if (!name.isEmpty()) {
+            this.oldInput.put(OldInputFormAttributeTag.PREFIX + "name", name);
+
+            if (!name.matches(NAME_REGEX)) {
+                this.errors.add("Name must be at least 5 characters as well as contain `_` symbol. The 1st symbol must be [A-Za-z].");
+                return false;
             }
         }
 
