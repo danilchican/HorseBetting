@@ -45,8 +45,9 @@ public class SessionErrorsTag extends TagSupport {
 
         try {
             StringBuilder outerHtml = new StringBuilder();
-            outerHtml.append("<h3>Errors:</h3>");
-            outerHtml.append("<div class=\"ul\">");
+            outerHtml.append("<div class=\"alert alert-danger\">");
+            outerHtml.append("<h4>You have some errors:</h4>");
+            outerHtml.append("<ul>");
 
             for (String error : errors) {
                 outerHtml.append("<li>");
@@ -54,7 +55,7 @@ public class SessionErrorsTag extends TagSupport {
                 outerHtml.append("</li>");
             }
 
-            outerHtml.append("</ul><br/>");
+            outerHtml.append("</ul></div>");
             session.removeAttribute("errors");
 
             JspWriter out = pageContext.getOut();
