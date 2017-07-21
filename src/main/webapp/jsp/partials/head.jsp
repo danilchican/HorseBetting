@@ -61,7 +61,7 @@
                     <c:when test="${sessionScope.authorized != null}">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    ${sessionScope.user.name} <b class="caret"></b>
+                                    ${user.name} <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
                                 <c:if test="${user.isAdministrator()}">

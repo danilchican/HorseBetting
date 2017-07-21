@@ -6,10 +6,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class RequestContent {
 
@@ -39,6 +36,11 @@ public class RequestContent {
     private HashMap<String, String> requestHeaders;
 
     /**
+     * Session attribute names to remove.
+     */
+    private ArrayList<String> sessionAttrsToRemove;
+
+    /**
      * Default constructor.
      */
     public RequestContent() {
@@ -47,6 +49,7 @@ public class RequestContent {
         this.requestHeaders = new HashMap<>();
 
         this.sessionAttributes = new HashMap<>();
+        this.sessionAttrsToRemove = new ArrayList<>();
     }
 
     /**
@@ -97,14 +100,12 @@ public class RequestContent {
     }
 
     /**
-     * Remove auth attribute from session.
+     * Remove attributes from session.
      *
-     * @param request
+     * @param session
      */
-    private void checkAuthSession(HttpServletRequest request) {
-        if(this.sessionAttributes.get("authorized") == null) {
-            request.getSession().removeAttribute("authorized");
-        }
+    private void removeSessionAttributes(HttpSession session) {
+        this.sessionAttrsToRemove.forEach(session::removeAttribute);
     }
 
     /**
@@ -113,6 +114,8 @@ public class RequestContent {
      * @param request
      */
     public void insertValues(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+
         for (Map.Entry<String, Object> entry : requestAttributes.entrySet()) {
             String key = entry.getKey();
             Object value = entry.getValue();
@@ -124,10 +127,10 @@ public class RequestContent {
             String key = entry.getKey();
             Object value = entry.getValue();
 
-            request.getSession().setAttribute(key, value);
+            session.setAttribute(key, value);
         }
 
-        this.checkAuthSession(request);
+        this.removeSessionAttributes(session);
     }
 
     /**
@@ -165,7 +168,7 @@ public class RequestContent {
      * @param key
      */
     public void removeSessionAttribute(String key) {
-        this.sessionAttributes.remove(key);
+        this.sessionAttrsToRemove.add(key);
     }
 
     /**

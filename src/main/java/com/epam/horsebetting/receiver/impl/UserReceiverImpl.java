@@ -7,7 +7,6 @@ import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.AbstractReceiver;
 import com.epam.horsebetting.receiver.UserReceiver;
 import com.epam.horsebetting.request.RequestContent;
-import com.epam.horsebetting.type.RoleType;
 import com.epam.horsebetting.validator.UserValidator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -79,35 +78,6 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
             throw new ReceiverException("Invalid registration data.");
         }
-    }
-
-    /**
-     * Check if the user exists.
-     *
-     * @param user
-     * @return boolean
-     * @throws DAOException
-     */
-    private boolean isUserExists(User user) throws DAOException {
-        User foundedUser;
-
-        try (UserDAOImpl userDAO = new UserDAOImpl()) {
-            foundedUser = userDAO.findByEmail(user.getEmail());
-        }
-
-        return foundedUser != null;
-    }
-
-    /**
-     * Authenticate user in system.
-     *
-     * @param content
-     * @param user
-     * @throws ReceiverException
-     */
-    private void authenticate(RequestContent content, User user) throws ReceiverException {
-        LOGGER.log(Level.DEBUG, "Auth user: " + user);
-        content.insertSessionAttribute("authorized", user.getId());
     }
 
     /**
@@ -186,5 +156,34 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
         content.insertSessionAttribute("locale", locale);
         LOGGER.log(Level.INFO, "The new locale was set: " + locale);
+    }
+
+    /**
+     * Check if the user exists.
+     *
+     * @param user
+     * @return boolean
+     * @throws DAOException
+     */
+    private boolean isUserExists(User user) throws DAOException {
+        User foundedUser;
+
+        try (UserDAOImpl userDAO = new UserDAOImpl()) {
+            foundedUser = userDAO.findByEmail(user.getEmail());
+        }
+
+        return foundedUser != null;
+    }
+
+    /**
+     * Authenticate user in system.
+     *
+     * @param content
+     * @param user
+     * @throws ReceiverException
+     */
+    private void authenticate(RequestContent content, User user) throws ReceiverException {
+        LOGGER.log(Level.DEBUG, "Auth user: " + user);
+        content.insertSessionAttribute("authorized", user.getId());
     }
 }
