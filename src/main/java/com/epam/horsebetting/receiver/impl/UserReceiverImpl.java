@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 
@@ -29,8 +30,6 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      * @param content
      */
     public void register(RequestContent content) throws ReceiverException {
-        LOGGER.log(Level.INFO, "Execution register() method: " + this.getClass().getName());
-
         this.setPageSubTitle("Регистрация");
         super.setDefaultContentAttributes(content);
 
@@ -39,43 +38,64 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         String password = content.findParameter("password");
         String passwordConfirmation = content.findParameter("password_confirmation");
 
-        LOGGER.log(Level.DEBUG, "User data["
-                + "name=" + name
-                + ",email=" + email
-                + ",password=" + password
-                + ",confirmation=" + passwordConfirmation + "]");
-
         UserValidator validator = new UserValidator();
 
-        if (validator.validateRegistration(name, email, password, passwordConfirmation)) {
-            User createdUser = null;
+        if (validator.validateRegistrationForm(name, email, password, passwordConfirmation)) {
+            User newUser = new User(email, password);
+            newUser.setName(name);
+
+            ArrayList<String> errors = new ArrayList<>();
 
             try (UserDAOImpl userDAO = new UserDAOImpl()) {
-                User user = new User();
+                if(!isUserExists(newUser)) {
+                    User user = userDAO.create(newUser);
+                    this.authenticate(content, user);
+                } else {
+                    errors.add("User already exists. Change your email.");
+                    content.insertSessionAttribute("errors", errors);
 
-                user.setEmail(email);
-                user.setName(name);
-                user.setPassword(password);
-                user.setRole(RoleType.CLIENT);
+                    for (Map.Entry<String, String> entry : validator.getOldInput()) {
+                        content.insertSessionAttribute(entry.getKey(), entry.getValue());
+                    }
 
-                createdUser = userDAO.create(user);
+                    throw new ReceiverException("Cannot register user. User already exists.");
+                }
             } catch (DAOException e) {
+                errors.add("Can't create new user.");
+                content.insertSessionAttribute("errors", errors);
+
+                for (Map.Entry<String, String> entry : validator.getOldInput()) {
+                    content.insertSessionAttribute(entry.getKey(), entry.getValue());
+                }
+
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
-
-            this.authenticate(content, createdUser);
         } else {
             content.insertSessionAttribute("errors", validator.getErrors());
 
-            LOGGER.log(Level.DEBUG, "Old inputs:");
-
             for (Map.Entry<String, String> entry : validator.getOldInput()) {
                 content.insertSessionAttribute(entry.getKey(), entry.getValue());
-                LOGGER.log(Level.DEBUG, entry.getKey() + ": " + entry.getValue());
             }
 
             throw new ReceiverException("Invalid registration data.");
         }
+    }
+
+    /**
+     * Check if the user exists.
+     *
+     * @param user
+     * @return boolean
+     * @throws DAOException
+     */
+    private boolean isUserExists(User user) throws DAOException {
+        User foundedUser;
+
+        try (UserDAOImpl userDAO = new UserDAOImpl()) {
+            foundedUser = userDAO.findByEmail(user.getEmail());
+        }
+
+        return foundedUser != null;
     }
 
     /**
@@ -86,10 +106,6 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      * @throws ReceiverException
      */
     private void authenticate(RequestContent content, User user) throws ReceiverException {
-        if (user == null) {
-            throw new ReceiverException("Cannot authenticate user. User is null.");
-        }
-
         LOGGER.log(Level.DEBUG, "Auth user: " + user);
         content.insertSessionAttribute("authorized", user.getId());
     }
@@ -100,39 +116,41 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      * @param content
      */
     public void login(RequestContent content) throws ReceiverException {
-        LOGGER.log(Level.INFO, "Execution login() method: " + this.getClass().getName());
-
         this.setPageSubTitle("Авторизация");
         super.setDefaultContentAttributes(content);
 
         String email = content.findParameter("email");
         String password = content.findParameter("password");
 
-        LOGGER.log(Level.DEBUG, "User data[name=" + email + ",password=" + password + "]");
-
         UserValidator validator = new UserValidator();
 
-        if (validator.validateLogin(email, password)) {
-            User createdUser;
+        if (validator.validateLoginForm(email, password)) {
+            User user;
 
             try (UserDAOImpl userDAO = new UserDAOImpl()) {
-                createdUser = userDAO.attempt(email, password);
+                user = userDAO.attempt(email, password);
             } catch (DAOException e) {
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
 
-            this.authenticate(content, createdUser);
+            if(user == null) {
+                ArrayList<String> errors = new ArrayList<String>() {{
+                   add("User does not exists or credentials are not correct.");
+                }};
+
+                content.insertSessionAttribute("errors", errors);
+                throw new ReceiverException("Cannot authenticate user. User is null.");
+            }
+
+            this.authenticate(content, user);
         } else {
             content.insertSessionAttribute("errors", validator.getErrors());
 
-            LOGGER.log(Level.DEBUG, "Old inputs:");
-
             for (Map.Entry<String, String> entry : validator.getOldInput()) {
                 content.insertSessionAttribute(entry.getKey(), entry.getValue());
-                LOGGER.log(Level.DEBUG, entry.getKey() + ": " + entry.getValue());
             }
 
-            throw new ReceiverException("Invalid authentication data.");
+            throw new ReceiverException("Invalid user credentials.");
         }
     }
 
@@ -142,27 +160,9 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      * @param content
      */
     public void logout(RequestContent content) throws ReceiverException {
-        LOGGER.log(Level.INFO, "Execution logout() method: " + this.getClass().getName());
+        Object authorized = content.findSessionAttribute("authorized");
 
-        this.setPageSubTitle("Авторизация");
-        super.setDefaultContentAttributes(content);
-
-        Object userObj = content.findSessionAttribute("authorized");
-
-        if (userObj != null) {
-            int userId = Integer.parseInt(String.valueOf(userObj));
-            User user;
-
-            try (UserDAOImpl userDAO = new UserDAOImpl()) {
-                user = userDAO.find(userId);
-            } catch (DAOException e) {
-                throw new ReceiverException("Cannot retrieve data about authorized user.", e);
-            }
-
-            if (user == null) {
-                throw new ReceiverException("User not found.");
-            }
-
+        if (authorized != null) {
             content.removeSessionAttribute("authorized");
         }
     }
@@ -175,7 +175,6 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      */
     @Override
     public void changeLocale(RequestContent content) {
-        LOGGER.log(Level.INFO, "Execution changeLocale() method: " + this.getClass().getName());
         super.setDefaultContentAttributes(content);
 
         String language = content.findParameter("lang");

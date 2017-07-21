@@ -3,15 +3,38 @@ package com.epam.horsebetting.entity;
 import com.epam.horsebetting.type.RoleType;
 import com.epam.horsebetting.util.HashManager;
 
+import java.math.BigDecimal;
+
 public class User extends Entity {
 
     private int id;
     private int roleId;
 
+    private BigDecimal balance;
+
     private String name;
     private String email;
     private String password;
     private String createdAt;
+
+    /**
+     * Default constructor role type by default.
+     */
+    public User() {
+        this.setRole(RoleType.CLIENT);
+    }
+
+    /**
+     * Constructor with credentials.
+     *
+     * @param email
+     * @param password
+     */
+    public User(String email, String password) {
+        this();
+        this.setEmail(email);
+        this.setPassword(password);
+    }
 
     /**
      * Get id of the User.
@@ -56,6 +79,15 @@ public class User extends Entity {
      */
     public String getPassword() {
         return password;
+    }
+
+    /**
+     * Get user balance.
+     *
+     * @return balance
+     */
+    public BigDecimal getBalance() {
+        return balance;
     }
 
     /**
@@ -119,6 +151,15 @@ public class User extends Entity {
      */
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    /**
+     * Set user balance.
+     *
+     * @param balance
+     */
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
     @Override

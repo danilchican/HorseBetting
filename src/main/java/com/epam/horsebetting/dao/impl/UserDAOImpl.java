@@ -30,20 +30,21 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
      */
     @Override
     public User create(User user) throws DAOException {
-        User createdUser = null;
+        User createdUser;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_USER_QUERY)) {
-            // modify to transaction
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getEmail());
             preparedStatement.setString(3, user.getPassword());
             preparedStatement.setInt(4, user.getRoleId());
 
-            if (preparedStatement.executeUpdate() == 1) {
-                createdUser = findByEmail(user.getEmail());
+            if (preparedStatement.executeUpdate() != 1) {
+                throw new DAOException("Can't add a new user to the database.");
             }
+
+            createdUser = findByEmail(user.getEmail());
         } catch (SQLException e) {
-            throw new DAOException(e); // add comment to constructor
+            throw new DAOException("Can't register new user. " + e.getMessage(), e);
         }
 
         return createdUser;
@@ -138,11 +139,11 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
             preparedStatement.setString(2, HashManager.make(password));
             resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 user = extractFrom(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException(e); // add comment constructor
+            throw new DAOException("Can't attempt to login with user credentials.", e);
         }
 
         return user;

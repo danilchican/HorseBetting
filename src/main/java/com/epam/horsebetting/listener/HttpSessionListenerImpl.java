@@ -25,7 +25,5 @@ public class HttpSessionListenerImpl implements HttpSessionListener {
     }
 
     @Override
-    public void sessionDestroyed(HttpSessionEvent event) {
-        //..
-    }
+    public void sessionDestroyed(HttpSessionEvent event) {}
 }

@@ -24,7 +24,7 @@ public class UserValidator {
      */
     private static final String NAME_REGEX = "[a-zA-Z]\\w{4,}";
     private static final String EMAIL_REGEX = "\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+";
-    private static final String PASSWORD_REGEX = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{6,}";
+    private static final String PASSWORD_REGEX = "(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{6,}";
 
     /**
      * Default constructor.
@@ -43,7 +43,7 @@ public class UserValidator {
      * @param passwordConfirmation
      * @return boolean
      */
-    public boolean validateRegistration(String name, String email, String password, String passwordConfirmation) {
+    public boolean validateRegistrationForm(String name, String email, String password, String passwordConfirmation) {
         boolean isValidate = true;
 
         if (!validateName(name)) {
@@ -72,7 +72,7 @@ public class UserValidator {
      * @param password
      * @return boolean
      */
-    public boolean validateLogin(String email, String password) {
+    public boolean validateLoginForm(String email, String password) {
         boolean isValidate = true;
 
         if (!validateEmail(email)) {
@@ -148,7 +148,7 @@ public class UserValidator {
 
         if (!password.isEmpty()) {
             if (!password.matches(PASSWORD_REGEX)) {
-                this.errors.add("Your password must be at least 6 characters as well as contain at least one uppercase, one lowercase, and one number.");
+                this.errors.add("Your password must be at least 6 characters as well as contain at least one lowercase and one number.");
                 return false;
             }
         }

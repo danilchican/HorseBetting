@@ -44,6 +44,19 @@
                 <li><a href="/contact"><fmt:message key="menubar.contact"/></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <!-- Change to Tag -->
+                    <form action="/locale/change" method="get" style="margin: 15px 0 0;">
+                        <select name="lang" onchange="this.form.submit()">
+                            <option value="en"
+                                    <c:if test="${sessionScope.locale.language == 'en'}">selected</c:if>>en
+                            </option>
+                            <option value="ru"
+                                    <c:if test="${sessionScope.locale.language == 'ru'}">selected</c:if>>ru
+                            </option>
+                        </select>
+                    </form>
+                </li>
                 <c:choose>
                     <c:when test="${sessionScope.authorized != null}">
                         <li class="dropdown">
@@ -54,27 +67,17 @@
                                 <li><a href="/dashboard"><fmt:message key="account.adminpanel"/></a></li>
                                 <li><a href="/account"><fmt:message key="account.profile"/></a></li>
                                 <li>
-                                    <form action="/auth/logout" method="post">
-                                        <button type="submit"><fmt:message key="account.logout"/></button>
-                                    </form>
+                                    <a href="#"
+                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <fmt:message key="account.logout"/>
+                                    </a>
+                                    <form action="/auth/logout" id="logout-form" method="post"
+                                          style="display: none;"></form>
                                 </li>
                             </ul>
                         </li>
                     </c:when>
                     <c:otherwise>
-                        <li>
-                            <!-- Change to Tag -->
-                            <form action="/locale/change" method="get">
-                                <select name="lang" onchange="this.form.submit()">
-                                    <option value="en"
-                                            <c:if test="${sessionScope.locale.language == 'en'}">selected</c:if>>en
-                                    </option>
-                                    <option value="ru"
-                                            <c:if test="${sessionScope.locale.language == 'ru'}">selected</c:if>>ru
-                                    </option>
-                                </select>
-                            </form>
-                        </li>
                         <li><a href="/auth/login"><fmt:message key="menubar.auth.login"/></a></li>
                         <li><a href="/auth/register"><fmt:message key="menubar.auth.register"/></a></li>
                     </c:otherwise>
