@@ -64,8 +64,10 @@
                                     ${sessionScope.user.name} <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="/dashboard"><fmt:message key="account.adminpanel"/></a></li>
-                                <li><a href="/account"><fmt:message key="account.profile"/></a></li>
+                                <c:if test="${user.isAdministrator()}">
+                                    <li><a href="/dashboard"><fmt:message key="account.adminpanel"/></a></li>
+                                </c:if>
+                                <li><a href="/profile"><fmt:message key="account.profile"/></a></li>
                                 <li>
                                     <a href="#"
                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

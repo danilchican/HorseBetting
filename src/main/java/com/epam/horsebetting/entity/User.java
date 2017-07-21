@@ -162,6 +162,15 @@ public class User extends Entity {
         this.balance = balance;
     }
 
+    /**
+     * Check if the user is Administrator.
+     *
+     * @return boolean
+     */
+    public boolean isAdministrator() {
+        return getRoleId() == RoleType.ADMINISTRATOR.getValue();
+    }
+
     @Override
     public String toString() {
         return "User{" +
