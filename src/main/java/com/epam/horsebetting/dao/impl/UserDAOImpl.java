@@ -69,7 +69,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
                 user = extractFrom(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException(e); // add comment as param to constructor.
+            throw new DAOException("Can't find user by id[" + id + "]", e);
         }
 
         return user;

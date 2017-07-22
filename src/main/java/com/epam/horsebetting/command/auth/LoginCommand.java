@@ -42,7 +42,7 @@ public class LoginCommand extends AbstractCommand {
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);
-            router = new Router("/", Router.RouteType.REDIRECT);
+            router = new Router("/profile", Router.RouteType.REDIRECT);
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e);
             router = new Router("/auth/login", Router.RouteType.REDIRECT);

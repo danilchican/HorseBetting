@@ -1,7 +1,9 @@
 package com.epam.horsebetting.command;
 
 import com.epam.horsebetting.command.auth.*;
+import com.epam.horsebetting.command.dashboard.DashboardPresentCommand;
 import com.epam.horsebetting.command.locale.ChangeLocaleCommand;
+import com.epam.horsebetting.command.profile.ProfilePresentCommand;
 import com.epam.horsebetting.exception.IllegalCommandTypeException;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.impl.PageReceiverImpl;
@@ -49,6 +51,18 @@ public enum CommandType {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {
             ((UserReceiverImpl) getCommand().getReceiver()).changeLocale(content);
+        }
+    },
+    PROFILE_INDEX("profile::get", new ProfilePresentCommand(new PageReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((PageReceiverImpl) getCommand().getReceiver()).presentProfilePage(content);
+        }
+    },
+    DASHBOARD_INDEX("dashboard::get", new DashboardPresentCommand(new PageReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((PageReceiverImpl) getCommand().getReceiver()).presentDashboardPage(content);
         }
     };
 

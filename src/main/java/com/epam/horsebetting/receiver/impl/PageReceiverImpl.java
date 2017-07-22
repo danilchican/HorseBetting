@@ -38,4 +38,24 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         this.setPageSubTitle("Регистрация");
         this.setDefaultContentAttributes(content);
     }
+
+    /**
+     * Present profile page.
+     *
+     * @param content
+     */
+    public void presentProfilePage(RequestContent content) {
+        this.setPageSubTitle("Личный кабинет");
+        this.setDefaultContentAttributes(content);
+    }
+
+    /**
+     * Present dashboard page.
+     *
+     * @param content
+     */
+    public void presentDashboardPage(RequestContent content) {
+        this.setPageSubTitle("Админ-панель");
+        this.setDefaultContentAttributes(content);
+    }
 }

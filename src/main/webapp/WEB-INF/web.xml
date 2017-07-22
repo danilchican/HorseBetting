@@ -26,6 +26,14 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <filter>
+        <filter-name>authUserFilter</filter-name>
+        <filter-class>com.epam.horsebetting.filter.AuthUserFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>authUserFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
         <filter-name>accessProfileFilter</filter-name>
         <filter-class>com.epam.horsebetting.filter.AccessProfileFilter</filter-class>
     </filter>
@@ -34,12 +42,12 @@
         <url-pattern>/profile/*</url-pattern>
     </filter-mapping>
     <filter>
-        <filter-name>authUserFilter</filter-name>
-        <filter-class>com.epam.horsebetting.filter.AuthUserFilter</filter-class>
+        <filter-name>accessAdministratorFilter</filter-name>
+        <filter-class>com.epam.horsebetting.filter.AccessAdministratorFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>authUserFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <filter-name>accessAdministratorFilter</filter-name>
+        <url-pattern>/dashboard/*</url-pattern>
     </filter-mapping>
     <jsp-config>
         <taglib>

@@ -46,7 +46,6 @@ public class SessionErrorsTag extends TagSupport {
         try {
             StringBuilder outerHtml = new StringBuilder();
             outerHtml.append("<div class=\"alert alert-danger\">");
-            outerHtml.append("<h4>You have some errors:</h4>");
             outerHtml.append("<ul>");
 
             for (String error : errors) {

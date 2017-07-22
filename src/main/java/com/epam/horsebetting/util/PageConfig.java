@@ -10,7 +10,8 @@ import java.util.ResourceBundle;
 public class PageConfig {
 
     public enum PageConfigType {
-        WELCOME, AUTH_LOGIN, AUTH_REGISTER, NOT_FOUND
+        WELCOME, AUTH_LOGIN, AUTH_REGISTER, NOT_FOUND,
+        PROFILE_INDEX, DASHBOARD_INDEX
     }
 
     /**
@@ -47,7 +48,7 @@ public class PageConfig {
      * @return instance
      */
     public static PageConfig getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new PageConfig();
             LOGGER.log(Level.INFO, "PageConfig instance created!");
         }

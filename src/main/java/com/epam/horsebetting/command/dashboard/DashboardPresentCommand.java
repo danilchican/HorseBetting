@@ -1,17 +1,18 @@
-package com.epam.horsebetting.command.auth;
+package com.epam.horsebetting.command.dashboard;
 
 import com.epam.horsebetting.command.AbstractCommand;
-import com.epam.horsebetting.exception.IllegalCommandTypeException;
-import com.epam.horsebetting.request.RequestContent;
 import com.epam.horsebetting.command.CommandType;
+import com.epam.horsebetting.exception.IllegalCommandTypeException;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.AbstractReceiver;
+import com.epam.horsebetting.request.RequestContent;
+import com.epam.horsebetting.util.PageConfig;
 import com.epam.horsebetting.util.Router;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class RegisterCommand extends AbstractCommand {
+public class DashboardPresentCommand extends AbstractCommand {
 
     /**
      * Logger to write logs.
@@ -23,7 +24,7 @@ public class RegisterCommand extends AbstractCommand {
      *
      * @param receiver
      */
-    public RegisterCommand(AbstractReceiver receiver) {
+    public DashboardPresentCommand(AbstractReceiver receiver) {
         super(receiver);
     }
 
@@ -35,19 +36,18 @@ public class RegisterCommand extends AbstractCommand {
      */
     @Override
     public void execute(RequestContent request) throws IllegalCommandTypeException {
-        LOGGER.log(Level.INFO, "Processing execute() method of " + this.getClass().getName());
-
         String commandName = String.valueOf(request.findRequestAttribute(COMMAND_INSTANCE_NAME));
-        Router router;
+        String page;
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);
-            router = new Router("/profile", Router.RouteType.REDIRECT);
+            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.DASHBOARD_INDEX);
         } catch (ReceiverException e) {
+            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.NOT_FOUND);
             LOGGER.log(Level.ERROR, e);
-            router = new Router("/auth/register", Router.RouteType.REDIRECT);
         }
 
+        Router router = new Router(page, Router.RouteType.FORWARD);
         request.insertRequestAttribute(Router.ROUTER_INSTANCE_NAME, router);
     }
 }
