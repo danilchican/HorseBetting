@@ -2,7 +2,7 @@
 <%@ taglib prefix="ctg" uri="customtags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setLocale value="${locale}" scope="session" />
 <fmt:setBundle basename="/localization/lang"/>
 
 <html>
@@ -61,7 +61,7 @@
                     <c:when test="${sessionScope.authorized != null}">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    ${user.name} <b class="caret"></b>
+                                    ${user.getName()} <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
                                 <c:if test="${user.isAdministrator()}">
