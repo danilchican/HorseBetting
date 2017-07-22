@@ -1,7 +1,10 @@
 package com.epam.horsebetting.type;
 
 public enum RoleType {
-    GUEST(0), ADMINISTRATOR(1), MODERATOR(2), CLIENT(3);
+    GUEST(0, "Guest"),
+    ADMINISTRATOR(1, "Administrator"),
+    MODERATOR(2, "Moderator"),
+    CLIENT(3, "Client");
 
     /**
      * Role id.
@@ -9,12 +12,27 @@ public enum RoleType {
     private final int id;
 
     /**
+     * Name of the role type.
+     */
+    private final String name;
+
+    /**
      * Constructor.
      *
      * @param id
      */
-    RoleType(int id) {
+    RoleType(int id, String name) {
         this.id = id;
+        this.name = name;
+    }
+
+    /**
+     * Get the name of role.
+     *
+     * @return name
+     */
+    public String getRoleName() {
+        return name;
     }
 
     /**
@@ -22,7 +40,7 @@ public enum RoleType {
      *
      * @return id
      */
-    public int getValue() {
+    public int getRoleId() {
         return id;
     }
 
@@ -34,7 +52,7 @@ public enum RoleType {
      */
     public static RoleType findById(int id) {
         for (RoleType type : RoleType.values()) {
-            if (type.getValue() == id) {
+            if (type.getRoleId() == id) {
                 return type;
             }
         }

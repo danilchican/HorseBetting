@@ -11,7 +11,7 @@ public class PageConfig {
 
     public enum PageConfigType {
         WELCOME, AUTH_LOGIN, AUTH_REGISTER, NOT_FOUND,
-        PROFILE_INDEX, DASHBOARD_INDEX
+        PROFILE_INDEX, DASHBOARD_INDEX, DASHBOARD_USER_INDEX
     }
 
     /**

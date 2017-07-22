@@ -6,20 +6,31 @@ import com.epam.horsebetting.entity.User;
 import com.epam.horsebetting.exception.DAOException;
 import com.epam.horsebetting.type.RoleType;
 import com.epam.horsebetting.util.HashManager;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
 
     /**
+     * Logger to write logs.
+     */
+    private static final Logger LOGGER = LogManager.getLogger();
+
+    /**
      * SQL queries for UserDAOImpl.
      */
-    private static final String SQL_ADD_USER_QUERY = "INSERT INTO `users` (name, email, password, role_id) VALUES (?,?,?,?);";
+    private static final String SQL_ADD_USER = "INSERT INTO `users` (name, email, password, role_id) VALUES (?,?,?,?);";
     private static final String SQL_FIND_USER_BY_EMAIL = "SELECT * FROM `users` WHERE `email`=? LIMIT 1;";
     private static final String SQL_FIND_USER_BY_ID = "SELECT * FROM `users` WHERE `id`=? LIMIT 1;";
-    private static final String SQL_ATTEMPT_AUTH_QUERY = "SELECT * FROM `users` WHERE `email`=? AND `password`=? LIMIT 1;";
+    private static final String SQL_ATTEMPT_AUTH = "SELECT * FROM `users` WHERE `email`=? AND `password`=? LIMIT 1;";
+    private static final String SQL_SELECT_ALL_USERS = "SELECT `id`, `role_id`, `name`, `email`, `balance`, `created_at` FROM `users`;";
 
     /**
      * Create a new user.
@@ -32,7 +43,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     public User create(User user) throws DAOException {
         User createdUser;
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_USER_QUERY)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_USER)) {
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getEmail());
             preparedStatement.setString(3, user.getPassword());
@@ -48,6 +59,40 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
         }
 
         return createdUser;
+    }
+
+    /**
+     * Find all users.
+     *
+     * @return list of users
+     * @throws DAOException
+     */
+    @Override
+    public List<User> findAll() throws DAOException {
+        List<User> foundedUsers = new ArrayList<>();
+        ResultSet users;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL_USERS)) {
+            users = preparedStatement.executeQuery();
+
+            while (users.next()) {
+                User user = new User();
+
+                user.setId(users.getInt("id"));
+                user.setRole(RoleType.findById(users.getInt("role_id")));
+                user.setBalance(users.getBigDecimal("balance"));
+                user.setName(users.getString("name"));
+                user.setEmail(users.getString("email"));
+                user.setCreatedAt(users.getTimestamp("created_at"));
+
+                foundedUsers.add(user);
+                LOGGER.log(Level.DEBUG, "User was added to list: " + user);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Cannot retrieve users list. " + e.getMessage(), e);
+        }
+
+        return foundedUsers;
     }
 
     /**
@@ -69,7 +114,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
                 user = extractFrom(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException("Can't find user by id[" + id + "]", e);
+            throw new DAOException("Can't find user by id[" + id + "]. " + e.getMessage(), e);
         }
 
         return user;
@@ -113,10 +158,11 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
 
         user.setId(userDataSet.getInt("id"));
         user.setRole(RoleType.findById(userDataSet.getInt("role_id")));
+        user.setBalance(userDataSet.getBigDecimal("balance"));
         user.setName(userDataSet.getString("name"));
         user.setEmail(userDataSet.getString("email"));
         user.setPassword(userDataSet.getString("password"));
-        user.setCreatedAt(userDataSet.getString("created_at"));
+        user.setCreatedAt(userDataSet.getTimestamp("created_at"));
 
         return user;
     }
@@ -134,7 +180,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
         ResultSet resultSet;
         User user = null;
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_ATTEMPT_AUTH_QUERY)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_ATTEMPT_AUTH)) {
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, HashManager.make(password));
             resultSet = preparedStatement.executeQuery();

@@ -4,6 +4,8 @@ import com.epam.horsebetting.type.RoleType;
 import com.epam.horsebetting.util.HashManager;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class User extends Entity {
 
@@ -15,7 +17,7 @@ public class User extends Entity {
     private String name;
     private String email;
     private String password;
-    private String createdAt;
+    private Timestamp createdAt;
 
     /**
      * Default constructor role type by default.
@@ -52,6 +54,15 @@ public class User extends Entity {
      */
     public int getRoleId() {
         return roleId;
+    }
+
+    /**
+     * Get role type.
+     *
+     * @return role type
+     */
+    public String getRoleName() {
+        return RoleType.findById(roleId).getRoleName();
     }
 
     /**
@@ -95,8 +106,18 @@ public class User extends Entity {
      *
      * @return user created time
      */
-    public String getCreatedAt() {
+    public Timestamp getRegistrationDate() {
         return createdAt;
+    }
+
+    /**
+     * Get registration date by format.
+     *
+     * @param format
+     * @return date
+     */
+    public String getRegistrationDate(String format) {
+        return new SimpleDateFormat(format).format(createdAt);
     }
 
     /**
@@ -114,7 +135,7 @@ public class User extends Entity {
      * @param role
      */
     public void setRole(RoleType role) {
-        this.roleId = role.getValue();
+        this.roleId = role.getRoleId();
     }
 
     /**
@@ -149,7 +170,7 @@ public class User extends Entity {
      *
      * @param createdAt
      */
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -168,7 +189,7 @@ public class User extends Entity {
      * @return boolean
      */
     public boolean isAdministrator() {
-        return getRoleId() == RoleType.ADMINISTRATOR.getValue();
+        return getRoleId() == RoleType.ADMINISTRATOR.getRoleId();
     }
 
     @Override
@@ -176,10 +197,10 @@ public class User extends Entity {
         return "User{" +
                 "id=" + id +
                 ", roleId=" + roleId +
+                ", balance=" + balance +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                "}";
+                ", createdAt='" + createdAt + '\'' + "}";
     }
 }

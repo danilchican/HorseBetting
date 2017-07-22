@@ -5,6 +5,7 @@ import com.epam.horsebetting.exception.DAOException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public interface UserDAO {
 
@@ -16,6 +17,14 @@ public interface UserDAO {
      * @throws DAOException
      */
     User create(User user) throws DAOException;
+
+    /**
+     * Find all users.
+     *
+     * @return list of users
+     * @throws DAOException
+     */
+    List<User> findAll() throws DAOException;
 
     /**
      * Find user by id.

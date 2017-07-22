@@ -40,7 +40,7 @@ public class RouteFilter implements Filter {
         } else if (urlQuery.matches(URI_REGEX)) {
             chain.doFilter(req, resp);
         } else {
-            LOGGER.log(Level.DEBUG, "Page not found!");
+            LOGGER.log(Level.ERROR, "Page not found! " + urlQuery);
             response.sendError(404);
         }
     }

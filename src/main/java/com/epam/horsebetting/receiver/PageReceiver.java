@@ -1,5 +1,6 @@
 package com.epam.horsebetting.receiver;
 
+import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.request.RequestContent;
 
 public interface PageReceiver {
@@ -24,4 +25,25 @@ public interface PageReceiver {
      * @param content
      */
     void presentRegisterPage(RequestContent content);
+
+    /**
+     * Present profile page.
+     *
+     * @param content
+     */
+    void presentProfilePage(RequestContent content);
+
+    /**
+     * Present dashboard page.
+     *
+     * @param content
+     */
+    void presentDashboardPage(RequestContent content);
+
+    /**
+     * Present dashboard users page.
+     *
+     * @param content
+     */
+    void presentDashboardUsersPage(RequestContent content) throws ReceiverException;
 }
