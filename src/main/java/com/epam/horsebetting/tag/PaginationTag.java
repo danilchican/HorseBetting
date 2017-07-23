@@ -49,6 +49,10 @@ public class PaginationTag extends TagSupport {
 
     @Override
     public int doStartTag() throws JspException {
+        if(limit >= total) {
+            return SKIP_BODY;
+        }
+
         HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
         Paginator paginator = new Paginator(limit, total);
 
