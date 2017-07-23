@@ -1,7 +1,9 @@
 require('./bootstrap.js');
 
-const Vue = require('vue');
-require('vue-resource');
+window.Vue = require('vue');
+var VueResource = require('vue-resource');
+
+Vue.use(VueResource);
 
 Vue.component('users', require('../components/dashboard/users/UserComponent.vue'));
 

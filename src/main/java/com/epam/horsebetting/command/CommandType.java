@@ -1,6 +1,7 @@
 package com.epam.horsebetting.command;
 
 import com.epam.horsebetting.command.auth.*;
+import com.epam.horsebetting.command.dashboard.AjaxDashboardUsersListCommand;
 import com.epam.horsebetting.command.dashboard.DashboardPresentCommand;
 import com.epam.horsebetting.command.dashboard.DashboardUsersPresentCommand;
 import com.epam.horsebetting.command.locale.ChangeLocaleCommand;
@@ -70,6 +71,12 @@ public enum CommandType {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {
             ((PageReceiverImpl) getCommand().getReceiver()).presentDashboardUsersPage(content);
+        }
+    },
+    AJAX_DASHBOARD_USERS_LIST("ajax.dashboard.users::get", new AjaxDashboardUsersListCommand(new UserReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((UserReceiverImpl) getCommand().getReceiver()).ajaxObtainUsersList(content);
         }
     };
 

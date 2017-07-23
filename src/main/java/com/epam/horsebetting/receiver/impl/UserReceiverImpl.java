@@ -12,9 +12,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
@@ -156,6 +154,38 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
         content.insertSessionAttribute("locale", locale);
         LOGGER.log(Level.INFO, "The new locale was set: " + locale);
+    }
+
+    /**
+     * Obtain users list ajax.
+     *
+     * @param content
+     * @throws ReceiverException
+     */
+    @Override
+    public void ajaxObtainUsersList(RequestContent content) throws ReceiverException {
+        int page = 1;
+        String pageNumber = content.findParameter("page");
+
+        // create validators
+        if(pageNumber != null) {
+            try {
+                page = Integer.parseInt(pageNumber);
+            } catch (NumberFormatException e) {
+                throw new ReceiverException("Page incorrect: " + e.getMessage(), e);
+            }
+        }
+
+        final int step = 10;
+        final int offset = step * (page - 1);
+
+        try(UserDAOImpl userDAO = new UserDAOImpl()) {
+            List<User> users = userDAO.obtainPart(step, offset);
+            LOGGER.log(Level.DEBUG, "Users part: " + Arrays.toString(users.toArray()));
+            content.insertJsonAttribute("users", users);
+        } catch (DAOException e) {
+            throw new ReceiverException("Database Error: " + e.getMessage(), e);
+        }
     }
 
     /**

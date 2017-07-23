@@ -84,7 +84,7 @@ public class MainController extends HttpServlet {
      * @return command instance
      * @throws IllegalCommandTypeException
      */
-    private AbstractCommand initCommand(HttpServletRequest request) throws IllegalCommandTypeException {
+    static AbstractCommand initCommand(HttpServletRequest request) throws IllegalCommandTypeException {
         String uri = request.getRequestURI();
 
         /* Generate the main part of command name */

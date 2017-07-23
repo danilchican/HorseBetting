@@ -166,8 +166,10 @@ module.exports = function normalizeComponent (
 
 __webpack_require__(2);
 
-const Vue = __webpack_require__(20);
-__webpack_require__(22);
+window.Vue = __webpack_require__(20);
+var VueResource = __webpack_require__(22);
+
+Vue.use(VueResource);
 
 Vue.component('users', __webpack_require__(24));
 
@@ -25850,16 +25852,67 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            msg: ''
+            list: [],
+            step: 10,
+            page: 1
         }
     },
+    created: function () {
+        this.getUsersList();
+    },
+
+    methods: {
+
+        /**
+         * Get step to retrieve users.
+         */
+        getStep: function getStep() {
+            return this.step;
+        },
+
+        /**
+         * Set current page.
+         */
+        nextPage: function nextPage() {
+            return this.page++;
+        },
+
+        /**
+         * Get users from storage.
+         */
+        getUsersList: function getUsersList() {
+            var this$1 = this;
+
+            Vue.http.get('/ajax/dashboard/users?page=' + this.nextPage())
+                    .then(function (response) {
+                        this$1.processRequest(response.body.users);
+                    });
+        },
+
+        /**
+         * Process data for request.
+         */
+        processRequest: function processRequest(users) {
+            var this$1 = this;
+
+            console.log(users);
+
+            if(users === undefined) {
+                return;
+            }
+
+            for (var i = 0; i < users.length; i++) {
+                this$1.list.push(users[i]);
+            }
+        },
+    },
+
     components: {
         'view-user': __WEBPACK_IMPORTED_MODULE_0__ViewUserComponent_vue___default.a
     }
@@ -25916,13 +25969,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            msg: ''
-        }
-    }
+    props: ['user']
 });
 
 
@@ -25931,8 +26013,60 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_vm._v("UserView component")])
-},staticRenderFns: []}
+  return _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12 profile_details"
+  }, [_c('div', {
+    staticClass: "well profile_view"
+  }, [_c('div', {
+    staticClass: "col-sm-12"
+  }, [_c('div', {
+    staticClass: "left col-xs-7"
+  }, [_c('h2', [_vm._v(_vm._s(_vm.user.name))]), _vm._v(" "), _c('p', [_c('strong', [_vm._v("Role:")]), _vm._v(" " + _vm._s(_vm.user.roleId) + " ")]), _vm._v(" "), _c('ul', {
+    staticClass: "list-unstyled"
+  }, [_c('li', [_c('strong', [_vm._v("Balance:")]), _vm._v(" " + _vm._s(_vm.user.balance) + " "), _c('i', {
+    staticClass: "fa fa-eur"
+  })]), _vm._v(" "), _c('li', [_c('strong', [_vm._v("E-mail:")]), _vm._v(" " + _vm._s(_vm.user.email))])])]), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 bottom text-center"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-6 emphasis",
+    staticStyle: {
+      "text-align": "left",
+      "padding-top": "4px"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-sign-in"
+  }), _vm._v(" "), _c('strong', [_vm._v("Registration\n                date:")]), _vm._v(" " + _vm._s(_vm.user.createdAt) + "\n            ")]), _vm._v(" "), _vm._m(1)])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "right col-xs-5 text-center"
+  }, [_c('img', {
+    staticClass: "img-circle img-responsive",
+    attrs: {
+      "src": "/assets/dashboard/images/img.jpg",
+      "alt": ""
+    }
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-xs-12 col-sm-6 emphasis"
+  }, [_c('button', {
+    staticClass: "btn btn-success btn-xs",
+    attrs: {
+      "type": "button"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-user"
+  }), _vm._v(" "), _c('i', {
+    staticClass: "fa fa-comments-o"
+  })]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary btn-xs",
+    attrs: {
+      "type": "button"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-user"
+  }), _vm._v(" View Profile\n                ")])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -25946,7 +26080,15 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_vm._v("\n    User component\n    "), _c('view-user')], 1)
+  return _c('div', {
+    staticClass: "row"
+  }, _vm._l((_vm.list), function(user) {
+    return _c('view-user', {
+      attrs: {
+        "user": user
+      }
+    })
+  }))
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

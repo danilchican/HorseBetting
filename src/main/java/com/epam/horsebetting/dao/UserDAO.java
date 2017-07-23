@@ -27,6 +27,16 @@ public interface UserDAO {
     List<User> findAll() throws DAOException;
 
     /**
+     * Obtain part of users.
+     *
+     * @param limit
+     * @param offset
+     * @return users
+     * @throws DAOException
+     */
+    List<User> obtainPart(int limit, int offset) throws DAOException;
+
+    /**
      * Find user by id.
      *
      * @param id
@@ -50,6 +60,16 @@ public interface UserDAO {
      * @throws SQLException
      */
     User extractFrom(ResultSet userDataSet) throws SQLException;
+
+    /**
+     * Extract user data from result set to user instance
+     * without password.
+     *
+     * @param userDataSet
+     * @return
+     * @throws SQLException
+     */
+    User extractWithoutPassFrom(ResultSet userDataSet) throws SQLException;
 
     /**
      * Attempt user credentials.

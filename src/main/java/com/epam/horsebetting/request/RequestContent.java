@@ -41,6 +41,11 @@ public class RequestContent {
     private ArrayList<String> sessionAttrsToRemove;
 
     /**
+     * Json data to send.
+     */
+    private HashMap<String, Object> jsonData;
+
+    /**
      * Default constructor.
      */
     public RequestContent() {
@@ -49,6 +54,7 @@ public class RequestContent {
         this.requestHeaders = new HashMap<>();
 
         this.sessionAttributes = new HashMap<>();
+        this.jsonData = new HashMap<>();
         this.sessionAttrsToRemove = new ArrayList<>();
     }
 
@@ -181,6 +187,17 @@ public class RequestContent {
         this.requestAttributes.put(key, value);
     }
 
+
+    /**
+     * Insert new attribute to json data.
+     *
+     * @param key
+     * @param value
+     */
+    public void insertJsonAttribute(String key, Object value) {
+        this.jsonData.put(key, value);
+    }
+
     /**
      * Insert new attribute to session.
      *
@@ -209,5 +226,14 @@ public class RequestContent {
      */
     public String findHeader(String headerName) {
         return this.requestHeaders.get(headerName);
+    }
+
+    /**
+     * Returns json data.
+     *
+     * @return
+     */
+    public HashMap<String, Object> getJsonData() {
+        return this.jsonData;
     }
 }

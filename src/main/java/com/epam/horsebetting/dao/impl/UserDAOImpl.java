@@ -31,6 +31,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     private static final String SQL_FIND_USER_BY_ID = "SELECT * FROM `users` WHERE `id`=? LIMIT 1;";
     private static final String SQL_ATTEMPT_AUTH = "SELECT * FROM `users` WHERE `email`=? AND `password`=? LIMIT 1;";
     private static final String SQL_SELECT_ALL_USERS = "SELECT `id`, `role_id`, `name`, `email`, `balance`, `created_at` FROM `users`;";
+    private static final String SQL_SELECT_PART_USERS = "SELECT `id`, `role_id`, `name`, `email`, `balance`, `created_at` FROM `users` LIMIT ? OFFSET ?;";
 
     /**
      * Create a new user.
@@ -76,20 +77,41 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
             users = preparedStatement.executeQuery();
 
             while (users.next()) {
-                User user = new User();
-
-                user.setId(users.getInt("id"));
-                user.setRole(RoleType.findById(users.getInt("role_id")));
-                user.setBalance(users.getBigDecimal("balance"));
-                user.setName(users.getString("name"));
-                user.setEmail(users.getString("email"));
-                user.setCreatedAt(users.getTimestamp("created_at"));
-
+                User user = extractWithoutPassFrom(users);
                 foundedUsers.add(user);
                 LOGGER.log(Level.DEBUG, "User was added to list: " + user);
             }
         } catch (SQLException e) {
             throw new DAOException("Cannot retrieve users list. " + e.getMessage(), e);
+        }
+
+        return foundedUsers;
+    }
+
+    /**
+     * Obtain part of users.
+     *
+     * @param limit
+     * @param offset
+     * @return users
+     * @throws DAOException
+     */
+    @Override
+    public List<User> obtainPart(int limit, int offset) throws DAOException {
+        List<User> foundedUsers = new ArrayList<>();
+        ResultSet users;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_PART_USERS)) {
+            preparedStatement.setInt(1, limit);
+            preparedStatement.setInt(2, offset);
+            users = preparedStatement.executeQuery();
+
+            while (users.next()) {
+                User user = extractWithoutPassFrom(users);
+                foundedUsers.add(user);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Cannot obtain part of users. " + e.getMessage(), e);
         }
 
         return foundedUsers;
@@ -162,6 +184,28 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
         user.setName(userDataSet.getString("name"));
         user.setEmail(userDataSet.getString("email"));
         user.setPassword(userDataSet.getString("password"));
+        user.setCreatedAt(userDataSet.getTimestamp("created_at"));
+
+        return user;
+    }
+
+    /**
+     * Extract user data from result set to user instance
+     * without password.
+     *
+     * @param userDataSet
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public User extractWithoutPassFrom(ResultSet userDataSet) throws SQLException {
+        User user = new User();
+
+        user.setId(userDataSet.getInt("id"));
+        user.setRole(RoleType.findById(userDataSet.getInt("role_id")));
+        user.setBalance(userDataSet.getBigDecimal("balance"));
+        user.setName(userDataSet.getString("name"));
+        user.setEmail(userDataSet.getString("email"));
         user.setCreatedAt(userDataSet.getTimestamp("created_at"));
 
         return user;
