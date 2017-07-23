@@ -9,18 +9,10 @@
 </div>
 </div>
 
-<!-- jQuery -->
-<script src="${pageContext.request.contextPath}/assets/dashboard/jquery/jquery.min.js"></script>
-<!-- Bootstrap -->
-<script src="${pageContext.request.contextPath}/assets/dashboard/bootstrap/js/bootstrap.min.js"></script>
-<!-- FastClick -->
-<script src="${pageContext.request.contextPath}/assets/dashboard/fastclick/fastclick.js"></script>
-<!-- NProgress -->
-<script src="${pageContext.request.contextPath}/assets/dashboard/nprogress/nprogress.js"></script>
+<!-- Vue scripts -->
+<script src="${pageContext.request.contextPath}/assets/dashboard/production/js/dashboard.js"></script>
 <!-- Chart.js -->
 <script src="${pageContext.request.contextPath}/assets/dashboard/Chart.js/Chart.min.js"></script>
-<!-- gauge.js -->
-<script src="${pageContext.request.contextPath}/assets/dashboard/gauge.js/dist/gauge.min.js"></script>
 <!-- bootstrap-progressbar -->
 <script src="${pageContext.request.contextPath}/assets/dashboard/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
 <!-- iCheck -->

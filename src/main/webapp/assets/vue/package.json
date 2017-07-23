@@ -1,0 +1,33 @@
+{
+  "name": "vue",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "vue": "*",
+    "vue-resource": "^1.3.4",
+    "vue-router": "*"
+  },
+  "devDependencies": {
+    "buble": "*",
+    "buble-loader": "*",
+    "css-loader": "*",
+    "html-webpack-plugin": "*",
+    "vue-loader": "*",
+    "vue-template-compiler": "*",
+    "webpack": "*",
+
+    "jquery": "^2.2.3",
+    "bootstrap": "^3.3.7",
+    "fastclick": "^1.0.6",
+    "nprogress": "^0.2.0",
+    "gauge.js": "*"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build_dashboard": "webpack --config config/webpack.config.js js/dashboard.js ../dashboard/production/js/dashboard.js",
+    "prod_dashboard": "webpack --config config/webpack_prod.config.js js/dashboard.js ../dashboard/production/js/dashboard.min.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

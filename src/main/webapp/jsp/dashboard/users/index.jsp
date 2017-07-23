@@ -30,6 +30,10 @@
                     <div class="x_panel">
                         <div class="x_content">
                             <div class="row">
+                                <p>Users component</p>
+                                <div class="user-compo">
+                                    <users></users>
+                                </div>
                                 <c:forEach items="${users}" var="userItem">
                                     <div class="col-md-6 col-sm-6 col-xs-12 profile_details">
                                         <div class="well profile_view">
