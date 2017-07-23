@@ -99,10 +99,24 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         this.setPageSubTitle("Лошади");
         this.setDefaultContentAttributes(content);
 
-        try(HorseDAOImpl horseDAO = new HorseDAOImpl()) {
-            List<Horse> horses = horseDAO.findAll();
-            LOGGER.log(Level.DEBUG, "Horses list: " + Arrays.toString(horses.toArray()));
+        final int limit = 10;
+
+        String pageNum = content.findParameter("page");
+
+        try (HorseDAOImpl horseDAO = new HorseDAOImpl()) {
+            final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
+            final int offset = (page - 1) * limit;
+            final int totalHorses = horseDAO.getTotalCount();
+
+            List<Horse> horses = horseDAO.obtainPart(limit, offset);
+
             content.insertRequestAttribute("horses", horses);
+            content.insertRequestAttribute("totalHorses", totalHorses);
+            content.insertRequestAttribute("limitHorses", limit);
+
+            LOGGER.log(Level.DEBUG, "Horses list: " + Arrays.toString(horses.toArray()));
+        } catch (NumberFormatException e) {
+            throw new ReceiverException("Cannot convert page to number. GET[page]=" + e.getMessage(), e);
         } catch (DAOException e) {
             throw new ReceiverException("Database Error. " + e.getMessage(), e);
         }

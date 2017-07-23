@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="layout" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <layout:dashboard>
     <!-- page content -->
@@ -49,6 +50,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
+                            <button type="button" class="btn btn-round btn-success">New Horse</button>
                             <!-- start project list -->
                             <table class="table table-striped projects">
                                 <thead>
@@ -83,7 +85,7 @@
                                 </tbody>
                             </table>
                             <!-- end project list -->
-
+                            <ctg:pagination total="${totalHorses}" limit="${limitHorses}"/>
                         </div>
                     </div>
                 </div>

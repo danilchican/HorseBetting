@@ -26,6 +26,7 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
      */
     private static final String SQL_SELECT_ALL_HORSES = "SELECT * FROM `horses`;";
     private static final String SQL_SELECT_PART_HORSES = "SELECT * FROM `horses` LIMIT ? OFFSET ?;";
+    private static final String SQL_COUNT_HORSES = "SELECT COUNT(*) as `total` FROM `horses`;";
 
     /**
      * Find all horses.
@@ -84,14 +85,38 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
     }
 
     /**
+     * Get total count of horses.
+     *
+     * @return total count
+     * @throws DAOException
+     */
+    @Override
+    public int getTotalCount() throws DAOException {
+        ResultSet result;
+        int totalCount = 0;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_COUNT_HORSES)) {
+            result = preparedStatement.executeQuery();
+
+            while (result.next()) {
+                totalCount = result.getInt("total");
+                LOGGER.log(Level.DEBUG, "Count of horses: " + totalCount);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Cannot retrieve total count. " + e.getMessage(), e);
+        }
+
+        return totalCount;
+    }
+
+    /**
      * Extract horse data from result set to horse instance.
      *
      * @param horseDataSet
      * @return horse instance
      * @throws SQLException
      */
-    @Override
-    public Horse extractFrom(ResultSet horseDataSet) throws SQLException {
+    private Horse extractFrom(ResultSet horseDataSet) throws SQLException {
         Horse horse = new Horse();
 
         horse.setId(horseDataSet.getInt("id"));

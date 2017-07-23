@@ -28,11 +28,10 @@ public interface HorseDAO {
     List<Horse> obtainPart(int limit, int offset) throws DAOException;
 
     /**
-     * Extract horse data from result set to horse instance.
+     * Get total count of horses.
      *
-     * @param userDataSet
-     * @return horse instance
-     * @throws SQLException
+     * @return total count
+     * @throws DAOException
      */
-    public Horse extractFrom(ResultSet userDataSet) throws SQLException;
+    int getTotalCount() throws DAOException;
 }
