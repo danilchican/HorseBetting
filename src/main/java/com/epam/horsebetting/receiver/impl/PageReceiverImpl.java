@@ -1,6 +1,8 @@
 package com.epam.horsebetting.receiver.impl;
 
+import com.epam.horsebetting.dao.impl.HorseDAOImpl;
 import com.epam.horsebetting.dao.impl.UserDAOImpl;
+import com.epam.horsebetting.entity.Horse;
 import com.epam.horsebetting.entity.User;
 import com.epam.horsebetting.exception.DAOException;
 import com.epam.horsebetting.exception.ReceiverException;
@@ -85,13 +87,24 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
     public void presentDashboardUsersPage(RequestContent content) throws ReceiverException {
         this.setPageSubTitle("Пользователи");
         this.setDefaultContentAttributes(content);
+    }
 
-        try(UserDAOImpl userDAO = new UserDAOImpl()) {
-            List<User> users = userDAO.findAll();
-            LOGGER.log(Level.DEBUG, "Users list: " + Arrays.toString(users.toArray()));
-            content.insertRequestAttribute("users", users);
+    /**
+     * Present dashboard horses page.
+     *
+     * @param content
+     */
+    @Override
+    public void presentDashboardHorsesPage(RequestContent content) throws ReceiverException {
+        this.setPageSubTitle("Лошади");
+        this.setDefaultContentAttributes(content);
+
+        try(HorseDAOImpl horseDAO = new HorseDAOImpl()) {
+            List<Horse> horses = horseDAO.findAll();
+            LOGGER.log(Level.DEBUG, "Horses list: " + Arrays.toString(horses.toArray()));
+            content.insertRequestAttribute("horses", horses);
         } catch (DAOException e) {
-            throw new ReceiverException("Database Error: " + e.getMessage(), e);
+            throw new ReceiverException("Database Error. " + e.getMessage(), e);
         }
     }
 }
