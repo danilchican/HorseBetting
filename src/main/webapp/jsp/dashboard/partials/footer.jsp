@@ -38,6 +38,9 @@
 <!-- bootstrap-daterangepicker -->
 <script src="${pageContext.request.contextPath}/assets/dashboard/moment/min/moment.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/dashboard/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- Parsley -->
+<script src="${pageContext.request.contextPath}/assets/dashboard/parsleyjs/dist/parsley.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/dashboard/parsleyjs/dist/i18n/${locale.getLanguage()}.js"></script>
 <!-- Custom Theme Scripts -->
 <script src="${pageContext.request.contextPath}/assets/dashboard/production/js/custom.min.js"></script>
 
