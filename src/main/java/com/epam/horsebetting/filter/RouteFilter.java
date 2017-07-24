@@ -19,7 +19,7 @@ public class RouteFilter implements Filter {
     /**
      * URI regular expression.
      */
-    private static final String URI_REGEX = "((\\/[\\w\\-]*)+)(\\/)?(\\?[a-zA-Z\\d]+\\=[\\w\\-]*)?(\\&[a-zA-z\\d]+\\=[\\w\\-]*)?$";
+    private static final String URI_REGEX = "((\\/[\\w\\-]*)+)(\\/)?(\\?[\\w\\-]+\\=[\\w\\-]*)?(\\&[\\w\\-]+\\=[\\w\\-]*)*$";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
