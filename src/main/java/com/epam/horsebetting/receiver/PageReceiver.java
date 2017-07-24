@@ -53,4 +53,11 @@ public interface PageReceiver {
      * @param content
      */
     void presentDashboardHorsesPage(RequestContent content) throws ReceiverException;
+
+    /**
+     * Present dashboard horse create page.
+     *
+     * @param content
+     */
+    void presentDashboardHorseCreatePage(RequestContent content) throws ReceiverException;
 }

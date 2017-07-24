@@ -1,8 +1,10 @@
 package com.epam.horsebetting.receiver.impl;
 
 import com.epam.horsebetting.dao.impl.HorseDAOImpl;
+import com.epam.horsebetting.dao.impl.SuitDAOImpl;
 import com.epam.horsebetting.dao.impl.UserDAOImpl;
 import com.epam.horsebetting.entity.Horse;
+import com.epam.horsebetting.entity.Suit;
 import com.epam.horsebetting.entity.User;
 import com.epam.horsebetting.exception.DAOException;
 import com.epam.horsebetting.exception.ReceiverException;
@@ -99,11 +101,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         this.setPageSubTitle("Лошади");
         this.setDefaultContentAttributes(content);
 
-        final int limit = 10;
-
         String pageNum = content.findParameter("page");
 
         try (HorseDAOImpl horseDAO = new HorseDAOImpl()) {
+            final int limit = 10;
             final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
             final int offset = (page - 1) * limit;
             final int totalHorses = horseDAO.getTotalCount();
@@ -117,6 +118,26 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
             LOGGER.log(Level.DEBUG, "Horses list: " + Arrays.toString(horses.toArray()));
         } catch (NumberFormatException e) {
             throw new ReceiverException("Cannot convert page to number. GET[page]=" + e.getMessage(), e);
+        } catch (DAOException e) {
+            throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Present dashboard horse create page.
+     *
+     * @param content
+     */
+    @Override
+    public void presentDashboardHorseCreatePage(RequestContent content) throws ReceiverException {
+        this.setPageSubTitle("Создание лошади");
+        this.setDefaultContentAttributes(content);
+
+        try (SuitDAOImpl suitDAO = new SuitDAOImpl()) {
+            List<Suit> suits = suitDAO.findAll();
+            content.insertRequestAttribute("suits", suits);
+
+            LOGGER.log(Level.DEBUG, "Suits list: " + Arrays.toString(suits.toArray()));
         } catch (DAOException e) {
             throw new ReceiverException("Database Error. " + e.getMessage(), e);
         }

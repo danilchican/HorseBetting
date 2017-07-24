@@ -4,7 +4,8 @@ import com.epam.horsebetting.command.auth.*;
 import com.epam.horsebetting.command.dashboard.AjaxDashboardUsersListCommand;
 import com.epam.horsebetting.command.dashboard.DashboardPresentCommand;
 import com.epam.horsebetting.command.dashboard.DashboardUsersPresentCommand;
-import com.epam.horsebetting.command.horse.DashboardHorsesPresentCommand;
+import com.epam.horsebetting.command.horse.CreateHorsePresentCommand;
+import com.epam.horsebetting.command.horse.HorsesPresentCommand;
 import com.epam.horsebetting.command.locale.ChangeLocaleCommand;
 import com.epam.horsebetting.command.profile.ProfilePresentCommand;
 import com.epam.horsebetting.exception.IllegalCommandTypeException;
@@ -74,10 +75,16 @@ public enum CommandType {
             ((PageReceiverImpl) getCommand().getReceiver()).presentDashboardUsersPage(content);
         }
     },
-    DASHBOARD_HORSES_INDEX("dashboard.horses::get", new DashboardHorsesPresentCommand(new PageReceiverImpl())) {
+    DASHBOARD_HORSES_INDEX("dashboard.horses::get", new HorsesPresentCommand(new PageReceiverImpl())) {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {
             ((PageReceiverImpl) getCommand().getReceiver()).presentDashboardHorsesPage(content);
+        }
+    },
+    DASHBOARD_HORSES_CREATE("dashboard.horses.create::get", new CreateHorsePresentCommand(new PageReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((PageReceiverImpl) getCommand().getReceiver()).presentDashboardHorseCreatePage(content);
         }
     },
     AJAX_DASHBOARD_USERS_LIST("ajax.dashboard.users::get", new AjaxDashboardUsersListCommand(new UserReceiverImpl())) {
