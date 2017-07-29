@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class CreateHorsePresentCommand extends AbstractCommand {
+public class DashboardHorsesPresentCommand extends AbstractCommand {
 
     /**
      * Logger to write logs.
@@ -24,7 +24,7 @@ public class CreateHorsePresentCommand extends AbstractCommand {
      *
      * @param receiver
      */
-    public CreateHorsePresentCommand(AbstractReceiver receiver) {
+    public DashboardHorsesPresentCommand(AbstractReceiver receiver) {
         super(receiver);
     }
 
@@ -41,7 +41,7 @@ public class CreateHorsePresentCommand extends AbstractCommand {
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);
-            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.DASHBOARD_HORSES_CREATE);
+            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.DASHBOARD_HORSES_INDEX);
         } catch (ReceiverException e) {
             page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.NOT_FOUND);
             LOGGER.log(Level.ERROR, e);
