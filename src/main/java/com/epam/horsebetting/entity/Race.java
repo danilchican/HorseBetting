@@ -3,7 +3,7 @@ package com.epam.horsebetting.entity;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-public class Race {
+public class Race extends Entity {
     private int id;
     private int trackLength;
 

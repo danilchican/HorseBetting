@@ -1,11 +1,11 @@
 package com.epam.horsebetting.receiver.impl;
 
 import com.epam.horsebetting.dao.impl.HorseDAOImpl;
+import com.epam.horsebetting.dao.impl.RaceDAOImpl;
 import com.epam.horsebetting.dao.impl.SuitDAOImpl;
-import com.epam.horsebetting.dao.impl.UserDAOImpl;
 import com.epam.horsebetting.entity.Horse;
+import com.epam.horsebetting.entity.Race;
 import com.epam.horsebetting.entity.Suit;
-import com.epam.horsebetting.entity.User;
 import com.epam.horsebetting.exception.DAOException;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.AbstractReceiver;
@@ -138,6 +138,38 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
             content.insertRequestAttribute("suits", suits);
 
             LOGGER.log(Level.DEBUG, "Suits list: " + Arrays.toString(suits.toArray()));
+        } catch (DAOException e) {
+            throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Present dashboard races page.
+     *
+     * @param content
+     */
+    @Override
+    public void presentDashboardRacesPage(RequestContent content) throws ReceiverException {
+        this.setPageSubTitle("Скачки");
+        this.setDefaultContentAttributes(content);
+
+        String pageNum = content.findParameter("page");
+
+        try (RaceDAOImpl raceDAO = new RaceDAOImpl()) {
+            final int limit = 10;
+            final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
+            final int offset = (page - 1) * limit;
+            final int totalRaces = raceDAO.getTotalCount();
+
+            List<Race> races = raceDAO.obtainPart(limit, offset);
+
+            content.insertRequestAttribute("races", races);
+            content.insertRequestAttribute("totalRaces", totalRaces);
+            content.insertRequestAttribute("limitRaces", limit);
+
+            LOGGER.log(Level.DEBUG, "Races list: " + Arrays.toString(races.toArray()));
+        } catch (NumberFormatException e) {
+            throw new ReceiverException("Cannot convert page to number. GET[page]=" + e.getMessage(), e);
         } catch (DAOException e) {
             throw new ReceiverException("Database Error. " + e.getMessage(), e);
         }
