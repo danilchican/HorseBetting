@@ -5,14 +5,9 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/race/DashboardRacesPresentCommand.java" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/index.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/util/PageConfig.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/util/PageConfig.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/util/Paginator.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/util/Paginator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/config/pages.properties" afterPath="$PROJECT_DIR$/src/main/resources/config/pages.properties" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/dashboard/AjaxDashboardUsersListCommand.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/user/AjaxDashboardUsersListCommand.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/dashboard/DashboardUsersPresentCommand.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/user/DashboardUsersPresentCommand.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/horse/CreateHorsePresentCommand.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/horse/DashboardCreateHorsePresentCommand.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/horse/HorsesPresentCommand.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/horse/DashboardHorsesPresentCommand.java" />
     </list>
     <ignored path="HorseBetting.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -96,8 +91,8 @@
       <file leaf-file-name="Race.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/entity/Race.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="25" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
+            <state relative-caret-position="204">
+              <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#475#476#0" expanded="true" />
@@ -1094,14 +1089,7 @@
       <workItem from="1500708537253" duration="27494000" />
       <workItem from="1500804188897" duration="48813000" />
       <workItem from="1501180884202" duration="1102000" />
-      <workItem from="1501318122013" duration="5601000" />
-    </task>
-    <task id="LOCAL-00047" summary="Added toString() to User entity.">
-      <created>1500149014181</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1500149014181</updated>
+      <workItem from="1501318122013" duration="5705000" />
     </task>
     <task id="LOCAL-00048" summary="Created UserDAO.">
       <created>1500220355411</created>
@@ -1439,7 +1427,14 @@
       <option name="project" value="LOCAL" />
       <updated>1501348844287</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="Moved commands.">
+      <created>1501348919911</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1501348919911</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1475,7 +1470,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="326785000" />
+    <option name="totallyTimeSpent" value="326889000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -1558,7 +1553,6 @@
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Closed #3 task." />
     <MESSAGE value="Closed #25 task." />
     <MESSAGE value="Created localization files." />
     <MESSAGE value="Closed #28 task." />
@@ -1583,7 +1577,8 @@
     <MESSAGE value="Created page to add new horse." />
     <MESSAGE value="Created components to present page to add new horse." />
     <MESSAGE value="Created Race entity." />
-    <option name="LAST_COMMIT_MESSAGE" value="Created Race entity." />
+    <MESSAGE value="Moved commands." />
+    <option name="LAST_COMMIT_MESSAGE" value="Moved commands." />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -2015,8 +2010,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/entity/Race.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="25" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
+        <state relative-caret-position="204">
+          <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#475#476#0" expanded="true" />

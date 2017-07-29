@@ -107,6 +107,7 @@ public class Paginator {
         final int endLink = ((page + countLinks) < lastPage) ? page + countLinks : lastPage;
 
         builder.append("<ul class=\"").append(className).append("\">");
+
         generatePreviousLink(builder);
 
         if (startLink > 1) {
