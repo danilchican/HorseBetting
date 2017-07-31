@@ -174,4 +174,15 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
             throw new ReceiverException("Database Error. " + e.getMessage(), e);
         }
     }
+
+    /**
+     * Present dashboard suits page.
+     *
+     * @param content
+     */
+    @Override
+    public void presentDashboardSuitsPage(RequestContent content) throws ReceiverException {
+        this.setPageSubTitle("Масти лошадей");
+        this.setDefaultContentAttributes(content);
+    }
 }
