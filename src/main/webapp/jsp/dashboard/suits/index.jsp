@@ -26,13 +26,7 @@
             <div class="clearfix"></div>
 
             <div class="row">
-                <div class="col-md-12">
-                    <div class="x_panel">
-                        <div class="x_content">
-                            <suits></suits>
-                        </div>
-                    </div>
-                </div>
+                <suits title-page="${pageSubTitle}"></suits>
             </div>
         </div>
     </div>

@@ -1,0 +1,281 @@
+<template>
+    <div id="box-table-suits">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>{{ titlePage }}</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <td v-if="list.length == 0">
+                            <h5 style="padding-left: 15px;">Haven't any suits.</h5>
+                        </td>
+                        <view-suit v-else v-for="suit in list" :suit="suit" @suitRemoved="removeFromList(index)"
+                                   @suitEdited="getSuitInfo($event)"></view-suit>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="col-xs-12" style="margin-top: 15px;">
+                    <div class="row" style="text-align: center" v-if="canShowMore">
+                        <button class="btn btn-default" @click="showMore()" style="display: inline-block">Show More
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12 col-xs-12">
+            <create-suit @suitCreated="updateList(getCount())"></create-suit>
+        </div>
+
+        <!-- Edit Suit Modal -->
+        <div class="modal fade" id="editSuitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="editSuitModalLabel">Редактировать "{{ editSuit.title }}"</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="title-edit">Title</label>
+                            <input type="text" id="title-edit" @keyup.enter="updateSuit()" v-model="editSuit.title"
+                                   :value="editSuit.title" placeholder="Введите название услуги" class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" @click="updateSuit()" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<style>
+    .panel_toolbox {
+        min-width: inherit;
+    }
+</style>
+
+<script>
+    var loading_box = '<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>';
+
+    import CreateSuit from './CreateSuitComponent.vue'
+    import ViewSuit from './ViewSuitComponent.vue'
+
+    export default {
+        props: ['titlePage'],
+
+        data() {
+            return {
+                list: [],
+                canShowMore: false,
+                count: 0,
+                currentPage: 1,
+                step: 10,
+                disable: false,
+                countPerPage: 10,
+                editSuit: {
+                    id: 0,
+                    title: ''
+                }
+            }
+        },
+
+        created: function () {
+            this.getSuitsList();
+        },
+
+        methods: {
+
+            /**
+             * Set disable for boxes.
+             */
+            setDisable() {
+                this.disable = true;
+                $('#box-table-suits').append(loading_box);
+            },
+
+            /**
+             * Unset disable from box.
+             */
+            unsetDisable() {
+                this.disable = false;
+                $('#box-table-suits').find('.overlay').remove();
+            },
+
+            /**
+             * Check if the request sent.
+             */
+            isDisabled() {
+                return this.disable;
+            },
+
+            /**
+             * Set count of retrieved data.
+             *
+             * @param count
+             */
+            setCount (count){
+                this.count = count;
+            },
+
+            /**
+             * Get the count of suits.
+             */
+            getCount() {
+                return this.count;
+            },
+
+            /**
+             * Handle showing ShowMore button.
+             *
+             * @param count
+             */
+            handleShowMoreBtn (count) {
+                this.canShowMore = (this.getCount() >= count);
+            },
+
+            /**
+             * Process data for request.
+             */
+            processRequest(suits) {
+                if (suits.data === undefined) {
+                    return;
+                }
+
+                for (var i = 0; i < suits.data.length; i++) {
+                    this.list.push(suits.data[i]);
+                }
+
+                this.setCount(this.list.length);
+                this.handleShowMoreBtn(suits.data.length);
+
+                this.unsetDisable();
+            },
+
+            /**
+             * Set editing suit for modal.
+             *
+             * @param suit
+             */
+            setEditingSuit(suit) {
+                this.editSuit.id = suit.id;
+                this.editSuit.title = suit.title;
+            },
+
+            /**
+             * Unset editing suit for modal.
+             */
+            unsetEditingSuit() {
+                this.editSuit.id = 0;
+                this.editSuit.title = '';
+            },
+
+            /**
+             * Get suit info form modal.
+             *
+             * @param suit
+             */
+            getSuitInfo(suit) {
+                this.setEditingSuit(suit);
+            },
+
+            /**
+             * Update suit model.
+             */
+            updateSuit() {
+                this.$http.put('/ajax/dashboard/suits/' + this.editSuit.id, this.editSuit).then((data) => {
+                    this.updateList(this.getCount());
+
+                    if (data.body.success === true) {
+                        var messages = data.body.messages;
+
+                        $('#editSuitModal').modal('hide');
+                        $.each(messages, function (key, value) {
+                            toastr.success(value, 'Success')
+                        });
+                    } else {
+                        toastr.error('Что-то пошло не так...', 'Error')
+                    }
+
+                }, (data) => {
+                    this.unsetDisable();
+                    // error callback
+                    var errors = data.body;
+                    $.each(errors, function (key, value) {
+                        if (data.status === 422) {
+                            toastr.error(value[0], 'Error')
+                        } else {
+                            toastr.error(value, 'Error')
+                        }
+                    });
+                });
+            },
+
+            /**
+             * Get suits from storage.
+             */
+            getSuitsList() {
+                if (this.isDisabled())
+                    return;
+
+                this.setDisable();
+
+                this.$http.get('/ajax/dashboard/suits?page=1').then((suits) => {
+                    this.processRequest(suits);
+                });
+            },
+
+            /**
+             * Show more suits by step.
+             */
+            showMore () {
+                if (this.isDisabled())
+                    return;
+
+                this.setDisable();
+                this.currentPage++;
+
+                this.$http.get('/ajax/dashboard/suits?page=' + currentPage).then((suits) => {
+                    this.processRequest(suits);
+                });
+            },
+
+            /**
+             * Count suits per page.
+             */
+            getCountPerPage() {
+                return this.countPerPage;
+            },
+
+            /**
+             * Remove suit by index from list.
+             */
+            removeFromList(index) {
+                this.list.splice(index, 1);
+            }
+        },
+
+        components: {
+            'create-suit': CreateSuit,
+            'view-suit': ViewSuit
+        }
+    }
+</script>

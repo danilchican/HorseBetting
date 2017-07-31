@@ -172,6 +172,7 @@ var VueResource = __webpack_require__(22);
 Vue.use(VueResource);
 
 Vue.component('users', __webpack_require__(24));
+        Vue.component('suits', __webpack_require__(30));
 
 const app = new Vue({
     el: '#app'
@@ -26095,6 +26096,988 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-0e740d4e", module.exports)
+  }
+}
+
+        /***/
+    }),
+    /* 30 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        var disposed = false
+        var Component = __webpack_require__(0)(
+            /* script */
+            __webpack_require__(31),
+            /* template */
+            __webpack_require__(38),
+            /* styles */
+            null,
+            /* scopeId */
+            null,
+            /* moduleIdentifier (server only) */
+            null
+        )
+        Component.options.__file = "D:\\VLAD\\EPAM\\Проект\\HorseBettingProject\\src\\main\\webapp\\assets\\vue\\components\\dashboard\\suits\\SuitComponent.vue"
+        if (Component.esModule && Object.keys(Component.esModule).some(function (key) {
+                return key !== "default" && key.substr(0, 2) !== "__"
+            })) {
+            console.error("named exports are not supported in *.vue files.")
+        }
+        if (Component.options.functional) {
+            console.error("[vue-loader] SuitComponent.vue: functional components are not supported with templates, they should use render functions.")
+        }
+
+        /* hot reload */
+        if (false) {
+            (function () {
+                var hotAPI = require("vue-hot-reload-api")
+                hotAPI.install(require("vue"), false)
+                if (!hotAPI.compatible) return
+                module.hot.accept()
+                if (!module.hot.data) {
+                    hotAPI.createRecord("data-v-5485e26c", Component.options)
+                } else {
+                    hotAPI.reload("data-v-5485e26c", Component.options)
+                }
+                module.hot.dispose(function (data) {
+                    disposed = true
+                })
+            })()
+        }
+
+        module.exports = Component.exports
+
+
+        /***/
+    }),
+    /* 31 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+
+        "use strict";
+        Object.defineProperty(__webpack_exports__, "__esModule", {value: true});
+        /* harmony import */
+        var __WEBPACK_IMPORTED_MODULE_0__CreateSuitComponent_vue__ = __webpack_require__(32);
+        /* harmony import */
+        var __WEBPACK_IMPORTED_MODULE_0__CreateSuitComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__CreateSuitComponent_vue__);
+        /* harmony import */
+        var __WEBPACK_IMPORTED_MODULE_1__ViewSuitComponent_vue__ = __webpack_require__(35);
+        /* harmony import */
+        var __WEBPACK_IMPORTED_MODULE_1__ViewSuitComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ViewSuitComponent_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+        var loading_box = '<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>';
+
+
+        /* harmony default export */
+        __webpack_exports__["default"] = ({
+            props: ['titlePage'],
+
+            data: function data() {
+                return {
+                    list: [],
+                    canShowMore: false,
+                    count: 0,
+                    step: 5,
+                    disable: false,
+                    countPerPage: 5,
+                    editSuit: {
+                        id: 0,
+                        title: ''
+                    }
+                }
+            },
+
+            created: function () {
+                this.getSuitsList();
+            },
+
+            methods: {
+
+                /**
+                 * Set disable for boxes.
+                 */
+                setDisable: function setDisable() {
+                    this.disable = true;
+                    $('#box-table-suits').append(loading_box);
+                },
+
+                /**
+                 * Unset disable from box.
+                 */
+                unsetDisable: function unsetDisable() {
+                    this.disable = false;
+                    $('#box-table-suits').find('.overlay').remove();
+                },
+
+                /**
+                 * Check if the request sent.
+                 */
+                isDisabled: function isDisabled() {
+                    return this.disable;
+                },
+
+                /**
+                 * Set count of retrieved data.
+                 *
+                 * @param count
+                 */
+                setCount: function setCount(count) {
+                    this.count = count;
+                },
+
+                /**
+                 * Get the count of suits.
+                 */
+                getCount: function getCount() {
+                    return this.count;
+                },
+
+                /**
+                 * Handle showing ShowMore button.
+                 *
+                 * @param count
+                 */
+                handleShowMoreBtn: function handleShowMoreBtn(count) {
+                    this.canShowMore = (this.getCount() >= count);
+                },
+
+                /**
+                 * Process data for request.
+                 */
+                processRequest: function processRequest(suits, count) {
+                    this.list = suits.data;
+                    this.setCount(this.list.length);
+                    this.handleShowMoreBtn(count);
+
+                    this.unsetDisable();
+                },
+
+                /**
+                 * Set editing suit for modal.
+                 *
+                 * @param suit
+                 */
+                setEditingSuit: function setEditingSuit(suit) {
+                    this.editSuit.id = suit.id;
+                    this.editSuit.title = suit.title;
+                },
+
+                /**
+                 * Unset editing suit for modal.
+                 */
+                unsetEditingSuit: function unsetEditingSuit() {
+                    this.editSuit.id = 0;
+                    this.editSuit.title = '';
+                },
+
+                /**
+                 * Get suit info form modal.
+                 *
+                 * @param suit
+                 */
+                getSuitInfo: function getSuitInfo(suit) {
+                    this.setEditingSuit(suit);
+                },
+
+                /**
+                 * Update suit model.
+                 */
+                updateSuit: function updateSuit() {
+                    var this$1 = this;
+
+                    this.$http.put('/dashboard/suits/' + this.editSuit.id, this.editSuit).then(function (data) {
+                        this$1.updateList(this$1.getCount());
+
+                        if (data.body.success === true) {
+                            var messages = data.body.messages;
+
+                            $('#editSuitModal').modal('hide');
+                            $.each(messages, function (key, value) {
+                                toastr.success(value, 'Success')
+                            });
+                        } else {
+                            toastr.error('Что-то пошло не так...', 'Error')
+                        }
+
+                    }, function (data) {
+                        this$1.unsetDisable();
+                        // error callback
+                        var errors = data.body;
+                        $.each(errors, function (key, value) {
+                            if (data.status === 422) {
+                                toastr.error(value[0], 'Error')
+                            } else {
+                                toastr.error(value, 'Error')
+                            }
+                        });
+                    });
+                },
+
+                /**
+                 * Get suits from storage.
+                 */
+                getSuitsList: function getSuitsList() {
+                    var this$1 = this;
+
+                    if (this.isDisabled()) {
+                        return;
+                    }
+
+                    var count = this.getCount() + this.step;
+
+                    this.setDisable();
+
+                    this.$http.get('/dashboard/suits/get').then(function (suits) {
+                        this$1.processRequest(suits, count);
+                    });
+                },
+
+                /**
+                 * Show more orders by step = 5.
+                 */
+                showMore: function showMore() {
+                    var this$1 = this;
+
+                    if (this.isDisabled()) {
+                        return;
+                    }
+
+                    var count = this.getCount() + this.step;
+
+                    this.setDisable();
+
+                    this.$http.get('/dashboard/suits/get/' + count).then(function (suits) {
+                        this$1.processRequest(suits, count);
+                    });
+                },
+
+                /**
+                 * Count suits per page.
+                 */
+                getCountPerPage: function getCountPerPage() {
+                    return this.countPerPage;
+                },
+
+                /**
+                 * Get suits from storage.
+                 */
+                updateList: function updateList(count) {
+                    var this$1 = this;
+
+                    if (this.isDisabled()) {
+                        return;
+                    }
+
+                    console.log(count);
+
+                    this.setDisable();
+
+                    count = (count < this.getCountPerPage()) ? this.getCountPerPage() : count;
+
+                    this.$http.get('/dashboard/suits/get/' + count).then(function (suits) {
+                        this$1.processRequest(suits, count);
+                    });
+                },
+
+                /**
+                 * Remove suit from list.
+                 */
+                removeFromList: function removeFromList() {
+                    this.setCount(this.list.length);
+                    this.updateList(this.getCount());
+                }
+            },
+
+            components: {
+                'create-suit': __WEBPACK_IMPORTED_MODULE_0__CreateSuitComponent_vue___default.a,
+                'view-suit': __WEBPACK_IMPORTED_MODULE_1__ViewSuitComponent_vue___default.a
+            }
+        });
+
+
+        /***/
+    }),
+    /* 32 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        var disposed = false
+        var Component = __webpack_require__(0)(
+            /* script */
+            __webpack_require__(33),
+            /* template */
+            __webpack_require__(34),
+            /* styles */
+            null,
+            /* scopeId */
+            null,
+            /* moduleIdentifier (server only) */
+            null
+        )
+        Component.options.__file = "D:\\VLAD\\EPAM\\Проект\\HorseBettingProject\\src\\main\\webapp\\assets\\vue\\components\\dashboard\\suits\\CreateSuitComponent.vue"
+        if (Component.esModule && Object.keys(Component.esModule).some(function (key) {
+                return key !== "default" && key.substr(0, 2) !== "__"
+            })) {
+            console.error("named exports are not supported in *.vue files.")
+        }
+        if (Component.options.functional) {
+            console.error("[vue-loader] CreateSuitComponent.vue: functional components are not supported with templates, they should use render functions.")
+        }
+
+        /* hot reload */
+        if (false) {
+            (function () {
+                var hotAPI = require("vue-hot-reload-api")
+                hotAPI.install(require("vue"), false)
+                if (!hotAPI.compatible) return
+                module.hot.accept()
+                if (!module.hot.data) {
+                    hotAPI.createRecord("data-v-74f628a4", Component.options)
+                } else {
+                    hotAPI.reload("data-v-74f628a4", Component.options)
+                }
+                module.hot.dispose(function (data) {
+                    disposed = true
+                })
+            })()
+        }
+
+        module.exports = Component.exports
+
+
+        /***/
+    }),
+    /* 33 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+
+        "use strict";
+        Object.defineProperty(__webpack_exports__, "__esModule", {value: true});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+        var loading_box = '<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>';
+
+        /* harmony default export */
+        __webpack_exports__["default"] = ({
+            data: function data() {
+                return {
+                    title: '',
+                    disable: false,
+                }
+            },
+
+            methods: {
+
+                setDisable: function setDisable() {
+                    this.disable = true;
+                    $('#create-suit').append(loading_box);
+                },
+
+                unsetDisable: function unsetDisable() {
+                    this.disable = false;
+                    $('#create-suit').find('.overlay').remove();
+                },
+
+                /**
+                 * Check if the request sended.
+                 */
+                isDisabled: function isDisabled() {
+                    return this.disable;
+                },
+
+                /**
+                 * Create new suit.
+                 */
+                createSuit: function createSuit() {
+                    var this$1 = this;
+
+                    if (this.isDisabled()) {
+                        return;
+                    }
+
+                    this.setDisable();
+
+                    this.$http.post('/dashboard/suits', {title: this.title})
+                        .then(function (data) {
+                            // success callback
+                            var savedSuit = data.body.suit;
+
+                            if (data.body.success === true) {
+                                var messages = data.body.messages;
+
+                                $.each(messages, function (key, value) {
+                                    toastr.success(value, 'Success')
+                                });
+                            } else {
+                                toastr.error('Что-то пошло не так...', 'Error')
+                            }
+
+                            this$1.$emit('suitCreated', savedSuit);
+                            this$1.title = '';
+
+                            this$1.unsetDisable();
+                        }, function (data) {
+                            this$1.unsetDisable();
+                            // error callback
+                            var errors = data.body;
+                            $.each(errors, function (key, value) {
+                                if (data.status === 422) {
+                                    toastr.error(value[0], 'Error')
+                                } else {
+                                    toastr.error(value, 'Error')
+                                }
+                            });
+                        });
+                }
+            }
+        });
+
+
+        /***/
+    }),
+    /* 34 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        module.exports = {
+            render: function () {
+                var _vm = this;
+                var _h = _vm.$createElement;
+                var _c = _vm._self._c || _h;
+                return _c('div', {
+                    staticClass: "x_panel"
+                }, [_vm._m(0), _vm._v(" "), _c('div', {
+                    staticClass: "x_content"
+                }, [_c('form', {
+                    staticClass: "form-horizontal",
+                    attrs: {
+                        "method": "POST"
+                    },
+                    on: {
+                        "submit": function ($event) {
+                            $event.preventDefault();
+                            _vm.createSuit()
+                        }
+                    }
+                }, [_c('div', {
+                    staticClass: "form-group"
+                }, [_c('label', {
+                    staticClass: "control-label"
+                }, [_vm._v("Name")]), _vm._v(" "), _c('div', {
+                    staticClass: "col-md-12 col-sm-12 col-xs-12"
+                }, [_c('input', {
+                    directives: [{
+                        name: "model",
+                        rawName: "v-model",
+                        value: (_vm.title),
+                        expression: "title"
+                    }],
+                    staticClass: "form-control",
+                    attrs: {
+                        "id": "suit-title",
+                        "type": "text",
+                        "placeholder": "Enter the name",
+                        "disabled": _vm.disable == 1
+                    },
+                    domProps: {
+                        "value": _vm.title,
+                        "value": (_vm.title)
+                    },
+                    on: {
+                        "input": function ($event) {
+                            if ($event.target.composing) {
+                                return;
+                            }
+                            _vm.title = $event.target.value
+                        }
+                    }
+                })])]), _vm._v(" "), _c('button', {
+                    staticClass: "btn btn-success save-button",
+                    attrs: {
+                        "type": "submit"
+                    }
+                }, [_vm._v("Submit")])])])])
+            }, staticRenderFns: [function () {
+                var _vm = this;
+                var _h = _vm.$createElement;
+                var _c = _vm._self._c || _h;
+                return _c('div', {
+                    staticClass: "x_title"
+                }, [_c('h2', [_vm._v("Add suit")]), _vm._v(" "), _c('ul', {
+                    staticClass: "nav navbar-right panel_toolbox"
+                }, [_c('li', [_c('a', {
+                    staticClass: "collapse-link"
+                }, [_c('i', {
+                    staticClass: "fa fa-chevron-up"
+                })])])]), _vm._v(" "), _c('div', {
+                    staticClass: "clearfix"
+                })])
+            }]
+        }
+        module.exports.render._withStripped = true
+        if (false) {
+            module.hot.accept()
+            if (module.hot.data) {
+                require("vue-hot-reload-api").rerender("data-v-74f628a4", module.exports)
+            }
+        }
+
+        /***/
+    }),
+    /* 35 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        var disposed = false
+        var Component = __webpack_require__(0)(
+            /* script */
+            __webpack_require__(36),
+            /* template */
+            __webpack_require__(37),
+            /* styles */
+            null,
+            /* scopeId */
+            null,
+            /* moduleIdentifier (server only) */
+            null
+        )
+        Component.options.__file = "D:\\VLAD\\EPAM\\Проект\\HorseBettingProject\\src\\main\\webapp\\assets\\vue\\components\\dashboard\\suits\\ViewSuitComponent.vue"
+        if (Component.esModule && Object.keys(Component.esModule).some(function (key) {
+                return key !== "default" && key.substr(0, 2) !== "__"
+            })) {
+            console.error("named exports are not supported in *.vue files.")
+        }
+        if (Component.options.functional) {
+            console.error("[vue-loader] ViewSuitComponent.vue: functional components are not supported with templates, they should use render functions.")
+        }
+
+        /* hot reload */
+        if (false) {
+            (function () {
+                var hotAPI = require("vue-hot-reload-api")
+                hotAPI.install(require("vue"), false)
+                if (!hotAPI.compatible) return
+                module.hot.accept()
+                if (!module.hot.data) {
+                    hotAPI.createRecord("data-v-728061a5", Component.options)
+                } else {
+                    hotAPI.reload("data-v-728061a5", Component.options)
+                }
+                module.hot.dispose(function (data) {
+                    disposed = true
+                })
+            })()
+        }
+
+        module.exports = Component.exports
+
+
+        /***/
+    }),
+    /* 36 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+
+        "use strict";
+        Object.defineProperty(__webpack_exports__, "__esModule", {value: true});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+        /* harmony default export */
+        __webpack_exports__["default"] = ({
+            props: ['suit'],
+
+            methods: {
+                editSuit: function editSuit(suit) {
+                    this.$emit('suitEdited', suit);
+                },
+
+                /**
+                 * Remove suit from DB.
+                 *
+                 * @param suit
+                 */
+                removeSuit: function removeSuit(suit) {
+                    var this$1 = this;
+
+                    this.$http.delete('/dashboard/suits/' + suit.id).then(function (data) {
+                        // success callback
+                        if (data.body.success === true) {
+                            var messages = data.body.messages;
+
+                            $.each(messages, function (key, value) {
+                                toastr.success(value, 'Success')
+                            });
+                        } else {
+                            toastr.error('Что-то пошло не так...', 'Error')
+                        }
+
+                        this$1.$emit('suitRemoved');
+                    }, function (data) {
+                        // error callback
+                        var errors = data.body;
+                        $.each(errors, function (key, value) {
+                            if (data.status === 422) {
+                                toastr.error(value[0], 'Error')
+                            } else {
+                                toastr.error(value, 'Error')
+                            }
+                        });
+                    });
+
+                }
+            }
+        });
+
+
+        /***/
+    }),
+    /* 37 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        module.exports = {
+            render: function () {
+                var _vm = this;
+                var _h = _vm.$createElement;
+                var _c = _vm._self._c || _h;
+                return _c('tr', [_c('td', [_vm._v(_vm._s(_vm.suit.id) + ".")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.suit.title))]), _vm._v(" "), _c('td', [_c('div', {
+                    staticClass: "btn-group"
+                }, [_c('button', {
+                    staticClass: "btn btn-info btn-xs",
+                    attrs: {
+                        "type": "button",
+                        "data-toggle": "modal",
+                        "data-target": "#editSuitModal"
+                    },
+                    on: {
+                        "click": function ($event) {
+                            _vm.editSuit(_vm.suit)
+                        }
+                    }
+                }, [_vm._v("Edit\n            ")]), _vm._v(" "), _c('button', {
+                    staticClass: "btn btn-danger btn-xs",
+                    attrs: {
+                        "type": "button"
+                    },
+                    on: {
+                        "click": function ($event) {
+                            _vm.removeSuit(_vm.suit)
+                        }
+                    }
+                }, [_vm._v("Delete")])])])])
+            }, staticRenderFns: []
+        }
+        module.exports.render._withStripped = true
+        if (false) {
+            module.hot.accept()
+            if (module.hot.data) {
+                require("vue-hot-reload-api").rerender("data-v-728061a5", module.exports)
+            }
+        }
+
+        /***/
+    }),
+    /* 38 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        module.exports = {
+            render: function () {
+                var _vm = this;
+                var _h = _vm.$createElement;
+                var _c = _vm._self._c || _h;
+                return _c('div', {
+                    attrs: {
+                        "id": "box-table-suits"
+                    }
+                }, [_c('div', {
+                    staticClass: "col-md-6 col-sm-6 col-xs-12"
+                }, [_c('div', {
+                    staticClass: "x_panel"
+                }, [_c('div', {
+                    staticClass: "x_title"
+                }, [_c('h2', [_vm._v(_vm._s(_vm.titlePage))]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('div', {
+                    staticClass: "clearfix"
+                })]), _vm._v(" "), _c('div', {
+                    staticClass: "x_content"
+                }, [_c('table', {
+                    staticClass: "table"
+                }, [_vm._m(1), _vm._v(" "), _c('tbody', [(_vm.list.length == 0) ? _c('td', [_c('h5', {
+                    staticStyle: {
+                        "padding-left": "15px"
+                    }
+                }, [_vm._v("Haven't any suits.")])]) : _vm._l((_vm.list), function (suit) {
+                    return _c('view-suit', {
+                        attrs: {
+                            "suit": suit
+                        },
+                        on: {
+                            "suitRemoved": function ($event) {
+                                _vm.removeFromList()
+                            },
+                            "suitEdited": function ($event) {
+                                _vm.getSuitInfo($event)
+                            }
+                        }
+                    })
+                })], 2)])]), _vm._v(" "), _c('div', {
+                    staticClass: "col-xs-12",
+                    staticStyle: {
+                        "margin-top": "15px"
+                    }
+                }, [(_vm.canShowMore) ? _c('div', {
+                    staticClass: "row",
+                    staticStyle: {
+                        "text-align": "center"
+                    }
+                }, [_c('button', {
+                    staticClass: "btn btn-default",
+                    staticStyle: {
+                        "display": "inline-block"
+                    },
+                    on: {
+                        "click": function ($event) {
+                            _vm.showMore()
+                        }
+                    }
+                }, [_vm._v("Show More\n                    ")])]) : _vm._e()])])]), _vm._v(" "), _c('div', {
+                    staticClass: "col-md-6 col-sm-12 col-xs-12"
+                }, [_c('create-suit', {
+                    on: {
+                        "suitCreated": function ($event) {
+                            _vm.updateList(_vm.getCount())
+                        }
+                    }
+                })], 1), _vm._v(" "), _c('div', {
+                    staticClass: "col-xs-5"
+                }), _vm._v(" "), _c('div', {
+                    staticClass: "modal fade",
+                    attrs: {
+                        "id": "editSuitModal",
+                        "tabindex": "-1",
+                        "role": "dialog",
+                        "aria-labelledby": "myModalLabel"
+                    }
+                }, [_c('div', {
+                    staticClass: "modal-dialog",
+                    attrs: {
+                        "role": "document"
+                    }
+                }, [_c('div', {
+                    staticClass: "modal-content"
+                }, [_c('div', {
+                    staticClass: "modal-header"
+                }, [_vm._m(2), _vm._v(" "), _c('h4', {
+                    staticClass: "modal-title",
+                    attrs: {
+                        "id": "editSuitModalLabel"
+                    }
+                }, [_vm._v("Редактировать \"" + _vm._s(_vm.editSuit.title) + "\"")])]), _vm._v(" "), _c('div', {
+                    staticClass: "modal-body"
+                }, [_c('div', {
+                    staticClass: "form-group"
+                }, [_c('label', {
+                    attrs: {
+                        "for": "title-edit"
+                    }
+                }, [_vm._v("Title")]), _vm._v(" "), _c('input', {
+                    directives: [{
+                        name: "model",
+                        rawName: "v-model",
+                        value: (_vm.editSuit.title),
+                        expression: "editSuit.title"
+                    }],
+                    staticClass: "form-control",
+                    attrs: {
+                        "type": "text",
+                        "id": "title-edit",
+                        "placeholder": "Введите название услуги"
+                    },
+                    domProps: {
+                        "value": _vm.editSuit.title,
+                        "value": (_vm.editSuit.title)
+                    },
+                    on: {
+                        "keyup": function ($event) {
+                            if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) {
+                                return null;
+                            }
+                            _vm.updateSuit()
+                        },
+                        "input": function ($event) {
+                            if ($event.target.composing) {
+                                return;
+                            }
+                            _vm.editSuit.title = $event.target.value
+                        }
+                    }
+                })])]), _vm._v(" "), _c('div', {
+                    staticClass: "modal-footer"
+                }, [_c('button', {
+                    staticClass: "btn btn-default",
+                    attrs: {
+                        "type": "button",
+                        "data-dismiss": "modal"
+                    }
+                }, [_vm._v("Close")]), _vm._v(" "), _c('button', {
+                    staticClass: "btn btn-primary",
+                    attrs: {
+                        "type": "button"
+                    },
+                    on: {
+                        "click": function ($event) {
+                            _vm.updateSuit()
+                        }
+                    }
+                }, [_vm._v("Save changes")])])])])])])
+            }, staticRenderFns: [function () {
+                var _vm = this;
+                var _h = _vm.$createElement;
+                var _c = _vm._self._c || _h;
+                return _c('ul', {
+                    staticClass: "nav navbar-right panel_toolbox"
+                }, [_c('li', [_c('a', {
+                    staticClass: "collapse-link"
+                }, [_c('i', {
+                    staticClass: "fa fa-chevron-up"
+                })])])])
+            }, function () {
+                var _vm = this;
+                var _h = _vm.$createElement;
+                var _c = _vm._self._c || _h;
+                return _c('thead', [_c('tr', [_c('th', [_vm._v("ID")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
+            }, function () {
+                var _vm = this;
+                var _h = _vm.$createElement;
+                var _c = _vm._self._c || _h;
+                return _c('button', {
+                    staticClass: "close",
+                    attrs: {
+                        "type": "button",
+                        "data-dismiss": "modal",
+                        "aria-label": "Close"
+                    }
+                }, [_c('span', {
+                    attrs: {
+                        "aria-hidden": "true"
+                    }
+                }, [_vm._v("×")])])
+            }]
+        }
+        module.exports.render._withStripped = true
+        if (false) {
+            module.hot.accept()
+            if (module.hot.data) {
+                require("vue-hot-reload-api").rerender("data-v-5485e26c", module.exports)
   }
 }
 
