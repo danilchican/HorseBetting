@@ -27,10 +27,26 @@
                 <ul class="nav side-menu">
                     <li><a href="/dashboard"><i class="fa fa-home"></i> Home</a></li>
                     <li><a href="/dashboard/users"><i class="fa fa-user"></i> Users</a></li>
-                    <li><a href="/dashboard/races"><i class="fa fa-table"></i> Races</a></li>
-                    <li><a href="/dashboard/horses"><i class="fa fa-desktop"></i> Horses</a></li>
+                    <li><a><i class="fa fa-desktop"></i> Horses <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="/dashboard/suits">Suits</a></li>
+                            <li><a href="/dashboard/horses/create">New Horse</a></li>
+                            <li><a href="/dashboard/horses">All horses</a></li>
+                        </ul>
+                    </li>
+                    <li><a><i class="fa fa-table"></i> Races <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="/dashboard/races/create">New Race</a></li>
+                            <li><a href="/dashboard/races">All races</a></li>
+                        </ul>
+                    </li>
                     <li><a href="/dashboard/bets"><i class="fa fa-bar-chart-o"></i> Bets</a></li>
-                    <li><a href="/dashboard/news"><i class="fa fa-newspaper-o"></i> News</a></li>
+                    <li><a><i class="fa fa-newspaper-o"></i> News <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="/dashboard/news/create">Publish new</a></li>
+                            <li><a href="/dashboard/news">All news</a></li>
+                        </ul>
+                    </li>
                     <li><a href="/dashboard/comments"><i class="fa fa-bullhorn"></i> Comments</a></li>
                 </ul>
             </div>

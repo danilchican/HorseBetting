@@ -167,7 +167,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         int page = 1;
         String pageNumber = content.findParameter("page");
 
-        // create validators
+        //TODO create validators
         if(pageNumber != null) {
             try {
                 page = Integer.parseInt(pageNumber);
