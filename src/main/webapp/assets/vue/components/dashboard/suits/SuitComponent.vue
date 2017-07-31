@@ -15,7 +15,7 @@
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Title</th>
+                            <th>Name</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -27,12 +27,11 @@
                                    @suitEdited="getSuitInfo($event)"></view-suit>
                         </tbody>
                     </table>
-
-                </div>
-                <div class="col-xs-12" style="margin-top: 15px;">
-                    <div class="row" style="text-align: center" v-if="canShowMore">
-                        <button class="btn btn-default" @click="showMore()" style="display: inline-block">Show More
-                        </button>
+                    <div class="col-xs-12" style="margin-top: 15px;">
+                        <div class="row" style="text-align: center" v-if="canShowMore">
+                            <button class="btn btn-default" @click="showMore()" style="display: inline-block">Show More
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -90,7 +89,6 @@
                 currentPage: 1,
                 step: 10,
                 disable: false,
-                countPerPage: 10,
                 editSuit: {
                     id: 0,
                     title: ''
@@ -149,23 +147,26 @@
              * @param count
              */
             handleShowMoreBtn (count) {
-                this.canShowMore = (this.getCount() >= count);
+                this.canShowMore = (count >= this.step);
             },
 
             /**
              * Process data for request.
              */
             processRequest(suits) {
-                if (suits.data === undefined) {
+                console.log("processRequest suits:");
+                console.log(suits);
+
+                if (suits === undefined) {
                     return;
                 }
 
-                for (var i = 0; i < suits.data.length; i++) {
-                    this.list.push(suits.data[i]);
+                for (var i = 0; i < suits.length; i++) {
+                    this.list.push(suits[i]);
                 }
 
                 this.setCount(this.list.length);
-                this.handleShowMoreBtn(suits.data.length);
+                this.handleShowMoreBtn(suits.length);
 
                 this.unsetDisable();
             },
@@ -238,8 +239,8 @@
 
                 this.setDisable();
 
-                this.$http.get('/ajax/dashboard/suits?page=1').then((suits) => {
-                    this.processRequest(suits);
+                this.$http.get('/ajax/dashboard/suits?page=1').then((response) => {
+                    this.processRequest(response.data.suits);
                 });
             },
 
@@ -253,16 +254,9 @@
                 this.setDisable();
                 this.currentPage++;
 
-                this.$http.get('/ajax/dashboard/suits?page=' + currentPage).then((suits) => {
-                    this.processRequest(suits);
+                this.$http.get('/ajax/dashboard/suits?page=' + this.currentPage).then((response) => {
+                    this.processRequest(response.data.suits);
                 });
-            },
-
-            /**
-             * Count suits per page.
-             */
-            getCountPerPage() {
-                return this.countPerPage;
             },
 
             /**

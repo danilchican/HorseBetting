@@ -1,7 +1,7 @@
 <template>
     <tr>
         <td>{{ suit.id }}.</td>
-        <td>{{ suit.title }}</td>
+        <td>{{ suit.name }}</td>
         <td>
             <div class="btn-group">
                 <button type="button" @click="editSuit(suit)" class="btn btn-info btn-xs" data-toggle="modal"

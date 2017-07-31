@@ -20,7 +20,7 @@
                                    :value="title"
                                    v-model="title"
                                    placeholder="Enter the name"
-                                   :disabled="disable == 1">
+                                   :disabled="disable">
                         </div>
                     </div>
                 </div>

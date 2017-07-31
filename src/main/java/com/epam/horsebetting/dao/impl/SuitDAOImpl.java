@@ -17,17 +17,12 @@ import java.util.List;
 public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
 
     /**
-     * Logger to write logs.
-     */
-    private static final Logger LOGGER = LogManager.getLogger();
-
-    /**
-     * SQL queries for UserDAOImpl.
+     * SQL queries for SuitDAOImpl.
      */
     private static final String SQL_ADD_SUIT = "INSERT INTO `suits` (name) VALUES (?);";
     private static final String SQL_FIND_SUIT_BY_NAME = "SELECT * FROM `suits` WHERE `name`=? LIMIT 1;";
     private static final String SQL_SELECT_SUITS = "SELECT * FROM `suits`;";
-    private static final String SQL_SELECT_PART_SUITS = "SELECT * FROM `suits` LIMIT ? OFFSET ?;";
+    private static final String SQL_SELECT_PART_SUITS = "SELECT * FROM `suits` ORDER BY `id` LIMIT ? OFFSET ?;";
 
     /**
      * Create a new suit.
