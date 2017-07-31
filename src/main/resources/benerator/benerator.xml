@@ -3,8 +3,8 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://databene.org/benerator/0.9.8 http://databene.org/benerator-0.9.8.xsd"
        defaultEncoding="UTF-8"
-       defaultDataset="RU"
-       defaultLocale="ru"
+       defaultDataset="US"
+       defaultLocale="en"
        defaultLineSeparator="\r\n"
        defaultSeparator=";">
 
@@ -19,7 +19,11 @@
               driver="com.mysql.jdbc.Driver"
               user="root"
               password="root"
-              catalog="qs"/>
+              catalog="benerator"/>
 
-    <comment>Test message of Benerator</comment>
+    <comment>Generate test users by Benerator</comment>
+
+    <generate type="users" count="5" consumer="db,ConsoleExporter">
+        <attribute name="email" generator="EMailAddressGenerator" />
+    </generate>
 </setup>
