@@ -18,6 +18,17 @@ public interface SuitDAO {
      */
     Suit create(Suit suit) throws DAOException;
 
+
+    /**
+     * Obtain part of suits.
+     *
+     * @param limit
+     * @param offset
+     * @return suits
+     * @throws DAOException
+     */
+    List<Suit> obtainPart(int limit, int offset) throws DAOException;
+
     /**
      * Find all suits.
      *

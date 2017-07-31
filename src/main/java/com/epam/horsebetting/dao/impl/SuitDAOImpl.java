@@ -27,6 +27,7 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
     private static final String SQL_ADD_SUIT = "INSERT INTO `suits` (name) VALUES (?);";
     private static final String SQL_FIND_SUIT_BY_NAME = "SELECT * FROM `suits` WHERE `name`=? LIMIT 1;";
     private static final String SQL_SELECT_SUITS = "SELECT * FROM `suits`;";
+    private static final String SQL_SELECT_PART_SUITS = "SELECT * FROM `suits` LIMIT ? OFFSET ?;";
 
     /**
      * Create a new suit.
@@ -52,6 +53,36 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
         }
 
         return createdUser;
+    }
+
+    /**
+     * Obtain part of suits.
+     *
+     * @param limit
+     * @param offset
+     * @return suits
+     * @throws DAOException
+     */
+    @Override
+    public List<Suit> obtainPart(int limit, int offset) throws DAOException {
+        List<Suit> foundedSuits = new ArrayList<>();
+        ResultSet suits;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_PART_SUITS)) {
+            preparedStatement.setInt(1, limit);
+            preparedStatement.setInt(2, offset);
+
+            suits = preparedStatement.executeQuery();
+
+            while (suits.next()) {
+                Suit suit = extractFrom(suits);
+                foundedSuits.add(suit);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Cannot obtain part of suits. " + e.getMessage(), e);
+        }
+
+        return foundedSuits;
     }
 
     /**
