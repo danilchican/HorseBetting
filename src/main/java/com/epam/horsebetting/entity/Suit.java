@@ -39,4 +39,12 @@ public class Suit extends Entity {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Suit{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                "}";
+    }
 }

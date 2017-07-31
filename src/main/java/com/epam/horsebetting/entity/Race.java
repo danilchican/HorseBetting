@@ -179,4 +179,19 @@ public class Race extends Entity {
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
+
+    @Override
+    public String toString() {
+        return "Race{" +
+                "id=" + id +
+                ", trackLength=" + trackLength +
+                ", isFinished=" + isFinished +
+                ", title='" + title + '\'' +
+                ", place='" + place + '\'' +
+                ", minRate=" + minRate +
+                ", betEndDate=" + betEndDate +
+                ", startedAt=" + startedAt +
+                ", createdAt=" + createdAt +
+                "}";
+    }
 }

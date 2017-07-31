@@ -97,4 +97,15 @@ public class Horse extends Entity {
     public void setSex(boolean sex) {
         this.sex = sex;
     }
+
+    @Override
+    public String toString() {
+        return "Horse{" +
+                "id=" + id +
+                ", suitId=" + suitId +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", sex=" + sex +
+                "}";
+    }
 }
