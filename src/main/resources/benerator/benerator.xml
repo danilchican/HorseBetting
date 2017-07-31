@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup xmlns="http://databene.org/benerator/0.9.8"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://databene.org/benerator/0.9.8 http://databene.org/benerator-0.9.8.xsd"
+       defaultEncoding="UTF-8"
+       defaultDataset="RU"
+       defaultLocale="ru"
+       defaultLineSeparator="\r\n"
+       defaultSeparator=";">
+
+    <import platforms="db,csv"/>
+    <import defaults="true" domains="organization,address,person,net"/>
+    <import class="org.databene.benerator.distribution.function.*,
+	org.databene.benerator.primitive.*,org.databene.platform.db.*"/>
+    <import class="org.databene.commons.TimeUtil"/>
+
+    <database id="db"
+              url="jdbc:mysql://localhost:3306/benerator?characterEncoding=UTF-8"
+              driver="com.mysql.jdbc.Driver"
+              user="root"
+              password="root"
+              catalog="qs"/>
+
+    <comment>Test message of Benerator</comment>
+</setup>
