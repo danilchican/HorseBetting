@@ -26653,7 +26653,8 @@ if (false) {
                 }
             },
 
-            created: function () {
+            mounted: function () {
+                this.setDisable();
                 this.getSuitsList();
             },
 
@@ -26664,7 +26665,7 @@ if (false) {
                  */
                 setDisable: function setDisable() {
                     this.disable = true;
-                    $('#box-table-suits').append(loading_box);
+                    $('#box-table-suits').find('.x_panel').append(loading_box);
                 },
 
                 /**
@@ -26727,7 +26728,9 @@ if (false) {
                     this.setCount(this.list.length);
                     this.handleShowMoreBtn(suits.length);
 
-                    this.unsetDisable();
+                    if (this.isDisabled()) {
+                        this.unsetDisable();
+                    }
                 },
 
                 /**
@@ -26796,12 +26799,6 @@ if (false) {
                  */
                 getSuitsList: function getSuitsList() {
                     var this$1 = this;
-
-                    if (this.isDisabled()) {
-                        return;
-                    }
-
-                    this.setDisable();
 
                     this.$http.get('/ajax/dashboard/suits?page=1').then(function (response) {
                         this$1.processRequest(response.data.suits);
@@ -27054,7 +27051,7 @@ if (false) {
                         "id": "suit-title",
                         "type": "text",
                         "placeholder": "Enter the name",
-                        "disabled": _vm.disable == 1
+                        "disabled": _vm.disable
                     },
                     domProps: {
                         "value": _vm.title,
@@ -27307,12 +27304,12 @@ if (false) {
         }
                         }
                     })
-                })], 2)]), _vm._v(" "), _c('div', {
+                })], 2)]), _vm._v(" "), (_vm.canShowMore) ? _c('div', {
                     staticClass: "col-xs-12",
                     staticStyle: {
                         "margin-top": "15px"
                     }
-                }, [(_vm.canShowMore) ? _c('div', {
+                }, [_c('div', {
                     staticClass: "row",
                     staticStyle: {
                         "text-align": "center"
@@ -27327,7 +27324,7 @@ if (false) {
                             _vm.showMore()
                         }
                     }
-                }, [_vm._v("Show More\n                        ")])]) : _vm._e()])])])]), _vm._v(" "), _c('div', {
+                }, [_vm._v("Show More\n                        ")])])]) : _vm._e()])])]), _vm._v(" "), _c('div', {
                     staticClass: "col-md-6 col-sm-12 col-xs-12"
                 }, [_c('create-suit', {
                     on: {
@@ -27430,7 +27427,7 @@ if (false) {
                 var _vm = this;
                 var _h = _vm.$createElement;
                 var _c = _vm._self._c || _h;
-                return _c('thead', [_c('tr', [_c('th', [_vm._v("ID")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
+                return _c('thead', [_c('tr', [_c('th', [_vm._v("ID")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
             }, function () {
                 var _vm = this;
                 var _h = _vm.$createElement;

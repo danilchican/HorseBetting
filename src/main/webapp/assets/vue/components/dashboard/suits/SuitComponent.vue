@@ -27,8 +27,8 @@
                                    @suitEdited="getSuitInfo($event)"></view-suit>
                         </tbody>
                     </table>
-                    <div class="col-xs-12" style="margin-top: 15px;">
-                        <div class="row" style="text-align: center" v-if="canShowMore">
+                    <div class="col-xs-12" style="margin-top: 15px;" v-if="canShowMore">
+                        <div class="row" style="text-align: center">
                             <button class="btn btn-default" @click="showMore()" style="display: inline-block">Show More
                             </button>
                         </div>
@@ -96,7 +96,8 @@
             }
         },
 
-        created: function () {
+        mounted: function () {
+            this.setDisable();
             this.getSuitsList();
         },
 
@@ -107,7 +108,7 @@
              */
             setDisable() {
                 this.disable = true;
-                $('#box-table-suits').append(loading_box);
+                $('#box-table-suits').find('.x_panel').append(loading_box);
             },
 
             /**
@@ -168,7 +169,9 @@
                 this.setCount(this.list.length);
                 this.handleShowMoreBtn(suits.length);
 
-                this.unsetDisable();
+                if (this.isDisabled()) {
+                    this.unsetDisable();
+                }
             },
 
             /**
@@ -234,11 +237,6 @@
              * Get suits from storage.
              */
             getSuitsList() {
-                if (this.isDisabled())
-                    return;
-
-                this.setDisable();
-
                 this.$http.get('/ajax/dashboard/suits?page=1').then((response) => {
                     this.processRequest(response.data.suits);
                 });
