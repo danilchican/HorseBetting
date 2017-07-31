@@ -1,4 +1,4 @@
-package com.epam.horsebetting.command.user;
+package com.epam.horsebetting.command.suit;
 
 import com.epam.horsebetting.command.AbstractCommand;
 import com.epam.horsebetting.command.CommandType;
@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class DashboardUsersPresentCommand extends AbstractCommand {
+public class DashboardSuitsPresentCommand extends AbstractCommand {
 
     /**
      * Logger to write logs.
@@ -24,7 +24,7 @@ public class DashboardUsersPresentCommand extends AbstractCommand {
      *
      * @param receiver
      */
-    public DashboardUsersPresentCommand(AbstractReceiver receiver) {
+    public DashboardSuitsPresentCommand(AbstractReceiver receiver) {
         super(receiver);
     }
 
@@ -41,7 +41,7 @@ public class DashboardUsersPresentCommand extends AbstractCommand {
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);
-            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.DASHBOARD_USERS_INDEX);
+            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.DASHBOARD_SUITS_INDEX);
         } catch (ReceiverException e) {
             page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.NOT_FOUND);
             LOGGER.log(Level.ERROR, e);

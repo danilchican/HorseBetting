@@ -40,7 +40,7 @@ public class AjaxDashboardUsersListCommand extends AbstractCommand {
         try {
             receiver.action(CommandType.findByTag(commandName), request);
         } catch (ReceiverException e) {
-            LOGGER.log(Level.ERROR, e);
+            LOGGER.log(Level.ERROR, e.getMessage());
         }
     }
 }

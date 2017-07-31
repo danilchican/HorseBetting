@@ -2,6 +2,8 @@ package com.epam.horsebetting.command;
 
 import com.epam.horsebetting.command.auth.*;
 import com.epam.horsebetting.command.race.DashboardRacesPresentCommand;
+import com.epam.horsebetting.command.suit.AjaxDashboardSuitsListCommand;
+import com.epam.horsebetting.command.suit.DashboardSuitsPresentCommand;
 import com.epam.horsebetting.command.user.AjaxDashboardUsersListCommand;
 import com.epam.horsebetting.command.dashboard.DashboardPresentCommand;
 import com.epam.horsebetting.command.user.DashboardUsersPresentCommand;
@@ -12,6 +14,7 @@ import com.epam.horsebetting.command.profile.ProfilePresentCommand;
 import com.epam.horsebetting.exception.IllegalCommandTypeException;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.impl.PageReceiverImpl;
+import com.epam.horsebetting.receiver.impl.SuitReceiverImpl;
 import com.epam.horsebetting.request.RequestContent;
 import com.epam.horsebetting.receiver.impl.UserReceiverImpl;
 
@@ -94,12 +97,24 @@ public enum CommandType {
             ((PageReceiverImpl) getCommand().getReceiver()).presentDashboardRacesPage(content);
         }
     },
+    DASHBOARD_SUITS_INDEX("dashboard.suits::get", new DashboardSuitsPresentCommand(new PageReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((PageReceiverImpl) getCommand().getReceiver()).presentDashboardSuitsPage(content);
+        }
+    },
     AJAX_DASHBOARD_USERS_LIST("ajax.dashboard.users::get", new AjaxDashboardUsersListCommand(new UserReceiverImpl())) {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {
             ((UserReceiverImpl) getCommand().getReceiver()).ajaxObtainUsersList(content);
         }
-    };
+    },
+    AJAX_DASHBOARD_SUITS_LIST("ajax.dashboard.suits::get", new AjaxDashboardSuitsListCommand(new SuitReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((SuitReceiverImpl) getCommand().getReceiver()).ajaxObtainSuitsList(content);
+        }
+    };;
 
     /**
      * Command name.
