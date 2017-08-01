@@ -35,8 +35,6 @@ public class RegisterCommand extends AbstractCommand {
      */
     @Override
     public void execute(RequestContent request) throws IllegalCommandTypeException {
-        LOGGER.log(Level.INFO, "Processing execute() method of " + this.getClass().getName());
-
         String commandName = String.valueOf(request.findRequestAttribute(COMMAND_INSTANCE_NAME));
         Router router;
 

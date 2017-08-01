@@ -24,6 +24,8 @@
     <comment>Generate test users by Benerator</comment>
 
     <generate type="users" count="5" consumer="db,ConsoleExporter">
-        <attribute name="email" generator="EMailAddressGenerator" />
+        <attribute name="email" generator="EMailAddressGenerator"/>
     </generate>
+
+    <iterate type="users" source="" encoding="utf-8" consumer="db"/>
 </setup>
