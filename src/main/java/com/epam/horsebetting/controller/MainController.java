@@ -28,19 +28,15 @@ public class MainController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        service(request, response);
+        processRequest(request, response);
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        service(request, response);
+        processRequest(request, response);
     }
 
-    @Override
-    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             AbstractCommand command = CommandInitializer.init(request);
             LOGGER.log(Level.DEBUG, "Initialized command: " + command.getClass().getName());

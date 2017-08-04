@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-public class Config {
+public class EnvironmentConfig {
 
     /**
      * Logger to write logs.
@@ -39,7 +39,7 @@ public class Config {
     /**
      * Default constructor with getting bundle.
      */
-    public Config() {
+    public EnvironmentConfig() {
         dbBundle = ResourceBundle.getBundle(BUNDLE_ENVIRONMENT_DIR + "/" + BUNDLE_ENVIRONMENT_NAME);
     }
 

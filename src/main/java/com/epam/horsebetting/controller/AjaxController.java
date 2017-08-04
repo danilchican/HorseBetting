@@ -26,21 +26,18 @@ public class AjaxController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        service(req, resp);
+        processRequest(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        service(req, resp);
+        processRequest(req, resp);
     }
 
-    @Override
-    protected void service(HttpServletRequest request, HttpServletResponse response)
+    private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ArrayList<String> errors = new ArrayList<>();
         String json;
-
-        request.setCharacterEncoding("UTF-8");
 
         RequestContent content = new RequestContent();
 
@@ -60,7 +57,6 @@ public class AjaxController extends HttpServlet {
         json = new Gson().toJson(content.getJsonData());
 
         response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);
     }
 }

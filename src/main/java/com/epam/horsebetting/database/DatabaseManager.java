@@ -1,6 +1,6 @@
 package com.epam.horsebetting.database;
 
-import com.epam.horsebetting.util.Config;
+import com.epam.horsebetting.util.EnvironmentConfig;
 import com.mysql.jdbc.Driver;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -43,7 +43,7 @@ class DatabaseManager {
      * Default constructor with getting bundle.
      */
     DatabaseManager() {
-        dbBundle = ResourceBundle.getBundle(Config.BUNDLE_ENVIRONMENT_DIR + "/" + Config.BUNDLE_ENVIRONMENT_NAME);
+        dbBundle = ResourceBundle.getBundle(EnvironmentConfig.BUNDLE_ENVIRONMENT_DIR + "/" + EnvironmentConfig.BUNDLE_ENVIRONMENT_NAME);
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.epam.horsebetting.tag;
 
-import com.epam.horsebetting.util.Paginator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

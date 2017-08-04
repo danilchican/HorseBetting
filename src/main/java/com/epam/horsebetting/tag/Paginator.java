@@ -1,6 +1,6 @@
-package com.epam.horsebetting.util;
+package com.epam.horsebetting.tag;
 
-public class Paginator {
+class Paginator {
 
     /**
      * Limit of entities to display on page.
@@ -184,5 +184,4 @@ public class Paginator {
     private void generateNextLink(StringBuilder builder, int lastPage) {
         generateLink(builder, page, lastPage, page + 1);
     }
-
 }

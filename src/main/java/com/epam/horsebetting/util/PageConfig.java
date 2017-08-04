@@ -41,7 +41,7 @@ public class PageConfig {
      * Default private constructor.
      */
     private PageConfig() {
-        this.jspBundle = ResourceBundle.getBundle(Config.BUNDLE_ENVIRONMENT_DIR + "/" + BUNDLE_NAVIGATION_NAME);
+        this.jspBundle = ResourceBundle.getBundle(EnvironmentConfig.BUNDLE_ENVIRONMENT_DIR + "/" + BUNDLE_NAVIGATION_NAME);
     }
 
     /**
