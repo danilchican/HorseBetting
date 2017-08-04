@@ -128,6 +128,8 @@ public class ConnectionPool {
 
     /**
      * Close connection pool.
+     *
+     * TODO закрыть в context listener'е
      */
     public void close() {
         for (int i = 0; i < dbManager.getPoolSize(); i++) {

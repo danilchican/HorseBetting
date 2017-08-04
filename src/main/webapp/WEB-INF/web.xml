@@ -48,6 +48,7 @@
     <filter-mapping>
         <filter-name>accessAdministratorFilter</filter-name>
         <url-pattern>/dashboard/*</url-pattern>
+        <url-pattern>/ajax/dashboard/*</url-pattern>
     </filter-mapping>
     <jsp-config>
         <taglib>

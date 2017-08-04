@@ -2,9 +2,7 @@ package com.epam.horsebetting.controller;
 
 import com.epam.horsebetting.command.AbstractCommand;
 import com.epam.horsebetting.exception.IllegalCommandTypeException;
-import com.epam.horsebetting.exception.RouteNotFoundException;
 import com.epam.horsebetting.request.RequestContent;
-import com.epam.horsebetting.util.Router;
 import com.google.gson.Gson;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -16,8 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
-import static com.epam.horsebetting.util.Router.ROUTER_INSTANCE_NAME;
 
 @WebServlet(name = "AjaxController", urlPatterns = "/ajax/*")
 public class AjaxController extends HttpServlet {
