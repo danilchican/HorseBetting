@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(name = "AjaxController", urlPatterns = "/ajax/*")
 public class AjaxController extends HttpServlet {
@@ -34,21 +35,25 @@ public class AjaxController extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ArrayList<String> errors = new ArrayList<String>();
         String json;
+
+        RequestContent content = new RequestContent();
+        content.extractValues(request);
 
         try {
             AbstractCommand command = MainController.initCommand(request);
-            LOGGER.log(Level.DEBUG, "Initialized command: " + command.getClass().getName());
-
-            RequestContent content = new RequestContent();
-            content.extractValues(request);
+            LOGGER.log(Level.DEBUG, "Initialized AJAX command: " + command.getClass().getName());
 
             command.execute(content);
-            json = new Gson().toJson(content.getJsonData());
         } catch (IllegalCommandTypeException e) {
             LOGGER.log(Level.ERROR, e.getMessage(), e);
-            json = new Gson().toJson("Something went wrong...");
+
+            errors.add("Route does not exist.");
+            content.insertJsonAttribute("errors", errors);
         }
+
+        json = new Gson().toJson(content.getJsonData());
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
