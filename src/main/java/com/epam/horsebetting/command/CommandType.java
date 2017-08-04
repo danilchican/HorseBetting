@@ -2,6 +2,7 @@ package com.epam.horsebetting.command;
 
 import com.epam.horsebetting.command.auth.*;
 import com.epam.horsebetting.command.race.DashboardRacesPresentCommand;
+import com.epam.horsebetting.command.suit.AjaxDashboardCreateSuitCommand;
 import com.epam.horsebetting.command.suit.AjaxDashboardSuitsListCommand;
 import com.epam.horsebetting.command.suit.DashboardSuitsPresentCommand;
 import com.epam.horsebetting.command.user.AjaxDashboardUsersListCommand;
@@ -114,7 +115,13 @@ public enum CommandType {
         public void doReceiver(RequestContent content) throws ReceiverException {
             ((SuitReceiverImpl) getCommand().getReceiver()).ajaxObtainSuitsList(content);
         }
-    };;
+    },
+    AJAX_DASHBOARD_SUITS_CREATE("ajax.dashboard.suits.create::post", new AjaxDashboardCreateSuitCommand(new SuitReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((SuitReceiverImpl) getCommand().getReceiver()).createSuit(content);
+        }
+    };
 
     /**
      * Command name.

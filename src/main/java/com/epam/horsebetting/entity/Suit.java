@@ -4,6 +4,13 @@ public class Suit extends Entity {
     private int id;
     private String name;
 
+    public Suit() {
+    }
+
+    public Suit(String name) {
+        this.name = name;
+    }
+
     /**
      * Get id of suit.
      *

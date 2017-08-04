@@ -5,14 +5,10 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/suit/AjaxDashboardCreateSuitCommand.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/controller/AjaxController.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/controller/AjaxController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/controller/MainController.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/controller/MainController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/SuitDAOImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/SuitDAOImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/database/DatabaseManager.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/database/DatabaseManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/entity/Suit.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/entity/Suit.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/SuitReceiver.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/SuitReceiver.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/SuitReceiverImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/SuitReceiverImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/config/env.properties" afterPath="$PROJECT_DIR$/src/main/resources/config/env.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/assets/dashboard/production/js/dashboard.js" afterPath="$PROJECT_DIR$/src/main/webapp/assets/dashboard/production/js/dashboard.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/assets/vue/components/dashboard/suits/CreateSuitComponent.vue" afterPath="$PROJECT_DIR$/src/main/webapp/assets/vue/components/dashboard/suits/CreateSuitComponent.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/assets/vue/package.json" afterPath="$PROJECT_DIR$/src/main/webapp/assets/vue/package.json" />
@@ -85,8 +81,8 @@
       <file leaf-file-name="SuitDAOImpl.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/SuitDAOImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="67" column="48" selection-start-line="67" selection-start-column="48" selection-end-line="67" selection-end-column="48" />
+            <state relative-caret-position="311">
+              <caret line="73" column="10" selection-start-line="73" selection-start-column="10" selection-end-line="73" selection-end-column="10" />
               <folding>
                 <marker date="1501866108314" expanded="true" signature="665:702" ph="INSERT INTO `suits`... " />
                 <marker date="1501866108314" expanded="true" signature="763:807" ph="SELECT * FRO... suits" />
@@ -954,14 +950,7 @@
       <workItem from="1500804188897" duration="48813000" />
       <workItem from="1501180884202" duration="1102000" />
       <workItem from="1501318122013" duration="64550000" />
-      <workItem from="1501775326791" duration="17090000" />
-    </task>
-    <task id="LOCAL-00067" summary="Modified exceptions.">
-      <created>1500553212251</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1500553212251</updated>
+      <workItem from="1501775326791" duration="17164000" />
     </task>
     <task id="LOCAL-00068" summary="Created DAO interfaces.">
       <created>1500555224895</created>
@@ -1299,7 +1288,14 @@
       <option name="project" value="LOCAL" />
       <updated>1501857283437</updated>
     </task>
-    <option name="localTasksCounter" value="116" />
+    <task id="LOCAL-00116" summary="Fixed character encoding bug.">
+      <created>1501867263310</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1501867263310</updated>
+    </task>
+    <option name="localTasksCounter" value="117" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1335,7 +1331,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="402824000" />
+    <option name="totallyTimeSpent" value="402898000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1428,7 +1424,6 @@
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Modified displaying horses in dashboard." />
     <MESSAGE value="Fixed bug." />
     <MESSAGE value="Created page to add new horse." />
     <MESSAGE value="Created components to present page to add new horse." />
@@ -1453,7 +1448,8 @@
     <MESSAGE value="Added security to ajax of dashboard." />
     <MESSAGE value="Fixed displaying errors." />
     <MESSAGE value="Included toastr lib &amp; fixed ajax bug." />
-    <option name="LAST_COMMIT_MESSAGE" value="Included toastr lib &amp; fixed ajax bug." />
+    <MESSAGE value="Fixed character encoding bug." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed character encoding bug." />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1885,8 +1881,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/SuitDAOImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="67" column="48" selection-start-line="67" selection-start-column="48" selection-end-line="67" selection-end-column="48" />
+        <state relative-caret-position="311">
+          <caret line="73" column="10" selection-start-line="73" selection-start-column="10" selection-end-line="73" selection-end-column="10" />
           <folding>
             <marker date="1501866108314" expanded="true" signature="665:702" ph="INSERT INTO `suits`... " />
             <marker date="1501866108314" expanded="true" signature="763:807" ph="SELECT * FRO... suits" />

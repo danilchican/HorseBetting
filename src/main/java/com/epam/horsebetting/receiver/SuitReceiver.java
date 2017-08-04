@@ -12,4 +12,12 @@ public interface SuitReceiver {
      * @throws ReceiverException
      */
     void ajaxObtainSuitsList(RequestContent content) throws ReceiverException;
+
+    /**
+     * Create a new suit.
+     *
+     * @param content
+     * @throws ReceiverException
+     */
+    void createSuit(RequestContent content) throws ReceiverException;
 }

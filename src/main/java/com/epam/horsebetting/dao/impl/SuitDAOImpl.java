@@ -33,7 +33,7 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
      */
     @Override
     public Suit create(Suit suit) throws DAOException {
-        Suit createdUser;
+        Suit createdSuit;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_SUIT)) {
             preparedStatement.setString(1, suit.getName());
@@ -42,12 +42,12 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
                 throw new DAOException("Can't add a new suit to the database.");
             }
 
-            createdUser = findByName(suit.getName());
+            createdSuit = findByName(suit.getName());
         } catch (SQLException e) {
-            throw new DAOException("Can't register new user. " + e.getMessage(), e);
+            throw new DAOException("Can't register new suit. " + e.getMessage(), e);
         }
 
-        return createdUser;
+        return createdSuit;
     }
 
     /**
@@ -89,13 +89,13 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
     @Override
     public List<Suit> findAll() throws DAOException {
         List<Suit> foundedSuits = new ArrayList<>();
-        ResultSet users;
+        ResultSet suits;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_SUITS)) {
-            users = preparedStatement.executeQuery();
+            suits = preparedStatement.executeQuery();
 
-            while (users.next()) {
-                Suit suit = extractFrom(users);
+            while (suits.next()) {
+                Suit suit = extractFrom(suits);
                 foundedSuits.add(suit);
             }
         } catch (SQLException e) {

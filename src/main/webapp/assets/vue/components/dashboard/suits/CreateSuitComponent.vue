@@ -14,11 +14,11 @@
                     <label class="control-label">Name</label>
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="row">
-                            <input id="suit-title"
+                            <input id="suit-name"
                                    type="text"
                                    class="form-control"
-                                   :value="title"
-                                   v-model="title"
+                                   :value="name"
+                                   v-model="name"
                                    placeholder="Enter the name"
                                    :disabled="disable">
                         </div>
@@ -34,11 +34,13 @@
 
     var loading_box = '<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>';
 
+    import axios from 'axios';
+
     export default {
         data() {
             return {
-                title: '',
-                disable: false,
+                name: '',
+                disable: false
             }
         },
 
@@ -69,14 +71,21 @@
                     return;
 
                 this.setDisable();
+                var vm = this;
 
-                this.$http.post('/dashboard/suits', {title: this.title})
-                        .then((data) => {
+                $.post('/ajax/dashboard/suits/create', {name: this.name})
+                        .done(function (data) {
                             // success callback
-                            var savedSuit = data.body.suit;
+                            console.log("data createSuit:");
+                            console.log(data);
 
-                            if (data.body.success === true) {
-                                var messages = data.body.messages;
+                            var savedSuit = data.suit;
+
+                            console.log("savedSuit: ");
+                            console.log(savedSuit);
+
+                            if (data.success === true) {
+                                var messages = data.messages;
 
                                 $.each(messages, function (key, value) {
                                     toastr.success(value, 'Success')
@@ -85,16 +94,17 @@
                                 toastr.error('Что-то пошло не так...', 'Error')
                             }
 
-                            this.$emit('suitCreated', savedSuit);
-                            this.title = '';
+                            vm.$emit('suitCreated', savedSuit);
+                            vm.name = '';
 
-                            this.unsetDisable();
-                        }, (data) => {
-                            this.unsetDisable();
+                            vm.unsetDisable();
+                        })
+                        .fail(function (data, statusText, xhr) {
+                            vm.unsetDisable();
                             // error callback
-                            var errors = data.body;
+                            var errors = data;
                             $.each(errors, function (key, value) {
-                                if (data.status === 422) {
+                                if (xhr.status === 422) {
                                     toastr.error(value[0], 'Error')
                                 } else {
                                     toastr.error(value, 'Error')
