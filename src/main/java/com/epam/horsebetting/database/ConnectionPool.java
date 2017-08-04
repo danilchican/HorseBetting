@@ -127,21 +127,19 @@ public class ConnectionPool {
     }
 
     /**
-     * Close connection pool.
-     *
-     * TODO закрыть в context listener'е
+     * Destroy connection pool.
      */
-    public void close() {
+    public void destroy() {
         for (int i = 0; i < dbManager.getPoolSize(); i++) {
             try {
                 ProxyConnection connection = connections.take();
                 connection.realClose();
             } catch (SQLException | InterruptedException e) {
-                LOGGER.log(Level.ERROR, "Can't close the connection", e);
+                LOGGER.log(Level.ERROR, "Can't destroy the connection", e);
             }
         }
 
         dbManager.deregisterDrivers();
-        LOGGER.log(Level.INFO, "ConnectionPool closed!");
+        LOGGER.log(Level.INFO, "ConnectionPool destroyed!");
     }
 }

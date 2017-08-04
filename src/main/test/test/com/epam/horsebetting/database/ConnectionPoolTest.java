@@ -47,6 +47,6 @@ public class ConnectionPoolTest {
             fail(t.getMessage());
         }
 
-        connectionPool.close();
+        connectionPool.destroy();
     }
 }
