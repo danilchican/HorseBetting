@@ -26,15 +26,16 @@ public class AjaxController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        processRequest(req, resp);
+        service(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        processRequest(req, resp);
+        service(req, resp);
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    protected void service(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ArrayList<String> errors = new ArrayList<>();
         String json;
@@ -44,7 +45,7 @@ public class AjaxController extends HttpServlet {
         RequestContent content = new RequestContent();
 
         try {
-            AbstractCommand command = MainController.initCommand(request);
+            AbstractCommand command = CommandInitializer.init(request);
             LOGGER.log(Level.DEBUG, "Initialized AJAX command: " + command.getClass().getName());
 
             content.extractValues(request);
