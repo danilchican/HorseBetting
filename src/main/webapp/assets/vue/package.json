@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
+    "toastr": "^2.1.2",
     "vue": "*",
     "vue-resource": "^1.3.4",
     "vue-router": "*"
@@ -15,7 +16,6 @@
     "vue-loader": "*",
     "vue-template-compiler": "*",
     "webpack": "*",
-
     "jquery": "^2.2.3",
     "bootstrap": "^3.3.7",
     "fastclick": "^1.0.6",

@@ -60,7 +60,8 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+    /******/
+    return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -162,41 +163,6 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(2);
-
-window.Vue = __webpack_require__(20);
-var VueResource = __webpack_require__(22);
-
-Vue.use(VueResource);
-
-Vue.component('users', __webpack_require__(24));
-        Vue.component('suits', __webpack_require__(30));
-
-const app = new Vue({
-    el: '#app'
-});
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
- */
-window.$ = window.jQuery = __webpack_require__(3);
-
-__webpack_require__(4);
-__webpack_require__(17);
-__webpack_require__(18);
-__webpack_require__(19);
-
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10017,6 +9983,52 @@ return jQuery;
 
 
 /***/ }),
+    /* 2 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        __webpack_require__(3);
+
+        window.Vue = __webpack_require__(20);
+        var VueResource = __webpack_require__(22);
+
+        /**
+         * Toastr notifier lib
+         */
+        window.toastr = __webpack_require__(24);
+
+        window.toastr.options = {
+            "timeOut": "5000"
+        }
+
+        Vue.use(VueResource);
+
+        Vue.component('users', __webpack_require__(26));
+        Vue.component('suits', __webpack_require__(32));
+
+        const app = new Vue({
+            el: '#app'
+        });
+
+        /***/
+    }),
+    /* 3 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        /**
+         * We'll load jQuery and the Bootstrap jQuery plugin which provides support
+         * for JavaScript based Bootstrap features such as modals and tabs. This
+         * code may be modified to fit the specific needs of your application.
+         */
+        window.$ = window.jQuery = __webpack_require__(1);
+
+        __webpack_require__(4);
+        __webpack_require__(17);
+        __webpack_require__(18);
+        __webpack_require__(19);
+
+
+        /***/
+    }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -25803,12 +25815,475 @@ if (typeof window !== 'undefined' && window.Vue) {
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
+        var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
+        /*
+         * Toastr
+         * Copyright 2012-2015
+         * Authors: John Papa, Hans Fjällemark, and Tim Ferrell.
+         * All Rights Reserved.
+         * Use, reproduction, distribution, and modification of this code is subject to the terms and
+         * conditions of the MIT license, available at http://www.opensource.org/licenses/mit-license.php
+         *
+         * ARIA Support: Greta Krafsig
+         *
+         * Project: https://github.com/CodeSeven/toastr
+         */
+        /* global define */
+        ;
+        (function (define) {
+            !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function ($) {
+                return (function () {
+                    var $container;
+                    var listener;
+                    var toastId = 0;
+                    var toastType = {
+                        error: 'error',
+                        info: 'info',
+                        success: 'success',
+                        warning: 'warning'
+                    };
+
+                    var toastr = {
+                        clear: clear,
+                        remove: remove,
+                        error: error,
+                        getContainer: getContainer,
+                        info: info,
+                        options: {},
+                        subscribe: subscribe,
+                        success: success,
+                        version: '2.1.2',
+                        warning: warning
+                    };
+
+                    var previousToast;
+
+                    return toastr;
+
+                    ////////////////
+
+                    function error(message, title, optionsOverride) {
+                        return notify({
+                            type: toastType.error,
+                            iconClass: getOptions().iconClasses.error,
+                            message: message,
+                            optionsOverride: optionsOverride,
+                            title: title
+                        });
+                    }
+
+                    function getContainer(options, create) {
+                        if (!options) {
+                            options = getOptions();
+                        }
+                        $container = $('#' + options.containerId);
+                        if ($container.length) {
+                            return $container;
+                        }
+                        if (create) {
+                            $container = createContainer(options);
+                        }
+                        return $container;
+                    }
+
+                    function info(message, title, optionsOverride) {
+                        return notify({
+                            type: toastType.info,
+                            iconClass: getOptions().iconClasses.info,
+                            message: message,
+                            optionsOverride: optionsOverride,
+                            title: title
+                        });
+                    }
+
+                    function subscribe(callback) {
+                        listener = callback;
+                    }
+
+                    function success(message, title, optionsOverride) {
+                        return notify({
+                            type: toastType.success,
+                            iconClass: getOptions().iconClasses.success,
+                            message: message,
+                            optionsOverride: optionsOverride,
+                            title: title
+                        });
+                    }
+
+                    function warning(message, title, optionsOverride) {
+                        return notify({
+                            type: toastType.warning,
+                            iconClass: getOptions().iconClasses.warning,
+                            message: message,
+                            optionsOverride: optionsOverride,
+                            title: title
+                        });
+                    }
+
+                    function clear($toastElement, clearOptions) {
+                        var options = getOptions();
+                        if (!$container) {
+                            getContainer(options);
+                        }
+                        if (!clearToast($toastElement, options, clearOptions)) {
+                            clearContainer(options);
+                        }
+                    }
+
+                    function remove($toastElement) {
+                        var options = getOptions();
+                        if (!$container) {
+                            getContainer(options);
+                        }
+                        if ($toastElement && $(':focus', $toastElement).length === 0) {
+                            removeToast($toastElement);
+                            return;
+                        }
+                        if ($container.children().length) {
+                            $container.remove();
+                        }
+                    }
+
+                    // internal functions
+
+                    function clearContainer(options) {
+                        var toastsToClear = $container.children();
+                        for (var i = toastsToClear.length - 1; i >= 0; i--) {
+                            clearToast($(toastsToClear[i]), options);
+                        }
+                    }
+
+                    function clearToast($toastElement, options, clearOptions) {
+                        var force = clearOptions && clearOptions.force ? clearOptions.force : false;
+                        if ($toastElement && (force || $(':focus', $toastElement).length === 0)) {
+                            $toastElement[options.hideMethod]({
+                                duration: options.hideDuration,
+                                easing: options.hideEasing,
+                                complete: function () {
+                                    removeToast($toastElement);
+                                }
+                            });
+                            return true;
+                        }
+                        return false;
+                    }
+
+                    function createContainer(options) {
+                        $container = $('<div/>')
+                            .attr('id', options.containerId)
+                            .addClass(options.positionClass)
+                            .attr('aria-live', 'polite')
+                            .attr('role', 'alert');
+
+                        $container.appendTo($(options.target));
+                        return $container;
+                    }
+
+                    function getDefaults() {
+                        return {
+                            tapToDismiss: true,
+                            toastClass: 'toast',
+                            containerId: 'toast-container',
+                            debug: false,
+
+                            showMethod: 'fadeIn', //fadeIn, slideDown, and show are built into jQuery
+                            showDuration: 300,
+                            showEasing: 'swing', //swing and linear are built into jQuery
+                            onShown: undefined,
+                            hideMethod: 'fadeOut',
+                            hideDuration: 1000,
+                            hideEasing: 'swing',
+                            onHidden: undefined,
+                            closeMethod: false,
+                            closeDuration: false,
+                            closeEasing: false,
+
+                            extendedTimeOut: 1000,
+                            iconClasses: {
+                                error: 'toast-error',
+                                info: 'toast-info',
+                                success: 'toast-success',
+                                warning: 'toast-warning'
+                            },
+                            iconClass: 'toast-info',
+                            positionClass: 'toast-top-right',
+                            timeOut: 5000, // Set timeOut and extendedTimeOut to 0 to make it sticky
+                            titleClass: 'toast-title',
+                            messageClass: 'toast-message',
+                            escapeHtml: false,
+                            target: 'body',
+                            closeHtml: '<button type="button">&times;</button>',
+                            newestOnTop: true,
+                            preventDuplicates: false,
+                            progressBar: false
+                        };
+                    }
+
+                    function publish(args) {
+                        if (!listener) {
+                            return;
+                        }
+                        listener(args);
+                    }
+
+                    function notify(map) {
+                        var options = getOptions();
+                        var iconClass = map.iconClass || options.iconClass;
+
+                        if (typeof (map.optionsOverride) !== 'undefined') {
+                            options = $.extend(options, map.optionsOverride);
+                            iconClass = map.optionsOverride.iconClass || iconClass;
+                        }
+
+                        if (shouldExit(options, map)) {
+                            return;
+                        }
+
+                        toastId++;
+
+                        $container = getContainer(options, true);
+
+                        var intervalId = null;
+                        var $toastElement = $('<div/>');
+                        var $titleElement = $('<div/>');
+                        var $messageElement = $('<div/>');
+                        var $progressElement = $('<div/>');
+                        var $closeElement = $(options.closeHtml);
+                        var progressBar = {
+                            intervalId: null,
+                            hideEta: null,
+                            maxHideTime: null
+                        };
+                        var response = {
+                            toastId: toastId,
+                            state: 'visible',
+                            startTime: new Date(),
+                            options: options,
+                            map: map
+                        };
+
+                        personalizeToast();
+
+                        displayToast();
+
+                        handleEvents();
+
+                        publish(response);
+
+                        if (options.debug && console) {
+                            console.log(response);
+                        }
+
+                        return $toastElement;
+
+                        function escapeHtml(source) {
+                            if (source == null)
+                                source = "";
+
+                            return new String(source)
+                                .replace(/&/g, '&amp;')
+                                .replace(/"/g, '&quot;')
+                                .replace(/'/g, '&#39;')
+                                .replace(/</g, '&lt;')
+                                .replace(/>/g, '&gt;');
+                        }
+
+                        function personalizeToast() {
+                            setIcon();
+                            setTitle();
+                            setMessage();
+                            setCloseButton();
+                            setProgressBar();
+                            setSequence();
+                        }
+
+                        function handleEvents() {
+                            $toastElement.hover(stickAround, delayedHideToast);
+                            if (!options.onclick && options.tapToDismiss) {
+                                $toastElement.click(hideToast);
+                            }
+
+                            if (options.closeButton && $closeElement) {
+                                $closeElement.click(function (event) {
+                                    if (event.stopPropagation) {
+                                        event.stopPropagation();
+                                    } else if (event.cancelBubble !== undefined && event.cancelBubble !== true) {
+                                        event.cancelBubble = true;
+                                    }
+                                    hideToast(true);
+                                });
+                            }
+
+                            if (options.onclick) {
+                                $toastElement.click(function (event) {
+                                    options.onclick(event);
+                                    hideToast();
+                                });
+                            }
+                        }
+
+                        function displayToast() {
+                            $toastElement.hide();
+
+                            $toastElement[options.showMethod](
+                                {duration: options.showDuration, easing: options.showEasing, complete: options.onShown}
+                            );
+
+                            if (options.timeOut > 0) {
+                                intervalId = setTimeout(hideToast, options.timeOut);
+                                progressBar.maxHideTime = parseFloat(options.timeOut);
+                                progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
+                                if (options.progressBar) {
+                                    progressBar.intervalId = setInterval(updateProgress, 10);
+                                }
+                            }
+                        }
+
+                        function setIcon() {
+                            if (map.iconClass) {
+                                $toastElement.addClass(options.toastClass).addClass(iconClass);
+                            }
+                        }
+
+                        function setSequence() {
+                            if (options.newestOnTop) {
+                                $container.prepend($toastElement);
+                            } else {
+                                $container.append($toastElement);
+                            }
+                        }
+
+                        function setTitle() {
+                            if (map.title) {
+                                $titleElement.append(!options.escapeHtml ? map.title : escapeHtml(map.title)).addClass(options.titleClass);
+                                $toastElement.append($titleElement);
+                            }
+                        }
+
+                        function setMessage() {
+                            if (map.message) {
+                                $messageElement.append(!options.escapeHtml ? map.message : escapeHtml(map.message)).addClass(options.messageClass);
+                                $toastElement.append($messageElement);
+                            }
+                        }
+
+                        function setCloseButton() {
+                            if (options.closeButton) {
+                                $closeElement.addClass('toast-close-button').attr('role', 'button');
+                                $toastElement.prepend($closeElement);
+                            }
+                        }
+
+                        function setProgressBar() {
+                            if (options.progressBar) {
+                                $progressElement.addClass('toast-progress');
+                                $toastElement.prepend($progressElement);
+                            }
+                        }
+
+                        function shouldExit(options, map) {
+                            if (options.preventDuplicates) {
+                                if (map.message === previousToast) {
+                                    return true;
+                                } else {
+                                    previousToast = map.message;
+                                }
+                            }
+                            return false;
+                        }
+
+                        function hideToast(override) {
+                            var method = override && options.closeMethod !== false ? options.closeMethod : options.hideMethod;
+                            var duration = override && options.closeDuration !== false ?
+                                options.closeDuration : options.hideDuration;
+                            var easing = override && options.closeEasing !== false ? options.closeEasing : options.hideEasing;
+                            if ($(':focus', $toastElement).length && !override) {
+                                return;
+                            }
+                            clearTimeout(progressBar.intervalId);
+                            return $toastElement[method]({
+                                duration: duration,
+                                easing: easing,
+                                complete: function () {
+                                    removeToast($toastElement);
+                                    if (options.onHidden && response.state !== 'hidden') {
+                                        options.onHidden();
+                                    }
+                                    response.state = 'hidden';
+                                    response.endTime = new Date();
+                                    publish(response);
+                                }
+                            });
+                        }
+
+                        function delayedHideToast() {
+                            if (options.timeOut > 0 || options.extendedTimeOut > 0) {
+                                intervalId = setTimeout(hideToast, options.extendedTimeOut);
+                                progressBar.maxHideTime = parseFloat(options.extendedTimeOut);
+                                progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
+                            }
+                        }
+
+                        function stickAround() {
+                            clearTimeout(intervalId);
+                            progressBar.hideEta = 0;
+                            $toastElement.stop(true, true)[options.showMethod](
+                                {duration: options.showDuration, easing: options.showEasing}
+                            );
+                        }
+
+                        function updateProgress() {
+                            var percentage = ((progressBar.hideEta - (new Date().getTime())) / progressBar.maxHideTime) * 100;
+                            $progressElement.width(percentage + '%');
+                        }
+                    }
+
+                    function getOptions() {
+                        return $.extend({}, getDefaults(), toastr.options);
+                    }
+
+                    function removeToast($toastElement) {
+                        if (!$container) {
+                            $container = getContainer();
+                        }
+                        if ($toastElement.is(':visible')) {
+                            return;
+                        }
+                        $toastElement.remove();
+                        $toastElement = null;
+                        if ($container.children().length === 0) {
+                            $container.remove();
+                            previousToast = undefined;
+                        }
+                    }
+
+                })();
+            }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+            __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+        }(__webpack_require__(25)));
+
+
+        /***/
+    }),
+    /* 25 */
+    /***/ (function (module, exports) {
+
+        module.exports = function () {
+            throw new Error("define cannot be used indirect");
+        };
+
+
+        /***/
+    }),
+    /* 26 */
+    /***/ (function (module, exports, __webpack_require__) {
+
 var disposed = false
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(25),
+    __webpack_require__(27),
   /* template */
-  __webpack_require__(29),
+    __webpack_require__(31),
   /* styles */
   null,
   /* scopeId */
@@ -25840,12 +26315,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 25 */
+    /* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ViewUserComponent_vue__ = __webpack_require__(26);
+        /* harmony import */
+        var __WEBPACK_IMPORTED_MODULE_0__ViewUserComponent_vue__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ViewUserComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ViewUserComponent_vue__);
 //
 //
@@ -25921,15 +26397,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 26 */
+    /* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(27),
+    __webpack_require__(29),
   /* template */
-  __webpack_require__(28),
+    __webpack_require__(30),
   /* styles */
   null,
   /* scopeId */
@@ -25961,7 +26437,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 27 */
+    /* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26010,7 +26486,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 28 */
+    /* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -26077,7 +26553,7 @@ if (false) {
 }
 
 /***/ }),
-/* 29 */
+    /* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -26101,21 +26577,21 @@ if (false) {
 
         /***/
     }),
-    /* 30 */
+    /* 32 */
     /***/ (function (module, exports, __webpack_require__) {
 
         var disposed = false
 
         function injectStyle(ssrContext) {
             if (disposed) return
-            __webpack_require__(31)
+            __webpack_require__(33)
         }
 
         var Component = __webpack_require__(0)(
             /* script */
-            __webpack_require__(36),
+            __webpack_require__(38),
             /* template */
-            __webpack_require__(43),
+            __webpack_require__(45),
             /* styles */
             injectStyle,
             /* scopeId */
@@ -26156,17 +26632,17 @@ if (false) {
 
         /***/
     }),
-    /* 31 */
+    /* 33 */
     /***/ (function (module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-        var content = __webpack_require__(32);
+        var content = __webpack_require__(34);
         if (typeof content === 'string') content = [[module.i, content, '']];
         if (content.locals) module.exports = content.locals;
 // add the styles to the DOM
-        var update = __webpack_require__(34)("3feb9ab0", content, false);
+        var update = __webpack_require__(36)("3feb9ab0", content, false);
 // Hot Module Replacement
         if (false) {
             // When the styles change, update the <style> tags
@@ -26185,10 +26661,10 @@ if (false) {
 
         /***/
     }),
-    /* 32 */
+    /* 34 */
     /***/ (function (module, exports, __webpack_require__) {
 
-        exports = module.exports = __webpack_require__(33)(undefined);
+        exports = module.exports = __webpack_require__(35)(undefined);
 // imports
 
 
@@ -26200,7 +26676,7 @@ if (false) {
 
         /***/
     }),
-    /* 33 */
+    /* 35 */
     /***/ (function (module, exports) {
 
         /*
@@ -26283,7 +26759,7 @@ if (false) {
 
         /***/
     }),
-    /* 34 */
+    /* 36 */
     /***/ (function (module, exports, __webpack_require__) {
 
         /*
@@ -26303,7 +26779,7 @@ if (false) {
             }
         }
 
-        var listToStyles = __webpack_require__(35)
+        var listToStyles = __webpack_require__(37)
 
         /*
          type StyleObject = {
@@ -26509,7 +26985,7 @@ if (false) {
 
         /***/
     }),
-    /* 35 */
+    /* 37 */
     /***/ (function (module, exports) {
 
         /**
@@ -26543,17 +27019,17 @@ if (false) {
 
         /***/
     }),
-    /* 36 */
+    /* 38 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
 
         "use strict";
         Object.defineProperty(__webpack_exports__, "__esModule", {value: true});
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0__CreateSuitComponent_vue__ = __webpack_require__(37);
+        var __WEBPACK_IMPORTED_MODULE_0__CreateSuitComponent_vue__ = __webpack_require__(39);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_0__CreateSuitComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__CreateSuitComponent_vue__);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_1__ViewSuitComponent_vue__ = __webpack_require__(40);
+        var __WEBPACK_IMPORTED_MODULE_1__ViewSuitComponent_vue__ = __webpack_require__(42);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_1__ViewSuitComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ViewSuitComponent_vue__);
 //
@@ -26840,15 +27316,15 @@ if (false) {
 
         /***/
     }),
-    /* 37 */
+    /* 39 */
     /***/ (function (module, exports, __webpack_require__) {
 
         var disposed = false
         var Component = __webpack_require__(0)(
             /* script */
-            __webpack_require__(38),
+            __webpack_require__(40),
             /* template */
-            __webpack_require__(39),
+            __webpack_require__(41),
             /* styles */
             null,
             /* scopeId */
@@ -26889,7 +27365,7 @@ if (false) {
 
         /***/
     }),
-    /* 38 */
+    /* 40 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
 
         "use strict";
@@ -26934,8 +27410,8 @@ if (false) {
         __webpack_exports__["default"] = ({
             data: function data() {
                 return {
-                    title: '',
-                    disable: false,
+                    name: '',
+                    disable: false
                 }
             },
 
@@ -26970,7 +27446,7 @@ if (false) {
 
                     this.setDisable();
 
-                    this.$http.post('/dashboard/suits', {title: this.title})
+                    this.$http.post('/ajax/dashboard/suits/create', {name: this.name})
                         .then(function (data) {
                             // success callback
                             var savedSuit = data.body.suit;
@@ -26986,7 +27462,7 @@ if (false) {
                             }
 
                             this$1.$emit('suitCreated', savedSuit);
-                            this$1.title = '';
+                            this$1.name = '';
 
                             this$1.unsetDisable();
                         }, function (data) {
@@ -27008,7 +27484,7 @@ if (false) {
 
         /***/
     }),
-    /* 39 */
+    /* 41 */
     /***/ (function (module, exports, __webpack_require__) {
 
         module.exports = {
@@ -27043,26 +27519,26 @@ if (false) {
                     directives: [{
                         name: "model",
                         rawName: "v-model",
-                        value: (_vm.title),
-                        expression: "title"
+                        value: (_vm.name),
+                        expression: "name"
                     }],
                     staticClass: "form-control",
                     attrs: {
-                        "id": "suit-title",
+                        "id": "suit-name",
                         "type": "text",
                         "placeholder": "Enter the name",
                         "disabled": _vm.disable
                     },
                     domProps: {
-                        "value": _vm.title,
-                        "value": (_vm.title)
+                        "value": _vm.name,
+                        "value": (_vm.name)
                     },
                     on: {
                         "input": function ($event) {
                             if ($event.target.composing) {
                                 return;
                             }
-                            _vm.title = $event.target.value
+                            _vm.name = $event.target.value
                         }
                     }
                 })])])]), _vm._v(" "), _c('button', {
@@ -27098,15 +27574,15 @@ if (false) {
 
         /***/
     }),
-    /* 40 */
+    /* 42 */
     /***/ (function (module, exports, __webpack_require__) {
 
         var disposed = false
         var Component = __webpack_require__(0)(
             /* script */
-            __webpack_require__(41),
+            __webpack_require__(43),
             /* template */
-            __webpack_require__(42),
+            __webpack_require__(44),
             /* styles */
             null,
             /* scopeId */
@@ -27147,7 +27623,7 @@ if (false) {
 
         /***/
     }),
-    /* 41 */
+    /* 43 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
 
         "use strict";
@@ -27217,7 +27693,7 @@ if (false) {
 
         /***/
     }),
-    /* 42 */
+    /* 44 */
     /***/ (function (module, exports, __webpack_require__) {
 
         module.exports = {
@@ -27262,7 +27738,7 @@ if (false) {
 
         /***/
     }),
-    /* 43 */
+    /* 45 */
     /***/ (function (module, exports, __webpack_require__) {
 
         module.exports = {

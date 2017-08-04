@@ -34,17 +34,18 @@ public class AjaxController extends HttpServlet {
         processRequest(req, resp);
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ArrayList<String> errors = new ArrayList<String>();
+    private void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        ArrayList<String> errors = new ArrayList<>();
         String json;
 
         RequestContent content = new RequestContent();
-        content.extractValues(request);
 
         try {
             AbstractCommand command = MainController.initCommand(request);
             LOGGER.log(Level.DEBUG, "Initialized AJAX command: " + command.getClass().getName());
 
+            content.extractValues(request);
             command.execute(content);
         } catch (IllegalCommandTypeException e) {
             LOGGER.log(Level.ERROR, e.getMessage(), e);
