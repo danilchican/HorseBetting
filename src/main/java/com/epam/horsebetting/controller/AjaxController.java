@@ -39,6 +39,8 @@ public class AjaxController extends HttpServlet {
         ArrayList<String> errors = new ArrayList<>();
         String json;
 
+        request.setCharacterEncoding("UTF-8");
+
         RequestContent content = new RequestContent();
 
         try {

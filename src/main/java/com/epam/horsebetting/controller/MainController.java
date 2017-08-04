@@ -43,6 +43,9 @@ public class MainController extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
         try {
             AbstractCommand command = initCommand(request);
             LOGGER.log(Level.DEBUG, "Initialized command: " + command.getClass().getName());

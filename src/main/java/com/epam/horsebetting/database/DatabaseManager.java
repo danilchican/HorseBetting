@@ -31,6 +31,7 @@ class DatabaseManager {
     private static final String DEFAULT_DB_USERNAME = "root";
     private static final String DEFAULT_DB_PASSWORD = "root";
     private static final String DEFAULT_DB_USE_SSL = "false";
+    private static final String DEFAULT_DB_CHARACTER_ENCODING = "utf-8";
     private static final int DEFAULT_DB_POOL_SIZE = 10;
 
     /**
@@ -95,6 +96,7 @@ class DatabaseManager {
         String host;
         String port;
         String database;
+        String characterEncoding;
 
         try {
             propName = "DB_DRIVER";
@@ -136,7 +138,17 @@ class DatabaseManager {
             LOGGER.log(Level.ERROR, "Can't find " + propName + " prop", e);
         }
 
-        url = driver + ":" + connection + "://" + host + ":" + port + "/" + database;
+        try {
+            propName = "DB_CHARACTER_ENCODING";
+            characterEncoding = dbBundle.getString(propName);
+        } catch (MissingResourceException e) {
+            characterEncoding = DEFAULT_DB_CHARACTER_ENCODING;
+            LOGGER.log(Level.ERROR, "Can't find " + propName + " prop", e);
+        }
+
+        url = driver + ":" + connection + "://" + host + ":" + port + "/" + database +
+                "?characterEncoding=" + characterEncoding;
+
         return url;
     }
 
