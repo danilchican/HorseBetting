@@ -10455,7 +10455,7 @@ return jQuery;
                     cachedClearTimeout = clearTimeout;
                 } else {
                     cachedClearTimeout = defaultClearTimeout;
-                }
+        }
             } catch (e) {
                 cachedClearTimeout = defaultClearTimeout;
             }
@@ -10480,7 +10480,7 @@ return jQuery;
                 } catch (e) {
                     // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
                     return cachedSetTimeout.call(this, fun, 0);
-                }
+        }
             }
 
 
@@ -10507,7 +10507,7 @@ return jQuery;
                     // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
                     // Some versions of I.E. have different rules for clearTimeout vs setTimeout
                     return cachedClearTimeout.call(this, marker);
-                }
+        }
             }
 
 
@@ -10547,8 +10547,8 @@ return jQuery;
                 while (++queueIndex < len) {
                     if (currentQueue) {
                         currentQueue[queueIndex].run();
-                    }
-                }
+            }
+        }
                 queueIndex = -1;
                 len = queue.length;
             }
@@ -10562,7 +10562,7 @@ return jQuery;
             if (arguments.length > 1) {
                 for (var i = 1; i < arguments.length; i++) {
                     args[i - 1] = arguments[i];
-                }
+        }
             }
             queue.push(new Item(fun, args));
             if (queue.length === 1 && !draining) {
@@ -14302,16 +14302,16 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* NProgress, 
 
       if (n === 1) {
         // Fade out
-        css(progress, {
-          transition: 'none',
-          opacity: 1
+          css(progress, {
+              transition: 'none',
+              opacity: 1
         });
         progress.offsetWidth; /* Repaint */
 
         setTimeout(function() {
-          css(progress, {
-            transition: 'all ' + speed + 'ms linear',
-            opacity: 0
+            css(progress, {
+                transition: 'all ' + speed + 'ms linear',
+                opacity: 0
           });
           setTimeout(function() {
             NProgress.remove();
@@ -14440,7 +14440,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* NProgress, 
 
     addClass(document.documentElement, 'nprogress-busy');
 
-    var progress = document.createElement('div');
+      var progress = document.createElement('div');
     progress.id = 'nprogress';
     progress.innerHTML = Settings.template;
 
@@ -14449,7 +14449,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* NProgress, 
         parent   = document.querySelector(Settings.parent),
         spinner;
 
-    css(bar, {
+      css(bar, {
       transition: 'all 0 linear',
       transform: 'translate3d(' + perc + '%,0,0)'
     });
@@ -14560,7 +14560,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* NProgress, 
   var queue = (function() {
     var pending = [];
 
-    function next() {
+      function next() {
       var fn = pending.shift();
       if (fn) {
         fn(next);
@@ -14649,7 +14649,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* NProgress, 
     var oldList = classList(element),
         newList = oldList + name;
 
-    if (hasClass(oldList, name)) return;
+      if (hasClass(oldList, name)) return;
 
     // Trim the opening space.
     element.className = newList.substring(1);
@@ -28083,7 +28083,7 @@ if (false) {
                 /**
                  * Process data for request.
                  */
-                processRequest: function processRequest(suits) {
+                processRequest: function processRequest(suits, replace) {
                     var this$1 = this;
 
                     console.log("processRequest suits:");
@@ -28093,8 +28093,13 @@ if (false) {
                         return;
                     }
 
-                    for (var i = 0; i < suits.length; i++) {
-                        this$1.list.push(suits[i]);
+                    if (replace === true) {
+                        this.list = suits;
+                        this.currentPage = 1;
+                    } else {
+                        for (var i = 0; i < suits.length; i++) {
+                            this$1.list.push(suits[i]);
+                        }
                     }
 
                     this.setCount(this.list.length);
@@ -28173,7 +28178,7 @@ if (false) {
                     var this$1 = this;
 
                     this.$http.get('/ajax/dashboard/suits?page=1').then(function (response) {
-                        this$1.processRequest(response.data.suits);
+                        this$1.processRequest(response.data.suits, true);
                     });
                 },
 
@@ -28191,7 +28196,7 @@ if (false) {
                     this.currentPage++;
 
                     this.$http.get('/ajax/dashboard/suits?page=' + this.currentPage).then(function (response) {
-                        this$1.processRequest(response.data.suits);
+                        this$1.processRequest(response.data.suits, false);
                     });
                 },
 
@@ -28382,7 +28387,7 @@ if (false) {
                             } else {
                                     toastr.error(value, 'Error')
                             }
-                            });
+                        });
                         });
                 }
             }
@@ -28920,7 +28925,7 @@ if (false) {
 
                             if (utils.isNumber(expires)) {
                                 cookie.push('expires=' + new Date(expires).toGMTString());
-        }
+                            }
 
                             if (utils.isString(path)) {
                                 cookie.push('path=' + path);
@@ -28932,7 +28937,7 @@ if (false) {
 
                             if (secure === true) {
                                 cookie.push('secure');
-                            }
+        }
 
                             document.cookie = cookie.join('; ');
                         },
@@ -29459,33 +29464,33 @@ if (false) {
                  * @param suit
                  */
                 removeSuit: function removeSuit(suit) {
-                    var this$1 = this;
+                    var vm = this;
 
-                    this.$http.delete('/dashboard/suits/' + suit.id).then(function (data) {
-                        // success callback
-                        if (data.body.success === true) {
-                            var messages = data.body.messages;
+                    $.post('/ajax/dashboard/suits/remove', {id: suit.id})
+                        .done(function (data) {
+                            if (data.success === true) {
+                                var messages = data.messages;
 
                             $.each(messages, function (key, value) {
                                 toastr.success(value, 'Success')
-                    });
+                            });
                         } else {
                             toastr.error('Что-то пошло не так...', 'Error')
-                }
+                            }
 
-                        this$1.$emit('suitRemoved');
-                    }, function (data) {
+                            vm.$emit('suitRemoved');
+                        })
+                        .fail(function (data, statusText, xhr) {
                         // error callback
-                        var errors = data.body;
+                            var errors = data;
                         $.each(errors, function (key, value) {
                             if (data.status === 422) {
                                 toastr.error(value[0], 'Error')
                             } else {
                                 toastr.error(value, 'Error')
-                    }
+                            }
                         });
                     });
-
         }
             }
         });
@@ -29566,14 +29571,14 @@ if (false) {
                     staticStyle: {
                         "padding-left": "15px"
                     }
-                }, [_vm._v("Haven't any suits.")])]) : _vm._l((_vm.list), function (suit) {
+                }, [_vm._v("Haven't any suits.")])]) : _vm._l((_vm.list), function (suit, index) {
                     return _c('view-suit', {
                         attrs: {
                             "suit": suit
                         },
                         on: {
                             "suitRemoved": function ($event) {
-                                _vm.removeFromList(_vm.index)
+                                _vm.removeFromList(index)
                             },
                             "suitEdited": function ($event) {
                                 _vm.getSuitInfo($event)
@@ -29605,7 +29610,7 @@ if (false) {
                 }, [_c('create-suit', {
                     on: {
                         "suitCreated": function ($event) {
-                            _vm.updateList(_vm.getCount())
+                            _vm.getSuitsList()
                         }
                     }
                 })], 1), _vm._v(" "), _c('div', {

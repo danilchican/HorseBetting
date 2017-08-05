@@ -28,31 +28,33 @@
              * @param suit
              */
             removeSuit(suit) {
-                this.$http.delete('/dashboard/suits/' + suit.id).then((data) => {
-                    // success callback
-                    if (data.body.success === true) {
-                        var messages = data.body.messages;
+                var vm = this;
 
-                        $.each(messages, function (key, value) {
-                            toastr.success(value, 'Success')
+                $.post('/ajax/dashboard/suits/remove', {id: suit.id})
+                        .done(function (data) {
+                            if (data.success === true) {
+                                var messages = data.messages;
+
+                                $.each(messages, function (key, value) {
+                                    toastr.success(value, 'Success')
+                                });
+                            } else {
+                                toastr.error('Что-то пошло не так...', 'Error')
+                            }
+
+                            vm.$emit('suitRemoved');
+                        })
+                        .fail(function (data, statusText, xhr) {
+                            // error callback
+                            var errors = data;
+                            $.each(errors, function (key, value) {
+                                if (data.status === 422) {
+                                    toastr.error(value[0], 'Error')
+                                } else {
+                                    toastr.error(value, 'Error')
+                                }
+                            });
                         });
-                    } else {
-                        toastr.error('Что-то пошло не так...', 'Error')
-                    }
-
-                    this.$emit('suitRemoved');
-                }, (data) => {
-                    // error callback
-                    var errors = data.body;
-                    $.each(errors, function (key, value) {
-                        if (data.status === 422) {
-                            toastr.error(value[0], 'Error')
-                        } else {
-                            toastr.error(value, 'Error')
-                        }
-                    });
-                });
-
             }
         }
     }

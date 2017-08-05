@@ -23,7 +23,8 @@
                         <td v-if="list.length == 0">
                             <h5 style="padding-left: 15px;">Haven't any suits.</h5>
                         </td>
-                        <view-suit v-else v-for="suit in list" :suit="suit" @suitRemoved="removeFromList(index)"
+                        <view-suit v-else v-for="(suit, index) in list" :suit="suit"
+                                   @suitRemoved="removeFromList(index)"
                                    @suitEdited="getSuitInfo($event)"></view-suit>
                         </tbody>
                     </table>
@@ -37,7 +38,7 @@
             </div>
         </div>
         <div class="col-md-6 col-sm-12 col-xs-12">
-            <create-suit @suitCreated="updateList(getCount())"></create-suit>
+            <create-suit @suitCreated="getSuitsList()"></create-suit>
         </div>
 
         <!-- Edit Suit Modal -->
@@ -154,7 +155,7 @@
             /**
              * Process data for request.
              */
-            processRequest(suits) {
+            processRequest(suits, replace) {
                 console.log("processRequest suits:");
                 console.log(suits);
 
@@ -162,8 +163,13 @@
                     return;
                 }
 
-                for (var i = 0; i < suits.length; i++) {
-                    this.list.push(suits[i]);
+                if (replace === true) {
+                    this.list = suits;
+                    this.currentPage = 1;
+                } else {
+                    for (var i = 0; i < suits.length; i++) {
+                        this.list.push(suits[i]);
+                    }
                 }
 
                 this.setCount(this.list.length);
@@ -238,7 +244,7 @@
              */
             getSuitsList() {
                 this.$http.get('/ajax/dashboard/suits?page=1').then((response) => {
-                    this.processRequest(response.data.suits);
+                    this.processRequest(response.data.suits, true);
                 });
             },
 
@@ -253,7 +259,7 @@
                 this.currentPage++;
 
                 this.$http.get('/ajax/dashboard/suits?page=' + this.currentPage).then((response) => {
-                    this.processRequest(response.data.suits);
+                    this.processRequest(response.data.suits, false);
                 });
             },
 
