@@ -20,6 +20,7 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
      * SQL queries for SuitDAOImpl.
      */
     private static final String SQL_ADD_SUIT = "INSERT INTO `suits` (name) VALUES (?);";
+    private static final String SQL_REMOVE_SUIT = "DELETE FROM `suits` WHERE `id`=?;";
     private static final String SQL_FIND_SUIT_BY_NAME = "SELECT * FROM `suits` WHERE `name`=? LIMIT 1;";
     private static final String SQL_SELECT_SUITS = "SELECT * FROM `suits`;";
     private static final String SQL_SELECT_PART_SUITS = "SELECT * FROM `suits` ORDER BY `id` LIMIT ? OFFSET ?;";
@@ -48,6 +49,28 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
         }
 
         return createdSuit;
+    }
+
+    /**
+     * Remove suit.
+     *
+     * @param suit
+     * @return boolean
+     * @throws DAOException
+     */
+    @Override
+    public boolean remove(Suit suit) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_REMOVE_SUIT)) {
+            preparedStatement.setInt(1, suit.getId());
+
+            if (preparedStatement.executeUpdate() != 1) {
+                throw new DAOException("Can't remove suit from the database.");
+            }
+
+            return true;
+        } catch (SQLException e) {
+            throw new DAOException("Can't register new suit. " + e.getMessage(), e);
+        }
     }
 
     /**

@@ -7,6 +7,10 @@ public class Suit extends Entity {
     public Suit() {
     }
 
+    public Suit(int id) {
+        this.id = id;
+    }
+
     public Suit(String name) {
         this.name = name;
     }

@@ -18,6 +18,15 @@ public interface SuitDAO {
      */
     Suit create(Suit suit) throws DAOException;
 
+    /**
+     * Remove suit.
+     *
+     * @param suit
+     * @return boolean
+     * @throws DAOException
+     */
+    boolean remove(Suit suit) throws DAOException;
+
 
     /**
      * Obtain part of suits.
