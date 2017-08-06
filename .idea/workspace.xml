@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e9db2c3d-90c7-4a9a-9541-77ab3b3b2a13" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/suit/AjaxDashboardUpdateSuitCommand.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/SuitDAO.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/SuitDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/SuitDAOImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/SuitDAOImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/SuitReceiver.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/SuitReceiver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/SuitReceiverImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/SuitReceiverImpl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/assets/dashboard/production/js/dashboard.js" afterPath="$PROJECT_DIR$/src/main/webapp/assets/dashboard/production/js/dashboard.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/assets/vue/components/dashboard/suits/SuitComponent.vue" afterPath="$PROJECT_DIR$/src/main/webapp/assets/vue/components/dashboard/suits/SuitComponent.vue" />
     </list>
@@ -1124,14 +1118,7 @@
       <workItem from="1500804188897" duration="48813000" />
       <workItem from="1501180884202" duration="1102000" />
       <workItem from="1501318122013" duration="64550000" />
-      <workItem from="1501775326791" duration="35718000" />
-    </task>
-    <task id="LOCAL-00076" summary="Modified showing errors.">
-      <created>1500649533158</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1500649533159</updated>
+      <workItem from="1501775326791" duration="35744000" />
     </task>
     <task id="LOCAL-00077" summary="Closed #23 and fixed login &amp; register.">
       <created>1500660506869</created>
@@ -1469,7 +1456,14 @@
       <option name="project" value="LOCAL" />
       <updated>1501927441706</updated>
     </task>
-    <option name="localTasksCounter" value="125" />
+    <task id="LOCAL-00125" summary="Created method to update Suit.">
+      <created>1502026598906</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1502026598906</updated>
+    </task>
+    <option name="localTasksCounter" value="126" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1505,7 +1499,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="421452000" />
+    <option name="totallyTimeSpent" value="421478000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1598,7 +1592,6 @@
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Modified dashboard sidebar." />
     <MESSAGE value="Created jsp for suits of horses." />
     <MESSAGE value="Created view for dashboard suits." />
     <MESSAGE value="Fixed character encoding in ajax." />
@@ -1623,7 +1616,8 @@
     <MESSAGE value="Added logging to contextListener." />
     <MESSAGE value="Created method to delete suit." />
     <MESSAGE value="Fixed updating suits list after delete()." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed updating suits list after delete()." />
+    <MESSAGE value="Created method to update Suit." />
+    <option name="LAST_COMMIT_MESSAGE" value="Created method to update Suit." />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

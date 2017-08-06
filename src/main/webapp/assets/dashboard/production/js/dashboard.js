@@ -28002,6 +28002,7 @@ if (false) {
 //
 //
 //
+//
 
         var loading_box = '<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>';
 
@@ -28020,7 +28021,7 @@ if (false) {
                     disable: false,
                     editSuit: {
                         id: 0,
-                        title: ''
+                        name: ''
                     }
                 }
             },
@@ -28036,6 +28037,7 @@ if (false) {
                  * Set disable for boxes.
                  */
                 setDisable: function setDisable() {
+                    $('input').attr('disabled', 'disabled');
                     this.disable = true;
                     $('#box-table-suits').find('.x_panel').append(loading_box);
                 },
@@ -28044,6 +28046,7 @@ if (false) {
                  * Unset disable from box.
                  */
                 unsetDisable: function unsetDisable() {
+                    $('input').attr('disabled', false);
                     this.disable = false;
                     $('#box-table-suits').find('.overlay').remove();
                 },
@@ -28090,6 +28093,7 @@ if (false) {
                     console.log(suits);
 
                     if (suits === undefined) {
+                        this.unsetDisable();
                         return;
                     }
 
@@ -28117,7 +28121,7 @@ if (false) {
                  */
                 setEditingSuit: function setEditingSuit(suit) {
                     this.editSuit.id = suit.id;
-                    this.editSuit.title = suit.title;
+                    this.editSuit.name = suit.name;
                 },
 
                 /**
@@ -28125,7 +28129,7 @@ if (false) {
                  */
                 unsetEditingSuit: function unsetEditingSuit() {
                     this.editSuit.id = 0;
-                    this.editSuit.title = '';
+                    this.editSuit.name = '';
                 },
 
                 /**
@@ -28141,32 +28145,44 @@ if (false) {
                  * Update suit model.
                  */
                 updateSuit: function updateSuit() {
-                    var this$1 = this;
+                    var vm = this;
 
-                    this.$http.put('/ajax/dashboard/suits/' + this.editSuit.id, this.editSuit).then(function (data) {
-                        this$1.updateList(this$1.getCount());
+                    var data = {
+                        id: this.editSuit.id,
+                        name: this.editSuit.name
+                    };
 
-                        if (data.body.success === true) {
-                            var messages = data.body.messages;
+                    if (this.isDisabled()) {
+                        return;
+                    }
 
-                            $('#editSuitModal').modal('hide');
+                    this.setDisable();
+
+                    $.post('/ajax/dashboard/suits/update', data)
+                        .done(function (data) {
+                            if (data.success === true) {
+                                var messages = data.messages;
+
                             $.each(messages, function (key, value) {
                                 toastr.success(value, 'Success')
-                    });
+                            });
+
+                                $('#editSuitModal').modal('hide');
+
+                                vm.getSuitsList();
                         } else {
                             toastr.error('Что-то пошло не так...', 'Error')
                         }
-
-                    }, function (data) {
-                        this$1.unsetDisable();
+                        })
+                        .fail(function (data, statusText, xhr) {
                         // error callback
-                        var errors = data.body;
+                            var errors = data;
                         $.each(errors, function (key, value) {
                             if (data.status === 422) {
                                 toastr.error(value[0], 'Error')
                             } else {
                                 toastr.error(value, 'Error')
-                    }
+                            }
                         });
                     });
                 },
@@ -29635,30 +29651,30 @@ if (false) {
                     attrs: {
                         "id": "editSuitModalLabel"
                     }
-                }, [_vm._v("Редактировать \"" + _vm._s(_vm.editSuit.title) + "\"")])]), _vm._v(" "), _c('div', {
+                }, [_vm._v("Редактировать \"" + _vm._s(_vm.editSuit.name) + "\"")])]), _vm._v(" "), _c('div', {
                     staticClass: "modal-body"
                 }, [_c('div', {
                     staticClass: "form-group"
                 }, [_c('label', {
                     attrs: {
-                        "for": "title-edit"
+                        "for": "suit-name-edit"
                     }
-                }, [_vm._v("Title")]), _vm._v(" "), _c('input', {
+                }, [_vm._v("Suit Name")]), _vm._v(" "), _c('input', {
                     directives: [{
                         name: "model",
                         rawName: "v-model",
-                        value: (_vm.editSuit.title),
-                        expression: "editSuit.title"
+                        value: (_vm.editSuit.name),
+                        expression: "editSuit.name"
                     }],
                     staticClass: "form-control",
                     attrs: {
                         "type": "text",
-                        "id": "title-edit",
+                        "id": "suit-name-edit",
                         "placeholder": "Введите название услуги"
                     },
                     domProps: {
-                        "value": _vm.editSuit.title,
-                        "value": (_vm.editSuit.title)
+                        "value": _vm.editSuit.name,
+                        "value": (_vm.editSuit.name)
                     },
                     on: {
                         "keyup": function ($event) {
@@ -29671,7 +29687,7 @@ if (false) {
                             if ($event.target.composing) {
                                 return;
                             }
-                            _vm.editSuit.title = $event.target.value
+                            _vm.editSuit.name = $event.target.value
                         }
                     }
                 })])]), _vm._v(" "), _c('div', {

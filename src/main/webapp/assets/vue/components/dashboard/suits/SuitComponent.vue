@@ -48,13 +48,13 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="editSuitModalLabel">Редактировать "{{ editSuit.title }}"</h4>
+                        <h4 class="modal-title" id="editSuitModalLabel">Редактировать "{{ editSuit.name }}"</h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="title-edit">Title</label>
-                            <input type="text" id="title-edit" @keyup.enter="updateSuit()" v-model="editSuit.title"
-                                   :value="editSuit.title" placeholder="Введите название услуги" class="form-control">
+                            <label for="suit-name-edit">Suit Name</label>
+                            <input type="text" id="suit-name-edit" @keyup.enter="updateSuit()" v-model="editSuit.name"
+                                   :value="editSuit.name" placeholder="Введите название услуги" class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -92,7 +92,7 @@
                 disable: false,
                 editSuit: {
                     id: 0,
-                    title: ''
+                    name: ''
                 }
             }
         },
@@ -108,6 +108,7 @@
              * Set disable for boxes.
              */
             setDisable() {
+                $('input').attr('disabled', 'disabled');
                 this.disable = true;
                 $('#box-table-suits').find('.x_panel').append(loading_box);
             },
@@ -116,6 +117,7 @@
              * Unset disable from box.
              */
             unsetDisable() {
+                $('input').attr('disabled', false);
                 this.disable = false;
                 $('#box-table-suits').find('.overlay').remove();
             },
@@ -160,6 +162,7 @@
                 console.log(suits);
 
                 if (suits === undefined) {
+                    this.unsetDisable();
                     return;
                 }
 
@@ -187,7 +190,7 @@
              */
             setEditingSuit(suit) {
                 this.editSuit.id = suit.id;
-                this.editSuit.title = suit.title;
+                this.editSuit.name = suit.name;
             },
 
             /**
@@ -195,7 +198,7 @@
              */
             unsetEditingSuit() {
                 this.editSuit.id = 0;
-                this.editSuit.title = '';
+                this.editSuit.name = '';
             },
 
             /**
@@ -211,32 +214,45 @@
              * Update suit model.
              */
             updateSuit() {
-                this.$http.put('/ajax/dashboard/suits/' + this.editSuit.id, this.editSuit).then((data) => {
-                    this.updateList(this.getCount());
+                var vm = this;
 
-                    if (data.body.success === true) {
-                        var messages = data.body.messages;
+                var data = {
+                    id: this.editSuit.id,
+                    name: this.editSuit.name
+                };
 
-                        $('#editSuitModal').modal('hide');
-                        $.each(messages, function (key, value) {
-                            toastr.success(value, 'Success')
+                if (this.isDisabled())
+                    return;
+
+                this.setDisable();
+
+                $.post('/ajax/dashboard/suits/update', data)
+                        .done(function (data) {
+                            if (data.success === true) {
+                                var messages = data.messages;
+
+                                $.each(messages, function (key, value) {
+                                    toastr.success(value, 'Success')
+                                });
+
+                                $('#editSuitModal').modal('hide');
+
+                                vm.getSuitsList();
+                            } else {
+                                toastr.error('Что-то пошло не так...', 'Error')
+                            }
+                        })
+                        .fail(function (data, statusText, xhr) {
+                            // error callback
+                            var errors = data;
+                            $.each(errors, function (key, value) {
+                                if (data.status === 422) {
+                                    toastr.error(value[0], 'Error')
+                                } else {
+                                    toastr.error(value, 'Error')
+                                }
+                            });
                         });
-                    } else {
-                        toastr.error('Что-то пошло не так...', 'Error')
-                    }
-
-                }, (data) => {
-                    this.unsetDisable();
-                    // error callback
-                    var errors = data.body;
-                    $.each(errors, function (key, value) {
-                        if (data.status === 422) {
-                            toastr.error(value[0], 'Error')
-                        } else {
-                            toastr.error(value, 'Error')
-                        }
-                    });
-                });
             },
 
             /**
