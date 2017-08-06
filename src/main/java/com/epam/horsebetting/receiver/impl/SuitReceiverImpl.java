@@ -86,6 +86,44 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
     }
 
     /**
+     * Find suit by id.
+     *
+     * @param content
+     * @throws ReceiverException
+     */
+    @Override
+    public void updateSuit(RequestContent content) throws ReceiverException {
+        ArrayList<String> messages = new ArrayList<>();
+
+        int id = Integer.parseInt(content.findParameter("id"));
+        String name = content.findParameter("name");
+
+        //TODO Create validators
+
+        Suit suit = new Suit(id);
+        suit.setName(name);
+
+        try (SuitDAOImpl suitDAO = new SuitDAOImpl()) {
+            boolean result = suitDAO.update(suit);
+
+            if (result) {
+                messages.add("Suit updated successfully");
+            } else {
+                messages.add("Can't update current suit");
+            }
+
+            content.insertJsonAttribute("messages", messages);
+            content.insertJsonAttribute("success", result);
+        } catch (DAOException e) {
+            messages.add("Can't update current suit");
+            content.insertJsonAttribute("messages", messages);
+            content.insertJsonAttribute("success", false);
+
+            throw new ReceiverException("Database Error: " + e.getMessage(), e);
+        }
+    }
+
+    /**
      * Remove suit.
      *
      * @param content

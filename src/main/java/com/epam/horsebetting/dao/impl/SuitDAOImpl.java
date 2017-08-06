@@ -20,6 +20,7 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
      * SQL queries for SuitDAOImpl.
      */
     private static final String SQL_ADD_SUIT = "INSERT INTO `suits` (name) VALUES (?);";
+    private static final String SQL_UPDATE_SUIT = "UPDATE `suits` SET `name`=? WHERE `id`=?;";
     private static final String SQL_REMOVE_SUIT = "DELETE FROM `suits` WHERE `id`=?;";
     private static final String SQL_FIND_SUIT_BY_NAME = "SELECT * FROM `suits` WHERE `name`=? LIMIT 1;";
     private static final String SQL_SELECT_SUITS = "SELECT * FROM `suits`;";
@@ -49,6 +50,28 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
         }
 
         return createdSuit;
+    }
+
+    /**
+     * Update suit.
+     *
+     * @param suit
+     * @return boolean
+     */
+    @Override
+    public boolean update(Suit suit) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_SUIT)) {
+            preparedStatement.setString(1, suit.getName());
+            preparedStatement.setInt(2, suit.getId());
+
+            if (preparedStatement.executeUpdate() != 1) {
+                throw new DAOException("Can't update suit.");
+            }
+
+            return true;
+        } catch (SQLException e) {
+            throw new DAOException("Can't update suit. " + e.getMessage(), e);
+        }
     }
 
     /**
@@ -147,7 +170,7 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
                 suit = extractFrom(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Can't find suit: " + e.getMessage(), e);
         }
 
         return suit;

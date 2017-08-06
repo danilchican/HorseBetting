@@ -2,10 +2,7 @@ package com.epam.horsebetting.command;
 
 import com.epam.horsebetting.command.auth.*;
 import com.epam.horsebetting.command.race.DashboardRacesPresentCommand;
-import com.epam.horsebetting.command.suit.AjaxDashboardCreateSuitCommand;
-import com.epam.horsebetting.command.suit.AjaxDashboardRemoveSuitCommand;
-import com.epam.horsebetting.command.suit.AjaxDashboardSuitsListCommand;
-import com.epam.horsebetting.command.suit.DashboardSuitsPresentCommand;
+import com.epam.horsebetting.command.suit.*;
 import com.epam.horsebetting.command.user.AjaxDashboardUsersListCommand;
 import com.epam.horsebetting.command.dashboard.DashboardPresentCommand;
 import com.epam.horsebetting.command.user.DashboardUsersPresentCommand;
@@ -127,6 +124,12 @@ public enum CommandType {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {
             ((SuitReceiverImpl) getCommand().getReceiver()).removeSuit(content);
+        }
+    },
+    AJAX_DASHBOARD_SUITS_FIND("ajax.dashboard.suits.update::post", new AjaxDashboardUpdateSuitCommand(new SuitReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((SuitReceiverImpl) getCommand().getReceiver()).updateSuit(content);
         }
     };
 

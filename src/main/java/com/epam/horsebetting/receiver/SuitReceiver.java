@@ -21,6 +21,15 @@ public interface SuitReceiver {
      */
     void createSuit(RequestContent content) throws ReceiverException;
 
+
+    /**
+     * Update suit.
+     *
+     * @param content
+     * @throws ReceiverException
+     */
+    void updateSuit(RequestContent content) throws ReceiverException;
+
     /**
      * Remove suit.
      *
