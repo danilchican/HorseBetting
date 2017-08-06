@@ -72,7 +72,7 @@
                                         <td>${horse.getName()}</td>
                                         <td>${horse.getSuitId()}</td>
                                         <td>${horse.getAge()}</td>
-                                        <td>${horse.getSex() ? "Male" : "Female"}</td>
+                                        <td>${horse.getGender() ? "Male" : "Female"}</td>
                                         <td>
                                             <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View
                                             </a>
@@ -86,6 +86,9 @@
                                 </c:forEach>
                                 </tbody>
                             </table>
+                            <c:if test="${totalHorses == 0}">
+                                <p>Haven't any horses.</p>
+                            </c:if>
                             <!-- end project list -->
                             <ctg:pagination total="${totalHorses}" limit="${limitHorses}"/>
                         </div>
