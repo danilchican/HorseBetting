@@ -24,34 +24,63 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
     /**
      * SQL queries for HorseDAOImpl.
      */
-    private static final String SQL_SELECT_ALL_HORSES = "SELECT * FROM `horses`;";
+    private static final String SQL_ADD_HORSE = "INSERT INTO `horses` (name, age, gender, suit_id) VALUES (?,?,?,?);";
+    private static final String SQL_FIND_HORSE_BY_NAME = "SELECT * FROM `horses` WHERE `name`=? LIMIT 1;";
     private static final String SQL_SELECT_PART_HORSES = "SELECT * FROM `horses` LIMIT ? OFFSET ?;";
     private static final String SQL_COUNT_HORSES = "SELECT COUNT(*) as `total` FROM `horses`;";
 
     /**
-     * Find all horses.
+     * Create a new horse.
      *
-     * @return list of horses
+     * @param horse
+     * @return horse
      * @throws DAOException
      */
     @Override
-    public List<Horse> findAll() throws DAOException {
-        List<Horse> foundedHorses = new ArrayList<>();
-        ResultSet horses;
+    public Horse create(Horse horse) throws DAOException {
+        Horse createdHorse;
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL_HORSES)) {
-            horses = preparedStatement.executeQuery();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_HORSE)) {
+            preparedStatement.setString(1, horse.getName());
+            preparedStatement.setByte(2, horse.getAge());
+            preparedStatement.setBoolean(3, horse.getGender());
+            preparedStatement.setInt(4, horse.getSuitId());
 
-            while (horses.next()) {
-                Horse horse = extractFrom(horses);
-                foundedHorses.add(horse);
-                LOGGER.log(Level.DEBUG, "Horse was added to list: " + horse);
+            if (preparedStatement.executeUpdate() != 1) {
+                throw new DAOException("Can't add a new horse to the database.");
             }
+
+            createdHorse = findByName(horse.getName());
         } catch (SQLException e) {
-            throw new DAOException("Cannot retrieve horses list. " + e.getMessage(), e);
+            throw new DAOException("Can't add a new horse. " + e.getMessage(), e);
         }
 
-        return foundedHorses;
+        return createdHorse;
+    }
+
+    /**
+     * Find horse by name.
+     *
+     * @param name
+     * @return horse
+     */
+    @Override
+    public Horse findByName(String name) throws DAOException {
+        ResultSet resultSet;
+        Horse horse = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_HORSE_BY_NAME)) {
+            preparedStatement.setString(1, name);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                horse = extractFrom(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't find horse: " + e.getMessage(), e);
+        }
+
+        return horse;
     }
 
     /**
@@ -123,7 +152,7 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
         horse.setSuitId(horseDataSet.getInt("suit_id"));
         horse.setName(horseDataSet.getString("name"));
         horse.setAge(horseDataSet.getByte("age"));
-        horse.setSex(horseDataSet.getBoolean("sex"));
+        horse.setGender(horseDataSet.getBoolean("gender"));
 
         return horse;
     }

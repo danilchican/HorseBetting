@@ -6,7 +6,14 @@ public class Horse extends Entity {
 
     private String name;
     private byte age;
-    private boolean sex;
+    private boolean gender;
+
+    public Horse() {
+    }
+
+    public Horse(String name) {
+        setName(name);
+    }
 
     /**
      * Get id of horse.
@@ -47,10 +54,10 @@ public class Horse extends Entity {
     /**
      * Get sex of horse.
      *
-     * @return sex
+     * @return gender
      */
-    public boolean getSex() {
-        return sex;
+    public boolean getGender() {
+        return gender;
     }
 
     /**
@@ -90,12 +97,12 @@ public class Horse extends Entity {
     }
 
     /**
-     * Set sex of horse.
+     * Set gender of horse.
      *
-     * @param sex
+     * @param gender
      */
-    public void setSex(boolean sex) {
-        this.sex = sex;
+    public void setGender(boolean gender) {
+        this.gender = gender;
     }
 
     @Override
@@ -105,7 +112,7 @@ public class Horse extends Entity {
                 ", suitId=" + suitId +
                 ", name='" + name + '\'' +
                 ", age=" + age +
-                ", sex=" + sex +
+                ", gender=" + gender +
                 "}";
     }
 }

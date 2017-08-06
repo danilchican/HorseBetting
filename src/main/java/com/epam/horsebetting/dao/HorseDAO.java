@@ -3,19 +3,26 @@ package com.epam.horsebetting.dao;
 import com.epam.horsebetting.entity.Horse;
 import com.epam.horsebetting.exception.DAOException;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 public interface HorseDAO {
 
     /**
-     * Find all horses.
+     * Create a new horse.
      *
-     * @return list of horses
+     * @param horse
+     * @return horse
      * @throws DAOException
      */
-    List<Horse> findAll() throws DAOException;
+    Horse create(Horse horse) throws DAOException;
+
+    /**
+     * Find horse by name.
+     *
+     * @param name
+     * @return horse
+     */
+    Horse findByName(String name) throws DAOException;
 
     /**
      * Obtain part of horses.

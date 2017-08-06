@@ -4,9 +4,6 @@ import com.epam.horsebetting.dao.AbstractDAO;
 import com.epam.horsebetting.dao.SuitDAO;
 import com.epam.horsebetting.entity.Suit;
 import com.epam.horsebetting.exception.DAOException;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -46,7 +43,7 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
 
             createdSuit = findByName(suit.getName());
         } catch (SQLException e) {
-            throw new DAOException("Can't register new suit. " + e.getMessage(), e);
+            throw new DAOException("Can't add a new suit. " + e.getMessage(), e);
         }
 
         return createdSuit;
