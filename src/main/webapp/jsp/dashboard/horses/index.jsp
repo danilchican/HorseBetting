@@ -53,7 +53,7 @@
                             <a href="/dashboard/horses/create">
                                 <button type="button" class="btn btn-round btn-success">New Horse</button>
                             </a>
-                            <!-- start project list -->
+                            <!-- start horse list -->
                             <table class="table table-striped projects">
                                 <thead>
                                 <tr>
@@ -61,7 +61,7 @@
                                     <th style="width: 25%">Name</th>
                                     <th>Suit</th>
                                     <th style="width: 4%">Age</th>
-                                    <th style="width: 10%">Sex</th>
+                                    <th style="width: 10%">Gender</th>
                                     <th style="width: 20%">Action</th>
                                 </tr>
                                 </thead>
@@ -74,13 +74,17 @@
                                         <td>${horse.getAge()}</td>
                                         <td>${horse.getGender() ? "Male" : "Female"}</td>
                                         <td>
-                                            <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View
+                                            <a href="/dashboard/horses/edit/${horse.getId()}"
+                                               class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit
                                             </a>
-                                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit
-                                            </a>
-                                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>
+                                            <a href="#"
+                                               onclick="event.preventDefault(); document.getElementById('delete-horse-form-${horse.getId()}').submit();"
+                                               class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>
                                                 Delete
                                             </a>
+                                            <form action="/dashboard/horses/delete/${horse.getId()}"
+                                                  id="delete-horse-form-${horse.getId()}" method="post"
+                                                  style="display: none;"></form>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -89,7 +93,7 @@
                             <c:if test="${totalHorses == 0}">
                                 <p>Haven't any horses.</p>
                             </c:if>
-                            <!-- end project list -->
+                            <!-- end horse list -->
                             <ctg:pagination total="${totalHorses}" limit="${limitHorses}"/>
                         </div>
                     </div>
