@@ -2,6 +2,7 @@ package com.epam.horsebetting.command;
 
 import com.epam.horsebetting.command.auth.*;
 import com.epam.horsebetting.command.horse.DashboardCreateHorseCommand;
+import com.epam.horsebetting.command.horse.DashboardRemoveHorseCommand;
 import com.epam.horsebetting.command.race.DashboardRacesPresentCommand;
 import com.epam.horsebetting.command.suit.*;
 import com.epam.horsebetting.command.user.AjaxDashboardUsersListCommand;
@@ -96,6 +97,12 @@ public enum CommandType {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {
             ((HorseReceiverImpl) getCommand().getReceiver()).createHorse(content);
+        }
+    },
+    DASHBOARD_HORSES_REMOVE("dashboard.horses.remove::post", new DashboardRemoveHorseCommand(new HorseReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((HorseReceiverImpl) getCommand().getReceiver()).removeHorse(content);
         }
     },
     DASHBOARD_RACES_INDEX("dashboard.races::get", new DashboardRacesPresentCommand(new PageReceiverImpl())) {

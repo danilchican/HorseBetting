@@ -89,7 +89,7 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
 
             return true;
         } catch (SQLException e) {
-            throw new DAOException("Can't register new suit. " + e.getMessage(), e);
+            throw new DAOException("Can't remove suit. " + e.getMessage(), e);
         }
     }
 

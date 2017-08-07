@@ -12,4 +12,12 @@ public interface HorseReceiver {
      * @throws ReceiverException
      */
     void createHorse(RequestContent content) throws ReceiverException;
+
+    /**
+     * Remove horse.
+     *
+     * @param content
+     * @throws ReceiverException
+     */
+    void removeHorse(RequestContent content) throws ReceiverException;
 }

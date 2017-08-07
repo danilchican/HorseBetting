@@ -82,9 +82,11 @@
                                                class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>
                                                 Delete
                                             </a>
-                                            <form action="/dashboard/horses/delete/${horse.getId()}"
+                                            <form action="/dashboard/horses/remove"
                                                   id="delete-horse-form-${horse.getId()}" method="post"
-                                                  style="display: none;"></form>
+                                                  style="display: none;">
+                                                <input type="hidden" name="horse-id" value="${horse.getId()}">
+                                            </form>
                                         </td>
                                     </tr>
                                 </c:forEach>

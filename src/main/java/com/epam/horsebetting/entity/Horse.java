@@ -11,6 +11,10 @@ public class Horse extends Entity {
     public Horse() {
     }
 
+    public Horse(int id) {
+        setId(id);
+    }
+
     public Horse(String name) {
         setName(name);
     }

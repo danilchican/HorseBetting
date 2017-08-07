@@ -16,6 +16,16 @@ public interface HorseDAO {
      */
     Horse create(Horse horse) throws DAOException;
 
+
+    /**
+     * Remove horse.
+     *
+     * @param horse
+     * @return boolean
+     * @throws DAOException
+     */
+    boolean remove(Horse horse) throws DAOException;
+
     /**
      * Find horse by name.
      *

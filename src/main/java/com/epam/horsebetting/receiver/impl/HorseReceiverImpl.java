@@ -29,7 +29,7 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
     @Override
     public void createHorse(RequestContent content) throws ReceiverException {
         String name = content.findParameter("horse-name");
-        boolean gender = Boolean.valueOf(content.findParameter("gender"));
+        boolean gender = "male".equals(content.findParameter("gender"));
 
         byte age = Byte.parseByte(content.findParameter("horse-age"));
         int suitId = Integer.parseInt(content.findParameter("horse-suit"));
@@ -54,6 +54,43 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
             content.insertSessionAttribute("errors", errors);
 
             // TODO add saving old inputs
+
+            throw new ReceiverException("Database Error: " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Remove horse.
+     *
+     * @param content
+     * @throws ReceiverException
+     */
+    @Override
+    public void removeHorse(RequestContent content) throws ReceiverException {
+        int id = Integer.parseInt(content.findParameter("horse-id"));
+
+        ArrayList<String> messages = new ArrayList<>();
+
+        //TODO Create validators
+
+        Horse suit = new Horse(id);
+        LOGGER.log(Level.DEBUG, "Want remove horse: " + suit);
+
+        try (HorseDAOImpl suitDAO = new HorseDAOImpl()) {
+            boolean result = suitDAO.remove(suit);
+
+            if (result) {
+                messages.add("Horse removed successfully");
+            } else {
+                messages.add("Can't remove current horse");
+            }
+
+            content.insertSessionAttribute("messages", messages);
+            content.insertSessionAttribute("success", result);
+        } catch (DAOException e) {
+            messages.add("Can't remove current horse");
+            content.insertSessionAttribute("messages", messages);
+            content.insertSessionAttribute("success", false);
 
             throw new ReceiverException("Database Error: " + e.getMessage(), e);
         }

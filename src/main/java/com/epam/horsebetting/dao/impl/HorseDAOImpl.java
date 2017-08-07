@@ -25,6 +25,7 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
      * SQL queries for HorseDAOImpl.
      */
     private static final String SQL_ADD_HORSE = "INSERT INTO `horses` (name, age, gender, suit_id) VALUES (?,?,?,?);";
+    private static final String SQL_REMOVE_HORSE = "DELETE FROM `horses` WHERE `id`=?;";
     private static final String SQL_FIND_HORSE_BY_NAME = "SELECT * FROM `horses` WHERE `name`=? LIMIT 1;";
     private static final String SQL_SELECT_PART_HORSES =
             "SELECT `h`.`id`, `h`.`name`, `h`.`suit_id`,`s`.`name` AS `suit_name`, `h`.`age`, `h`.`gender` " +
@@ -58,6 +59,28 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
         }
 
         return createdHorse;
+    }
+
+    /**
+     * Remove horse.
+     *
+     * @param horse
+     * @return boolean
+     * @throws DAOException
+     */
+    @Override
+    public boolean remove(Horse horse) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_REMOVE_HORSE)) {
+            preparedStatement.setInt(1, horse.getId());
+
+            if (preparedStatement.executeUpdate() != 1) {
+                throw new DAOException("Can't remove horse from the database.");
+            }
+
+            return true;
+        } catch (SQLException e) {
+            throw new DAOException("Can't remove horse. " + e.getMessage(), e);
+        }
     }
 
     /**
