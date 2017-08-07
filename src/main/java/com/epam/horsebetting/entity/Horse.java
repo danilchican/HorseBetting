@@ -61,6 +61,15 @@ public class Horse extends Entity {
     }
 
     /**
+     * Get suit name.
+     *
+     * @return suit name
+     */
+    public String getSuitName() {
+        return String.valueOf(findAttribute("suit_name"));
+    }
+
+    /**
      * Set id of horse.
      *
      * @param id

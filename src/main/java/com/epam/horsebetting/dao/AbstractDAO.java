@@ -4,11 +4,10 @@ import com.epam.horsebetting.entity.Entity;
 import com.epam.horsebetting.database.ConnectionPool;
 import com.epam.horsebetting.database.ProxyConnection;
 import com.epam.horsebetting.exception.DAOException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.List;
 
 public abstract class AbstractDAO<T extends Entity> implements AutoCloseable {
 
@@ -22,6 +21,28 @@ public abstract class AbstractDAO<T extends Entity> implements AutoCloseable {
      */
     public AbstractDAO() {
         this.connection = ConnectionPool.getInstance().fetchConnection();
+    }
+
+    /**
+     * Check if the Result set has column.
+     *
+     * @param set
+     * @param columnName
+     * @return boolean
+     * @throws SQLException
+     */
+    protected boolean hasColumn(ResultSet set, String columnName) throws SQLException {
+        ResultSetMetaData meta = set.getMetaData();
+        int columns = meta.getColumnCount();
+
+        for (int x = 1; x <= columns; x++) {
+            String column = meta.getColumnLabel(x);
+            if (columnName.equals(column)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
