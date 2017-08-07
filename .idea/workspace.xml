@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e9db2c3d-90c7-4a9a-9541-77ab3b3b2a13" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/horse/DashboardEditHorsePresentCommand.java" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/edit.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/HorseDAO.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/HorseDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/HorseDAOImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/HorseDAOImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/entity/Horse.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/entity/Horse.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/PageReceiver.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/PageReceiver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/util/PageConfig.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/util/PageConfig.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/config/pages.properties" afterPath="$PROJECT_DIR$/src/main/resources/config/pages.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/index.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/index.jsp" />
     </list>
@@ -998,14 +990,7 @@
       <workItem from="1500804188897" duration="48813000" />
       <workItem from="1501180884202" duration="1102000" />
       <workItem from="1501318122013" duration="64550000" />
-      <workItem from="1501775326791" duration="60714000" />
-    </task>
-    <task id="LOCAL-00088" summary="Created Paginator.">
-      <created>1500836411979</created>
-      <option name="number" value="00088" />
-      <option name="presentableId" value="LOCAL-00088" />
-      <option name="project" value="LOCAL" />
-      <updated>1500836411979</updated>
+      <workItem from="1501775326791" duration="60849000" />
     </task>
     <task id="LOCAL-00089" summary="Fixed #34 bug.">
       <created>1500840297605</created>
@@ -1343,7 +1328,14 @@
       <option name="project" value="LOCAL" />
       <updated>1502112334526</updated>
     </task>
-    <option name="localTasksCounter" value="137" />
+    <task id="LOCAL-00137" summary="Created methods to present edit page of horse.">
+      <created>1502115970905</created>
+      <option name="number" value="00137" />
+      <option name="presentableId" value="LOCAL-00137" />
+      <option name="project" value="LOCAL" />
+      <updated>1502115970905</updated>
+    </task>
+    <option name="localTasksCounter" value="138" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1379,7 +1371,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="446448000" />
+    <option name="totallyTimeSpent" value="446583000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1472,8 +1464,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="Removed some logger of command." />
-    <MESSAGE value="Added security to ajax of dashboard." />
     <MESSAGE value="Fixed displaying errors." />
     <MESSAGE value="Included toastr lib &amp; fixed ajax bug." />
     <MESSAGE value="Fixed character encoding bug." />
@@ -1497,7 +1487,9 @@
     <MESSAGE value="Fixed #8 bug." />
     <MESSAGE value="Fixed #33 bug." />
     <MESSAGE value="Fixed edit href." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed edit href." />
+    <MESSAGE value="Created method to present edit page of horse." />
+    <MESSAGE value="Created methods to present edit page of horse." />
+    <option name="LAST_COMMIT_MESSAGE" value="Created methods to present edit page of horse." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

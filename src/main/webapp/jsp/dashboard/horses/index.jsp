@@ -72,7 +72,7 @@
                                         <td>${horse.getName()}</td>
                                         <td>${horse.getSuitName()}</td>
                                         <td>${horse.getAge()}</td>
-                                        <td>${horse.getGender() ? "Male" : "Female"}</td>
+                                        <td>${horse.getGenderAsName()}</td>
                                         <td>
                                             <a href="/dashboard/horses/edit?id=${horse.getId()}"
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit
