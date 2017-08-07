@@ -74,7 +74,7 @@
                                         <td>${horse.getAge()}</td>
                                         <td>${horse.getGender() ? "Male" : "Female"}</td>
                                         <td>
-                                            <a href="/dashboard/horses/edit/${horse.getId()}"
+                                            <a href="/dashboard/horses/edit?id=${horse.getId()}"
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit
                                             </a>
                                             <a href="#"
