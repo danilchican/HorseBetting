@@ -47,17 +47,19 @@
         methods: {
 
             setDisable() {
+                $('input').attr('disabled', 'disabled');
                 this.disable = true;
-                $('#create-suit').append(loading_box);
+                $('#box-table-suits').find('.x_panel').append(loading_box);
             },
 
             unsetDisable() {
+                $('input').attr('disabled', false);
                 this.disable = false;
-                $('#create-suit').find('.overlay').remove();
+                $('#box-table-suits').find('.overlay').remove();
             },
 
             /**
-             * Check if the request sended.
+             * Check if the request sent.
              */
             isDisabled() {
                 return this.disable;
@@ -110,6 +112,8 @@
                                     toastr.error(value, 'Error')
                                 }
                             });
+
+                            vm.unsetDisable();
                         });
             }
         }

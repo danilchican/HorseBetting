@@ -252,6 +252,8 @@
                                     toastr.error(value, 'Error')
                                 }
                             });
+
+                            vm.unsetDisable();
                         });
             },
 
