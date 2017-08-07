@@ -25,6 +25,7 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
      * SQL queries for HorseDAOImpl.
      */
     private static final String SQL_ADD_HORSE = "INSERT INTO `horses` (name, age, gender, suit_id) VALUES (?,?,?,?);";
+    private static final String SQL_UPDATE_HORSE = "UPDATE `horses` SET `name`=?, `age`=?, `gender`=?, `suit_id`=? WHERE `id`=?;";
     private static final String SQL_REMOVE_HORSE = "DELETE FROM `horses` WHERE `id`=?;";
     private static final String SQL_FIND_HORSE_BY_ID = "SELECT * FROM `horses` WHERE `id`=? LIMIT 1;";
     private static final String SQL_FIND_HORSE_BY_NAME = "SELECT * FROM `horses` WHERE `name`=? LIMIT 1;";
@@ -60,6 +61,33 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
         }
 
         return createdHorse;
+    }
+
+    /**
+     * Update horse.
+     *
+     * @param horse
+     * @return updated result
+     * @throws DAOException
+     */
+    @Override
+    public boolean update(Horse horse) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_HORSE)) {
+            preparedStatement.setString(1, horse.getName());
+            preparedStatement.setByte(2, horse.getAge());
+            preparedStatement.setBoolean(3, horse.getGender());
+            preparedStatement.setInt(4, horse.getSuitId());
+
+            preparedStatement.setInt(5, horse.getId());
+
+            if (preparedStatement.executeUpdate() != 1) {
+                throw new DAOException("Can't update horse.");
+            }
+
+            return true;
+        } catch (SQLException e) {
+            throw new DAOException("Can't update horse. " + e.getMessage(), e);
+        }
     }
 
     /**

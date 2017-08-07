@@ -95,4 +95,51 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
             throw new ReceiverException("Database Error: " + e.getMessage(), e);
         }
     }
+
+    /**
+     * Update horse.
+     *
+     * @param content
+     * @throws ReceiverException
+     */
+    @Override
+    public void updateHorse(RequestContent content) throws ReceiverException {
+        int id = Integer.parseInt(content.findParameter("horse-id"));
+
+        String name = content.findParameter("horse-name");
+        boolean gender = "male".equals(content.findParameter("gender"));
+
+        byte age = Byte.parseByte(content.findParameter("horse-age"));
+        int suitId = Integer.parseInt(content.findParameter("horse-suit"));
+
+        // TODO Create validators
+
+        Horse horse = new Horse(id);
+
+        horse.setName(name);
+        horse.setSuitId(suitId);
+        horse.setAge(age);
+        horse.setGender(gender);
+
+        LOGGER.log(Level.DEBUG, "Want update horse: " + horse);
+
+        ArrayList<String> errors = new ArrayList<>();
+
+        try (HorseDAOImpl horseDAO = new HorseDAOImpl()) {
+            boolean isUpdated = horseDAO.update(horse);
+
+            if (isUpdated) {
+                errors.add("Horse updated successfully");
+            } else {
+                errors.add("Can't update current horse");
+            }
+        } catch (DAOException e) {
+            errors.add("Can't update horse.");
+            content.insertSessionAttribute("errors", errors);
+
+            // TODO add saving old inputs
+
+            throw new ReceiverException("Database Error: " + e.getMessage(), e);
+        }
+    }
 }

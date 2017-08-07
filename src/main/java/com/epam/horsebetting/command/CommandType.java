@@ -90,10 +90,16 @@ public enum CommandType {
             ((PageReceiverImpl) getCommand().getReceiver()).presentDashboardHorseCreatePage(content);
         }
     },
-    DASHBOARD_HORSES_EDIT_PRESENT("dashboard.horses.edit::get", new DashboardEditHorsePresentCommand(new PageReceiverImpl())) {
+    DASHBOARD_HORSES_EDIT("dashboard.horses.edit::get", new DashboardEditHorsePresentCommand(new PageReceiverImpl())) {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {
             ((PageReceiverImpl) getCommand().getReceiver()).presentDashboardHorseEditPage(content);
+        }
+    },
+    DASHBOARD_HORSES_UPDATE("dashboard.horses.update::post", new DashboardUpdateHorseCommand(new HorseReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((HorseReceiverImpl) getCommand().getReceiver()).updateHorse(content);
         }
     },
     DASHBOARD_HORSES_CREATE("dashboard.horses.create::post", new DashboardCreateHorseCommand(new HorseReceiverImpl())) {

@@ -50,7 +50,7 @@
                         <div class="x_content">
                             <jsp:include page="${pageContext.request.contextPath}/jsp/errors/show.jsp"/>
                             <br/>
-                            <form id="demo-form2" method="post" action="/dashboard/horses/edit" data-parsley-validate
+                            <form id="demo-form2" method="post" action="/dashboard/horses/update" data-parsley-validate
                                   class="form-horizontal form-label-left">
 
                                 <input type="hidden" name="horse-id" value="${horse.getId()}">

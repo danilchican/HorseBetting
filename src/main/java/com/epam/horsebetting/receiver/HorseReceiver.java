@@ -20,4 +20,12 @@ public interface HorseReceiver {
      * @throws ReceiverException
      */
     void removeHorse(RequestContent content) throws ReceiverException;
+
+    /**
+     * Update horse.
+     *
+     * @param content
+     * @throws ReceiverException
+     */
+    void updateHorse(RequestContent content) throws ReceiverException;
 }
