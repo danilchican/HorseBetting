@@ -70,7 +70,7 @@
                                     <tr>
                                         <td>${horse.getId()}</td>
                                         <td>${horse.getName()}</td>
-                                        <td>${horse.getSuitId()}</td>
+                                        <td>${horse.getSuitName()}</td>
                                         <td>${horse.getAge()}</td>
                                         <td>${horse.getGender() ? "Male" : "Female"}</td>
                                         <td>

@@ -26,8 +26,10 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
      */
     private static final String SQL_ADD_HORSE = "INSERT INTO `horses` (name, age, gender, suit_id) VALUES (?,?,?,?);";
     private static final String SQL_FIND_HORSE_BY_NAME = "SELECT * FROM `horses` WHERE `name`=? LIMIT 1;";
-    private static final String SQL_SELECT_PART_HORSES = "SELECT * FROM `horses` LIMIT ? OFFSET ?;";
-    private static final String SQL_COUNT_HORSES = "SELECT COUNT(*) as `total` FROM `horses`;";
+    private static final String SQL_SELECT_PART_HORSES =
+            "SELECT `h`.`id`, `h`.`name`, `h`.`suit_id`,`s`.`name` AS `suit_name`, `h`.`age`, `h`.`gender` " +
+            "FROM `horses` AS `h` LEFT JOIN `suits` AS `s` ON `h`.`suit_id`=`s`.`id` LIMIT ? OFFSET ?;";
+    private static final String SQL_COUNT_HORSES = "SELECT COUNT(*) AS `total` FROM `horses`;";
 
     /**
      * Create a new horse.
@@ -153,6 +155,10 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
         horse.setName(horseDataSet.getString("name"));
         horse.setAge(horseDataSet.getByte("age"));
         horse.setGender(horseDataSet.getBoolean("gender"));
+
+        if(hasColumn(horseDataSet, "suit_name")) {
+            horse.insertAttribute("suit_name", horseDataSet.getString("suit_name"));
+        }
 
         return horse;
     }
