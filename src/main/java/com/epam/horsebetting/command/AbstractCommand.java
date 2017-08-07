@@ -22,6 +22,11 @@ public abstract class AbstractCommand {
     public static final String COMMAND_INSTANCE_NAME = "commandName";
 
     /**
+     * Command URI name.
+     */
+    public static final String COMMAND_URI_NAME = "commandURI";
+
+    /**
      * Constructor.
      *
      * @param receiver

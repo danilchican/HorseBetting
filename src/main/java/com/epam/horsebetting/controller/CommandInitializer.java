@@ -45,9 +45,12 @@ class CommandInitializer {
                 ? INDEX_PAGE_COMMAND_VALUE :
                 uri.substring(1, uri.length()).replace('/', '.').toLowerCase();
 
-
         /* Add second part called 'method' of the request */
         commandName += COMMAND_METHOD_PREFIX + request.getMethod().toLowerCase();
+
+        /* Save command uri */
+        request.setAttribute(AbstractCommand.COMMAND_URI_NAME, uri);
+        LOGGER.log(Level.DEBUG, AbstractCommand.COMMAND_URI_NAME + ": " + uri);
 
         /* Set attribute to init command */
         request.setAttribute(AbstractCommand.COMMAND_INSTANCE_NAME, commandName);

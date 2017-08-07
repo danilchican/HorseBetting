@@ -1,8 +1,5 @@
 package com.epam.horsebetting.tag;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 class Paginator {
 
     /**
@@ -40,6 +37,11 @@ class Paginator {
      * Active class name of link.
      */
     private String activeClass = "active";
+
+    /**
+     * Request URI.
+     */
+    private String requestURI;
 
     /**
      * Constructor.
@@ -98,6 +100,15 @@ class Paginator {
     }
 
     /**
+     * Set request uri.
+     *
+     * @param uri
+     */
+    void setRequestURI(String uri) {
+        this.requestURI = uri;
+    }
+
+    /**
      * Generate html code of navigation.
      *
      * @return
@@ -114,7 +125,7 @@ class Paginator {
         generatePreviousLink(builder);
 
         if (startLink > 1) {
-            builder.append("<li><a href=\"?page=1\">1</a></li>");
+            builder.append("<li><a href=\"").append(this.requestURI).append("?page=1\">1</a></li>");
             builder.append("<li class=\"").append(disabledClass).append("\">");
             builder.append("<span>...</span></li>");
         }
@@ -126,7 +137,8 @@ class Paginator {
             if (isCurrentPage) {
                 builder.append(" class=\"").append(activeClass).append("\"><a>");
             } else {
-                builder.append("><a href=\"?page=").append(i).append("\">");
+                builder.append("><a href=\"").append(this.requestURI);
+                builder.append("?page=").append(i).append("\">");
             }
 
             builder.append(i).append("</a></li>");
@@ -134,8 +146,8 @@ class Paginator {
 
         if (endLink < totalPages) {
             builder.append("<li class=\"").append(disabledClass).append("\"><span>...</span></li>");
-            builder.append("<li><a href=\"?page=").append(totalPages).append("\">");
-            builder.append(totalPages).append("</a></li>");
+            builder.append("<li><a href=\"").append(this.requestURI).append("?page=").append(totalPages);
+            builder.append("\">").append(totalPages).append("</a></li>");
         }
 
         generateNextLink(builder, totalPages);
@@ -162,8 +174,8 @@ class Paginator {
             builder.append(" class=\"").append(disabledClass);
             builder.append("\"><a>");
         } else {
-            builder.append("><a href=\"?page=").append(previousPage);
-            builder.append("\">");
+            builder.append("><a href=\"").append(this.requestURI).append("?page=");
+            builder.append(previousPage).append("\">");
         }
 
         builder.append("&").append(wishedPage == 1 ? "l" : "r").append("aquo;</a></li>");

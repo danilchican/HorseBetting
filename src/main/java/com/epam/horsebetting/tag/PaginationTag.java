@@ -1,5 +1,6 @@
 package com.epam.horsebetting.tag;
 
+import com.epam.horsebetting.command.AbstractCommand;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -55,6 +56,10 @@ public class PaginationTag extends TagSupport {
         HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
         Paginator paginator = new Paginator(limit, total);
 
+        Object commandURIObj = request.getAttribute(AbstractCommand.COMMAND_URI_NAME);
+        String commandURI = commandURIObj == null ? "" : String.valueOf(commandURIObj);
+
+        paginator.setRequestURI(commandURI);
         String pageParam = request.getParameter("page");
 
         try {
