@@ -26,7 +26,8 @@ public class RouteFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
+    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
+            throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
 
@@ -41,7 +42,7 @@ public class RouteFilter implements Filter {
             chain.doFilter(req, resp);
         } else {
             LOGGER.log(Level.ERROR, "Page not found! " + urlQuery);
-            response.sendError(404);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 

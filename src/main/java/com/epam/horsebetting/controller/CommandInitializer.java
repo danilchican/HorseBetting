@@ -17,9 +17,14 @@ class CommandInitializer {
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
+     * Command method prefix.
+     */
+    private static final String COMMAND_METHOD_PREFIX = "::";
+
+    /**
      * Index page command value.
      */
-    private static final String INDEX_PAGE_COMMAND_VALUE = "index::get";
+    private static final String INDEX_PAGE_COMMAND_VALUE = "index" + COMMAND_METHOD_PREFIX + "get";
 
     /**
      * Init command by command name.
@@ -31,13 +36,18 @@ class CommandInitializer {
     static AbstractCommand init(HttpServletRequest request) throws IllegalCommandTypeException {
         String uri = request.getRequestURI();
 
+        if(uri.endsWith("/")) {
+            uri = uri.substring(0, uri.length() - 1);
+        }
+
         /* Generate the main part of command name */
         String commandName = (uri.length() == 1 && uri.startsWith("/"))
                 ? INDEX_PAGE_COMMAND_VALUE :
                 uri.substring(1, uri.length()).replace('/', '.').toLowerCase();
 
+
         /* Add second part called 'method' of the request */
-        commandName += "::" + request.getMethod().toLowerCase();
+        commandName += COMMAND_METHOD_PREFIX + request.getMethod().toLowerCase();
 
         /* Set attribute to init command */
         request.setAttribute(AbstractCommand.COMMAND_INSTANCE_NAME, commandName);
