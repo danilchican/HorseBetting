@@ -8,13 +8,26 @@ public class Horse extends Entity {
     private byte age;
     private boolean gender;
 
+    /**
+     * Default constructor.
+     */
     public Horse() {
     }
 
+    /**
+     * Constructor with id.
+     *
+     * @param id
+     */
     public Horse(int id) {
         setId(id);
     }
 
+    /**
+     * Constructor with name.
+     *
+     * @param name
+     */
     public Horse(String name) {
         setName(name);
     }
@@ -65,12 +78,39 @@ public class Horse extends Entity {
     }
 
     /**
+     * Get gender as name.
+     *
+     * @return gender name
+     */
+    public String getGenderAsName() {
+        return isMale() ? "Male" : "Female";
+    }
+
+    /**
      * Get suit name.
      *
      * @return suit name
      */
     public String getSuitName() {
         return String.valueOf(findAttribute("suit_name"));
+    }
+
+    /**
+     * Check if the horse is male.
+     *
+     * @return boolean
+     */
+    public boolean isMale() {
+        return gender;
+    }
+
+    /**
+     * Check if the horse is female.
+     *
+     * @return boolean
+     */
+    public boolean isFemale() {
+        return !gender;
     }
 
     /**

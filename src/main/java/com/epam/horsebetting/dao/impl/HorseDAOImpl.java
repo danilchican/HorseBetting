@@ -26,6 +26,7 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
      */
     private static final String SQL_ADD_HORSE = "INSERT INTO `horses` (name, age, gender, suit_id) VALUES (?,?,?,?);";
     private static final String SQL_REMOVE_HORSE = "DELETE FROM `horses` WHERE `id`=?;";
+    private static final String SQL_FIND_HORSE_BY_ID = "SELECT * FROM `horses` WHERE `id`=? LIMIT 1;";
     private static final String SQL_FIND_HORSE_BY_NAME = "SELECT * FROM `horses` WHERE `name`=? LIMIT 1;";
     private static final String SQL_SELECT_PART_HORSES =
             "SELECT `h`.`id`, `h`.`name`, `h`.`suit_id`,`s`.`name` AS `suit_name`, `h`.`age`, `h`.`gender` " +
@@ -81,6 +82,31 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
         } catch (SQLException e) {
             throw new DAOException("Can't remove horse. " + e.getMessage(), e);
         }
+    }
+
+    /**
+     * Find horse by id.
+     *
+     * @param id
+     * @return horse
+     */
+    @Override
+    public Horse find(int id) throws DAOException {
+        ResultSet resultSet;
+        Horse horse = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_HORSE_BY_ID)) {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                horse = extractFrom(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't find horse by id[" + id + "]. " + e.getMessage(), e);
+        }
+
+        return horse;
     }
 
     /**

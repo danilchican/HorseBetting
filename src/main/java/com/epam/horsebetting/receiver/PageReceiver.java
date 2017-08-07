@@ -62,6 +62,13 @@ public interface PageReceiver {
     void presentDashboardHorseCreatePage(RequestContent content) throws ReceiverException;
 
     /**
+     * Present dashboard horse edit page.
+     *
+     * @param content
+     */
+    void presentDashboardHorseEditPage(RequestContent content) throws ReceiverException;
+
+    /**
      * Present dashboard races page.
      *
      * @param content

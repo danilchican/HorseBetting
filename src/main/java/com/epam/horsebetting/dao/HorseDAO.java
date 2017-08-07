@@ -27,6 +27,14 @@ public interface HorseDAO {
     boolean remove(Horse horse) throws DAOException;
 
     /**
+     * Find horse by id.
+     *
+     * @param id
+     * @return horse
+     */
+    Horse find(int id) throws DAOException;
+
+    /**
      * Find horse by name.
      *
      * @param name

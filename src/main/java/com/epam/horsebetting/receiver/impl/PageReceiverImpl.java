@@ -101,6 +101,8 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         this.setPageSubTitle("Лошади");
         this.setDefaultContentAttributes(content);
 
+        // TODO create validators
+
         String pageNum = content.findParameter("page");
 
         try (HorseDAOImpl horseDAO = new HorseDAOImpl()) {
@@ -144,6 +146,44 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
     }
 
     /**
+     * Present dashboard horse edit page.
+     *
+     * @param content
+     */
+    @Override
+    public void presentDashboardHorseEditPage(RequestContent content) throws ReceiverException {
+        this.setPageSubTitle("Редактирование лошади");
+        this.setDefaultContentAttributes(content);
+
+        // TODO create validators
+
+        String idNum = content.findParameter("id");
+
+        try (HorseDAOImpl horseDAO = new HorseDAOImpl()) {
+            final int id = idNum != null ? Integer.parseInt(idNum) : 1;
+            Horse horse = horseDAO.find(id);
+
+            if(horse == null) {
+                throw new ReceiverException("Cannot find horse with id=" + id);
+            }
+
+            content.insertRequestAttribute("horse", horse);
+            LOGGER.log(Level.DEBUG, "Editing horse: " + horse);
+        } catch (DAOException e) {
+            throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        }
+
+        try (SuitDAOImpl suitDAO = new SuitDAOImpl()) {
+            List<Suit> suits = suitDAO.findAll();
+            content.insertRequestAttribute("suits", suits);
+
+            LOGGER.log(Level.DEBUG, "Suits list: " + Arrays.toString(suits.toArray()));
+        } catch (DAOException e) {
+            throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        }
+    }
+
+    /**
      * Present dashboard races page.
      *
      * @param content
@@ -152,6 +192,8 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
     public void presentDashboardRacesPage(RequestContent content) throws ReceiverException {
         this.setPageSubTitle("Скачки");
         this.setDefaultContentAttributes(content);
+
+        // TODO create validators
 
         String pageNum = content.findParameter("page");
 
