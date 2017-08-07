@@ -1,5 +1,8 @@
 package com.epam.horsebetting.tag;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 class Paginator {
 
     /**
@@ -44,7 +47,7 @@ class Paginator {
      * @param limit
      * @param total
      */
-    public Paginator(int limit, int total) {
+    Paginator(int limit, int total) {
         this.limit = limit;
         this.total = total;
     }
@@ -102,9 +105,9 @@ class Paginator {
     public String generate() {
         StringBuilder builder = new StringBuilder();
 
-        final int lastPage = (int) Math.ceil(total / limit);
+        final int totalPages = (int) Math.ceil((double) total / limit);
         final int startLink = ((page - countLinks) > 0) ? page - countLinks : 1;
-        final int endLink = ((page + countLinks) < lastPage) ? page + countLinks : lastPage;
+        final int endLink = ((page + countLinks) < totalPages) ? page + countLinks : totalPages;
 
         builder.append("<ul class=\"").append(className).append("\">");
 
@@ -129,13 +132,13 @@ class Paginator {
             builder.append(i).append("</a></li>");
         }
 
-        if (endLink < lastPage) {
+        if (endLink < totalPages) {
             builder.append("<li class=\"").append(disabledClass).append("\"><span>...</span></li>");
-            builder.append("<li><a href=\"?page=").append(lastPage).append("\">");
-            builder.append(lastPage).append("</a></li>");
+            builder.append("<li><a href=\"?page=").append(totalPages).append("\">");
+            builder.append(totalPages).append("</a></li>");
         }
 
-        generateNextLink(builder, lastPage);
+        generateNextLink(builder, totalPages);
         builder.append("</ul>");
 
         return builder.toString();
@@ -150,7 +153,7 @@ class Paginator {
      * @param toPage
      */
     private void generateLink(StringBuilder builder, int defaultPage, int wishedPage, int toPage) {
-        boolean isThisCurrentPage = this.page == wishedPage;
+        final boolean isThisCurrentPage = this.page == wishedPage;
         final int previousPage = isThisCurrentPage ? defaultPage : toPage;
 
         builder.append("<li");
