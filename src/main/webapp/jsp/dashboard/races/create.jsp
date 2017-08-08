@@ -61,9 +61,8 @@
                                                class="form-control col-md-7 col-xs-12">
                                     </div>
                                 </div>
-                                <div class="col-md-12">
 
-                                </div>
+                                <!-- TODO fix pattern to available decimal number -->
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="race-min-rate">Minimal
                                         rate <span

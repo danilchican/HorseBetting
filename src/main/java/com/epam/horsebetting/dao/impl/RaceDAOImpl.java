@@ -24,7 +24,11 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
     /**
      * SQL queries for RaceDAOImpl.
      */
+    private static final String SQL_ADD_RACE = "INSERT INTO `races` " +
+            "(title, place, min_rate, track_length, is_finished, bet_end_date, started_at)" +
+            " VALUES (?,?,?,?,?,?,?);";
     private static final String SQL_SELECT_PART_RACES = "SELECT * FROM `races` LIMIT ? OFFSET ?;";
+    private static final String SQL_FIND_RACE_BY_TITLE = "SELECT * FROM `races` WHERE `title`=? LIMIT 1;";
     private static final String SQL_COUNT_RACES = "SELECT COUNT(*) AS `total` FROM `races`;";
 
     /**
@@ -36,7 +40,52 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
      */
     @Override
     public Race create(Race race) throws DAOException {
-        return null;
+        Race createdRace;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_RACE)) {
+            preparedStatement.setString(1, race.getTitle());
+            preparedStatement.setString(2, race.getPlace());
+            preparedStatement.setBigDecimal(3, race.getMinRate());
+            preparedStatement.setInt(4, race.getTrackLength());
+            preparedStatement.setBoolean(5, race.isFinished());
+            preparedStatement.setTimestamp(6, race.getBetEndDate());
+            preparedStatement.setTimestamp(7, race.getStartedAt());
+
+            if (preparedStatement.executeUpdate() != 1) {
+                throw new DAOException("Can't add a new race to the database.");
+            }
+
+            createdRace = findByTitle(race.getTitle());
+        } catch (SQLException e) {
+            throw new DAOException("Can't add a new race. " + e.getMessage(), e);
+        }
+
+        return createdRace;
+    }
+
+    /**
+     * Find race by title.
+     *
+     * @param title
+     * @return race
+     */
+    @Override
+    public Race findByTitle(String title) throws DAOException {
+        ResultSet resultSet;
+        Race race = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_RACE_BY_TITLE)) {
+            preparedStatement.setString(1, title);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                race = extractFrom(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't find race: " + e.getMessage(), e);
+        }
+
+        return race;
     }
 
     /**
