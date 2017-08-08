@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="f" uri="http://horsebetting.com/functions"%>
+<%@ taglib prefix="f" uri="http://horsebetting.com/functions" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="layout" %>
 <%@ taglib prefix="ctg" uri="customtags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -35,18 +35,6 @@
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                       aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Settings 1</a>
-                                        </li>
-                                        <li><a href="#">Settings 2</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
                             </ul>
                             <div class="clearfix"></div>
                         </div>
@@ -75,13 +63,22 @@
                                         <td>${race.isFinished()}</td>
                                         <td>${f:formatDate("yyyy/mm/dd",race.getCreatedAt())}</td>
                                         <td>
-                                            <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View
+                                            <a href="/dashboard/races/view?id=${race.getId()}"
+                                               class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View
                                             </a>
-                                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit
+                                            <a href="/dashboard/races/edit?id=${race.getId()}"
+                                               class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit
                                             </a>
-                                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>
+                                            <a href="#"
+                                               onclick="event.preventDefault(); document.getElementById('delete-race-form-${race.getId()}').submit();"
+                                               class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>
                                                 Delete
                                             </a>
+                                            <form action="/dashboard/races/remove"
+                                                  id="delete-race-form-${race.getId()}" method="post"
+                                                  style="display: none;">
+                                                <input type="hidden" name="race-id" value="${race.getId()}">
+                                            </form>
                                         </td>
                                     </tr>
                                 </c:forEach>
