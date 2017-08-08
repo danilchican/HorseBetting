@@ -34,8 +34,6 @@
 
     var loading_box = '<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>';
 
-    import axios from 'axios';
-
     export default {
         data() {
             return {

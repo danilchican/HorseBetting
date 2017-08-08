@@ -151,7 +151,8 @@
                                         </div>
                                     </div>
 
-                                    <!-- Horses -->
+                                    <div class="ln_solid"></div>
+                                    <race-horses></race-horses>
 
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
@@ -161,7 +162,6 @@
                                             <button type="submit" class="btn btn-success">Submit</button>
                                         </div>
                                     </div>
-
                                 </form>
                             </div>
                         </div>

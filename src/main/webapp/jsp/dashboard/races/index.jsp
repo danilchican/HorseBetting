@@ -60,7 +60,7 @@
                                         <td>${race.getId()}</td>
                                         <td>${race.getTitle()}</td>
                                         <td>${race.getPlace()}</td>
-                                        <td>${race.isFinished()}</td>
+                                        <td>${race.isFinished() ? "Yes" : "No"}</td>
                                         <td>${f:formatDate("yyyy/mm/dd",race.getCreatedAt())}</td>
                                         <td>
                                             <a href="/dashboard/races/view?id=${race.getId()}"
