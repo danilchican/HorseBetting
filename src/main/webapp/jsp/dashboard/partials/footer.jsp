@@ -1,14 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<!-- footer content -->
-<footer>
-    <div class="pull-right">HorseBetting.com</div>
-    <div class="clearfix"></div>
-</footer>
-<!-- /footer content -->
-</div>
-</div>
-
 <!-- Vue scripts -->
 <script src="${pageContext.request.contextPath}/assets/dashboard/production/js/dashboard.js"></script>
 <!-- Chart.js -->
@@ -38,22 +29,8 @@
 <!-- bootstrap-daterangepicker -->
 <script src="${pageContext.request.contextPath}/assets/dashboard/moment/min/moment.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/dashboard/bootstrap-daterangepicker/daterangepicker.js"></script>
-<!-- bootstrap-datetimepicker -->
-<script src="${pageContext.request.contextPath}/assets/dashboard/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 <!-- Parsley -->
 <script src="${pageContext.request.contextPath}/assets/dashboard/parsleyjs/dist/parsley.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/dashboard/parsleyjs/dist/i18n/${locale.getLanguage()}.js"></script>
 <!-- Custom Theme Scripts -->
 <script src="${pageContext.request.contextPath}/assets/dashboard/production/js/custom.min.js"></script>
-
-<script>
-    $('#betEndDatePricker').datetimepicker({
-        format: 'YYYY-MM-DD HH:mm:ss'
-    });
-
-    $('#betStartedAtPricker').datetimepicker({
-        format: 'YYYY-MM-DD HH:mm:ss'
-    });
-</script>
-</body>
-</html>

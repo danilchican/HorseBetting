@@ -45,10 +45,13 @@
 
                     <div class="row x_title">
                         <div class="col-md-6">
-                            <h3>Network Activities <small>Graph title sub-title</small></h3>
+                            <h3>Network Activities
+                                <small>Graph title sub-title</small>
+                            </h3>
                         </div>
                         <div class="col-md-6">
-                            <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                            <div id="reportrange" class="pull-right"
+                                 style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                                 <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
                                 <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
                             </div>
@@ -69,7 +72,8 @@
                                 <p>Facebook Campaign</p>
                                 <div class="">
                                     <div class="progress progress_sm" style="width: 76%;">
-                                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="80"></div>
+                                        <div class="progress-bar bg-green" role="progressbar"
+                                             data-transitiongoal="80"></div>
                                     </div>
                                 </div>
                             </div>
@@ -77,7 +81,8 @@
                                 <p>Twitter Campaign</p>
                                 <div class="">
                                     <div class="progress progress_sm" style="width: 76%;">
-                                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="60"></div>
+                                        <div class="progress-bar bg-green" role="progressbar"
+                                             data-transitiongoal="60"></div>
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +92,8 @@
                                 <p>Conventional Media</p>
                                 <div class="">
                                     <div class="progress progress_sm" style="width: 76%;">
-                                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="40"></div>
+                                        <div class="progress-bar bg-green" role="progressbar"
+                                             data-transitiongoal="40"></div>
                                     </div>
                                 </div>
                             </div>
@@ -95,7 +101,8 @@
                                 <p>Bill boards</p>
                                 <div class="">
                                     <div class="progress progress_sm" style="width: 76%;">
-                                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
+                                        <div class="progress-bar bg-green" role="progressbar"
+                                             data-transitiongoal="50"></div>
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +115,7 @@
             </div>
 
         </div>
-        <br />
+        <br/>
 
         <div class="row">
 
@@ -121,7 +128,8 @@
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-expanded="false"><i class="fa fa-wrench"></i></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="#">Settings 1</a>
                                     </li>
@@ -142,7 +150,8 @@
                             </div>
                             <div class="w_center w_55">
                                 <div class="progress">
-                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 66%;">
+                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 66%;">
                                         <span class="sr-only">60% Complete</span>
                                     </div>
                                 </div>
@@ -159,7 +168,8 @@
                             </div>
                             <div class="w_center w_55">
                                 <div class="progress">
-                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
+                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
                                         <span class="sr-only">60% Complete</span>
                                     </div>
                                 </div>
@@ -175,7 +185,8 @@
                             </div>
                             <div class="w_center w_55">
                                 <div class="progress">
-                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
                                         <span class="sr-only">60% Complete</span>
                                     </div>
                                 </div>
@@ -191,7 +202,8 @@
                             </div>
                             <div class="w_center w_55">
                                 <div class="progress">
-                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 5%;">
+                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 5%;">
                                         <span class="sr-only">60% Complete</span>
                                     </div>
                                 </div>
@@ -207,7 +219,8 @@
                             </div>
                             <div class="w_center w_55">
                                 <div class="progress">
-                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 2%;">
+                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 2%;">
                                         <span class="sr-only">60% Complete</span>
                                     </div>
                                 </div>
@@ -230,7 +243,8 @@
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-expanded="false"><i class="fa fa-wrench"></i></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="#">Settings 1</a>
                                     </li>
@@ -260,7 +274,8 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
+                                    <canvas class="canvasDoughnut" height="140" width="140"
+                                            style="margin: 15px 10px 10px 0"></canvas>
                                 </td>
                                 <td>
                                     <table class="tile_info">
@@ -311,7 +326,8 @@
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-expanded="false"><i class="fa fa-wrench"></i></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="#">Settings 1</a>
                                     </li>
@@ -331,10 +347,10 @@
                                 </li>
                                 <li><i class="fa fa-bars"></i><a href="#">Subscription</a>
                                 </li>
-                                <li><i class="fa fa-bar-chart"></i><a href="#">Auto Renewal</a> </li>
+                                <li><i class="fa fa-bar-chart"></i><a href="#">Auto Renewal</a></li>
                                 <li><i class="fa fa-line-chart"></i><a href="#">Achievements</a>
                                 </li>
-                                <li><i class="fa fa-bar-chart"></i><a href="#">Auto Renewal</a> </li>
+                                <li><i class="fa fa-bar-chart"></i><a href="#">Auto Renewal</a></li>
                                 <li><i class="fa fa-line-chart"></i><a href="#">Achievements</a>
                                 </li>
                                 <li><i class="fa fa-area-chart"></i><a href="#">Logout</a>
@@ -343,7 +359,8 @@
 
                             <div class="sidebar-widget">
                                 <h4>Profile Completion</h4>
-                                <canvas width="150" height="80" id="chart_gauge_01" class="" style="width: 160px; height: 100px;"></canvas>
+                                <canvas width="150" height="80" id="chart_gauge_01" class=""
+                                        style="width: 160px; height: 100px;"></canvas>
                                 <div class="goal-wrapper">
                                     <span id="gauge-text" class="gauge-value pull-left">0</span>
                                     <span class="gauge-value pull-left">%</span>
@@ -362,12 +379,15 @@
             <div class="col-md-4 col-sm-4 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Recent Activities <small>Sessions</small></h2>
+                        <h2>Recent Activities
+                            <small>Sessions</small>
+                        </h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-expanded="false"><i class="fa fa-wrench"></i></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="#">Settings 1</a>
                                     </li>
@@ -393,7 +413,10 @@
                                             <div class="byline">
                                                 <span>13 hours ago</span> by <a>Jane Smith</a>
                                             </div>
-                                            <p class="excerpt">Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                                            <p class="excerpt">Film festivals used to be do-or-die moments for movie
+                                                makers. They were where you met the producers that could fund your
+                                                project, and if the buyers liked your flick, they’d pay to Fast-forward
+                                                and… <a>Read&nbsp;More</a>
                                             </p>
                                         </div>
                                     </div>
@@ -407,7 +430,10 @@
                                             <div class="byline">
                                                 <span>13 hours ago</span> by <a>Jane Smith</a>
                                             </div>
-                                            <p class="excerpt">Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                                            <p class="excerpt">Film festivals used to be do-or-die moments for movie
+                                                makers. They were where you met the producers that could fund your
+                                                project, and if the buyers liked your flick, they’d pay to Fast-forward
+                                                and… <a>Read&nbsp;More</a>
                                             </p>
                                         </div>
                                     </div>
@@ -421,7 +447,10 @@
                                             <div class="byline">
                                                 <span>13 hours ago</span> by <a>Jane Smith</a>
                                             </div>
-                                            <p class="excerpt">Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                                            <p class="excerpt">Film festivals used to be do-or-die moments for movie
+                                                makers. They were where you met the producers that could fund your
+                                                project, and if the buyers liked your flick, they’d pay to Fast-forward
+                                                and… <a>Read&nbsp;More</a>
                                             </p>
                                         </div>
                                     </div>
@@ -435,7 +464,10 @@
                                             <div class="byline">
                                                 <span>13 hours ago</span> by <a>Jane Smith</a>
                                             </div>
-                                            <p class="excerpt">Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                                            <p class="excerpt">Film festivals used to be do-or-die moments for movie
+                                                makers. They were where you met the producers that could fund your
+                                                project, and if the buyers liked your flick, they’d pay to Fast-forward
+                                                and… <a>Read&nbsp;More</a>
                                             </p>
                                         </div>
                                     </div>
@@ -450,18 +482,20 @@
             <div class="col-md-8 col-sm-8 col-xs-12">
 
 
-
                 <div class="row">
 
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>Visitors location <small>geo-presentation</small></h2>
+                                <h2>Visitors location
+                                    <small>geo-presentation</small>
+                                </h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                           aria-expanded="false"><i class="fa fa-wrench"></i></a>
                                         <ul class="dropdown-menu" role="menu">
                                             <li><a href="#">Settings 1</a>
                                             </li>
@@ -504,7 +538,8 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div id="world-map-gdp" class="col-md-8 col-sm-12 col-xs-12" style="height:230px;"></div>
+                                    <div id="world-map-gdp" class="col-md-8 col-sm-12 col-xs-12"
+                                         style="height:230px;"></div>
                                 </div>
                             </div>
                         </div>
@@ -518,12 +553,15 @@
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>To Do List <small>Sample tasks</small></h2>
+                                <h2>To Do List
+                                    <small>Sample tasks</small>
+                                </h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                           aria-expanded="false"><i class="fa fa-wrench"></i></a>
                                         <ul class="dropdown-menu" role="menu">
                                             <li><a href="#">Settings 1</a>
                                             </li>
@@ -542,31 +580,13 @@
                                     <ul class="to_do">
                                         <li>
                                             <p>
-                                                <input type="checkbox" class="flat"> Schedule meeting with new client </p>
+                                                <input type="checkbox" class="flat"> Schedule meeting with new client
+                                            </p>
                                         </li>
                                         <li>
                                             <p>
-                                                <input type="checkbox" class="flat"> Create email address for new intern</p>
-                                        </li>
-                                        <li>
-                                            <p>
-                                                <input type="checkbox" class="flat"> Have IT fix the network printer</p>
-                                        </li>
-                                        <li>
-                                            <p>
-                                                <input type="checkbox" class="flat"> Copy backups to offsite location</p>
-                                        </li>
-                                        <li>
-                                            <p>
-                                                <input type="checkbox" class="flat"> Food truck fixie locavors mcsweeney</p>
-                                        </li>
-                                        <li>
-                                            <p>
-                                                <input type="checkbox" class="flat"> Food truck fixie locavors mcsweeney</p>
-                                        </li>
-                                        <li>
-                                            <p>
-                                                <input type="checkbox" class="flat"> Create email address for new intern</p>
+                                                <input type="checkbox" class="flat"> Create email address for new intern
+                                            </p>
                                         </li>
                                         <li>
                                             <p>
@@ -574,7 +594,32 @@
                                         </li>
                                         <li>
                                             <p>
-                                                <input type="checkbox" class="flat"> Copy backups to offsite location</p>
+                                                <input type="checkbox" class="flat"> Copy backups to offsite location
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p>
+                                                <input type="checkbox" class="flat"> Food truck fixie locavors mcsweeney
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p>
+                                                <input type="checkbox" class="flat"> Food truck fixie locavors mcsweeney
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p>
+                                                <input type="checkbox" class="flat"> Create email address for new intern
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p>
+                                                <input type="checkbox" class="flat"> Have IT fix the network printer</p>
+                                        </li>
+                                        <li>
+                                            <p>
+                                                <input type="checkbox" class="flat"> Copy backups to offsite location
+                                            </p>
                                         </li>
                                     </ul>
                                 </div>
@@ -587,12 +632,15 @@
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>Daily active users <small>Sessions</small></h2>
+                                <h2>Daily active users
+                                    <small>Sessions</small>
+                                </h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                           aria-expanded="false"><i class="fa fa-wrench"></i></a>
                                         <ul class="dropdown-menu" role="menu">
                                             <li><a href="#">Settings 1</a>
                                             </li>
