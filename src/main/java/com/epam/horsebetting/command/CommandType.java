@@ -83,6 +83,12 @@ public enum CommandType {
             ((PageReceiverImpl) getCommand().getReceiver()).presentDashboardHorsesPage(content);
         }
     },
+    AJAX_DASHBOARD_HORSES_LIST("ajax.dashboard.horses::get", new AjaxDashboardHorsesListCommand(new HorseReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((HorseReceiverImpl) getCommand().getReceiver()).ajaxObtainHorsesList(content);
+        }
+    },
     DASHBOARD_HORSES_CREATE_PRESENT("dashboard.horses.create::get", new DashboardCreateHorsePresentCommand(new PageReceiverImpl())) {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {

@@ -61,6 +61,14 @@ public interface HorseDAO {
     List<Horse> obtainPart(int limit, int offset) throws DAOException;
 
     /**
+     * Find all horses.
+     *
+     * @return horses
+     * @throws DAOException
+     */
+    List<Horse> findAll() throws DAOException;
+
+    /**
      * Get total count of horses.
      *
      * @return total count

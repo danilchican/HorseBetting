@@ -14,6 +14,14 @@ public interface HorseReceiver {
     void createHorse(RequestContent content) throws ReceiverException;
 
     /**
+     * Obtain horses list ajax.
+     *
+     * @param content
+     * @throws ReceiverException
+     */
+    void ajaxObtainHorsesList(RequestContent content) throws ReceiverException;
+
+    /**
      * Remove horse.
      *
      * @param content

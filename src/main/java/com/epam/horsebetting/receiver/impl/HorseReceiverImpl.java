@@ -12,6 +12,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver {
 
@@ -55,6 +57,22 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
 
             // TODO add saving old inputs
 
+            throw new ReceiverException("Database Error: " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Obtain horses list ajax.
+     *
+     * @param content
+     * @throws ReceiverException
+     */
+    @Override
+    public void ajaxObtainHorsesList(RequestContent content) throws ReceiverException {
+        try (HorseDAOImpl horseDAO = new HorseDAOImpl()) {
+            List<Horse> horses = horseDAO.findAll();
+            content.insertJsonAttribute("horses", horses);
+        } catch (DAOException e) {
             throw new ReceiverException("Database Error: " + e.getMessage(), e);
         }
     }

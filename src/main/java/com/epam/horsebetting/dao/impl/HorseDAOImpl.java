@@ -29,6 +29,7 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
     private static final String SQL_REMOVE_HORSE = "DELETE FROM `horses` WHERE `id`=?;";
     private static final String SQL_FIND_HORSE_BY_ID = "SELECT * FROM `horses` WHERE `id`=? LIMIT 1;";
     private static final String SQL_FIND_HORSE_BY_NAME = "SELECT * FROM `horses` WHERE `name`=? LIMIT 1;";
+    private static final String SQL_SELECT_HORSES = "SELECT * FROM `horses` ";
     private static final String SQL_SELECT_PART_HORSES =
             "SELECT `h`.`id`, `h`.`name`, `h`.`suit_id`,`s`.`name` AS `suit_name`, `h`.`age`, `h`.`gender` " +
             "FROM `horses` AS `h` LEFT JOIN `suits` AS `s` ON `h`.`suit_id`=`s`.`id` LIMIT ? OFFSET ?;";
@@ -184,6 +185,31 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
                 Horse horse = extractFrom(horses);
                 foundedHorses.add(horse);
                 LOGGER.log(Level.DEBUG, "Horse was added to list: " + horse);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Cannot retrieve horses list. " + e.getMessage(), e);
+        }
+
+        return foundedHorses;
+    }
+
+    /**
+     * Find all horses.
+     *
+     * @return horses
+     * @throws DAOException
+     */
+    @Override
+    public List<Horse> findAll() throws DAOException {
+        List<Horse> foundedHorses = new ArrayList<>();
+        ResultSet horses;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_HORSES)) {
+            horses = preparedStatement.executeQuery();
+
+            while (horses.next()) {
+                Horse horse = extractFrom(horses);
+                foundedHorses.add(horse);
             }
         } catch (SQLException e) {
             throw new DAOException("Cannot retrieve horses list. " + e.getMessage(), e);
