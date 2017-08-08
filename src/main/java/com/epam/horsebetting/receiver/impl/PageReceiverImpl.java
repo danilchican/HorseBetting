@@ -92,6 +92,17 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
     }
 
     /**
+     * Present dashboard suits page.
+     *
+     * @param content
+     */
+    @Override
+    public void presentDashboardSuitsPage(RequestContent content) throws ReceiverException {
+        this.setPageSubTitle("Масти лошадей");
+        this.setDefaultContentAttributes(content);
+    }
+
+    /**
      * Present dashboard horses page.
      *
      * @param content
@@ -218,13 +229,13 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
     }
 
     /**
-     * Present dashboard suits page.
+     * Present dashboard race create page.
      *
      * @param content
      */
     @Override
-    public void presentDashboardSuitsPage(RequestContent content) throws ReceiverException {
-        this.setPageSubTitle("Масти лошадей");
+    public void presentDashboardRaceCreatePage(RequestContent content) throws ReceiverException {
+        this.setPageSubTitle("Создание забега");
         this.setDefaultContentAttributes(content);
     }
 }

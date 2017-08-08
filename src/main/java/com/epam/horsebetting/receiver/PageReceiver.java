@@ -48,6 +48,13 @@ public interface PageReceiver {
     void presentDashboardUsersPage(RequestContent content) throws ReceiverException;
 
     /**
+     * Present dashboard suits page.
+     *
+     * @param content
+     */
+    void presentDashboardSuitsPage(RequestContent content) throws ReceiverException;
+
+    /**
      * Present dashboard horses page.
      *
      * @param content
@@ -76,9 +83,9 @@ public interface PageReceiver {
     void presentDashboardRacesPage(RequestContent content) throws ReceiverException;
 
     /**
-     * Present dashboard suits page.
+     * Present dashboard race create page.
      *
      * @param content
      */
-    void presentDashboardSuitsPage(RequestContent content) throws ReceiverException;
+    void presentDashboardRaceCreatePage(RequestContent content) throws ReceiverException;
 }
