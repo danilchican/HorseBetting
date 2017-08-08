@@ -28,3 +28,11 @@
     color: #000;
     font-size: 30px;
 }
+
+.input-group.date {
+    margin-bottom: 0;
+}
+
+.input-group.date > ul.parsley-errors-list {
+    display: none;
+}

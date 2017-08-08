@@ -30,6 +30,8 @@
     <link href="${pageContext.request.contextPath}/assets/dashboard/jqvmap/jqvmap.min.css" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
     <link href="${pageContext.request.contextPath}/assets/dashboard/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- bootstrap-datetimepicker -->
+    <link href="${pageContext.request.contextPath}/assets/dashboard/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
     <!-- Toastr -->
     <link href="${pageContext.request.contextPath}/assets/dashboard/toastr/toastr.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
