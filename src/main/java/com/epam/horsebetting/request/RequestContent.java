@@ -31,6 +31,11 @@ public class RequestContent {
     private HashMap<String, String> requestParameters;
 
     /**
+     * Request parameters where every variable is array.
+     */
+    private HashMap<String, String[]> requestArrayParameters;
+
+    /**
      * Request headers.
      */
     private HashMap<String, String> requestHeaders;
@@ -51,6 +56,7 @@ public class RequestContent {
     public RequestContent() {
         this.requestAttributes = new HashMap<>();
         this.requestParameters = new HashMap<>();
+        this.requestArrayParameters = new HashMap<>();
         this.requestHeaders = new HashMap<>();
 
         this.sessionAttributes = new HashMap<>();
@@ -69,7 +75,13 @@ public class RequestContent {
 
         while (requestParameterNames.hasMoreElements()) {
             String paramName = (String) requestParameterNames.nextElement();
-            requestParameters.put(paramName, request.getParameter(paramName));
+            String[] values = request.getParameterValues(paramName);
+
+            if(values.length > 1) {
+                requestArrayParameters.put(paramName, values);
+            } else {
+                requestParameters.put(paramName, values[0]);
+            }
         }
 
         LOGGER.log(Level.INFO, "Request params saved.");
@@ -187,7 +199,6 @@ public class RequestContent {
         this.requestAttributes.put(key, value);
     }
 
-
     /**
      * Insert new attribute to json data.
      *
@@ -216,6 +227,16 @@ public class RequestContent {
      */
     public String findParameter(String paramName) {
         return this.requestParameters.get(paramName);
+    }
+
+    /**
+     * Find parameter values in request parameters map.
+     *
+     * @param paramName
+     * @return param value
+     */
+    public String[] findParameterValues(String paramName) {
+        return this.requestArrayParameters.get(paramName);
     }
 
     /**
