@@ -1,6 +1,7 @@
 package com.epam.horsebetting.entity;
 
 import com.epam.horsebetting.type.RoleType;
+import com.epam.horsebetting.util.DateFormatter;
 import com.epam.horsebetting.util.HashManager;
 
 import java.math.BigDecimal;
@@ -108,16 +109,6 @@ public class User extends Entity {
      */
     public Timestamp getRegistrationDate() {
         return createdAt;
-    }
-
-    /**
-     * Get registration date by format.
-     *
-     * @param format
-     * @return date
-     */
-    public String getRegistrationDate(String format) {
-        return new SimpleDateFormat(format).format(createdAt);
     }
 
     /**

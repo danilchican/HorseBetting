@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://horsebetting.com/functions"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="layout" %>
 <%@ taglib prefix="ctg" uri="customtags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -72,7 +73,7 @@
                                         <td>${race.getTitle()}</td>
                                         <td>${race.getPlace()}</td>
                                         <td>${race.isFinished()}</td>
-                                        <td>${race.getCreatedAt()}</td>
+                                        <td>${f:formatDate("yyyy/mm/dd",race.getCreatedAt())}</td>
                                         <td>
                                             <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View
                                             </a>
