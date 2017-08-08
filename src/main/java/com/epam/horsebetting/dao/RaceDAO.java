@@ -8,12 +8,13 @@ import java.util.List;
 public interface RaceDAO {
 
     /**
-     * Find all races.
+     * Create a new race.
      *
-     * @return list of races
+     * @param race
+     * @return race
      * @throws DAOException
      */
-    List<Race> findAll() throws DAOException;
+    Race create(Race race) throws DAOException;
 
     /**
      * Obtain part of races.

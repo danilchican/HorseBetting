@@ -24,33 +24,19 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
     /**
      * SQL queries for RaceDAOImpl.
      */
-    private static final String SQL_SELECT_ALL_RACES = "SELECT * FROM `races`;";
     private static final String SQL_SELECT_PART_RACES = "SELECT * FROM `races` LIMIT ? OFFSET ?;";
     private static final String SQL_COUNT_RACES = "SELECT COUNT(*) AS `total` FROM `races`;";
 
     /**
-     * Find all races.
+     * Create a new race.
      *
-     * @return list of races
+     * @param race
+     * @return race
      * @throws DAOException
      */
     @Override
-    public List<Race> findAll() throws DAOException {
-        List<Race> foundedRaces = new ArrayList<>();
-        ResultSet races;
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL_RACES)) {
-            races = preparedStatement.executeQuery();
-
-            while (races.next()) {
-                Race race = extractFrom(races);
-                foundedRaces.add(race);
-            }
-        } catch (SQLException e) {
-            throw new DAOException("Cannot retrieve races list. " + e.getMessage(), e);
-        }
-
-        return foundedRaces;
+    public Race create(Race race) throws DAOException {
+        return null;
     }
 
     /**
