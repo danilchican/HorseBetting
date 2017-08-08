@@ -28187,8 +28187,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-group"
   }, [_c('label', {
     staticClass: "control-label col-md-3 col-sm-3 col-xs-12"
-  }, [_vm._v("Horse " + _vm._s(_vm.index + 1))]), _vm._v(" "), _c('button', {
+  }, [_vm._v("Horse " + _vm._s(_vm.index + 1))]), _vm._v(" "), _c('a', {
     staticClass: "btn-danger",
+    staticStyle: {
+      "cursor": "pointer",
+      "padding": "5px 10px"
+    },
     on: {
       "click": function($event) {
         _vm.removeHorse()

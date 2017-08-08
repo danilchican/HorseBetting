@@ -2,7 +2,7 @@
     <div class="race-horse-item col-md-12 col-sm-6 col-xs-12">
         <div class="form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">Horse {{ index + 1 }}</label>
-            <button class="btn-danger" @click="removeHorse()">x</button>
+            <a style="cursor: pointer; padding: 5px 10px;" @click="removeHorse()" class="btn-danger">x</a>
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <select name="selected-horses" v-model="selected" class="form-control">
                     <option v-for="horse in horses" :value="horse.id">{{ horse.name }}</option>
