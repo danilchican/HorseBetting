@@ -3,7 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="e9db2c3d-90c7-4a9a-9541-77ab3b3b2a13" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/index.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/index.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/create.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/create.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/index.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/index.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/partials/sidebar.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/partials/sidebar.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/partials/top_nav.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/partials/top_nav.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/create.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/create.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/suits/index.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/suits/index.jsp" />
     </list>
     <ignored path="HorseBetting.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,11 +45,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.jsp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/index.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1326">
-              <caret line="78" column="58" selection-start-line="78" selection-start-column="58" selection-end-line="78" selection-end-column="58" />
+            <state relative-caret-position="102">
+              <caret line="6" column="11" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dashboard.tag" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/tags/dashboard.tag">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="79" selection-start-line="2" selection-start-column="79" selection-end-line="2" selection-end-column="79" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sidebar.jsp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/partials/sidebar.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" column="28" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -80,10 +105,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/listener/ServletContextListenerImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/suit/AjaxDashboardRemoveSuitCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/entity/Suit.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/suit/AjaxDashboardFindSuitCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/SuitReceiver.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/SuitDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/SuitReceiverImpl.java" />
@@ -99,7 +120,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/tag/PaginationTag.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/horse/DashboardEditHorsePresentCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/entity/Horse.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/index.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/assets/vue/components/dashboard/suits/CreateSuitComponent.vue" />
         <option value="$PROJECT_DIR$/src/main/webapp/assets/vue/components/dashboard/suits/SuitComponent.vue" />
         <option value="$PROJECT_DIR$/src/main/webapp/assets/vue/components/dashboard/suits/ViewSuitComponent.vue" />
@@ -113,7 +133,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/race/DashboardCreateRacePresentCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/PageReceiver.java" />
         <option value="$PROJECT_DIR$/src/main/resources/config/pages.properties" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/create.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/tags/app.tag" />
         <option value="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/partials/head.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/assets/dashboard/production/css/custom.min.css" />
@@ -123,14 +142,20 @@
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/RaceReceiver.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/RaceReceiverImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/create.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/RaceDAOImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/RaceDAO.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/functions.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/util/DateFormatter.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/functions.tld" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/entity/User.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/tags/dashboard.tag" />
+        <option value="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/suits/index.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/index.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/index.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/create.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/create.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/partials/top_nav.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/partials/sidebar.jsp" />
       </list>
     </option>
   </component>
@@ -304,6 +329,74 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="dashboard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HorseBetting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HorseBettingProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dashboard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="suits" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HorseBetting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HorseBettingProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dashboard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="races" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -961,14 +1054,7 @@
       <workItem from="1500804188897" duration="48813000" />
       <workItem from="1501180884202" duration="1102000" />
       <workItem from="1501318122013" duration="64550000" />
-      <workItem from="1501775326791" duration="81990000" />
-    </task>
-    <task id="LOCAL-00098" summary="Created RaceDAO interface.">
-      <created>1501349589375</created>
-      <option name="number" value="00098" />
-      <option name="presentableId" value="LOCAL-00098" />
-      <option name="project" value="LOCAL" />
-      <updated>1501349589375</updated>
+      <workItem from="1501775326791" duration="82634000" />
     </task>
     <task id="LOCAL-00099" summary="Implemented RaceDAO.">
       <created>1501490601189</created>
@@ -1306,7 +1392,14 @@
       <option name="project" value="LOCAL" />
       <updated>1502195324604</updated>
     </task>
-    <option name="localTasksCounter" value="147" />
+    <task id="LOCAL-00147" summary="Modified actions in races view.">
+      <created>1502195605963</created>
+      <option name="number" value="00147" />
+      <option name="presentableId" value="LOCAL-00147" />
+      <option name="project" value="LOCAL" />
+      <updated>1502195605963</updated>
+    </task>
+    <option name="localTasksCounter" value="148" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1342,7 +1435,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="467724000" />
+    <option name="totallyTimeSpent" value="468368000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1374,7 +1467,7 @@
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39067525" sideWeight="0.49092284" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39067525" sideWeight="0.49092284" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38424438" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30728376" sideWeight="0.4785276" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1437,7 +1530,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="Created method to delete suit." />
     <MESSAGE value="Fixed updating suits list after delete()." />
     <MESSAGE value="Created method to update Suit." />
     <MESSAGE value="Created frontend to updating() Suit." />
@@ -1462,7 +1554,8 @@
     <MESSAGE value="Added methods to create race." />
     <MESSAGE value="Added DAO method to create race." />
     <MESSAGE value="Created functions tld and helper." />
-    <option name="LAST_COMMIT_MESSAGE" value="Created functions tld and helper." />
+    <MESSAGE value="Modified actions in races view." />
+    <option name="LAST_COMMIT_MESSAGE" value="Modified actions in races view." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1475,39 +1568,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/UserReceiverImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-306">
-          <caret line="61" column="39" selection-start-line="61" selection-start-column="39" selection-end-line="61" selection-end-column="39" />
-          <folding>
-            <element signature="method#login#0;class#UserReceiverImpl#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/UserDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/UserDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="31" column="4" selection-start-line="30" selection-start-column="4" selection-end-line="31" selection-end-column="4" />
-          <folding>
-            <marker date="1500817124460" expanded="true" signature="867:936" ph="INSERT INTO `users`... " />
-            <marker date="1500817124460" expanded="true" signature="998:1043" ph="SELECT * FRO... users" />
-            <marker date="1500817124460" expanded="true" signature="1102:1144" ph="SELECT * FRO... users" />
-            <marker date="1500817124460" expanded="true" signature="1200:1262" ph="SELECT * FRO... users" />
-            <marker date="1500817124460" expanded="true" signature="1322:1399" ph="SELECT `id`,... users" />
-            <marker date="1500817124460" expanded="true" signature="1460:1554" ph="SELECT `id`,... users" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/AbstractCommand.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -1607,14 +1667,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/create.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="87" column="32" selection-start-line="87" selection-start-column="32" selection-end-line="87" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/jsp/lib/jsp-impl.jar!/standardSchemas/jspdirectives2_1.xsd">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="215">
@@ -1667,14 +1719,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="237">
           <caret line="40" column="21" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/tags/dashboard.tag">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="77" selection-start-line="5" selection-start-column="77" selection-end-line="5" selection-end-column="77" />
           <folding />
         </state>
       </provider>
@@ -1865,14 +1909,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/create.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="69" column="11" selection-start-line="69" selection-start-column="11" selection-end-line="69" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/entity/Horse.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1156">
@@ -1886,9 +1922,9 @@
         <state relative-caret-position="85">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#296#297#0" expanded="true" />
-            <element signature="e#360#361#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#296#297#0" expanded="false" />
+            <element signature="e#360#361#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1922,16 +1958,64 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/index.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="401">
-          <caret line="88" column="51" selection-start-line="88" selection-start-column="51" selection-end-line="88" selection-end-column="51" />
+        <state relative-caret-position="469">
+          <caret line="84" column="39" selection-start-line="84" selection-start-column="39" selection-end-line="84" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/suits/index.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="36" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/index.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1326">
-          <caret line="78" column="58" selection-start-line="78" selection-start-column="58" selection-end-line="78" selection-end-column="58" />
+        <state relative-caret-position="102">
+          <caret line="6" column="11" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/create.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="29" column="64" selection-start-line="29" selection-start-column="64" selection-end-line="29" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/create.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="106" column="38" selection-start-line="106" selection-start-column="38" selection-end-line="106" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/partials/top_nav.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="21" column="26" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/tags/dashboard.tag">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="79" selection-start-line="2" selection-start-column="79" selection-end-line="2" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/partials/sidebar.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="28" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
           <folding />
         </state>
       </provider>
