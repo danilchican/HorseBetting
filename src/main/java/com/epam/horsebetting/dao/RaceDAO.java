@@ -3,6 +3,8 @@ package com.epam.horsebetting.dao;
 import com.epam.horsebetting.entity.Race;
 import com.epam.horsebetting.exception.DAOException;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 
 public interface RaceDAO {
@@ -33,6 +35,15 @@ public interface RaceDAO {
      * @throws DAOException
      */
     List<Race> obtainPart(int limit, int offset) throws DAOException;
+
+    /**
+     * Create horses to race.
+     *
+     * @param horses
+     * @param race
+     * @throws DAOException
+     */
+    void createHorsesToRace(HashMap<Integer, BigDecimal> horses, Race race) throws DAOException;
 
     /**
      * Get total count of races.

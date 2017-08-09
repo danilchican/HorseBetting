@@ -116,11 +116,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         // TODO create validators
 
         String pageNum = content.findParameter("page");
-
-        HorseDAOImpl horseDAO = new HorseDAOImpl(true);
-
-        TransactionManager transaction = new TransactionManager(horseDAO);
-        transaction.beginTransaction();
+        HorseDAOImpl horseDAO = new HorseDAOImpl(false);
 
         try {
             final int limit = 10;
@@ -130,21 +126,15 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
             List<Horse> horses = horseDAO.obtainPart(limit, offset);
 
-            transaction.commit();
-
             content.insertRequestAttribute("horses", horses);
             content.insertRequestAttribute("totalHorses", totalHorses);
             content.insertRequestAttribute("limitHorses", limit);
 
             LOGGER.log(Level.DEBUG, "Horses list: " + Arrays.toString(horses.toArray()));
         } catch (NumberFormatException e) {
-            transaction.rollback();
             throw new ReceiverException("Cannot convert page to number. GET[page]=" + e.getMessage(), e);
         } catch (DAOException e) {
-            transaction.rollback();
             throw new ReceiverException("Database Error. " + e.getMessage(), e);
-        } finally {
-            transaction.endTransaction();
         }
     }
 
@@ -230,11 +220,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         // TODO create validators
 
         String pageNum = content.findParameter("page");
-
-        RaceDAOImpl raceDAO = new RaceDAOImpl(true);
-
-        TransactionManager transaction = new TransactionManager(raceDAO);
-        transaction.beginTransaction();
+        RaceDAOImpl raceDAO = new RaceDAOImpl(false);
 
         try {
             final int limit = 10;
@@ -244,21 +230,15 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
             List<Race> races = raceDAO.obtainPart(limit, offset);
 
-            transaction.commit();
-
             content.insertRequestAttribute("races", races);
             content.insertRequestAttribute("totalRaces", totalRaces);
             content.insertRequestAttribute("limitRaces", limit);
 
             LOGGER.log(Level.DEBUG, "Races list: " + Arrays.toString(races.toArray()));
         } catch (NumberFormatException e) {
-            transaction.rollback();
             throw new ReceiverException("Cannot convert page to number. GET[page]=" + e.getMessage(), e);
         } catch (DAOException e) {
-            transaction.rollback();
             throw new ReceiverException("Database Error. " + e.getMessage(), e);
-        } finally {
-            transaction.endTransaction();
         }
     }
 

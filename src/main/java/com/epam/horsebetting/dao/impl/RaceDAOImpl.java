@@ -8,12 +8,11 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
 
@@ -28,6 +27,8 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
     private static final String SQL_ADD_RACE = "INSERT INTO `races` " +
             "(title, place, min_rate, track_length, is_finished, bet_end_date, started_at)" +
             " VALUES (?,?,?,?,?,?,?);";
+    private static final String SQL_INSERT_HORSE_RACE = "INSERT INTO `horse_race` " +
+            "(`horse_id`, `race_id`, `coefficient`)" + " VALUES (?,?,?);";
     private static final String SQL_SELECT_PART_RACES = "SELECT * FROM `races` LIMIT ? OFFSET ?;";
     private static final String SQL_FIND_RACE_BY_TITLE = "SELECT * FROM `races` WHERE `title`=? LIMIT 1;";
     private static final String SQL_COUNT_RACES = "SELECT COUNT(*) AS `total` FROM `races`;";
@@ -133,23 +134,27 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
      *
      * @param horses
      * @param race
-     * @return boolean
      * @throws DAOException
      */
     @Override
-    public boolean createHorsesToRace(HashMap<String, String> horses, Race race) throws DAOException {
-        boolean result = false;
+    public void createHorsesToRace(HashMap<Integer, BigDecimal> horses, Race race) throws DAOException {
+        int affectedHorses[];
 
-//        connection.setAutoCommit(false);
-//        PreparedStatement ps = connection.prepareStatement(query);
-//        for (Record record : records) {
-//            // etc.
-//            ps.addBatch();
-//        }
-//        ps.executeBatch();
-//        connection.commit();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_HORSE_RACE)) {
+            for(Map.Entry<Integer, BigDecimal> horse: horses.entrySet()) {
+                statement.setInt(1, horse.getKey());
+                statement.setInt(2, race.getId());
+                statement.setBigDecimal(3, horse.getValue());
 
-        return result;
+                statement.addBatch();
+            }
+
+            // TODO check execution result
+            affectedHorses = statement.executeBatch();
+            LOGGER.log(Level.DEBUG, "Count of inserted horses to race:" + Arrays.toString(affectedHorses));
+        } catch (SQLException e) {
+            throw new DAOException("Cannot save horses to race. " + e.getMessage(), e);
+        }
     }
 
     /**

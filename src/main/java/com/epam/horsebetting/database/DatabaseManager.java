@@ -32,6 +32,8 @@ class DatabaseManager {
     private static final String DEFAULT_DB_PASSWORD = "root";
     private static final String DEFAULT_DB_USE_SSL = "false";
     private static final String DEFAULT_DB_CHARACTER_ENCODING = "utf-8";
+
+    private static final boolean DEFAULT_DB_REWRITE_BATCHED_STATEMENTS = true;
     private static final int DEFAULT_DB_POOL_SIZE = 10;
 
     /**
@@ -43,7 +45,8 @@ class DatabaseManager {
      * Default constructor with getting bundle.
      */
     DatabaseManager() {
-        dbBundle = ResourceBundle.getBundle(EnvironmentConfig.BUNDLE_ENVIRONMENT_DIR + "/" + EnvironmentConfig.BUNDLE_ENVIRONMENT_NAME);
+        dbBundle = ResourceBundle.getBundle(EnvironmentConfig.BUNDLE_ENVIRONMENT_DIR +
+                "/" + EnvironmentConfig.BUNDLE_ENVIRONMENT_NAME);
     }
 
     /**
@@ -98,6 +101,8 @@ class DatabaseManager {
         String database;
         String characterEncoding;
 
+        boolean rewriteBatchedStatements;
+
         try {
             propName = "DB_DRIVER";
             driver = dbBundle.getString(propName);
@@ -146,8 +151,17 @@ class DatabaseManager {
             LOGGER.log(Level.ERROR, "Can't find " + propName + " prop", e);
         }
 
+        try {
+            propName = "DB_REWRITE_BATCHED_STATEMENTS";
+            rewriteBatchedStatements = Boolean.valueOf(dbBundle.getString(propName));
+        } catch (MissingResourceException e) {
+            rewriteBatchedStatements = DEFAULT_DB_REWRITE_BATCHED_STATEMENTS;
+            LOGGER.log(Level.ERROR, "Can't find " + propName + " prop", e);
+        }
+
         url = driver + ":" + connection + "://" + host + ":" + port + "/" + database +
-                "?characterEncoding=" + characterEncoding;
+                "?characterEncoding=" + characterEncoding +
+                "&rewriteBatchedStatements" + rewriteBatchedStatements;
 
         return url;
     }
