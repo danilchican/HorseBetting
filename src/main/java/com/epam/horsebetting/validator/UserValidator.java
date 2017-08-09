@@ -7,17 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class UserValidator {
-
-    /**
-     * List of errors.
-     */
-    private ArrayList<String> errors;
-
-    /**
-     * Old input from data.
-     */
-    private HashMap<String, String> oldInput;
+public class UserValidator extends AbstractValidator {
 
     /**
      * Regular expressions for variables.
@@ -25,14 +15,6 @@ public class UserValidator {
     private static final String NAME_REGEX = "[a-zA-Z]\\w{4,}";
     private static final String EMAIL_REGEX = "\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+";
     private static final String PASSWORD_REGEX = "(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{6,}";
-
-    /**
-     * Default constructor.
-     */
-    public UserValidator() {
-        this.errors = new ArrayList<>();
-        this.oldInput = new HashMap<>();
-    }
 
     /**
      * Validate registration data.
@@ -94,15 +76,15 @@ public class UserValidator {
      */
     private boolean validateName(String name) {
         if (name == null) {
-            this.errors.add("Name is required.");
+            this.addErrorMessage("Name is required.");
             return false;
         }
 
         if (!name.isEmpty()) {
-            this.oldInput.put(OldInputFormAttributeTag.PREFIX + "name", name);
+            this.putOldData(OldInputFormAttributeTag.PREFIX + "name", name);
 
             if (!name.matches(NAME_REGEX)) {
-                this.errors.add("Name must be at least 5 characters as well as contain `_` symbol. The 1st symbol must be [A-Za-z].");
+                this.addErrorMessage("Name must be at least 5 characters as well as contain `_` symbol. The 1st symbol must be [A-Za-z].");
                 return false;
             }
         }
@@ -118,15 +100,15 @@ public class UserValidator {
      */
     private boolean validateEmail(String email) {
         if (email == null) {
-            this.errors.add("Email is required.");
+            this.addErrorMessage("Email is required.");
             return false;
         }
 
         if (!email.isEmpty()) {
-            this.oldInput.put(OldInputFormAttributeTag.PREFIX + "email", email);
+            this.putOldData(OldInputFormAttributeTag.PREFIX + "email", email);
 
             if (!email.matches(EMAIL_REGEX)) {
-                this.errors.add("Email is invalid.");
+                this.addErrorMessage("Email is invalid.");
                 return false;
             }
         }
@@ -142,13 +124,13 @@ public class UserValidator {
      */
     private boolean validatePassword(String password) {
         if (password == null) {
-            this.errors.add("Password is required.");
+            this.addErrorMessage("Password is required.");
             return false;
         }
 
         if (!password.isEmpty()) {
             if (!password.matches(PASSWORD_REGEX)) {
-                this.errors.add("Your password must be at least 6 characters as well as contain at least one lowercase and one number.");
+                this.addErrorMessage("Your password must be at least 6 characters as well as contain at least one lowercase and one number.");
                 return false;
             }
         }
@@ -168,25 +150,7 @@ public class UserValidator {
             return true;
         }
 
-        this.errors.add("Password not confirmed!");
+        this.addErrorMessage("Password not confirmed!");
         return false;
-    }
-
-    /**
-     * Get list of errors.
-     *
-     * @return errors
-     */
-    public ArrayList<String> getErrors() {
-        return errors;
-    }
-
-    /**
-     * Get old inputs..
-     *
-     * @return errors
-     */
-    public Set<Map.Entry<String, String>> getOldInput() {
-        return oldInput.entrySet();
     }
 }
