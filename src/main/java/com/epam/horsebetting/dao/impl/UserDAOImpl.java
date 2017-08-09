@@ -236,6 +236,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_ATTEMPT_AUTH)) {
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, HashManager.make(password));
+
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {

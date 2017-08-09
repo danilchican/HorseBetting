@@ -39,7 +39,7 @@ public class TransactionManager {
     }
 
     /**
-     * Begin transaction.
+     * Transaction begin.
      */
     public void beginTransaction() {
         try {
@@ -52,7 +52,7 @@ public class TransactionManager {
     }
 
     /**
-     * Finish transaction.
+     * Transaction end.
      */
     public void endTransaction() {
         try {

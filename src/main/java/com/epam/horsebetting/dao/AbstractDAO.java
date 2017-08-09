@@ -57,7 +57,7 @@ public abstract class AbstractDAO<T extends Entity> implements AutoCloseable {
     }
 
     /**
-     * Closes this resource, relinquishing any underlying resources.
+     * Return back connection into pool.
      */
     @Override
     public void close() throws DAOException {

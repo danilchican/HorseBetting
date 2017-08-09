@@ -1,6 +1,7 @@
 package com.epam.horsebetting.receiver.impl;
 
 import com.epam.horsebetting.dao.impl.UserDAOImpl;
+import com.epam.horsebetting.database.TransactionManager;
 import com.epam.horsebetting.entity.User;
 import com.epam.horsebetting.exception.DAOException;
 import com.epam.horsebetting.exception.ReceiverException;
@@ -43,11 +44,20 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
             ArrayList<String> errors = new ArrayList<>();
 
-            try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
+            UserDAOImpl userDAO = new UserDAOImpl(true);
+
+            TransactionManager transaction = new TransactionManager(userDAO);
+            transaction.beginTransaction();
+
+            try {
                 if(!isUserExists(newUser)) {
                     User user = userDAO.create(newUser);
+                    transaction.commit();
+
                     this.authenticate(content, user);
                 } else {
+                    transaction.rollback();
+
                     errors.add("User already exists. Change your email.");
                     content.insertSessionAttribute("errors", errors);
 
@@ -58,6 +68,8 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
                     throw new ReceiverException("Cannot register user. User already exists.");
                 }
             } catch (DAOException e) {
+                transaction.rollback();
+
                 errors.add("Can't create new user.");
                 content.insertSessionAttribute("errors", errors);
 
