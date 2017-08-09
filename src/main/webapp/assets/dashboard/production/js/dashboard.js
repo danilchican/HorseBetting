@@ -27217,31 +27217,36 @@ var loading_box = '<div class="overlay"><i class="fa fa-refresh fa-spin"></i></d
             $.post('/ajax/dashboard/suits/update', data)
                     .done(function (data) {
                         if (data.success === true) {
-                            var messages = data.messages;
-
-                            $.each(messages, function (key, value) {
-                                toastr.success(value, 'Success')
-                            });
+                            if (data.messages !== undefined) {
+                                $.each(data.messages, function (key, value) {
+                                    toastr.success(value, 'Success')
+                                });
+                            }
 
                             $('#editSuitModal').modal('hide');
-
                             vm.getSuitsList();
                         } else {
-                            toastr.error('Что-то пошло не так...', 'Error')
-                        }
-                    })
-                    .fail(function (data, statusText, xhr) {
-                        // error callback
-                        var errors = data;
-                        $.each(errors, function (key, value) {
-                            if (data.status === 422) {
-                                toastr.error(value[0], 'Error')
+                            if (data.errors !== undefined) {
+                                // error callback
+                                $.each(data.errors, function (key, value) {
+                                    toastr.error(value, 'Error')
+                                });
                             } else {
-                                toastr.error(value, 'Error')
+                                toastr.error('Что-то пошло не так...', 'Error')
                             }
-                        });
+                        }
 
                         vm.unsetDisable();
+                    })
+                    .fail(function (data) {
+                        vm.unsetDisable();
+                        // error callback
+
+                        if (data.errors !== undefined) {
+                            $.each(data.errors, function (key, value) {
+                                toastr.error(value, 'Error')
+                            });
+                        }
                     });
         },
 
@@ -27251,6 +27256,7 @@ var loading_box = '<div class="overlay"><i class="fa fa-refresh fa-spin"></i></d
         getSuitsList: function getSuitsList() {
             var this$1 = this;
 
+            // TODO add checking errors
             this.$http.get('/ajax/dashboard/suits?page=1').then(function (response) {
                 this$1.processRequest(response.data.suits, true);
             });
@@ -27268,6 +27274,7 @@ var loading_box = '<div class="overlay"><i class="fa fa-refresh fa-spin"></i></d
             this.setDisable();
             this.currentPage++;
 
+            // TODO add checking errors
             this.$http.get('/ajax/dashboard/suits?page=' + this.currentPage).then(function (response) {
                 this$1.processRequest(response.data.suits, false);
             });
@@ -27421,33 +27428,36 @@ var loading_box = '<div class="overlay"><i class="fa fa-refresh fa-spin"></i></d
                         console.log(savedSuit);
 
                         if (data.success === true) {
-                            var messages = data.messages;
+                            if (data.messages !== undefined) {
+                                $.each(data.messages, function (key, value) {
+                                    toastr.success(value, 'Success')
+                                });
+                            }
 
-                            $.each(messages, function (key, value) {
-                                toastr.success(value, 'Success')
-                            });
+                            vm.name = '';
+                            vm.$emit('suitCreated', savedSuit);
                         } else {
-                            toastr.error('Что-то пошло не так...', 'Error')
+                            if (data.errors !== undefined) {
+                                // error callback
+                                $.each(data.errors, function (key, value) {
+                                    toastr.error(value, 'Error')
+                                });
+                            } else {
+                                toastr.error('Что-то пошло не так...', 'Error')
+                            }
                         }
-
-                        vm.$emit('suitCreated', savedSuit);
-                        vm.name = '';
 
                         vm.unsetDisable();
                     })
-                    .fail(function (data, statusText, xhr) {
+                    .fail(function (data) {
                         vm.unsetDisable();
                         // error callback
-                        var errors = data;
-                        $.each(errors, function (key, value) {
-                            if (xhr.status === 422) {
-                                toastr.error(value[0], 'Error')
-                            } else {
-                                toastr.error(value, 'Error')
-                            }
-                        });
 
-                        vm.unsetDisable();
+                        if (data.errors !== undefined) {
+                            $.each(data.errors, function (key, value) {
+                                toastr.error(value, 'Error')
+                            });
+                        }
                     });
         }
     }
@@ -27601,9 +27611,9 @@ var loading_box = '<div class="overlay"><i class="fa fa-refresh fa-spin"></i></d
     props: ['suit'],
 
     data: function data() {
-      return {
-          disable: false
-      }
+        return {
+            disable: false
+        }
     },
 
     methods: {
@@ -27646,30 +27656,35 @@ var loading_box = '<div class="overlay"><i class="fa fa-refresh fa-spin"></i></d
             $.post('/ajax/dashboard/suits/remove', {id: suit.id})
                     .done(function (data) {
                         if (data.success === true) {
-                            var messages = data.messages;
-
-                            $.each(messages, function (key, value) {
-                                toastr.success(value, 'Success')
-                            });
+                            if (data.messages !== undefined) {
+                                $.each(data.messages, function (key, value) {
+                                    toastr.success(value, 'Success')
+                                });
+                            }
 
                             vm.$emit('suitRemoved');
-                            vm.unsetDisable();
                         } else {
-                            toastr.error('Что-то пошло не так...', 'Error')
-                        }
-                    })
-                    .fail(function (data, statusText, xhr) {
-                        // error callback
-                        var errors = data;
-                        $.each(errors, function (key, value) {
-                            if (data.status === 422) {
-                                toastr.error(value[0], 'Error')
+                            if (data.errors !== undefined) {
+                                // error callback
+                                $.each(data.errors, function (key, value) {
+                                    toastr.error(value, 'Error')
+                                });
                             } else {
-                                toastr.error(value, 'Error')
+                                toastr.error('Что-то пошло не так...', 'Error')
                             }
-                        });
+                        }
 
                         vm.unsetDisable();
+                    })
+                    .fail(function (data) {
+                        vm.unsetDisable();
+                        // error callback
+
+                        if (data.errors !== undefined) {
+                            $.each(data.errors, function (key, value) {
+                                toastr.error(value, 'Error')
+                            });
+                        }
                     });
         }
     }

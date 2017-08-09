@@ -20,9 +20,9 @@
         props: ['suit'],
 
         data() {
-          return {
-              disable: false
-          }
+            return {
+                disable: false
+            }
         },
 
         methods: {
@@ -65,30 +65,35 @@
                 $.post('/ajax/dashboard/suits/remove', {id: suit.id})
                         .done(function (data) {
                             if (data.success === true) {
-                                var messages = data.messages;
-
-                                $.each(messages, function (key, value) {
-                                    toastr.success(value, 'Success')
-                                });
+                                if (data.messages !== undefined) {
+                                    $.each(data.messages, function (key, value) {
+                                        toastr.success(value, 'Success')
+                                    });
+                                }
 
                                 vm.$emit('suitRemoved');
-                                vm.unsetDisable();
                             } else {
-                                toastr.error('Что-то пошло не так...', 'Error')
-                            }
-                        })
-                        .fail(function (data, statusText, xhr) {
-                            // error callback
-                            var errors = data;
-                            $.each(errors, function (key, value) {
-                                if (data.status === 422) {
-                                    toastr.error(value[0], 'Error')
+                                if (data.errors !== undefined) {
+                                    // error callback
+                                    $.each(data.errors, function (key, value) {
+                                        toastr.error(value, 'Error')
+                                    });
                                 } else {
-                                    toastr.error(value, 'Error')
+                                    toastr.error('Что-то пошло не так...', 'Error')
                                 }
-                            });
+                            }
 
                             vm.unsetDisable();
+                        })
+                        .fail(function (data) {
+                            vm.unsetDisable();
+                            // error callback
+
+                            if (data.errors !== undefined) {
+                                $.each(data.errors, function (key, value) {
+                                    toastr.error(value, 'Error')
+                                });
+                            }
                         });
             }
         }

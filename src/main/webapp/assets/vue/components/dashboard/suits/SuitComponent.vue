@@ -229,31 +229,36 @@
                 $.post('/ajax/dashboard/suits/update', data)
                         .done(function (data) {
                             if (data.success === true) {
-                                var messages = data.messages;
-
-                                $.each(messages, function (key, value) {
-                                    toastr.success(value, 'Success')
-                                });
+                                if (data.messages !== undefined) {
+                                    $.each(data.messages, function (key, value) {
+                                        toastr.success(value, 'Success')
+                                    });
+                                }
 
                                 $('#editSuitModal').modal('hide');
-
                                 vm.getSuitsList();
                             } else {
-                                toastr.error('Что-то пошло не так...', 'Error')
-                            }
-                        })
-                        .fail(function (data, statusText, xhr) {
-                            // error callback
-                            var errors = data;
-                            $.each(errors, function (key, value) {
-                                if (data.status === 422) {
-                                    toastr.error(value[0], 'Error')
+                                if (data.errors !== undefined) {
+                                    // error callback
+                                    $.each(data.errors, function (key, value) {
+                                        toastr.error(value, 'Error')
+                                    });
                                 } else {
-                                    toastr.error(value, 'Error')
+                                    toastr.error('Что-то пошло не так...', 'Error')
                                 }
-                            });
+                            }
 
                             vm.unsetDisable();
+                        })
+                        .fail(function (data) {
+                            vm.unsetDisable();
+                            // error callback
+
+                            if (data.errors !== undefined) {
+                                $.each(data.errors, function (key, value) {
+                                    toastr.error(value, 'Error')
+                                });
+                            }
                         });
             },
 
@@ -261,6 +266,7 @@
              * Get suits from storage.
              */
             getSuitsList() {
+                // TODO add checking errors
                 this.$http.get('/ajax/dashboard/suits?page=1').then((response) => {
                     this.processRequest(response.data.suits, true);
                 });
@@ -276,6 +282,7 @@
                 this.setDisable();
                 this.currentPage++;
 
+                // TODO add checking errors
                 this.$http.get('/ajax/dashboard/suits?page=' + this.currentPage).then((response) => {
                     this.processRequest(response.data.suits, false);
                 });

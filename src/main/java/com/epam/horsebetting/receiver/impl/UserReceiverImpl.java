@@ -43,7 +43,6 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
             newUser.setName(name);
 
             ArrayList<String> errors = new ArrayList<>();
-
             UserDAOImpl userDAO = new UserDAOImpl(true);
 
             TransactionManager transaction = new TransactionManager(userDAO);

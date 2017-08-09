@@ -23,19 +23,16 @@ public interface SuitDAO {
      * Update suit.
      *
      * @param suit
-     * @return boolean
      */
-    boolean update(Suit suit) throws DAOException;
+    void update(Suit suit) throws DAOException;
 
     /**
      * Remove suit.
      *
      * @param suit
-     * @return boolean
      * @throws DAOException
      */
-    boolean remove(Suit suit) throws DAOException;
-
+    void remove(Suit suit) throws DAOException;
 
     /**
      * Obtain part of suits.

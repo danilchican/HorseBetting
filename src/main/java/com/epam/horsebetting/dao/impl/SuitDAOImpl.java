@@ -62,10 +62,9 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
      * Update suit.
      *
      * @param suit
-     * @return boolean
      */
     @Override
-    public boolean update(Suit suit) throws DAOException {
+    public void update(Suit suit) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_SUIT)) {
             preparedStatement.setString(1, suit.getName());
             preparedStatement.setInt(2, suit.getId());
@@ -73,8 +72,6 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
             if (preparedStatement.executeUpdate() != 1) {
                 throw new DAOException("Can't update suit.");
             }
-
-            return true;
         } catch (SQLException e) {
             throw new DAOException("Can't update suit. " + e.getMessage(), e);
         }
@@ -84,19 +81,16 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
      * Remove suit.
      *
      * @param suit
-     * @return boolean
      * @throws DAOException
      */
     @Override
-    public boolean remove(Suit suit) throws DAOException {
+    public void remove(Suit suit) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_REMOVE_SUIT)) {
             preparedStatement.setInt(1, suit.getId());
 
             if (preparedStatement.executeUpdate() != 1) {
                 throw new DAOException("Can't remove suit from the database.");
             }
-
-            return true;
         } catch (SQLException e) {
             throw new DAOException("Can't remove suit. " + e.getMessage(), e);
         }

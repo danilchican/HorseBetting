@@ -85,33 +85,36 @@
                             console.log(savedSuit);
 
                             if (data.success === true) {
-                                var messages = data.messages;
+                                if (data.messages !== undefined) {
+                                    $.each(data.messages, function (key, value) {
+                                        toastr.success(value, 'Success')
+                                    });
+                                }
 
-                                $.each(messages, function (key, value) {
-                                    toastr.success(value, 'Success')
-                                });
+                                vm.name = '';
+                                vm.$emit('suitCreated', savedSuit);
                             } else {
-                                toastr.error('Что-то пошло не так...', 'Error')
+                                if (data.errors !== undefined) {
+                                    // error callback
+                                    $.each(data.errors, function (key, value) {
+                                        toastr.error(value, 'Error')
+                                    });
+                                } else {
+                                    toastr.error('Что-то пошло не так...', 'Error')
+                                }
                             }
-
-                            vm.$emit('suitCreated', savedSuit);
-                            vm.name = '';
 
                             vm.unsetDisable();
                         })
-                        .fail(function (data, statusText, xhr) {
+                        .fail(function (data) {
                             vm.unsetDisable();
                             // error callback
-                            var errors = data;
-                            $.each(errors, function (key, value) {
-                                if (xhr.status === 422) {
-                                    toastr.error(value[0], 'Error')
-                                } else {
-                                    toastr.error(value, 'Error')
-                                }
-                            });
 
-                            vm.unsetDisable();
+                            if (data.errors !== undefined) {
+                                $.each(data.errors, function (key, value) {
+                                    toastr.error(value, 'Error')
+                                });
+                            }
                         });
             }
         }
