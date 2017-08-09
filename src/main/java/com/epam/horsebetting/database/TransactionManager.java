@@ -48,6 +48,7 @@ public class TransactionManager {
             LOGGER.log(Level.ERROR, "Can't begin transaction. " + e.getMessage(), e);
         }
 
+        LOGGER.log(Level.INFO, "Transaction has been begin.");
         daos.forEach(dao -> dao.setConnection(connection));
     }
 
@@ -61,6 +62,7 @@ public class TransactionManager {
             LOGGER.log(Level.ERROR, "Can't finish transaction", e);
         }
 
+        LOGGER.log(Level.INFO, "Transaction has been end.");
         ConnectionPool.getInstance().releaseConnection(connection);
     }
 
@@ -89,6 +91,7 @@ public class TransactionManager {
     public void rollback() {
         try {
             connection.rollback();
+            LOGGER.log(Level.INFO, "Transaction has been rolled back.");
         } catch (SQLException e) {
             LOGGER.log(Level.ERROR, "Can't rollback transaction", e);
         }

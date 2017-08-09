@@ -50,10 +50,10 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
             transaction.beginTransaction();
 
             try {
-                if(!isUserExists(newUser)) {
+                if(!isUserExists(userDAO, newUser)) {
                     User user = userDAO.create(newUser);
-                    transaction.commit();
 
+                    transaction.commit();
                     this.authenticate(content, user);
                 } else {
                     transaction.rollback();
@@ -78,6 +78,8 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
                 }
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
+            } finally {
+                transaction.endTransaction();
             }
         } else {
             content.insertSessionAttribute("errors", validator.getErrors());
@@ -207,12 +209,8 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      * @return boolean
      * @throws DAOException
      */
-    private boolean isUserExists(User user) throws DAOException {
-        User foundedUser;
-
-        try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
-            foundedUser = userDAO.findByEmail(user.getEmail());
-        }
+    private boolean isUserExists(UserDAOImpl userDAO, User user) throws DAOException {
+        User foundedUser = userDAO.findByEmail(user.getEmail());
 
         return foundedUser != null;
     }

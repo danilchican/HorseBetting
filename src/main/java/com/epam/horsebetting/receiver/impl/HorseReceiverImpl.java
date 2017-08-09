@@ -1,6 +1,7 @@
 package com.epam.horsebetting.receiver.impl;
 
 import com.epam.horsebetting.dao.impl.HorseDAOImpl;
+import com.epam.horsebetting.database.TransactionManager;
 import com.epam.horsebetting.entity.Horse;
 import com.epam.horsebetting.exception.DAOException;
 import com.epam.horsebetting.exception.ReceiverException;
@@ -47,17 +48,27 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
         LOGGER.log(Level.DEBUG, "Want create horse: " + horse);
 
         ArrayList<String> errors = new ArrayList<>();
+        HorseDAOImpl horseDAO = new HorseDAOImpl(true);
 
-        try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
+        TransactionManager transaction = new TransactionManager(horseDAO);
+        transaction.beginTransaction();
+
+        try {
             Horse createdHorse = horseDAO.create(horse);
+            transaction.commit();
+
             LOGGER.log(Level.DEBUG, "Created horse: " + createdHorse);
         } catch (DAOException e) {
+            transaction.rollback();
+
             errors.add("Can't create new horse.");
             content.insertSessionAttribute("errors", errors);
 
             // TODO add saving old inputs
 
             throw new ReceiverException("Database Error: " + e.getMessage(), e);
+        } finally {
+            transaction.endTransaction();
         }
     }
 
@@ -94,8 +105,8 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
         Horse suit = new Horse(id);
         LOGGER.log(Level.DEBUG, "Want remove horse: " + suit);
 
-        try (HorseDAOImpl suitDAO = new HorseDAOImpl(false)) {
-            boolean result = suitDAO.remove(suit);
+        try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
+            boolean result = horseDAO.remove(suit);
 
             if (result) {
                 messages.add("Horse removed successfully");

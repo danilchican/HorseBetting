@@ -1,6 +1,7 @@
 package com.epam.horsebetting.receiver.impl;
 
 import com.epam.horsebetting.dao.impl.SuitDAOImpl;
+import com.epam.horsebetting.database.TransactionManager;
 import com.epam.horsebetting.entity.Suit;
 import com.epam.horsebetting.exception.DAOException;
 import com.epam.horsebetting.exception.ReceiverException;
@@ -70,9 +71,15 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
         Suit suit = new Suit(name);
         LOGGER.log(Level.DEBUG, "Want create suit: " + suit);
 
-        try (SuitDAOImpl suitDAO = new SuitDAOImpl(false)) {
+        SuitDAOImpl suitDAO = new SuitDAOImpl(true);
+
+        TransactionManager transaction = new TransactionManager(suitDAO);
+        transaction.beginTransaction();
+
+        try {
             Suit createdSuit = suitDAO.create(suit);
 
+            transaction.commit();
             LOGGER.log(Level.DEBUG, "Created suit: " + createdSuit);
 
             messages.add("Suit created successfully");
@@ -81,7 +88,10 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
             content.insertJsonAttribute("messages", messages);
             content.insertJsonAttribute("success", true);
         } catch (DAOException e) {
+            transaction.rollback();
             throw new ReceiverException("Database Error: " + e.getMessage(), e);
+        } finally {
+            transaction.endTransaction();
         }
     }
 
