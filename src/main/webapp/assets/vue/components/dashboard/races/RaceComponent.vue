@@ -9,7 +9,7 @@
                          :horses="horses"
                          @removeHorse="removeHorse(index)"></view-race-horse>
         <div class="form-group">
-            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+            <div class="col-md-9 col-sm-12 col-xs-12 col-md-offset-3">
                 <a style="cursor: pointer; padding: 5px;" @click="appendHorse()" class="btn-primary">Append horse</a>
             </div>
         </div>

@@ -28187,7 +28187,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-group"
   }, [_c('label', {
     staticClass: "control-label col-md-3 col-sm-3 col-xs-12"
-  }, [_vm._v("Horse " + _vm._s(_vm.index + 1))]), _vm._v(" "), _c('a', {
+  }, [_vm._v("Horse " + _vm._s(_vm.index + 1) + " "), _c('a', {
     staticClass: "btn-danger",
     staticStyle: {
       "cursor": "pointer",
@@ -28198,7 +28198,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.removeHorse()
       }
     }
-  }, [_vm._v("x")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("x")])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-6 col-sm-6 col-xs-12"
   }, [_c('select', {
     directives: [{
@@ -28300,7 +28300,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('div', {
-    staticClass: "col-md-6 col-sm-6 col-xs-12 col-md-offset-3"
+    staticClass: "col-md-9 col-sm-12 col-xs-12 col-md-offset-3"
   }, [_c('a', {
     staticClass: "btn-primary",
     staticStyle: {
