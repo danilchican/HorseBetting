@@ -36,6 +36,15 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
     private static final String SQL_COUNT_HORSES = "SELECT COUNT(*) AS `total` FROM `horses`;";
 
     /**
+     * Default constructor connection.
+     *
+     * @param isForTransaction
+     */
+    public HorseDAOImpl(boolean isForTransaction) {
+        super(isForTransaction);
+    }
+
+    /**
      * Create a new horse.
      *
      * @param horse

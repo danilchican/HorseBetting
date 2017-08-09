@@ -24,6 +24,15 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
     private static final String SQL_SELECT_PART_SUITS = "SELECT * FROM `suits` ORDER BY `id` LIMIT ? OFFSET ?;";
 
     /**
+     * Default constructor connection.
+     *
+     * @param isForTransaction
+     */
+    public SuitDAOImpl(boolean isForTransaction) {
+        super(isForTransaction);
+    }
+
+    /**
      * Create a new suit.
      *
      * @param suit

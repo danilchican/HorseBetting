@@ -33,7 +33,7 @@ public class AuthUserFilter implements Filter {
         if (userObj != null) {
             int userId = Integer.parseInt(String.valueOf(userObj));
 
-            try (UserDAOImpl userDAO = new UserDAOImpl()) {
+            try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
                 User user = userDAO.find(userId);
                 request.setAttribute("user", user);
             } catch (DAOException e) {

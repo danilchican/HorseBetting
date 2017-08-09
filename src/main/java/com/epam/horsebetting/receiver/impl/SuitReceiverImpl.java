@@ -45,7 +45,7 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
         final int step = 10;
         final int offset = step * (page - 1);
 
-        try (SuitDAOImpl suitDAO = new SuitDAOImpl()) {
+        try (SuitDAOImpl suitDAO = new SuitDAOImpl(false)) {
             List<Suit> suits = suitDAO.obtainPart(step, offset);
             LOGGER.log(Level.DEBUG, "Suits part: " + Arrays.toString(suits.toArray()));
             content.insertJsonAttribute("suits", suits);
@@ -70,7 +70,7 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
         Suit suit = new Suit(name);
         LOGGER.log(Level.DEBUG, "Want create suit: " + suit);
 
-        try (SuitDAOImpl suitDAO = new SuitDAOImpl()) {
+        try (SuitDAOImpl suitDAO = new SuitDAOImpl(false)) {
             Suit createdSuit = suitDAO.create(suit);
 
             LOGGER.log(Level.DEBUG, "Created suit: " + createdSuit);
@@ -103,7 +103,7 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
         Suit suit = new Suit(id);
         suit.setName(name);
 
-        try (SuitDAOImpl suitDAO = new SuitDAOImpl()) {
+        try (SuitDAOImpl suitDAO = new SuitDAOImpl(false)) {
             boolean result = suitDAO.update(suit);
 
             if (result) {
@@ -139,7 +139,7 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
         Suit suit = new Suit(id);
         LOGGER.log(Level.DEBUG, "Want remove suit: " + suit);
 
-        try (SuitDAOImpl suitDAO = new SuitDAOImpl()) {
+        try (SuitDAOImpl suitDAO = new SuitDAOImpl(false)) {
             boolean result = suitDAO.remove(suit);
 
             if (result) {

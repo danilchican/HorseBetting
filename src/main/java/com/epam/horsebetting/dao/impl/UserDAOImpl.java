@@ -34,6 +34,15 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     private static final String SQL_SELECT_PART_USERS = "SELECT `id`, `role_id`, `name`, `email`, `balance`, `created_at` FROM `users` LIMIT ? OFFSET ?;";
 
     /**
+     * Default constructor connection.
+     *
+     * @param isForTransaction
+     */
+    public UserDAOImpl(boolean isForTransaction) {
+        super(isForTransaction);
+    }
+
+    /**
      * Create a new user.
      *
      * @param user

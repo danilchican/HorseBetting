@@ -19,8 +19,19 @@ public abstract class AbstractDAO<T extends Entity> implements AutoCloseable {
     /**
      * Default constructor connection.
      */
-    public AbstractDAO() {
-        this.connection = ConnectionPool.getInstance().fetchConnection();
+    public AbstractDAO(boolean isForTransaction) {
+        if(!isForTransaction) {
+            this.connection = ConnectionPool.getInstance().fetchConnection();
+        }
+    }
+
+    /**
+     * Set connection.
+     *
+     * @param connection
+     */
+    public void setConnection(ProxyConnection connection) {
+        this.connection = connection;
     }
 
     /**

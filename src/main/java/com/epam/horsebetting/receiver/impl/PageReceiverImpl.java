@@ -116,7 +116,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
         String pageNum = content.findParameter("page");
 
-        try (HorseDAOImpl horseDAO = new HorseDAOImpl()) {
+        try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
             final int limit = 10;
             final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
             final int offset = (page - 1) * limit;
@@ -146,7 +146,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         this.setPageSubTitle("Создание лошади");
         this.setDefaultContentAttributes(content);
 
-        try (SuitDAOImpl suitDAO = new SuitDAOImpl()) {
+        try (SuitDAOImpl suitDAO = new SuitDAOImpl(false)) {
             List<Suit> suits = suitDAO.findAll();
             content.insertRequestAttribute("suits", suits);
 
@@ -170,7 +170,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
         String idNum = content.findParameter("id");
 
-        try (HorseDAOImpl horseDAO = new HorseDAOImpl()) {
+        try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
             final int id = idNum != null ? Integer.parseInt(idNum) : 1;
             Horse horse = horseDAO.find(id);
 
@@ -184,7 +184,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
             throw new ReceiverException("Database Error. " + e.getMessage(), e);
         }
 
-        try (SuitDAOImpl suitDAO = new SuitDAOImpl()) {
+        try (SuitDAOImpl suitDAO = new SuitDAOImpl(false)) {
             List<Suit> suits = suitDAO.findAll();
             content.insertRequestAttribute("suits", suits);
 
@@ -208,7 +208,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
         String pageNum = content.findParameter("page");
 
-        try (RaceDAOImpl raceDAO = new RaceDAOImpl()) {
+        try (RaceDAOImpl raceDAO = new RaceDAOImpl(false)) {
             final int limit = 10;
             final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
             final int offset = (page - 1) * limit;

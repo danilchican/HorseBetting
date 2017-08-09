@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 
 public class DateFormatter {
 
+    public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
     /**
      * Format date.
      *

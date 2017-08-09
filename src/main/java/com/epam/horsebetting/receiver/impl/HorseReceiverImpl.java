@@ -48,7 +48,7 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
 
         ArrayList<String> errors = new ArrayList<>();
 
-        try (HorseDAOImpl horseDAO = new HorseDAOImpl()) {
+        try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
             Horse createdHorse = horseDAO.create(horse);
             LOGGER.log(Level.DEBUG, "Created horse: " + createdHorse);
         } catch (DAOException e) {
@@ -69,7 +69,7 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
      */
     @Override
     public void ajaxObtainHorsesList(RequestContent content) throws ReceiverException {
-        try (HorseDAOImpl horseDAO = new HorseDAOImpl()) {
+        try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
             List<Horse> horses = horseDAO.findAll();
             content.insertJsonAttribute("horses", horses);
         } catch (DAOException e) {
@@ -94,7 +94,7 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
         Horse suit = new Horse(id);
         LOGGER.log(Level.DEBUG, "Want remove horse: " + suit);
 
-        try (HorseDAOImpl suitDAO = new HorseDAOImpl()) {
+        try (HorseDAOImpl suitDAO = new HorseDAOImpl(false)) {
             boolean result = suitDAO.remove(suit);
 
             if (result) {
@@ -143,7 +143,7 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
 
         ArrayList<String> errors = new ArrayList<>();
 
-        try (HorseDAOImpl horseDAO = new HorseDAOImpl()) {
+        try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
             boolean isUpdated = horseDAO.update(horse);
 
             if (isUpdated) {

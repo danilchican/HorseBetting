@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
@@ -30,6 +31,15 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
     private static final String SQL_SELECT_PART_RACES = "SELECT * FROM `races` LIMIT ? OFFSET ?;";
     private static final String SQL_FIND_RACE_BY_TITLE = "SELECT * FROM `races` WHERE `title`=? LIMIT 1;";
     private static final String SQL_COUNT_RACES = "SELECT COUNT(*) AS `total` FROM `races`;";
+
+    /**
+     * Default constructor connection.
+     *
+     * @param isForTransaction
+     */
+    public RaceDAOImpl(boolean isForTransaction) {
+        super(isForTransaction);
+    }
 
     /**
      * Create a new race.
@@ -116,6 +126,30 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
         }
 
         return foundedRaces;
+    }
+
+    /**
+     * Create horses to race.
+     *
+     * @param horses
+     * @param race
+     * @return boolean
+     * @throws DAOException
+     */
+    @Override
+    public boolean createHorsesToRace(HashMap<String, String> horses, Race race) throws DAOException {
+        boolean result = false;
+
+//        connection.setAutoCommit(false);
+//        PreparedStatement ps = connection.prepareStatement(query);
+//        for (Record record : records) {
+//            // etc.
+//            ps.addBatch();
+//        }
+//        ps.executeBatch();
+//        connection.commit();
+
+        return result;
     }
 
     /**

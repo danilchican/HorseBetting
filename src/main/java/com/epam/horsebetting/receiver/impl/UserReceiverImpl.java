@@ -43,7 +43,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
             ArrayList<String> errors = new ArrayList<>();
 
-            try (UserDAOImpl userDAO = new UserDAOImpl()) {
+            try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
                 if(!isUserExists(newUser)) {
                     User user = userDAO.create(newUser);
                     this.authenticate(content, user);
@@ -95,7 +95,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         if (validator.validateLoginForm(email, password)) {
             User user;
 
-            try (UserDAOImpl userDAO = new UserDAOImpl()) {
+            try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
                 user = userDAO.attempt(email, password);
             } catch (DAOException e) {
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
@@ -179,7 +179,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         final int step = 10;
         final int offset = step * (page - 1);
 
-        try(UserDAOImpl userDAO = new UserDAOImpl()) {
+        try(UserDAOImpl userDAO = new UserDAOImpl(false)) {
             List<User> users = userDAO.obtainPart(step, offset);
             LOGGER.log(Level.DEBUG, "Users part: " + Arrays.toString(users.toArray()));
             content.insertJsonAttribute("users", users);
@@ -198,7 +198,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
     private boolean isUserExists(User user) throws DAOException {
         User foundedUser;
 
-        try (UserDAOImpl userDAO = new UserDAOImpl()) {
+        try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
             foundedUser = userDAO.findByEmail(user.getEmail());
         }
 
