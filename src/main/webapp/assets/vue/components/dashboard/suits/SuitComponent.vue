@@ -67,12 +67,6 @@
     </div>
 </template>
 
-<style>
-    .panel_toolbox {
-        min-width: inherit;
-    }
-</style>
-
 <script>
     var loading_box = '<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>';
 
@@ -266,7 +260,6 @@
              * Get suits from storage.
              */
             getSuitsList() {
-                // TODO add checking errors
                 this.$http.get('/ajax/dashboard/suits?page=1').then((response) => {
                     this.processRequest(response.data.suits, true);
                 });
@@ -282,7 +275,6 @@
                 this.setDisable();
                 this.currentPage++;
 
-                // TODO add checking errors
                 this.$http.get('/ajax/dashboard/suits?page=' + this.currentPage).then((response) => {
                     this.processRequest(response.data.suits, false);
                 });

@@ -32,7 +32,9 @@
 .input-group.date {
     margin-bottom: 0;
 }
-
 .input-group.date > ul.parsley-errors-list {
     display: none;
 }
+ .panel_toolbox {
+     min-width: inherit;
+ }
