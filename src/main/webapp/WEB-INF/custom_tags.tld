@@ -25,13 +25,19 @@
         </attribute>
     </tag>
     <tag>
-        <name>pageErrors</name>
-        <tag-class>com.epam.horsebetting.tag.SessionErrorsTag</tag-class>
+        <name>flashMessages</name>
+        <tag-class>com.epam.horsebetting.tag.FlashMessagesTag</tag-class>
         <body-content>scriptless</body-content>
         <attribute>
-            <name>errors</name>
+            <name>messages</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>type</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>com.epam.horsebetting.type.FlashMessageType</type>
         </attribute>
     </tag>
     <tag>

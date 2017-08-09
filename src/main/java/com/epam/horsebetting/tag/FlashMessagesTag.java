@@ -1,5 +1,6 @@
 package com.epam.horsebetting.tag;
 
+import com.epam.horsebetting.type.FlashMessageType;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @SuppressWarnings("serial")
-public class SessionErrorsTag extends TagSupport {
+public class FlashMessagesTag extends TagSupport {
 
     /**
      * Logger to write logs.
@@ -22,17 +23,31 @@ public class SessionErrorsTag extends TagSupport {
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
-     * Session errors storage.
+     * Session messages.
      */
-    private ArrayList<String> errors;
+    private ArrayList<String> messages;
 
     /**
-     * Set session errors.
-     *
-     * @param errors
+     * Attribute name of displaying content.
      */
-    public void setErrors(ArrayList<String> errors) {
-        this.errors = errors;
+    private FlashMessageType type;
+
+    /**
+     * Set session messages.
+     *
+     * @param messages
+     */
+    public void setMessages(ArrayList<String> messages) {
+        this.messages = messages;
+    }
+
+    /**
+     * Set attribute name of type.
+     *
+     * @param type
+     */
+    public void setType(FlashMessageType type) {
+        this.type = type;
     }
 
     @Override
@@ -40,22 +55,30 @@ public class SessionErrorsTag extends TagSupport {
         HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
         HttpSession session = request.getSession();
 
-        LOGGER.log(Level.DEBUG, "Tag Errors:");
-        LOGGER.log(Level.DEBUG, Arrays.toString(errors.toArray()));
+        LOGGER.log(Level.DEBUG, "Tag messages[type=" + type + "]:");
+        LOGGER.log(Level.DEBUG, Arrays.toString(messages.toArray()));
 
         try {
             StringBuilder outerHtml = new StringBuilder();
-            outerHtml.append("<div class=\"alert alert-danger\">");
-            outerHtml.append("<ul>");
+            outerHtml.append("<div class=\"alert ").append(type.getBlockClassName());
+            outerHtml.append("\">").append("<ul>");
 
-            for (String error : errors) {
+            for (String message : messages) {
                 outerHtml.append("<li>");
-                outerHtml.append(error);
+                outerHtml.append(message);
                 outerHtml.append("</li>");
             }
 
             outerHtml.append("</ul></div>");
-            session.removeAttribute("errors");
+
+            switch(type) {
+                case ERROR:
+                    session.removeAttribute("errors");
+                    break;
+                case MESSAGE:
+                    session.removeAttribute("messages");
+                    break;
+            }
 
             JspWriter out = pageContext.getOut();
             out.write(outerHtml.toString());

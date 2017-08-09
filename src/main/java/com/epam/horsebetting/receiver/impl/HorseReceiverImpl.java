@@ -47,7 +47,7 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
 
         LOGGER.log(Level.DEBUG, "Want create horse: " + horse);
 
-        ArrayList<String> errors = new ArrayList<>();
+        ArrayList<String> messages = new ArrayList<>();
         HorseDAOImpl horseDAO = new HorseDAOImpl(true);
 
         TransactionManager transaction = new TransactionManager(horseDAO);
@@ -57,12 +57,15 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
             Horse createdHorse = horseDAO.create(horse);
             transaction.commit();
 
+            messages.add("Horse has been created successfully.");
+
+            content.insertSessionAttribute("messages", messages);
             LOGGER.log(Level.DEBUG, "Created horse: " + createdHorse);
         } catch (DAOException e) {
             transaction.rollback();
 
-            errors.add("Can't create new horse.");
-            content.insertSessionAttribute("errors", errors);
+            messages.add("Can't create new horse.");
+            content.insertSessionAttribute("errors", messages);
 
             // TODO add saving old inputs
 

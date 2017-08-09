@@ -4,7 +4,7 @@
 
 <layout:app>
     <div class="container">
-        <jsp:include page="${pageContext.request.contextPath}/jsp/errors/show.jsp"/>
+        <jsp:include page="${pageContext.request.contextPath}/jsp/partials/messages.jsp"/>
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">

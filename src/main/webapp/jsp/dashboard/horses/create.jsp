@@ -24,7 +24,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <jsp:include page="${pageContext.request.contextPath}/jsp/errors/show.jsp"/>
+                            <jsp:include page="${pageContext.request.contextPath}/jsp/partials/messages.jsp"/>
                             <br/>
                             <form id="demo-form2" method="post" action="/dashboard/horses/create" data-parsley-validate
                                   class="form-horizontal form-label-left">

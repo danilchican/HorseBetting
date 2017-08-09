@@ -45,7 +45,7 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
-                                <jsp:include page="${pageContext.request.contextPath}/jsp/errors/show.jsp"/>
+                                <jsp:include page="${pageContext.request.contextPath}/jsp/partials/messages.jsp"/>
                                 <br/>
                                 <form id="demo-form2" method="post" action="/dashboard/races/create"
                                       data-parsley-validate
@@ -73,16 +73,14 @@
                                         </div>
                                     </div>
 
-                                    <!-- TODO fix pattern to available decimal number -->
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="race-min-rate">Minimal
-                                            rate <span
+                                            rate ($) <span
                                                     class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="race-min-rate" data-parsley-min="0.01" name="race-min-rate"
-                                                   required="required" data-parsley-pattern="^\d+(,\d+)?$"
-                                                   type="number" class="form-control col-md-7 col-xs-12">
+                                            <input id="race-min-rate" data-parsley-min="1" step="0.01" name="race-min-rate"
+                                                   required="required" type="number" class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
 
