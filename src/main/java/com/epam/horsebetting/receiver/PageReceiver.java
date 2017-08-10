@@ -41,6 +41,13 @@ public interface PageReceiver {
     void presentProfileSettingsPage(RequestContent content);
 
     /**
+     * Present profile payment page.
+     *
+     * @param content
+     */
+    void presentProfilePaymentPage(RequestContent content);
+
+    /**
      * Present dashboard page.
      *
      * @param content

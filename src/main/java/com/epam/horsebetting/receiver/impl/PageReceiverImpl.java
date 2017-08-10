@@ -82,6 +82,17 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
     }
 
     /**
+     * Present profile payment page.
+     *
+     * @param content
+     */
+    @Override
+    public void presentProfilePaymentPage(RequestContent content) {
+        this.setPageSubTitle("Пополнение баланса");
+        this.setDefaultContentAttributes(content);
+    }
+
+    /**
      * Present dashboard page.
      *
      * @param content

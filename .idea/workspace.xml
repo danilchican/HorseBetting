@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e9db2c3d-90c7-4a9a-9541-77ab3b3b2a13" name="Default" comment="">
+    <list default="true" id="e9db2c3d-90c7-4a9a-9541-77ab3b3b2a13" name="Default" comment="Added security block.">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/profile/ProfilePaymentPresentCommand.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/profile/payment.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jsp/profile/settings.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/profile/settings.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/PageConfig.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/PageConfig.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/PageReceiver.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/PageReceiver.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/config/pages.properties" afterPath="$PROJECT_DIR$/src/main/resources/config/pages.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jsp/profile/index.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/profile/index.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jsp/profile/partials/sidebar.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/profile/partials/sidebar.jsp" />
     </list>
     <ignored path="HorseBetting.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,42 +48,36 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PageConfig.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/PageConfig.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="12" column="39" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CommandType.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="106">
-              <caret line="59" column="29" selection-start-line="59" selection-start-column="29" selection-end-line="59" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="settings.jsp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/profile/settings.jsp">
+      <file leaf-file-name="index.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/profile/index.jsp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="153">
-              <caret line="42" column="52" selection-start-line="42" selection-start-column="52" selection-end-line="42" selection-end-column="52" />
+              <caret line="9" column="48" selection-start-line="9" selection-start-column="48" selection-end-line="9" selection-end-column="48" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/index.jsp">
+      <file leaf-file-name="payment.jsp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/profile/payment.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="93">
-              <caret line="75" column="88" selection-start-line="75" selection-start-column="88" selection-end-line="75" selection-end-column="88" />
+            <state relative-caret-position="119">
+              <caret line="12" column="40" selection-start-line="12" selection-start-column="40" selection-end-line="12" selection-end-column="40" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProfilePaymentPresentCommand.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/profile/ProfilePaymentPresentCommand.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="126">
+              <caret line="33" column="21" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#914#915#0" expanded="true" />
+                <element signature="e#945#946#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -87,8 +89,8 @@
       <list>
         <option value="Interface" />
         <option value="Enum" />
-        <option value="Class" />
         <option value="Jsp File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -110,9 +112,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/resources/config/env.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/RaceReceiverImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/RaceDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/RaceDAOImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/tag/SessionErrorsTag.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/tag/FlashMessageType.java" />
@@ -150,17 +149,20 @@
         <option value="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/partials/top_nav.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/assets/css/styles.css" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/tags/app.tag" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/profile/index.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/tags/account.tag" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/profile/partials/sidebar.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/profile/ProfileSettingsPresentCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/index.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/jsp/profile/settings.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/jsp/profile/index.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/jsp/profile/balance.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/jsp/profile/partials/sidebar.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/PageConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/profile/ProfilePaymentPresentCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/config/pages.properties" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/PageReceiver.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/config/pages.properties" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/index.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/profile/settings.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/jsp/profile/payment.jsp" />
       </list>
     </option>
   </component>
@@ -335,36 +337,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="profile" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HorseBetting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HorseBettingProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="partials" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -988,14 +960,7 @@
       <workItem from="1501180884202" duration="1102000" />
       <workItem from="1501318122013" duration="64550000" />
       <workItem from="1501775326791" duration="136556000" />
-      <workItem from="1502355136487" duration="24690000" />
-    </task>
-    <task id="LOCAL-00127" summary="Created methods to create() new horse.">
-      <created>1502053411597</created>
-      <option name="number" value="00127" />
-      <option name="presentableId" value="LOCAL-00127" />
-      <option name="project" value="LOCAL" />
-      <updated>1502053411597</updated>
+      <workItem from="1502355136487" duration="27055000" />
     </task>
     <task id="LOCAL-00128" summary="Modified horses dashboard page.">
       <created>1502053470363</created>
@@ -1333,7 +1298,14 @@
       <option name="project" value="LOCAL" />
       <updated>1502381334233</updated>
     </task>
-    <option name="localTasksCounter" value="176" />
+    <task id="LOCAL-00176" summary="Added security block.">
+      <created>1502382026613</created>
+      <option name="number" value="00176" />
+      <option name="presentableId" value="LOCAL-00176" />
+      <option name="project" value="LOCAL" />
+      <updated>1502382026614</updated>
+    </task>
+    <option name="localTasksCounter" value="177" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1369,7 +1341,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="546980000" />
+    <option name="totallyTimeSpent" value="549345000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1390,7 +1362,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329582" sideWeight="0.4969743" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4533762" sideWeight="0.50907713" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36173633" sideWeight="0.50907713" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3279743" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36173633" sideWeight="0.49092284" order="2" side_tool="false" content_ui="tabs" />
@@ -1398,7 +1370,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38424438" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26399395" sideWeight="0.4785276" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26399395" sideWeight="0.4785276" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28139183" sideWeight="0.5214724" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1431,7 +1403,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="Created method to get values of array variable." />
     <MESSAGE value="Created view to append horse to race." />
     <MESSAGE value="Fixed vue buttons." />
     <MESSAGE value="Fixed race horses view." />
@@ -1456,7 +1427,8 @@
     <MESSAGE value="Restructured profile index." />
     <MESSAGE value="Added generation active class of profile sidebar menu." />
     <MESSAGE value="Created present profile settings page." />
-    <option name="LAST_COMMIT_MESSAGE" value="Created present profile settings page." />
+    <MESSAGE value="Added security block." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added security block." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1484,39 +1456,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/SuitDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="30" column="6" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/SuitDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2771">
-          <caret line="165" column="49" selection-start-line="165" selection-start-column="49" selection-end-line="165" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <marker date="1502311113774" expanded="true" signature="542:579" ph="INSERT INTO `suits`... " />
-            <marker date="1502311113774" expanded="true" signature="634:674" ph="SELECT * FRO... users" />
-            <marker date="1502311113774" expanded="true" signature="729:754" ph="DELETE FROM " />
-            <marker date="1502311113774" expanded="true" signature="729:761" ph="DELETE FROM " />
-            <marker date="1502311113774" expanded="true" signature="822:866" ph="SELECT * FRO... suits" />
-            <marker date="1502311113774" expanded="true" signature="922:943" ph="SELECT * FRO... suits" />
-            <marker date="1502311113774" expanded="true" signature="1004:1056" ph="SELECT * FRO... suits" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/assets/vue/components/dashboard/suits/ViewSuitComponent.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="707">
-          <caret line="75" column="62" selection-start-line="75" selection-start-column="62" selection-end-line="75" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/assets/dashboard/production/css/custom.min.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -1803,68 +1742,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/profile/partials/sidebar.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/PageReceiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="37" column="6" selection-start-line="37" selection-start-column="6" selection-end-line="37" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/config/pages.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="36" selection-start-line="2" selection-start-column="36" selection-end-line="2" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/profile/ProfilePresentCommand.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="401">
           <caret line="50" column="76" selection-start-line="50" selection-start-column="76" selection-end-line="50" selection-end-column="76" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/PageConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="12" column="39" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/profile/index.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/profile/ProfileSettingsPresentCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="30" column="7" selection-start-line="30" selection-start-column="7" selection-end-line="30" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="58">
-          <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1885,14 +1766,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/tags/account.tag">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/index.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -1901,34 +1774,126 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/entity/User.java">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/index.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="109" column="40" selection-start-line="109" selection-start-column="21" selection-end-line="109" selection-end-column="40" />
+        <state relative-caret-position="161">
+          <caret line="48" column="39" selection-start-line="48" selection-start-column="39" selection-end-line="48" selection-end-column="39" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/index.jsp">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/resources/html5-schema/html5/common.rnc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="75" column="88" selection-start-line="75" selection-start-column="88" selection-end-line="75" selection-end-column="88" />
+        <state relative-caret-position="123">
+          <caret line="124" column="18" selection-start-line="124" selection-start-column="18" selection-end-line="124" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/tags/account.tag">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/profile/partials/sidebar.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="31" selection-start-line="4" selection-start-column="31" selection-end-line="4" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/config/pages.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="59" column="29" selection-start-line="59" selection-start-column="29" selection-end-line="59" selection-end-column="29" />
+        <state relative-caret-position="225">
+          <caret line="67" column="9" selection-start-line="67" selection-start-column="9" selection-end-line="67" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/PageConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/profile/ProfileSettingsPresentCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="44" column="23" selection-start-line="44" selection-start-column="23" selection-end-line="44" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="76" column="7" selection-start-line="76" selection-start-column="7" selection-end-line="76" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/PageReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="45" column="21" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/profile/ProfilePaymentPresentCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="33" column="21" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#914#915#0" expanded="true" />
+            <element signature="e#945#946#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/entity/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5">
+          <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/profile/settings.jsp">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-34">
+          <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/profile/index.jsp">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
-          <caret line="42" column="52" selection-start-line="42" selection-start-column="52" selection-end-line="42" selection-end-column="52" />
+          <caret line="9" column="48" selection-start-line="9" selection-start-column="48" selection-end-line="9" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/profile/payment.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="12" column="40" selection-start-line="12" selection-start-column="40" selection-end-line="12" selection-end-column="40" />
           <folding />
         </state>
       </provider>
