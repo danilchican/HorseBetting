@@ -61,15 +61,25 @@ public class FlashMessagesTag extends TagSupport {
         try {
             StringBuilder outerHtml = new StringBuilder();
             outerHtml.append("<div class=\"alert ").append(type.getBlockClassName());
-            outerHtml.append("\">").append("<ul>");
+            outerHtml.append("\">");
 
-            for (String message : messages) {
-                outerHtml.append("<li>");
-                outerHtml.append(message);
-                outerHtml.append("</li>");
+            if(messages.size() > 1) {
+                outerHtml.append("<ul>");
+
+                for (String message : messages) {
+                    outerHtml.append("<li>");
+                    outerHtml.append(message);
+                    outerHtml.append("</li>");
+                }
+
+                outerHtml.append("</ul>");
+            } else {
+                for (String message : messages) {
+                    outerHtml.append(message);
+                }
             }
 
-            outerHtml.append("</ul></div>");
+            outerHtml.append("</div>");
 
             switch(type) {
                 case ERROR:
