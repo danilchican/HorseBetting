@@ -39,11 +39,15 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         UserValidator validator = new UserValidator();
 
         if (validator.validateRegistrationForm(name, email, password, passwordConfirmation)) {
-            User newUser = new User(email, password);
-            newUser.setName(name);
-
             ArrayList<String> errors = new ArrayList<>();
             UserDAOImpl userDAO = new UserDAOImpl(true);
+
+            for (Map.Entry<String, String> entry : validator.getOldInput()) {
+                content.insertSessionAttribute(entry.getKey(), entry.getValue());
+            }
+
+            User newUser = new User(email, password);
+            newUser.setName(name);
 
             TransactionManager transaction = new TransactionManager(userDAO);
             transaction.beginTransaction();
@@ -60,10 +64,6 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
                     errors.add("User already exists. Change your email.");
                     content.insertSessionAttribute("errors", errors);
 
-                    for (Map.Entry<String, String> entry : validator.getOldInput()) {
-                        content.insertSessionAttribute(entry.getKey(), entry.getValue());
-                    }
-
                     throw new ReceiverException("Cannot register user. User already exists.");
                 }
             } catch (DAOException e) {
@@ -71,10 +71,6 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
                 errors.add("Can't create new user.");
                 content.insertSessionAttribute("errors", errors);
-
-                for (Map.Entry<String, String> entry : validator.getOldInput()) {
-                    content.insertSessionAttribute(entry.getKey(), entry.getValue());
-                }
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             } finally {
@@ -103,23 +99,29 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         String email = content.findParameter("email");
         String password = content.findParameter("password");
 
+        ArrayList<String> errors = new ArrayList<String>();
         UserValidator validator = new UserValidator();
 
         if (validator.validateLoginForm(email, password)) {
             User user;
 
+            for (Map.Entry<String, String> entry : validator.getOldInput()) {
+                content.insertSessionAttribute(entry.getKey(), entry.getValue());
+            }
+
             try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
                 user = userDAO.attempt(email, password);
             } catch (DAOException e) {
+                errors.add("Can't login with your credentials.");
+                content.insertSessionAttribute("errors", errors);
+
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
 
             if(user == null) {
-                ArrayList<String> errors = new ArrayList<String>() {{
-                   add("User does not exists or credentials are not correct.");
-                }};
-
+                errors.add("User does not exists or credentials are not correct.");
                 content.insertSessionAttribute("errors", errors);
+
                 throw new ReceiverException("Cannot authenticate user. User is null.");
             }
 

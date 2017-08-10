@@ -2,19 +2,22 @@ package com.epam.horsebetting.validator;
 
 import com.epam.horsebetting.tag.OldInputFormAttributeTag;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 public class UserValidator extends AbstractValidator {
 
     /**
      * Regular expressions for variables.
      */
-    private static final String NAME_REGEX = "[a-zA-Z]\\w{4,}";
     private static final String EMAIL_REGEX = "\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+";
     private static final String PASSWORD_REGEX = "(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{6,}";
+
+    /**
+     * Messages to valid.
+     */
+    private static final String NAME_MESSAGE = "must be at least 5 characters " +
+            "as well as contain `_` symbol. " +
+            "The 1st symbol must be [A-Za-z].";
+    private static final String PASSWORD_MESSAGE = "Your password must be at least 6 characters " +
+            "as well as contain at least one lowercase and one number.";
 
     /**
      * Validate registration data.
@@ -28,15 +31,15 @@ public class UserValidator extends AbstractValidator {
     public boolean validateRegistrationForm(String name, String email, String password, String passwordConfirmation) {
         boolean isValidate = true;
 
-        if (!validateName(name)) {
+        if (!validateName(name, "name", "Name")) {
             isValidate = false;
         }
 
-        if (!validateEmail(email)) {
+        if (!validateEmail(email, "email", "Email")) {
             isValidate = false;
         }
 
-        if (!validatePassword(password)) {
+        if (!validatePassword(password, "Password")) {
             isValidate = false;
         }
 
@@ -57,11 +60,11 @@ public class UserValidator extends AbstractValidator {
     public boolean validateLoginForm(String email, String password) {
         boolean isValidate = true;
 
-        if (!validateEmail(email)) {
+        if (!validateEmail(email, "email", "Email")) {
             isValidate = false;
         }
 
-        if (!validatePassword(password)) {
+        if (!validatePassword(password, "Password")) {
             isValidate = false;
         }
 
@@ -72,70 +75,57 @@ public class UserValidator extends AbstractValidator {
      * Validate name. Not required.
      *
      * @param name
+     * @param attributeName
+     * @param key
      * @return boolean
      */
-    private boolean validateName(String name) {
-        if (name == null) {
-            this.addErrorMessage("Name is required.");
-            return false;
-        }
-
-        if (!name.isEmpty()) {
-            this.putOldData(OldInputFormAttributeTag.PREFIX + "name", name);
-
-            if (!name.matches(NAME_REGEX)) {
-                this.addErrorMessage("Name must be at least 5 characters as well as contain `_` symbol. The 1st symbol must be [A-Za-z].");
-                return false;
-            }
-        }
-
-        return true;
+    private boolean validateName(String name, String attributeName, String key) {
+        return validateDefaultName(name, attributeName, key, NAME_MESSAGE);
     }
 
     /**
      * Validate email. Required.
      *
      * @param email
+     * @param attributeName
+     * @param key
      * @return boolean
      */
-    private boolean validateEmail(String email) {
-        if (email == null) {
-            this.addErrorMessage("Email is required.");
-            return false;
-        }
-
-        if (!email.isEmpty()) {
-            this.putOldData(OldInputFormAttributeTag.PREFIX + "email", email);
+    private boolean validateEmail(String email, String attributeName, String key) {
+        if (email != null && !email.trim().isEmpty()) {
+            this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, email);
 
             if (!email.matches(EMAIL_REGEX)) {
-                this.addErrorMessage("Email is invalid.");
+                this.addErrorMessage(key + " is invalid.");
                 return false;
             }
+
+            return true;
         }
 
-        return true;
+        this.addErrorMessage(key + " is required.");
+        return false;
     }
 
     /**
      * Validate password. Required.
      *
      * @param password
+     * @param key
      * @return boolean
      */
-    private boolean validatePassword(String password) {
-        if (password == null) {
-            this.addErrorMessage("Password is required.");
-            return false;
-        }
-
-        if (!password.isEmpty()) {
+    private boolean validatePassword(String password, String key) {
+        if (password != null && !password.trim().isEmpty()) {
             if (!password.matches(PASSWORD_REGEX)) {
-                this.addErrorMessage("Your password must be at least 6 characters as well as contain at least one lowercase and one number.");
+                this.addErrorMessage(PASSWORD_MESSAGE);
                 return false;
             }
+
+            return true;
         }
 
-        return true;
+        this.addErrorMessage(key + " is required.");
+        return false;
     }
 
     /**
