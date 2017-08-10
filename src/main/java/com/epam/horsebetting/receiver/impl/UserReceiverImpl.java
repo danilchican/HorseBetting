@@ -160,10 +160,6 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
             User authorizedUser = (User)content.findRequestAttribute("user");
             authorizedUser.setName(name);
 
-            for (Map.Entry<String, String> entry : validator.getOldInput()) {
-                content.insertSessionAttribute(entry.getKey(), entry.getValue());
-            }
-
             try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
                 userDAO.updateSettings(authorizedUser);
 
@@ -178,9 +174,40 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         } else {
             content.insertSessionAttribute("errors", validator.getErrors());
 
-            for (Map.Entry<String, String> entry : validator.getOldInput()) {
-                content.insertSessionAttribute(entry.getKey(), entry.getValue());
+            throw new ReceiverException("Invalid user credentials.");
+        }
+    }
+
+    /**
+     * Update user's security.
+     *
+     * @param content
+     */
+    @Override
+    public void updateSecurity(RequestContent content) throws ReceiverException {
+        String password = content.findParameter("password");
+        String confirmation = content.findParameter("password-confirmation");
+
+        ArrayList<String> messages = new ArrayList<>();
+        UserValidator validator = new UserValidator();
+
+        if(validator.validateSecurityForm(password, confirmation)) {
+            User authorizedUser = (User)content.findRequestAttribute("user");
+            authorizedUser.setPassword(password);
+
+            try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
+                userDAO.updateSecurity(authorizedUser);
+
+                messages.add("Password changed successfully.");
+                content.insertSessionAttribute("messages", messages);
+            } catch (DAOException e) {
+                messages.add("Can't change the password.");
+                content.insertSessionAttribute("errors", messages);
+
+                throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
+        } else {
+            content.insertSessionAttribute("errors", validator.getErrors());
 
             throw new ReceiverException("Invalid user credentials.");
         }

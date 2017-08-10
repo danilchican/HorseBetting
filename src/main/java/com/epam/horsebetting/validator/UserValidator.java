@@ -82,6 +82,27 @@ public class UserValidator extends AbstractValidator {
     }
 
     /**
+     * Validate update security form.
+     *
+     * @param password
+     * @param confirmation
+     * @return boolean
+     */
+    public boolean validateSecurityForm(String password, String confirmation) {
+        boolean isValidate = true;
+
+        if (!validatePassword(password, "Password")) {
+            isValidate = false;
+        }
+
+        if (!validateConfirmation(password, confirmation)) {
+            isValidate = false;
+        }
+
+        return isValidate;
+    }
+
+    /**
      * Validate name. Not required.
      *
      * @param name

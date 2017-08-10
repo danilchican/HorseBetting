@@ -35,6 +35,13 @@ public interface UserReceiver {
     void updateProfileSettings(RequestContent content) throws ReceiverException;
 
     /**
+     * Update user's security.
+     *
+     * @param content
+     */
+    void updateSecurity(RequestContent content) throws ReceiverException;
+
+    /**
      * Change locale.
      *
      * @param content

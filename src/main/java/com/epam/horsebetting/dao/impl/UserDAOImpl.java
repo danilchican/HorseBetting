@@ -33,6 +33,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     private static final String SQL_SELECT_ALL_USERS = "SELECT `id`, `role_id`, `name`, `email`, `balance`, `created_at` FROM `users`;";
     private static final String SQL_SELECT_PART_USERS = "SELECT `id`, `role_id`, `name`, `email`, `balance`, `created_at` FROM `users` LIMIT ? OFFSET ?;";
     private static final String SQL_UPDATE_USER_SETTINGS = "UPDATE `users` SET `name`=? WHERE `id`=?;";
+    private static final String SQL_UPDATE_USER_SECURITY = "UPDATE `users` SET `password`=? WHERE `id`=?;";
 
     /**
      * Default constructor connection.
@@ -171,7 +172,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
                 user = extractFrom(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Can't find user by email[" + email + "]. " + e.getMessage(), e);
         }
 
         return user;
@@ -244,7 +245,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
                 user = extractFrom(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException("Can't attempt to login with user credentials.", e);
+            throw new DAOException("Can't attempt to login with user's credentials.", e);
         }
 
         return user;
@@ -263,10 +264,30 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
             preparedStatement.setInt(2, user.getId());
 
             if (preparedStatement.executeUpdate() != 1) {
-                throw new DAOException("Can't update user settings.");
+                throw new DAOException("Can't update user's settings.");
             }
         } catch (SQLException e) {
-            throw new DAOException("Can't update user settings. " + e.getMessage(), e);
+            throw new DAOException("Can't update user's settings. " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Update user's security.
+     *
+     * @param user
+     * @throws DAOException
+     */
+    @Override
+    public void updateSecurity(User user) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_USER_SECURITY)) {
+            preparedStatement.setString(1, user.getPassword());
+            preparedStatement.setInt(2, user.getId());
+
+            if (preparedStatement.executeUpdate() != 1) {
+                throw new DAOException("Can't update user's security.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't update user's security. " + e.getMessage(), e);
         }
     }
 }

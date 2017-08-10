@@ -53,7 +53,7 @@ public interface UserDAO {
     User findByEmail(String email) throws DAOException;
 
     /**
-     * Extract user data from result set to user instance.
+     * Extract user's data from result set to user instance.
      *
      * @param userDataSet
      * @return user
@@ -62,7 +62,7 @@ public interface UserDAO {
     User extractFrom(ResultSet userDataSet) throws SQLException;
 
     /**
-     * Extract user data from result set to user instance
+     * Extract user's data from result set to user instance
      * without password.
      *
      * @param userDataSet
@@ -72,7 +72,7 @@ public interface UserDAO {
     User extractWithoutPassFrom(ResultSet userDataSet) throws SQLException;
 
     /**
-     * Attempt user credentials.
+     * Attempt user's credentials.
      *
      * @param email
      * @param password
@@ -82,10 +82,18 @@ public interface UserDAO {
     User attempt(String email, String password) throws DAOException;
 
     /**
-     * Update user settings.
+     * Update user's settings.
      *
      * @param user
      * @throws DAOException
      */
     void updateSettings(User user) throws DAOException;
+
+    /**
+     * Update user's security.
+     *
+     * @param user
+     * @throws DAOException
+     */
+    void updateSecurity(User user) throws DAOException;
 }
