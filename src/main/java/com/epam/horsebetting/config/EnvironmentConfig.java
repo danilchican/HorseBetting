@@ -9,6 +9,12 @@ import java.util.ResourceBundle;
 
 public class EnvironmentConfig {
 
+    private enum EnvironmentProperties {
+        APP_URL,
+        APP_NAME,
+        APP_LOCALE
+    }
+
     /**
      * Logger to write logs.
      */
@@ -49,7 +55,7 @@ public class EnvironmentConfig {
      * @return website url
      */
     public String findURL() {
-        return retrievePropValue("APP_URL", DEFAULT_APP_URL);
+        return retrievePropValue(EnvironmentProperties.APP_URL, DEFAULT_APP_URL);
     }
 
     /**
@@ -58,7 +64,7 @@ public class EnvironmentConfig {
      * @return application name
      */
     public String findAppName() {
-        return retrievePropValue("APP_NAME", DEFAULT_APP_NAME);
+        return retrievePropValue(EnvironmentProperties.APP_NAME, DEFAULT_APP_NAME);
     }
 
     /**
@@ -67,21 +73,21 @@ public class EnvironmentConfig {
      * @return locale
      */
     public String findLocale() {
-        return retrievePropValue("APP_LOCALE", DEFAULT_APP_LOCALE);
+        return retrievePropValue(EnvironmentProperties.APP_LOCALE, DEFAULT_APP_LOCALE);
     }
 
     /**
      * Retrieve property value.
      *
-     * @param propName
+     * @param property
      * @param defaultValue
      * @return property value
      */
-    private String retrievePropValue(String propName, String defaultValue) {
+    private String retrievePropValue(EnvironmentProperties property, String defaultValue) {
         try {
-            return dbBundle.getString(propName);
+            return dbBundle.getString(String.valueOf(property));
         } catch (MissingResourceException e) {
-            LOGGER.log(Level.ERROR, "Can't find " + propName + " prop", e);
+            LOGGER.log(Level.ERROR, "Can't find " + property + " prop", e);
         }
 
         return defaultValue;

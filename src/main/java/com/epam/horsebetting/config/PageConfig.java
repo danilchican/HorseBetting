@@ -52,7 +52,7 @@ public class PageConfig {
     public static PageConfig getInstance() {
         if (instance == null) {
             instance = new PageConfig();
-            LOGGER.log(Level.INFO, "PageConfig instance created!");
+            LOGGER.log(Level.INFO, PageConfig.class + " instance created!");
         }
 
         return instance;
