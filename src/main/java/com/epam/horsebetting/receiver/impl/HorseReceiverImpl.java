@@ -1,20 +1,20 @@
 package com.epam.horsebetting.receiver.impl;
 
 import com.epam.horsebetting.dao.impl.HorseDAOImpl;
-import com.epam.horsebetting.database.TransactionManager;
 import com.epam.horsebetting.entity.Horse;
 import com.epam.horsebetting.exception.DAOException;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.AbstractReceiver;
 import com.epam.horsebetting.receiver.HorseReceiver;
 import com.epam.horsebetting.request.RequestContent;
+import com.epam.horsebetting.validator.HorseValidator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver {
 
@@ -32,46 +32,54 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
     @Override
     public void createHorse(RequestContent content) throws ReceiverException {
         String name = content.findParameter("horse-name");
-        boolean gender = "male".equals(content.findParameter("gender"));
+        String genderAttr = content.findParameter("gender");
+        String ageAttr = content.findParameter("horse-age");
+        String suitAttr = content.findParameter("horse-suit");
 
-        byte age = Byte.parseByte(content.findParameter("horse-age"));
-        int suitId = Integer.parseInt(content.findParameter("horse-suit"));
+        HorseValidator validator = new HorseValidator();
 
-        //TODO Create validators
+        if (validator.validateCreateHorse(name, genderAttr, ageAttr, suitAttr)) {
+            boolean gender = "male".equals(genderAttr);
+            byte age = Byte.parseByte(ageAttr);
+            int suitId = Integer.parseInt(suitAttr);
 
-        Horse horse = new Horse(name);
+            ArrayList<String> messages = new ArrayList<>();
 
-        horse.setSuitId(suitId);
-        horse.setAge(age);
-        horse.setGender(gender);
+            Horse horse = new Horse(name);
 
-        LOGGER.log(Level.DEBUG, "Want create horse: " + horse);
+            horse.setSuitId(suitId);
+            horse.setAge(age);
+            horse.setGender(gender);
 
-        ArrayList<String> messages = new ArrayList<>();
-        HorseDAOImpl horseDAO = new HorseDAOImpl(true);
+            LOGGER.log(Level.DEBUG, "Want create horse: " + horse);
 
-        TransactionManager transaction = new TransactionManager(horseDAO);
-        transaction.beginTransaction();
+            try(HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
+                Horse createdHorse = horseDAO.create(horse);
 
-        try {
-            Horse createdHorse = horseDAO.create(horse);
-            transaction.commit();
+                messages.add("Horse has been created successfully.");
+                content.insertSessionAttribute("messages", messages);
 
-            messages.add("Horse has been created successfully.");
+                LOGGER.log(Level.DEBUG, "Created horse: " + createdHorse);
+            } catch (DAOException e) {
+                messages.add("Can't create new horse.");
+                content.insertSessionAttribute("errors", messages);
 
-            content.insertSessionAttribute("messages", messages);
-            LOGGER.log(Level.DEBUG, "Created horse: " + createdHorse);
-        } catch (DAOException e) {
-            transaction.rollback();
+                LOGGER.log(Level.DEBUG, "Old input values: " + validator.getOldInput());
+                for (Map.Entry<String, String> entry : validator.getOldInput()) {
+                    content.insertSessionAttribute(entry.getKey(), entry.getValue());
+                }
 
-            messages.add("Can't create new horse.");
-            content.insertSessionAttribute("errors", messages);
+                throw new ReceiverException("Database Error: " + e.getMessage(), e);
+            }
+        } else {
+            content.insertSessionAttribute("errors", validator.getErrors());
 
-            // TODO add saving old inputs
+            LOGGER.log(Level.DEBUG, "Old input values: " + validator.getOldInput());
+            for (Map.Entry<String, String> entry : validator.getOldInput()) {
+                content.insertSessionAttribute(entry.getKey(), entry.getValue());
+            }
 
-            throw new ReceiverException("Database Error: " + e.getMessage(), e);
-        } finally {
-            transaction.endTransaction();
+            throw new ReceiverException("Invalid horse data.");
         }
     }
 

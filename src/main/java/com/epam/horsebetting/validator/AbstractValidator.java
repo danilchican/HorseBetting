@@ -1,5 +1,7 @@
 package com.epam.horsebetting.validator;
 
+import com.epam.horsebetting.tag.OldInputFormAttributeTag;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +18,11 @@ public abstract class AbstractValidator {
      * Old input from data.
      */
     private HashMap<String, String> oldInput;
+
+    /**
+     * Regular expressions for variables.
+     */
+    private static final String DEFAULT_NAME_REGEX = "[a-zA-Zа-яА-ЯёЁ0-9 ]+";
 
     /**
      * Default constructor.
@@ -60,5 +67,80 @@ public abstract class AbstractValidator {
      */
     public Set<Map.Entry<String, String>> getOldInput() {
         return oldInput.entrySet();
+    }
+
+    /**
+     * Validate integer number.
+     *
+     * @param number
+     * @param attributeName
+     * @param key
+     * @return boolean
+     */
+    boolean validateInteger(String number, String attributeName, String key) {
+        try {
+            if(number != null && !number.trim().isEmpty()) {
+                this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, number);
+
+                int n = Integer.parseInt(number);
+                return true;
+            }
+
+            this.addErrorMessage(key + " is empty.");
+            return false;
+        } catch (NumberFormatException e) {
+            this.addErrorMessage(key + " is incorrect.");
+            return false;
+        }
+    }
+
+    /**
+     * Validate byte.
+     *
+     * @param byteNumber
+     * @param attributeName
+     * @param key
+     * @return boolean
+     */
+    boolean validateByte(String byteNumber, String attributeName, String key) {
+        try {
+            if(byteNumber != null && !byteNumber.trim().isEmpty()) {
+                this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, byteNumber);
+
+                byte b = Byte.parseByte(byteNumber);
+                return true;
+            }
+
+            this.addErrorMessage(key + " is empty.");
+            return false;
+        } catch (NumberFormatException e) {
+            this.addErrorMessage(key + " is incorrect.");
+            return false;
+        }
+    }
+
+    /**
+     * Validate default name.
+     *
+     * @param name
+     * @param attributeName
+     * @param key
+     * @param errorMessage
+     * @return boolean
+     */
+    boolean validateDefaultName(String name, String attributeName, String key, String errorMessage) {
+        if (name != null && !name.trim().isEmpty()) {
+            this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, name);
+
+            if (!name.matches(DEFAULT_NAME_REGEX)) {
+                this.addErrorMessage(key + (errorMessage != null ? " " + errorMessage : ""));
+                return false;
+            }
+
+            return true;
+        }
+
+        this.addErrorMessage(key + " is required.");
+        return false;
     }
 }

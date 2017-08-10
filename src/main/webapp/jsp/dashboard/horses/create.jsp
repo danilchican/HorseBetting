@@ -34,7 +34,8 @@
                                             class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="horse-name" name="horse-name" required="required"
+                                        <input type="text" value="<ctg:oldInputFormAttribute name="horse-name" />"
+                                               id="horse-name" name="horse-name" required="required"
                                                class="form-control col-md-7 col-xs-12">
                                     </div>
                                 </div>
@@ -46,7 +47,8 @@
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input id="horse-age" data-parsley-min="1" data-parsley-max="45"
                                                name="horse-age" required="required" data-parsley-type="integer"
-                                               type="number" class="form-control col-md-7 col-xs-12">
+                                               type="number" class="form-control col-md-7 col-xs-12"
+                                               value="<ctg:oldInputFormAttribute name="horse-age" />">
                                     </div>
                                 </div>
 
@@ -55,26 +57,39 @@
                                             class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <select required="required" class="form-control" name="horse-suit">
+                                            <c:set var="oldSuitId"><ctg:oldInputFormAttribute
+                                                    name="horse-suit"/></c:set>
                                             <c:forEach items="${suits}" var="suit">
-                                                <option value="${suit.getId()}">${suit.getName()}</option>
+                                                <c:choose>
+                                                    <c:when test="${suit.getId() eq oldSuitId}">
+                                                        <option value="${suit.getId()}"
+                                                                selected="selected">${suit.getName()}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="${suit.getId()}">${suit.getName()} </option>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </c:forEach>
                                         </select>
                                     </div>
                                 </div>
 
+                                <c:set var="oldGender"><ctg:oldInputFormAttribute name="gender"/></c:set>
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender <span
                                             class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div id="gender" class="btn-group" data-toggle="buttons">
-                                            <label class="btn btn-default" data-toggle-class="btn-primary"
+                                            <label class="btn btn-default <c:if test="${oldGender eq 'male'}">active</c:if>" data-toggle-class="btn-primary"
                                                    data-toggle-passive-class="btn-default">
-                                                <input type="radio" required="required" name="gender" value="male">
+                                                <input type="radio" required="required" name="gender" value="male"
+                                                       <c:if test="${oldGender eq 'male'}">checked</c:if> >
                                                 &nbsp; Male &nbsp;
                                             </label>
-                                            <label class="btn btn-primary" data-toggle-class="btn-primary"
+                                            <label class="btn btn-primary <c:if test="${oldGender eq 'female'}">active</c:if>" data-toggle-class="btn-primary"
                                                    data-toggle-passive-class="btn-default">
-                                                <input type="radio" required="required" name="gender" value="female">
+                                                <input type="radio" required="required" name="gender" value="female"
+                                                       <c:if test="${oldGender eq 'female'}">checked</c:if> >
                                                 Female
                                             </label>
                                         </div>
