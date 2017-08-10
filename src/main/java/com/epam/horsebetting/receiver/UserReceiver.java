@@ -28,6 +28,13 @@ public interface UserReceiver {
     void logout(RequestContent content) throws ReceiverException;
 
     /**
+     * Update profile settings.
+     *
+     * @param content
+     */
+    void updateProfileSettings(RequestContent content) throws ReceiverException;
+
+    /**
      * Change locale.
      *
      * @param content

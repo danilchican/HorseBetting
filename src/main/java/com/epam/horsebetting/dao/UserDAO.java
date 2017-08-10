@@ -80,4 +80,12 @@ public interface UserDAO {
      * @throws DAOException
      */
     User attempt(String email, String password) throws DAOException;
+
+    /**
+     * Update user settings.
+     *
+     * @param user
+     * @throws DAOException
+     */
+    void updateSettings(User user) throws DAOException;
 }

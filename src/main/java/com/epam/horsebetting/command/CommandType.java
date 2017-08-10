@@ -13,6 +13,7 @@ import com.epam.horsebetting.command.dashboard.DashboardPresentCommand;
 import com.epam.horsebetting.command.user.DashboardUsersPresentCommand;
 import com.epam.horsebetting.command.locale.ChangeLocaleCommand;
 import com.epam.horsebetting.command.profile.ProfilePresentCommand;
+import com.epam.horsebetting.command.user.UpdateProfileUserSettingsCommand;
 import com.epam.horsebetting.exception.IllegalCommandTypeException;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.impl.*;
@@ -71,6 +72,12 @@ public enum CommandType {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {
             ((PageReceiverImpl) getCommand().getReceiver()).presentProfileSettingsPage(content);
+        }
+    },
+    PROFILE_SETTINGS_UPDATE("profile.settings.update::post", new UpdateProfileUserSettingsCommand(new UserReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((UserReceiverImpl) getCommand().getReceiver()).updateProfileSettings(content);
         }
     },
     PROFILE_PAYMENT("profile.payment::get", new ProfilePaymentPresentCommand(new PageReceiverImpl())) {

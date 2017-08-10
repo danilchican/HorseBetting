@@ -32,6 +32,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     private static final String SQL_ATTEMPT_AUTH = "SELECT * FROM `users` WHERE `email`=? AND `password`=? LIMIT 1;";
     private static final String SQL_SELECT_ALL_USERS = "SELECT `id`, `role_id`, `name`, `email`, `balance`, `created_at` FROM `users`;";
     private static final String SQL_SELECT_PART_USERS = "SELECT `id`, `role_id`, `name`, `email`, `balance`, `created_at` FROM `users` LIMIT ? OFFSET ?;";
+    private static final String SQL_UPDATE_USER_SETTINGS = "UPDATE `users` SET `name`=? WHERE `id`=?;";
 
     /**
      * Default constructor connection.
@@ -247,5 +248,25 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
         }
 
         return user;
+    }
+
+    /**
+     * Update user settings.
+     *
+     * @param user
+     * @throws DAOException
+     */
+    @Override
+    public void updateSettings(User user) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_USER_SETTINGS)) {
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setInt(2, user.getId());
+
+            if (preparedStatement.executeUpdate() != 1) {
+                throw new DAOException("Can't update user settings.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't update user settings. " + e.getMessage(), e);
+        }
     }
 }

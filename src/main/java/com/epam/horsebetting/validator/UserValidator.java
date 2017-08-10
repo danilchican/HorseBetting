@@ -72,6 +72,16 @@ public class UserValidator extends AbstractValidator {
     }
 
     /**
+     * Validate update settings form.
+     *
+     * @param name
+     * @return boolean
+     */
+    public boolean validateUpdateSettingsForm(String name) {
+        return validateName(name, "user-name", "Name");
+    }
+
+    /**
      * Validate name. Not required.
      *
      * @param name

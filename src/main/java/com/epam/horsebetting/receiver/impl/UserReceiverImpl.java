@@ -28,9 +28,6 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      * @param content
      */
     public void register(RequestContent content) throws ReceiverException {
-        this.setPageSubTitle("Регистрация");
-        super.setDefaultContentAttributes(content);
-
         String name = content.findParameter("name");
         String email = content.findParameter("email");
         String password = content.findParameter("password");
@@ -93,13 +90,10 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      * @param content
      */
     public void login(RequestContent content) throws ReceiverException {
-        this.setPageSubTitle("Авторизация");
-        super.setDefaultContentAttributes(content);
-
         String email = content.findParameter("email");
         String password = content.findParameter("password");
 
-        ArrayList<String> errors = new ArrayList<String>();
+        ArrayList<String> errors = new ArrayList<>();
         UserValidator validator = new UserValidator();
 
         if (validator.validateLoginForm(email, password)) {
@@ -147,6 +141,48 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
         if (authorized != null) {
             content.removeSessionAttribute("authorized");
+        }
+    }
+
+    /**
+     * Update profile settings.
+     *
+     * @param content
+     */
+    @Override
+    public void updateProfileSettings(RequestContent content) throws ReceiverException {
+        String name = content.findParameter("user-name");
+
+        ArrayList<String> messages = new ArrayList<>();
+        UserValidator validator = new UserValidator();
+
+        if (validator.validateUpdateSettingsForm(name)) {
+            User authorizedUser = (User)content.findRequestAttribute("user");
+            authorizedUser.setName(name);
+
+            for (Map.Entry<String, String> entry : validator.getOldInput()) {
+                content.insertSessionAttribute(entry.getKey(), entry.getValue());
+            }
+
+            try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
+                userDAO.updateSettings(authorizedUser);
+
+                messages.add("Profile settings updated successfully.");
+                content.insertSessionAttribute("messages", messages);
+            } catch (DAOException e) {
+                messages.add("Can't update user settings.");
+                content.insertSessionAttribute("errors", messages);
+
+                throw new ReceiverException("Database Error: " + e.getMessage(), e);
+            }
+        } else {
+            content.insertSessionAttribute("errors", validator.getErrors());
+
+            for (Map.Entry<String, String> entry : validator.getOldInput()) {
+                content.insertSessionAttribute(entry.getKey(), entry.getValue());
+            }
+
+            throw new ReceiverException("Invalid user credentials.");
         }
     }
 
