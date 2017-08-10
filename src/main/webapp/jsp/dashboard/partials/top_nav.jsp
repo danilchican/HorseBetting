@@ -2,8 +2,10 @@
 <%@ taglib prefix="ctg" uri="customtags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<fmt:setLocale value="${locale}" scope="session" />
+
+<fmt:setLocale value="${locale}" scope="session"/>
 <fmt:setBundle basename="/localization/lang"/>
+<c:set var="lang">${(sessionScope.locale.language == 'en') ? 'ru' : 'en'}</c:set>
 
 <!-- top navigation -->
 <div class="top_nav">
@@ -37,6 +39,9 @@
                                   style="display: none;"></form>
                         </li>
                     </ul>
+                </li>
+                <li>
+                    <a href="/locale/change?lang=${lang}">${sessionScope.locale.language}</a>
                 </li>
             </ul>
         </nav>
