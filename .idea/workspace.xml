@@ -3,21 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e9db2c3d-90c7-4a9a-9541-77ab3b3b2a13" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/IndexPageCommand.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/IndexPageCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/auth/LoginPresentCommand.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/auth/LoginPresentCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/auth/RegisterPresentCommand.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/auth/RegisterPresentCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/dashboard/DashboardPresentCommand.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/dashboard/DashboardPresentCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/horse/DashboardCreateHorsePresentCommand.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/horse/DashboardCreateHorsePresentCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/horse/DashboardEditHorsePresentCommand.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/horse/DashboardEditHorsePresentCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/horse/DashboardHorsesPresentCommand.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/horse/DashboardHorsesPresentCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/profile/ProfilePresentCommand.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/profile/ProfilePresentCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/race/DashboardCreateRacePresentCommand.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/race/DashboardCreateRacePresentCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/race/DashboardRacesPresentCommand.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/race/DashboardRacesPresentCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/suit/DashboardSuitsPresentCommand.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/suit/DashboardSuitsPresentCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/user/DashboardUsersPresentCommand.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/user/DashboardUsersPresentCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/database/ConnectionPool.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/database/ConnectionPool.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/database/DatabaseManager.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/database/DatabaseManager.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/util/EnvironmentConfig.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/EnvironmentConfig.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/util/PageConfig.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/PageConfig.java" />
     </list>
     <ignored path="HorseBetting.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -87,23 +74,29 @@
       <file leaf-file-name="EnvironmentConfig.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/EnvironmentConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="23" column="7" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
+            <state relative-caret-position="153">
+              <caret line="14" column="64" selection-start-line="14" selection-start-column="64" selection-end-line="14" selection-end-column="64" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DatabaseManager.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DatabaseManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/database/DatabaseManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="30" column="61" selection-start-line="30" selection-start-column="61" selection-end-line="30" selection-end-column="61" />
-              <folding>
-                <element signature="method#getPoolSize#0;class#DatabaseManager#0" expanded="false" />
-                <element signature="method#registerDriver#0;class#DatabaseManager#0" expanded="false" />
-                <element signature="method#deregisterDrivers#0;class#DatabaseManager#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="-1564">
+              <caret line="32" column="28" selection-start-line="32" selection-start-column="28" selection-end-line="32" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConnectionPool.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/database/ConnectionPool.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="73" column="7" selection-start-line="73" selection-start-column="7" selection-end-line="73" selection-end-column="7" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -148,7 +141,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/webapp/assets/vue/js/dashboard.js" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/horse/AjaxDashboardObtainHorsesCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/horse/AjaxDashboardHorsesListCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/HorseReceiver.java" />
@@ -199,6 +191,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/util/PageConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/EnvironmentConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/database/DatabaseManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/database/ConnectionPool.java" />
       </list>
     </option>
   </component>
@@ -1176,14 +1169,7 @@
       <workItem from="1501180884202" duration="1102000" />
       <workItem from="1501318122013" duration="64550000" />
       <workItem from="1501775326791" duration="136556000" />
-      <workItem from="1502355136487" duration="15927000" />
-    </task>
-    <task id="LOCAL-00120" summary="Created contextListener implementation.">
-      <created>1501868867107</created>
-      <option name="number" value="00120" />
-      <option name="presentableId" value="LOCAL-00120" />
-      <option name="project" value="LOCAL" />
-      <updated>1501868867107</updated>
+      <workItem from="1502355136487" duration="17313000" />
     </task>
     <task id="LOCAL-00121" summary="Some improves &amp; created encoding filter.">
       <created>1501877317128</created>
@@ -1521,7 +1507,14 @@
       <option name="project" value="LOCAL" />
       <updated>1502370677691</updated>
     </task>
-    <option name="localTasksCounter" value="169" />
+    <task id="LOCAL-00169" summary="Modified retrieving resource bundle props.">
+      <created>1502373007550</created>
+      <option name="number" value="00169" />
+      <option name="presentableId" value="LOCAL-00169" />
+      <option name="project" value="LOCAL" />
+      <updated>1502373007550</updated>
+    </task>
+    <option name="localTasksCounter" value="170" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1557,7 +1550,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="538217000" />
+    <option name="totallyTimeSpent" value="539603000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1619,7 +1612,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="Added methods to create race." />
     <MESSAGE value="Added DAO method to create race." />
     <MESSAGE value="Created functions tld and helper." />
     <MESSAGE value="Modified actions in races view." />
@@ -1644,7 +1636,8 @@
     <MESSAGE value="Modified horse validators." />
     <MESSAGE value="Fixed old input data." />
     <MESSAGE value="Improved flash." />
-    <option name="LAST_COMMIT_MESSAGE" value="Improved flash." />
+    <MESSAGE value="Modified retrieving resource bundle props." />
+    <option name="LAST_COMMIT_MESSAGE" value="Modified retrieving resource bundle props." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1672,14 +1665,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/AbstractDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/config/env.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -2096,21 +2081,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/EnvironmentConfig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="23" column="7" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
+        <state relative-caret-position="153">
+          <caret line="14" column="64" selection-start-line="14" selection-start-column="64" selection-end-line="14" selection-end-column="64" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/database/DatabaseManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="30" column="61" selection-start-line="30" selection-start-column="61" selection-end-line="30" selection-end-column="61" />
-          <folding>
-            <element signature="method#getPoolSize#0;class#DatabaseManager#0" expanded="false" />
-            <element signature="method#registerDriver#0;class#DatabaseManager#0" expanded="false" />
-            <element signature="method#deregisterDrivers#0;class#DatabaseManager#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="-1564">
+          <caret line="32" column="28" selection-start-line="32" selection-start-column="28" selection-end-line="32" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/database/ConnectionPool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="73" column="7" selection-start-line="73" selection-start-column="7" selection-end-line="73" selection-end-column="7" />
+          <folding />
         </state>
       </provider>
     </entry>

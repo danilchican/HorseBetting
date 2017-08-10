@@ -55,13 +55,13 @@ public class ConnectionPool {
         Properties props = dbManager.getProps();
 
         final int poolSize = dbManager.getPoolSize();
-        String dbUrl = dbManager.getURL();
+        String connectionQuery = dbManager.getConnectionQuery();
 
         connections = new ArrayBlockingQueue<>(poolSize);
 
         for (int i = 0; i < poolSize; i++) {
             try {
-                Connection connection = DriverManager.getConnection(dbUrl, props);
+                Connection connection = DriverManager.getConnection(connectionQuery, props);
                 ProxyConnection proxyConnection = new ProxyConnection(connection);
 
                 connections.offer(proxyConnection);

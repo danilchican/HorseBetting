@@ -15,6 +15,20 @@ import java.util.ResourceBundle;
 
 class DatabaseManager {
 
+    private enum DatabaseProperties {
+        DB_DRIVER,
+        DB_CONNECTION,
+        DB_HOST,
+        DB_PORT,
+        DB_DATABASE,
+        DB_USERNAME,
+        DB_PASSWORD,
+        DB_USE_SSL,
+        DB_CHARACTER_ENCODING,
+        DB_REWRITE_BATCHED_STATEMENTS,
+        DB_POOL_SIZE
+    }
+
     /**
      * Logger to write logs.
      */
@@ -57,13 +71,13 @@ class DatabaseManager {
     Properties getProps() {
         Properties props = new Properties();
 
-        String propertyValue = retrievePropValue("DB_USERNAME", DEFAULT_DB_USERNAME);
+        String propertyValue = retrievePropValue(DatabaseProperties.DB_USERNAME, DEFAULT_DB_USERNAME);
         props.put("user", propertyValue);
 
-        propertyValue = retrievePropValue("DB_PASSWORD", DEFAULT_DB_PASSWORD);
+        propertyValue = retrievePropValue(DatabaseProperties.DB_PASSWORD, DEFAULT_DB_PASSWORD);
         props.put("password", propertyValue);
 
-        propertyValue = retrievePropValue("DB_USE_SSL", DEFAULT_DB_USE_SSL);
+        propertyValue = retrievePropValue(DatabaseProperties.DB_USE_SSL, DEFAULT_DB_USE_SSL);
         props.put("useSSL", propertyValue);
 
         return props;
@@ -74,45 +88,42 @@ class DatabaseManager {
      *
      * @return url
      */
-    String getURL() {
-        String driver = retrievePropValue("DB_DRIVER", DEFAULT_DB_DRIVER);
-        String connection = retrievePropValue("DB_CONNECTION", DEFAULT_DB_CONNECTION);
-        String host = retrievePropValue("DB_HOST", DEFAULT_DB_HOST);
-        String port = retrievePropValue("DB_PORT", DEFAULT_DB_PORT);
-        String database = retrievePropValue("DB_DATABASE", DEFAULT_DB_DATABASE);
-        String characterEncoding = retrievePropValue("DB_CHARACTER_ENCODING", DEFAULT_DB_CHARACTER_ENCODING);
+    String getConnectionQuery() {
+        String driver = retrievePropValue(DatabaseProperties.DB_DRIVER, DEFAULT_DB_DRIVER);
+        String connection = retrievePropValue(DatabaseProperties.DB_CONNECTION, DEFAULT_DB_CONNECTION);
+        String host = retrievePropValue(DatabaseProperties.DB_HOST, DEFAULT_DB_HOST);
+        String port = retrievePropValue(DatabaseProperties.DB_PORT, DEFAULT_DB_PORT);
+        String database = retrievePropValue(DatabaseProperties.DB_DATABASE, DEFAULT_DB_DATABASE);
+        String characterEncoding = retrievePropValue(DatabaseProperties.DB_CHARACTER_ENCODING, DEFAULT_DB_CHARACTER_ENCODING);
 
         String propName = "";
 
         boolean rewriteBatchedStatements;
 
         try {
-            propName = "DB_REWRITE_BATCHED_STATEMENTS";
+            propName = String.valueOf(DatabaseProperties.DB_REWRITE_BATCHED_STATEMENTS);
             rewriteBatchedStatements = Boolean.valueOf(dbBundle.getString(propName));
         } catch (MissingResourceException e) {
             rewriteBatchedStatements = DEFAULT_DB_REWRITE_BATCHED_STATEMENTS;
             LOGGER.log(Level.ERROR, "Can't find " + propName + " prop", e);
         }
 
-        String url = driver + ":" + connection + "://" + host + ":" + port + "/" + database +
-                "?characterEncoding=" + characterEncoding +
-                "&rewriteBatchedStatements" + rewriteBatchedStatements;
-
-        return url;
+        return String.format("%s:%s://%s:%s/%s?characterEncoding=%s&rewriteBatchedStatements%s",
+                driver, connection, host, port, database, characterEncoding, rewriteBatchedStatements);
     }
 
     /**
      * Retrieve property value.
      *
-     * @param propName
+     * @param property
      * @param defaultValue
      * @return property value
      */
-    private String retrievePropValue(String propName, String defaultValue) {
+    private String retrievePropValue(DatabaseProperties property, String defaultValue) {
         try {
-            return dbBundle.getString(propName);
+            return dbBundle.getString(String.valueOf(property));
         } catch (MissingResourceException e) {
-            LOGGER.log(Level.ERROR, "Can't find " + propName + " prop", e);
+            LOGGER.log(Level.ERROR, "Can't find " + property + " prop", e);
         }
 
         return defaultValue;
@@ -124,7 +135,7 @@ class DatabaseManager {
      * @return pool size
      */
     int getPoolSize() {
-        String propName = "DB_POOL_SIZE";
+        String propName = String.valueOf(DatabaseProperties.DB_POOL_SIZE);
         int poolSize;
 
         try {
