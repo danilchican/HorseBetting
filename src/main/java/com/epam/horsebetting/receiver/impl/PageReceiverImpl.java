@@ -71,6 +71,17 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
     }
 
     /**
+     * Present profile settings page.
+     *
+     * @param content
+     */
+    @Override
+    public void presentProfileSettingsPage(RequestContent content) {
+        this.setPageSubTitle("Настройки");
+        this.setDefaultContentAttributes(content);
+    }
+
+    /**
      * Present dashboard page.
      *
      * @param content

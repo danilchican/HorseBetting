@@ -2,6 +2,7 @@ package com.epam.horsebetting.command;
 
 import com.epam.horsebetting.command.auth.*;
 import com.epam.horsebetting.command.horse.*;
+import com.epam.horsebetting.command.profile.ProfileSettingsPresentCommand;
 import com.epam.horsebetting.command.race.DashboardCreateRaceCommand;
 import com.epam.horsebetting.command.race.DashboardCreateRacePresentCommand;
 import com.epam.horsebetting.command.race.DashboardRacesPresentCommand;
@@ -63,6 +64,12 @@ public enum CommandType {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {
             ((PageReceiverImpl) getCommand().getReceiver()).presentProfilePage(content);
+        }
+    },
+    PROFILE_SETTINGS("profile.settings::get", new ProfileSettingsPresentCommand(new PageReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((PageReceiverImpl) getCommand().getReceiver()).presentProfileSettingsPage(content);
         }
     },
     DASHBOARD_INDEX("dashboard::get", new DashboardPresentCommand(new PageReceiverImpl())) {
