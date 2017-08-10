@@ -1,4 +1,4 @@
-package com.epam.horsebetting.util;
+package com.epam.horsebetting.config;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;

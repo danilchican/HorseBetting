@@ -1,6 +1,6 @@
 package com.epam.horsebetting.database;
 
-import com.epam.horsebetting.util.EnvironmentConfig;
+import com.epam.horsebetting.config.EnvironmentConfig;
 import com.mysql.jdbc.Driver;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -56,31 +56,15 @@ class DatabaseManager {
      */
     Properties getProps() {
         Properties props = new Properties();
-        String propName = "";
 
-        try {
-            propName = "DB_USERNAME";
-            props.put("user", dbBundle.getString(propName));
-        } catch (MissingResourceException e) {
-            props.put("user", DEFAULT_DB_USERNAME);
-            LOGGER.log(Level.ERROR, "Can't find " + propName + " prop", e);
-        }
+        String propertyValue = retrievePropValue("DB_USERNAME", DEFAULT_DB_USERNAME);
+        props.put("user", propertyValue);
 
-        try {
-            propName = "DB_PASSWORD";
-            props.put("password", dbBundle.getString(propName));
-        } catch (MissingResourceException e) {
-            props.put("password", DEFAULT_DB_PASSWORD);
-            LOGGER.log(Level.ERROR, "Can't find " + propName + " prop", e);
-        }
+        propertyValue = retrievePropValue("DB_PASSWORD", DEFAULT_DB_PASSWORD);
+        props.put("password", propertyValue);
 
-        try {
-            propName = "DB_USE_SSL";
-            props.put("useSSL", dbBundle.getString(propName));
-        } catch (MissingResourceException e) {
-            props.put("useSSL", DEFAULT_DB_USE_SSL);
-            LOGGER.log(Level.ERROR, "Can't find " + propName + " prop", e);
-        }
+        propertyValue = retrievePropValue("DB_USE_SSL", DEFAULT_DB_USE_SSL);
+        props.put("useSSL", propertyValue);
 
         return props;
     }
@@ -91,65 +75,16 @@ class DatabaseManager {
      * @return url
      */
     String getURL() {
-        String url;
+        String driver = retrievePropValue("DB_DRIVER", DEFAULT_DB_DRIVER);
+        String connection = retrievePropValue("DB_CONNECTION", DEFAULT_DB_CONNECTION);
+        String host = retrievePropValue("DB_HOST", DEFAULT_DB_HOST);
+        String port = retrievePropValue("DB_PORT", DEFAULT_DB_PORT);
+        String database = retrievePropValue("DB_DATABASE", DEFAULT_DB_DATABASE);
+        String characterEncoding = retrievePropValue("DB_CHARACTER_ENCODING", DEFAULT_DB_CHARACTER_ENCODING);
+
         String propName = "";
 
-        String driver;
-        String connection;
-        String host;
-        String port;
-        String database;
-        String characterEncoding;
-
         boolean rewriteBatchedStatements;
-
-        try {
-            propName = "DB_DRIVER";
-            driver = dbBundle.getString(propName);
-        } catch (MissingResourceException e) {
-            driver = DEFAULT_DB_DRIVER;
-            LOGGER.log(Level.ERROR, "Can't find " + propName + " prop", e);
-        }
-
-        try {
-            propName = "DB_CONNECTION";
-            connection = dbBundle.getString(propName);
-        } catch (MissingResourceException e) {
-            connection = DEFAULT_DB_CONNECTION;
-            LOGGER.log(Level.ERROR, "Can't find " + propName + " prop", e);
-        }
-
-        try {
-            propName = "DB_HOST";
-            host = dbBundle.getString(propName);
-        } catch (MissingResourceException e) {
-            host = DEFAULT_DB_HOST;
-            LOGGER.log(Level.ERROR, "Can't find " + propName + " prop", e);
-        }
-
-        try {
-            propName = "DB_PORT";
-            port = dbBundle.getString(propName);
-        } catch (MissingResourceException e) {
-            port = DEFAULT_DB_PORT;
-            LOGGER.log(Level.ERROR, "Can't find " + propName + " prop", e);
-        }
-
-        try {
-            propName = "DB_DATABASE";
-            database = dbBundle.getString(propName);
-        } catch (MissingResourceException e) {
-            database = DEFAULT_DB_DATABASE;
-            LOGGER.log(Level.ERROR, "Can't find " + propName + " prop", e);
-        }
-
-        try {
-            propName = "DB_CHARACTER_ENCODING";
-            characterEncoding = dbBundle.getString(propName);
-        } catch (MissingResourceException e) {
-            characterEncoding = DEFAULT_DB_CHARACTER_ENCODING;
-            LOGGER.log(Level.ERROR, "Can't find " + propName + " prop", e);
-        }
 
         try {
             propName = "DB_REWRITE_BATCHED_STATEMENTS";
@@ -159,11 +94,28 @@ class DatabaseManager {
             LOGGER.log(Level.ERROR, "Can't find " + propName + " prop", e);
         }
 
-        url = driver + ":" + connection + "://" + host + ":" + port + "/" + database +
+        String url = driver + ":" + connection + "://" + host + ":" + port + "/" + database +
                 "?characterEncoding=" + characterEncoding +
                 "&rewriteBatchedStatements" + rewriteBatchedStatements;
 
         return url;
+    }
+
+    /**
+     * Retrieve property value.
+     *
+     * @param propName
+     * @param defaultValue
+     * @return property value
+     */
+    private String retrievePropValue(String propName, String defaultValue) {
+        try {
+            return dbBundle.getString(propName);
+        } catch (MissingResourceException e) {
+            LOGGER.log(Level.ERROR, "Can't find " + propName + " prop", e);
+        }
+
+        return defaultValue;
     }
 
     /**

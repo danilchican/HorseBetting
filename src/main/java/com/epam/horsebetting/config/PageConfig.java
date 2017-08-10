@@ -1,4 +1,4 @@
-package com.epam.horsebetting.util;
+package com.epam.horsebetting.config;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -10,8 +10,8 @@ import java.util.ResourceBundle;
 public class PageConfig {
 
     public enum PageConfigType {
-        WELCOME, AUTH_LOGIN, AUTH_REGISTER, NOT_FOUND,
-        PROFILE_INDEX, DASHBOARD_INDEX, DASHBOARD_SUITS_INDEX, DASHBOARD_USERS_INDEX,
+        WELCOME, AUTH_LOGIN, AUTH_REGISTER, NOT_FOUND, PROFILE_INDEX,
+        DASHBOARD_INDEX, DASHBOARD_SUITS_INDEX, DASHBOARD_USERS_INDEX,
         DASHBOARD_HORSES_INDEX, DASHBOARD_HORSES_CREATE, DASHBOARD_HORSES_EDIT,
         DASHBOARD_RACES_INDEX, DASHBOARD_RACES_CREATE
     }

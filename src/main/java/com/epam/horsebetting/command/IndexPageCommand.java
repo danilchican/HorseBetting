@@ -4,7 +4,7 @@ import com.epam.horsebetting.exception.IllegalCommandTypeException;
 import com.epam.horsebetting.request.RequestContent;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.AbstractReceiver;
-import com.epam.horsebetting.util.PageConfig;
+import com.epam.horsebetting.config.PageConfig;
 import com.epam.horsebetting.util.Router;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
