@@ -4,6 +4,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <layout:dashboard>
+    <c:set var="horseName"><ctg:oldInputFormAttribute name="horse-name"/></c:set>
+    <c:set var="horseAge"><ctg:oldInputFormAttribute name="horse-age"/></c:set>
+    <c:set var="horseSuit"><ctg:oldInputFormAttribute name="horse-suit"/></c:set>
+    <c:set var="horseGender"><ctg:oldInputFormAttribute name="gender"/></c:set>
+
     <!-- page content -->
     <div class="right_col" role="main">
         <div class="">
@@ -36,7 +41,8 @@
                                             class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="horse-name" value="${horse.getName()}" name="horse-name"
+                                        <input type="text" id="horse-name" name="horse-name"
+                                               value="${empty horseName ? horse.getName() : horseName}"
                                                required="required"
                                                class="form-control col-md-7 col-xs-12">
                                     </div>
@@ -50,7 +56,7 @@
                                         <input id="horse-age" data-parsley-min="1" data-parsley-max="45"
                                                name="horse-age" required="required" data-parsley-type="integer"
                                                type="number" class="form-control col-md-7 col-xs-12"
-                                               value="${horse.getAge()}">
+                                               value="${empty horseAge ? horse.getAge() : horseAge}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -60,7 +66,11 @@
                                         <select required="required" class="form-control" name="horse-suit">
                                             <c:forEach items="${suits}" var="suit">
                                                 <c:choose>
-                                                    <c:when test="${suit.getId() == horse.getSuitId()}">
+                                                    <c:when test="${!empty horseSuit && suit.getId() == horseSuit}">
+                                                        <option value="${suit.getId()}"
+                                                                selected>${suit.getName()}</option>
+                                                    </c:when>
+                                                    <c:when test="${suit.getId() == horse.getSuitId() && empty horseSuit}">
                                                         <option value="${suit.getId()}"
                                                                 selected>${suit.getName()}</option>
                                                     </c:when>
@@ -77,18 +87,18 @@
                                             class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div id="gender" class="btn-group" data-toggle="buttons">
-                                            <label class="btn btn-default <c:if test="${horse.isMale()}">active</c:if>"
+                                            <label class="btn btn-default <c:if test="${(empty horseGender && horse.isMale()) or (!empty horseGender && horseGender eq 'male')}">active</c:if>"
                                                    data-toggle-class="btn-primary"
                                                    data-toggle-passive-class="btn-default">
                                                 <input type="radio" required="required" name="gender" value="male"
-                                                       <c:if test="${horse.isMale()}">checked</c:if> >
+                                                       <c:if test="${(empty horseGender && horse.isMale()) or (!empty horseGender && horseGender eq 'male')}">checked</c:if> >
                                                 &nbsp; Male &nbsp;
                                             </label>
-                                            <label class="btn btn-primary <c:if test="${horse.isFemale()}">active</c:if>"
+                                            <label class="btn btn-primary <c:if test="${(empty horseGender && horse.isFemale()) or (!empty horseGender && horseGender eq 'female')}">active</c:if>"
                                                    data-toggle-class="btn-primary"
                                                    data-toggle-passive-class="btn-default">
                                                 <input type="radio" required="required" name="gender" value="female"
-                                                       <c:if test="${horse.isFemale()}">checked</c:if> >
+                                                       <c:if test="${(empty horseGender && horse.isFemale()) or (!empty horseGender && horseGender eq 'female')}">checked</c:if> >
                                                 Female
                                             </label>
                                         </div>

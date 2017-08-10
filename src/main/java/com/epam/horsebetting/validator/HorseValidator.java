@@ -48,7 +48,7 @@ public class HorseValidator extends AbstractValidator {
     public boolean validateUpdateHorse(String id, String name, String gender, String age, String suitId) {
         boolean isValidate = true;
 
-        if (!validateInteger(id, "horse-id", "Horse id")) {
+        if (!validateInteger(id, "horse-id", "Horse id", false)) {
             isValidate = false;
         }
 
@@ -78,7 +78,7 @@ public class HorseValidator extends AbstractValidator {
      * @return boolean
      */
     public boolean validateRemoveHorse(String id) {
-        return validateInteger(id, "horse-id", "Horse id");
+        return validateInteger(id, "horse-id", "Horse id", true);
     }
 
     /**
@@ -114,7 +114,7 @@ public class HorseValidator extends AbstractValidator {
      * @return boolean
      */
     private boolean validateSuitId(String suitId, String attributeName, String key) {
-        return validateInteger(suitId, attributeName, key);
+        return validateInteger(suitId, attributeName, key, true);
     }
 
     /**

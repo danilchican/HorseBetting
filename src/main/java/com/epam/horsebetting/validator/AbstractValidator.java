@@ -77,10 +77,12 @@ public abstract class AbstractValidator {
      * @param key
      * @return boolean
      */
-    boolean validateInteger(String number, String attributeName, String key) {
+    boolean validateInteger(String number, String attributeName, String key, boolean saveInput) {
         try {
             if(number != null && !number.trim().isEmpty()) {
-                this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, number);
+                if(saveInput) {
+                    this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, number);
+                }
 
                 int n = Integer.parseInt(number);
                 return true;
