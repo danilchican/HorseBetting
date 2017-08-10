@@ -96,4 +96,12 @@ public interface UserDAO {
      * @throws DAOException
      */
     void updateSecurity(User user) throws DAOException;
+
+    /**
+     * Update user's balance.
+     *
+     * @param user
+     * @throws DAOException
+     */
+    void updateBalance(User user) throws DAOException;
 }

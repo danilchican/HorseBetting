@@ -34,6 +34,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     private static final String SQL_SELECT_PART_USERS = "SELECT `id`, `role_id`, `name`, `email`, `balance`, `created_at` FROM `users` LIMIT ? OFFSET ?;";
     private static final String SQL_UPDATE_USER_SETTINGS = "UPDATE `users` SET `name`=? WHERE `id`=?;";
     private static final String SQL_UPDATE_USER_SECURITY = "UPDATE `users` SET `password`=? WHERE `id`=?;";
+    private static final String SQL_UPDATE_USER_BALANCE = "UPDATE `users` SET `balance`=? WHERE `id`=?;";
 
     /**
      * Default constructor connection.
@@ -288,6 +289,26 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
             }
         } catch (SQLException e) {
             throw new DAOException("Can't update user's security. " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Update user's balance.
+     *
+     * @param user
+     * @throws DAOException
+     */
+    @Override
+    public void updateBalance(User user) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_USER_BALANCE)) {
+            preparedStatement.setBigDecimal(1, user.getBalance());
+            preparedStatement.setInt(2, user.getId());
+
+            if (preparedStatement.executeUpdate() != 1) {
+                throw new DAOException("Can't update user's balance.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't update user's balance. " + e.getMessage(), e);
         }
     }
 }

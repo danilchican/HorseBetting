@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
@@ -173,8 +174,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
             }
         } else {
             content.insertSessionAttribute("errors", validator.getErrors());
-
-            throw new ReceiverException("Invalid user credentials.");
+            throw new ReceiverException("Invalid user data.");
         }
     }
 
@@ -208,8 +208,44 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
             }
         } else {
             content.insertSessionAttribute("errors", validator.getErrors());
+            throw new ReceiverException("Invalid user data.");
+        }
+    }
 
-            throw new ReceiverException("Invalid user credentials.");
+    /**
+     * Update profile balance.
+     *
+     * @param content
+     */
+    @Override
+    public void updateProfileBalance(RequestContent content) throws ReceiverException {
+        String paymentAmount = content.findParameter("payment-amount");
+
+        ArrayList<String> messages = new ArrayList<>();
+        UserValidator validator = new UserValidator();
+
+        if (validator.validateUpdateProfileBalanceForm(paymentAmount)) {
+            User authorizedUser = (User)content.findRequestAttribute("user");
+
+            BigDecimal amount = new BigDecimal(paymentAmount);
+            BigDecimal newBalance = authorizedUser.getBalance().add(amount);
+
+            authorizedUser.setBalance(newBalance);
+
+            try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
+                userDAO.updateBalance(authorizedUser);
+
+                messages.add("Profile balance updated successfully.");
+                content.insertSessionAttribute("messages", messages);
+            } catch (DAOException e) {
+                messages.add("Can't update user balance.");
+                content.insertSessionAttribute("errors", messages);
+
+                throw new ReceiverException("Database Error: " + e.getMessage(), e);
+            }
+        } else {
+            content.insertSessionAttribute("errors", validator.getErrors());
+            throw new ReceiverException("Invalid user data.");
         }
     }
 

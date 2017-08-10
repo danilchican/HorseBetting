@@ -42,6 +42,13 @@ public interface UserReceiver {
     void updateSecurity(RequestContent content) throws ReceiverException;
 
     /**
+     * Update profile balance.
+     *
+     * @param content
+     */
+    void updateProfileBalance(RequestContent content) throws ReceiverException;
+
+    /**
      * Change locale.
      *
      * @param content

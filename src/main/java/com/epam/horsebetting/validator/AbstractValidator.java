@@ -130,9 +130,11 @@ public abstract class AbstractValidator {
      * @param errorMessage
      * @return boolean
      */
-    boolean validateDefaultName(String name, String attributeName, String key, String errorMessage) {
+    boolean validateDefaultName(String name, String attributeName, String key, String errorMessage, boolean saveInput) {
         if (name != null && !name.trim().isEmpty()) {
-            this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, name);
+            if(saveInput) {
+                this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, name);
+            }
 
             if (!name.matches(DEFAULT_NAME_REGEX)) {
                 this.addErrorMessage(key + (errorMessage != null ? " " + errorMessage : ""));

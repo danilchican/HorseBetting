@@ -14,7 +14,7 @@
                     <label for="payment-amount">Сумма платежа</label>
                     <div class="input-group">
                         <span class="input-group-addon">$</span>
-                        <input type="number" id="payment-amount" name="payment-amount" step="0.2" min="5" value="5"
+                        <input type="number" id="payment-amount" name="payment-amount" step="0.01" min="5" value="5"
                                class="form-control">
                     </div>
                     <small style="color:#828282;"><i>Минимальная сумма: 5$</i></small>

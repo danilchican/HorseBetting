@@ -2,7 +2,6 @@ package com.epam.horsebetting.command.user;
 
 import com.epam.horsebetting.command.AbstractCommand;
 import com.epam.horsebetting.command.CommandType;
-import com.epam.horsebetting.config.PageConfig;
 import com.epam.horsebetting.exception.IllegalCommandTypeException;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.AbstractReceiver;

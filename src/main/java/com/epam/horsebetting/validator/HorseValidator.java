@@ -90,7 +90,7 @@ public class HorseValidator extends AbstractValidator {
      * @return boolean
      */
     private boolean validateName(String name, String attributeName, String key) {
-        return validateDefaultName(name, attributeName, key, "can contains only characters, numbers and spaces.");
+        return validateDefaultName(name, attributeName, key, "can contains only characters, numbers and spaces.", true);
     }
 
     /**

@@ -2,6 +2,8 @@ package com.epam.horsebetting.validator;
 
 import com.epam.horsebetting.tag.OldInputFormAttributeTag;
 
+import java.math.BigDecimal;
+
 public class UserValidator extends AbstractValidator {
 
     /**
@@ -9,6 +11,7 @@ public class UserValidator extends AbstractValidator {
      */
     private static final String EMAIL_REGEX = "\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+";
     private static final String PASSWORD_REGEX = "(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{6,}";
+    private static final int MIN_BALANCE_AMOUNT = 5;
 
     /**
      * Messages to valid.
@@ -103,6 +106,33 @@ public class UserValidator extends AbstractValidator {
     }
 
     /**
+     * Validate
+     *
+     * @param amount
+     * @return boolean
+     */
+    public boolean validateUpdateProfileBalanceForm(String amount) {
+        try {
+            if(amount != null && !amount.trim().isEmpty()) {
+                BigDecimal b = new BigDecimal(amount);
+
+                if(b.compareTo(new BigDecimal(MIN_BALANCE_AMOUNT)) != -1) {
+                    return true;
+                }
+
+                this.addErrorMessage("Payment amount should be equal or greater than " + MIN_BALANCE_AMOUNT + "$.");
+                return false;
+            }
+
+            this.addErrorMessage("Payment amount is empty.");
+            return false;
+        } catch (NumberFormatException e) {
+            this.addErrorMessage("Payment amount is incorrect.");
+            return false;
+        }
+    }
+
+    /**
      * Validate name. Not required.
      *
      * @param name
@@ -111,7 +141,7 @@ public class UserValidator extends AbstractValidator {
      * @return boolean
      */
     private boolean validateName(String name, String attributeName, String key) {
-        return validateDefaultName(name, attributeName, key, NAME_MESSAGE);
+        return validateDefaultName(name, attributeName, key, NAME_MESSAGE, false);
     }
 
     /**
