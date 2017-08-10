@@ -77,11 +77,10 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
      * Update horse.
      *
      * @param horse
-     * @return updated result
      * @throws DAOException
      */
     @Override
-    public boolean update(Horse horse) throws DAOException {
+    public void update(Horse horse) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_HORSE)) {
             preparedStatement.setString(1, horse.getName());
             preparedStatement.setByte(2, horse.getAge());
@@ -93,8 +92,6 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
             if (preparedStatement.executeUpdate() != 1) {
                 throw new DAOException("Can't update horse.");
             }
-
-            return true;
         } catch (SQLException e) {
             throw new DAOException("Can't update horse. " + e.getMessage(), e);
         }

@@ -53,7 +53,7 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
 
             LOGGER.log(Level.DEBUG, "Want create horse: " + horse);
 
-            try(HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
+            try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
                 Horse createdHorse = horseDAO.create(horse);
 
                 messages.add("Horse has been created successfully.");
@@ -91,10 +91,19 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
      */
     @Override
     public void ajaxObtainHorsesList(RequestContent content) throws ReceiverException {
+        ArrayList<String> errors = new ArrayList<>();
+
         try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
             List<Horse> horses = horseDAO.findAll();
+
+            content.insertJsonAttribute("success", true);
             content.insertJsonAttribute("horses", horses);
         } catch (DAOException e) {
+            errors.add("Something went wrong...");
+
+            content.insertJsonAttribute("success", false);
+            content.insertJsonAttribute("errors", errors);
+
             throw new ReceiverException("Database Error: " + e.getMessage(), e);
         }
     }
@@ -107,32 +116,38 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
      */
     @Override
     public void removeHorse(RequestContent content) throws ReceiverException {
-        int id = Integer.parseInt(content.findParameter("horse-id"));
-
+        HorseValidator validator = new HorseValidator();
         ArrayList<String> messages = new ArrayList<>();
 
-        //TODO Create validators
+        String idValue = content.findParameter("horse-id");
 
-        Horse suit = new Horse(id);
-        LOGGER.log(Level.DEBUG, "Want remove horse: " + suit);
+        if (validator.validateRemoveHorse(idValue)) {
+            int id = Integer.parseInt(idValue);
 
-        try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
-            boolean result = horseDAO.remove(suit);
+            Horse suit = new Horse(id);
+            LOGGER.log(Level.DEBUG, "Want remove horse: " + suit);
 
-            if (result) {
-                messages.add("Horse removed successfully");
-            } else {
+            try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
+                boolean result = horseDAO.remove(suit);
+
+                if (result) {
+                    messages.add("Horse removed successfully");
+                } else {
+                    messages.add("Can't remove current horse");
+                }
+
+                content.insertSessionAttribute("messages", messages);
+                content.insertSessionAttribute("success", result);
+            } catch (DAOException e) {
                 messages.add("Can't remove current horse");
+                content.insertSessionAttribute("errors", messages);
+                content.insertSessionAttribute("success", false);
+
+                throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
-
-            content.insertSessionAttribute("messages", messages);
-            content.insertSessionAttribute("success", result);
-        } catch (DAOException e) {
-            messages.add("Can't remove current horse");
-            content.insertSessionAttribute("messages", messages);
+        } else {
+            content.insertSessionAttribute("errors", validator.getErrors());
             content.insertSessionAttribute("success", false);
-
-            throw new ReceiverException("Database Error: " + e.getMessage(), e);
         }
     }
 
@@ -144,42 +159,56 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
      */
     @Override
     public void updateHorse(RequestContent content) throws ReceiverException {
-        int id = Integer.parseInt(content.findParameter("horse-id"));
-
+        String idAttr = content.findParameter("horse-id");
         String name = content.findParameter("horse-name");
-        boolean gender = "male".equals(content.findParameter("gender"));
+        String genderAttr = content.findParameter("gender");
+        String ageAttr = content.findParameter("horse-age");
+        String suitAttr = content.findParameter("horse-suit");
 
-        byte age = Byte.parseByte(content.findParameter("horse-age"));
-        int suitId = Integer.parseInt(content.findParameter("horse-suit"));
+        HorseValidator validator = new HorseValidator();
 
-        // TODO Create validators
+        if (validator.validateUpdateHorse(idAttr, name, genderAttr, ageAttr, suitAttr)) {
+            int id = Integer.parseInt(idAttr);
+            int suitId = Integer.parseInt(suitAttr);
 
-        Horse horse = new Horse(id);
+            byte age = Byte.parseByte(ageAttr);
+            boolean gender = "male".equals(genderAttr);
 
-        horse.setName(name);
-        horse.setSuitId(suitId);
-        horse.setAge(age);
-        horse.setGender(gender);
+            Horse horse = new Horse(id);
 
-        LOGGER.log(Level.DEBUG, "Want update horse: " + horse);
+            horse.setName(name);
+            horse.setSuitId(suitId);
+            horse.setAge(age);
+            horse.setGender(gender);
 
-        ArrayList<String> errors = new ArrayList<>();
+            LOGGER.log(Level.DEBUG, "Want update horse: " + horse);
 
-        try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
-            boolean isUpdated = horseDAO.update(horse);
+            ArrayList<String> messages = new ArrayList<>();
 
-            if (isUpdated) {
-                errors.add("Horse updated successfully");
-            } else {
-                errors.add("Can't update current horse");
+            try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
+                horseDAO.update(horse);
+
+                messages.add("Horse updated successfully");
+                content.insertSessionAttribute("messages", messages);
+            } catch (DAOException e) {
+                messages.add("Something went wrong...");
+                content.insertSessionAttribute("errors", messages);
+
+                for (Map.Entry<String, String> entry : validator.getOldInput()) {
+                    content.insertSessionAttribute(entry.getKey(), entry.getValue());
+                }
+
+                throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
-        } catch (DAOException e) {
-            errors.add("Can't update horse.");
-            content.insertSessionAttribute("errors", errors);
+        } else {
+            content.insertSessionAttribute("errors", validator.getErrors());
 
-            // TODO add saving old inputs
+            LOGGER.log(Level.DEBUG, "Old input values: " + validator.getOldInput());
+            for (Map.Entry<String, String> entry : validator.getOldInput()) {
+                content.insertSessionAttribute(entry.getKey(), entry.getValue());
+            }
 
-            throw new ReceiverException("Database Error: " + e.getMessage(), e);
+            throw new ReceiverException("Invalid horse data.");
         }
     }
 }

@@ -36,6 +36,52 @@ public class HorseValidator extends AbstractValidator {
     }
 
     /**
+     * Validate data to update horse.
+     *
+     * @param id
+     * @param name
+     * @param gender
+     * @param age
+     * @param suitId
+     * @return boolean
+     */
+    public boolean validateUpdateHorse(String id, String name, String gender, String age, String suitId) {
+        boolean isValidate = true;
+
+        if (!validateInteger(id, "horse-id", "Horse id")) {
+            isValidate = false;
+        }
+
+        if (!validateName(name, "horse-name", "Name")) {
+            isValidate = false;
+        }
+
+        if (!validateGender(gender, "gender", "Gender")) {
+            isValidate = false;
+        }
+
+        if (!validateAge(age, "horse-age", "Age")) {
+            isValidate = false;
+        }
+
+        if (!validateSuitId(suitId, "horse-suit", "Suit id")) {
+            isValidate = false;
+        }
+
+        return isValidate;
+    }
+
+    /**
+     * Validate remove horse data.
+     *
+     * @param id
+     * @return boolean
+     */
+    public boolean validateRemoveHorse(String id) {
+        return validateInteger(id, "horse-id", "Horse id");
+    }
+
+    /**
      * Validate name.
      *
      * @param name

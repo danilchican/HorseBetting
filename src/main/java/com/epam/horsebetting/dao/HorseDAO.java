@@ -20,10 +20,9 @@ public interface HorseDAO {
      * Update horse.
      *
      * @param horse
-     * @return updated result
      * @throws DAOException
      */
-    boolean update(Horse horse) throws DAOException;
+    void update(Horse horse) throws DAOException;
 
     /**
      * Remove horse.
