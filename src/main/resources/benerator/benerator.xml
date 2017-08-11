@@ -27,6 +27,7 @@
               catalog="{ftl:${DB_DATABASE}}"/>
 
     <bean id="idGen" spec="new IncrementGenerator(1)"/>
+    <bean id="idGenHorseRace" spec="new IncrementGenerator(1)"/>
 
     <bean id="datetime_gen" class="DateTimeGenerator">
         <property name="minDate" value="2005-06-01"/>
@@ -94,5 +95,12 @@
         <attribute name="started_at" type="date"
                    script="this.get('created_at') + (86400000 * RandomUtil.randomInt(3, 20))"/>
         <attribute name="bet_end_date" type="timestamp" script="this.get('started_at') - 86400000 * 2"/>
+        <generate type="horse_race" minCount="6" maxCount="10" consumer="db">
+            <id name="id" mode="ignored"/>
+            <reference name="horse_id" source="db" unique="true" targetType="horses" distribution="random"/>
+            <reference name="race_id" source="db" targetType="horses" script="races.id"/>
+            <attribute name="coefficient" type="big_decimal" min="1.2" max="10.00" granularity="0.03"
+                       distribution="random"/>
+        </generate>
     </generate>
 </setup>
