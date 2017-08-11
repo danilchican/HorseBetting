@@ -3,10 +3,12 @@ package com.epam.horsebetting.receiver.impl;
 import com.epam.horsebetting.dao.impl.HorseDAOImpl;
 import com.epam.horsebetting.dao.impl.RaceDAOImpl;
 import com.epam.horsebetting.dao.impl.SuitDAOImpl;
+import com.epam.horsebetting.dao.impl.UserDAOImpl;
 import com.epam.horsebetting.database.TransactionManager;
 import com.epam.horsebetting.entity.Horse;
 import com.epam.horsebetting.entity.Race;
 import com.epam.horsebetting.entity.Suit;
+import com.epam.horsebetting.entity.User;
 import com.epam.horsebetting.exception.DAOException;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.AbstractReceiver;
@@ -112,6 +114,30 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
     public void presentDashboardUsersPage(RequestContent content) throws ReceiverException {
         this.setPageSubTitle("Пользователи");
         this.setDefaultContentAttributes(content);
+
+        // TODO create validators
+
+        String pageNum = content.findParameter("page");
+        UserDAOImpl userDAO = new UserDAOImpl(false);
+
+        try {
+            final int limit = 10;
+            final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
+            final int offset = (page - 1) * limit;
+            final int totalUsers = userDAO.getTotalCount();
+
+            List<User> users = userDAO.obtainPart(limit, offset);
+
+            content.insertRequestAttribute("users", users);
+            content.insertRequestAttribute("totalUsers", totalUsers);
+            content.insertRequestAttribute("limitUsers", limit);
+
+            LOGGER.log(Level.DEBUG, "Users list: " + Arrays.toString(users.toArray()));
+        } catch (NumberFormatException e) {
+            throw new ReceiverException("Cannot convert page to number. GET[page]=" + e.getMessage(), e);
+        } catch (DAOException e) {
+            throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        }
     }
 
     /**

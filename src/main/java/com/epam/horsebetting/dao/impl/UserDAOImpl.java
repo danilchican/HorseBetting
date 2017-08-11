@@ -35,6 +35,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     private static final String SQL_UPDATE_USER_SETTINGS = "UPDATE `users` SET `name`=? WHERE `id`=?;";
     private static final String SQL_UPDATE_USER_SECURITY = "UPDATE `users` SET `password`=? WHERE `id`=?;";
     private static final String SQL_UPDATE_USER_BALANCE = "UPDATE `users` SET `balance`=? WHERE `id`=?;";
+    private static final String SQL_COUNT_USERS = "SELECT COUNT(*) AS `total` FROM `users`;";
 
     /**
      * Default constructor connection.
@@ -311,5 +312,30 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Can't update user's balance. " + e.getMessage(), e);
         }
+    }
+
+    /**
+     * Get total count of users.
+     *
+     * @return total count
+     * @throws DAOException
+     */
+    @Override
+    public int getTotalCount() throws DAOException {
+        ResultSet result;
+        int totalCount = 0;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_COUNT_USERS)) {
+            result = preparedStatement.executeQuery();
+
+            while (result.next()) {
+                totalCount = result.getInt("total");
+                LOGGER.log(Level.DEBUG, "Count of users: " + totalCount);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Cannot retrieve total count. " + e.getMessage(), e);
+        }
+
+        return totalCount;
     }
 }

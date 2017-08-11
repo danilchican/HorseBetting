@@ -104,4 +104,12 @@ public interface UserDAO {
      * @throws DAOException
      */
     void updateBalance(User user) throws DAOException;
+
+    /**
+     * Get total count of users.
+     *
+     * @return total count
+     * @throws DAOException
+     */
+    int getTotalCount() throws DAOException;
 }

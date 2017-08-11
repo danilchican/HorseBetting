@@ -14,7 +14,6 @@ window.toastr.options = {
 
 Vue.use(VueResource);
 
-Vue.component('users', require('../components/dashboard/users/UserComponent.vue'));
 Vue.component('suits', require('../components/dashboard/suits/SuitComponent.vue'));
 Vue.component('race-horses', require('../components/dashboard/races/RaceComponent.vue'));
 
