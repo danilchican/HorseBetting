@@ -100,10 +100,6 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         if (validator.validateLoginForm(email, password)) {
             User user;
 
-            for (Map.Entry<String, String> entry : validator.getOldInput()) {
-                content.insertSessionAttribute(entry.getKey(), entry.getValue());
-            }
-
             try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
                 user = userDAO.attempt(email, password);
             } catch (DAOException e) {
