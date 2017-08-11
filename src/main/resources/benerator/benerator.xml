@@ -11,6 +11,7 @@
     <comment>Including environment properties</comment>
 
     <include uri="../config/env.properties"/>
+    <include uri="../config/benerator.properties"/>
 
     <import platforms="db,csv"/>
     <import defaults="true" domains="organization,address,person,net"/>
@@ -25,11 +26,57 @@
               password="{ftl:${DB_PASSWORD}}"
               catalog="{ftl:${DB_DATABASE}}"/>
 
-    <comment>Generate test users by Benerator</comment>
+    <bean id="datetime_gen" class="org.databene.benerator.primitive.datetime.DateTimeGenerator">
+        <property name="minDate" value="2005-06-01"/>
+        <property name="maxDate" value="2017-08-01"/>
+        <property name="dateDistribution" value="random"/>
+        <property name="minTime" value="00:00:00"/>
+        <property name="maxTime" value="23:59:00"/>
+        <property name="timeDistribution" value="random"/>
+    </bean>
 
-    <generate type="users" count="5" consumer="db,ConsoleExporter">
-        <attribute name="email" generator="EMailAddressGenerator"/>
+    <comment>Dropping and creating database</comment>
+    <execute uri="queries/create_tables.sql" target="db"/>
+
+    <comment>Importing roles for users from CSV</comment>
+    <iterate source="data/roles.csv" type="roles" encoding="utf-8" consumer="db"/>
+1
+    <bean id="idGen" spec="new IncrementGenerator(1)"/>
+
+    <comment>Generating users</comment>
+    <generate type="users" consumer="db">
+        <id name="id" generator="idGen" />
+        <reference name="role_id" targetType="roles" source="db" values="1"/>
+        <attribute name="name" type="string" unique="true" values="'Vladislav'"/>
+        <attribute name="email" type="string" unique="true" values="'danilchican@mail.ru'"/>
+        <attribute name="password" type="string" script="{ftl:${DEFAULT_USER_PASSWORD}}"/>
+        <attribute name="balance" type="big_decimal" values="0.00"/>
+        <attribute name="created_at" type="timestamp" generator="datetime_gen"/>
+    </generate>
+    <generate type="users" count="{ftl:${MAX_USERS_COUNT}}" consumer="db">
+        <variable name="user" unique="true" generator="PersonGenerator" dataset="US" locale="en"/>
+
+        <id name="id" generator="idGen" />
+        <reference name="role_id" targetType="roles" source="db" distribution="random"/>
+        <attribute name="name" type="string" unique="true" script="{ftl:${user.givenName} ${user.familyName}}"/>
+        <attribute name="email" type="string" unique="true" script="user.email"/>
+        <attribute name="password" type="string" script="{ftl:${DEFAULT_USER_PASSWORD}}"/>
+        <attribute name="balance" type="big_decimal" min="0.00" max="10000.00" granularity="150.00"
+                   distribution="random"/>
+        <attribute name="created_at" type="timestamp" generator="datetime_gen"/>
     </generate>
 
-    <iterate type="users" source="" encoding="utf-8" consumer="db"/>
+
+    <comment>Importing suits for horses from CSV</comment>
+    <iterate source="data/suits.csv" type="suits" encoding="utf-8" consumer="db"/>
+
+    <comment>Generating horses</comment>
+    <generate type="horses" count="{ftl:${MAX_HORSES_COUNT}}" consumer="db">
+        <variable name="horse" unique="true" distribution="random" source="data/horses.ent.csv"/>
+
+        <reference name="suit_id" targetType="suits" source="db" distribution="random"/>
+        <attribute name="age" type="int" min="1" max="45" granularity="7" distribution="random"/>
+        <attribute name="gender" type="boolean" distribution="random"/>
+        <attribute name="name" type="string" unique="true" script="horse.NAME"/>
+    </generate>
 </setup>
