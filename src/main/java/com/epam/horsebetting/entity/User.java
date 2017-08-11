@@ -24,6 +24,7 @@ public class User extends Entity {
      * Default constructor role type by default.
      */
     public User() {
+        this.setBalance(new BigDecimal(0));
         this.setRole(RoleType.CLIENT);
     }
 

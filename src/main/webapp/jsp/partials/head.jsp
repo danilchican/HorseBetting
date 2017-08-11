@@ -1,7 +1,7 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ctg" uri="customtags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="${locale}" scope="session" />
 <fmt:setBundle basename="/localization/lang"/>
 
@@ -45,7 +45,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <!-- Change to Tag -->
+                    <!-- TODO Change to Tag -->
                     <form action="/locale/change" method="get" style="margin: 15px 0 0;">
                         <select name="lang" onchange="this.form.submit()">
                             <option value="en"

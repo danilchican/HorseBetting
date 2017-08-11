@@ -1,52 +1,55 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="f" uri="http://horsebetting.com/functions" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="layout" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${locale}" scope="session"/>
+<fmt:setBundle basename="/localization/lang"/>
 
 <layout:account>
     <div class="panel panel-default profile-settings">
         <div class="panel-heading">
-            <h3 class="panel-title">Основные настройки</h3>
+            <h3 class="panel-title"><fmt:message key="block.settings.main.title"/></h3>
         </div>
         <div class="panel-body">
             <form action="/profile/settings/update" method="post">
                 <div class="form-group">
-                    <label for="user-name">Имя</label>
-                    <input type="text" id="user-name" placeholder="Ваше имя" name="user-name"
+                    <label for="user-name"><fmt:message key="form.profile.name"/></label>
+                    <input type="text" id="user-name" name="user-name"
                            value="${user.getName() != null ? user.getName() : ''}" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="user-email">Email</label>
+                    <label for="user-email"><fmt:message key="form.email"/></label>
                     <input type="text" id="user-email" value="${user.getEmail()}" class="form-control" disabled>
                 </div>
                 <div class="form-group">
-                    <label for="user-role">Группа</label>
+                    <label for="user-role"><fmt:message key="form.profile.group"/></label>
                     <input type="text" id="user-role" value="${user.getRoleName()}" class="form-control" disabled>
                 </div>
                 <div class="form-group">
-                    <label for="user-registration-date">Дата регистрации</label>
+                    <label for="user-registration-date"><fmt:message key="form.profile.register_date"/></label>
                     <input type="text" id="user-registration-date"
                            value="${f:formatDate("yyyy-MM-dd HH:mm",user.getRegistrationDate())}" class="form-control"
                            disabled>
                 </div>
-                <button type="submit" class="btn btn-primary save-button">Сохранить</button>
+                <button type="submit" class="btn btn-primary save-button"><fmt:message key="button.save"/></button>
             </form>
         </div>
     </div>
     <div class="panel panel-default profile-security">
         <div class="panel-heading">
-            <h3 class="panel-title">Безопасность</h3>
+            <h3 class="panel-title"><fmt:message key="block.settings.security.title"/></h3>
         </div>
         <div class="panel-body">
             <form action="/profile/security/update" method="post">
                 <div class="form-group">
-                    <label for="password">Новый пароль</label>
+                    <label for="password"><fmt:message key="form.profile.new_password"/></label>
                     <input type="password" name="password" id="password" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="password-confirmation">Подтвердите пароль</label>
+                    <label for="password-confirmation"><fmt:message key="form.password.confirmation"/></label>
                     <input type="password" name="password-confirmation" id="password-confirmation" class="form-control">
                 </div>
-                <button type="submit" class="btn btn-primary save-button">Изменить пароль</button>
+                <button type="submit" class="btn btn-primary save-button"><fmt:message key="button.password.change"/></button>
             </form>
         </div>
     </div>

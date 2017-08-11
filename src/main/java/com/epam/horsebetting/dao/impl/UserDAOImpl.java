@@ -26,7 +26,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     /**
      * SQL queries for UserDAOImpl.
      */
-    private static final String SQL_ADD_USER = "INSERT INTO `users` (name, email, password, role_id) VALUES (?,?,?,?);";
+    private static final String SQL_ADD_USER = "INSERT INTO `users` (name, email, password, role_id, balance) VALUES (?,?,?,?,?);";
     private static final String SQL_FIND_USER_BY_EMAIL = "SELECT * FROM `users` WHERE `email`=? LIMIT 1;";
     private static final String SQL_FIND_USER_BY_ID = "SELECT * FROM `users` WHERE `id`=? LIMIT 1;";
     private static final String SQL_ATTEMPT_AUTH = "SELECT * FROM `users` WHERE `email`=? AND `password`=? LIMIT 1;";
@@ -61,6 +61,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
             preparedStatement.setString(2, user.getEmail());
             preparedStatement.setString(3, user.getPassword());
             preparedStatement.setInt(4, user.getRoleId());
+            preparedStatement.setBigDecimal(5, user.getBalance());
 
             if (preparedStatement.executeUpdate() != 1) {
                 throw new DAOException("Can't add a new user to the database.");

@@ -9,6 +9,7 @@ public class UserValidator extends AbstractValidator {
     /**
      * Regular expressions for variables.
      */
+    private static final String NAME_REGEX = "[a-zA-Zа-яА-ЯёЁ ]{4,}";
     private static final String EMAIL_REGEX = "\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+";
     private static final String PASSWORD_REGEX = "(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{6,}";
     private static final int MIN_BALANCE_AMOUNT = 5;
@@ -17,8 +18,7 @@ public class UserValidator extends AbstractValidator {
      * Messages to valid.
      */
     private static final String NAME_MESSAGE = "must be at least 5 characters " +
-            "as well as contain `_` symbol. " +
-            "The 1st symbol must be [A-Za-z].";
+            "as well as contain symbols and spaces.";
     private static final String PASSWORD_MESSAGE = "Your password must be at least 6 characters " +
             "as well as contain at least one lowercase and one number.";
 
@@ -34,7 +34,7 @@ public class UserValidator extends AbstractValidator {
     public boolean validateRegistrationForm(String name, String email, String password, String passwordConfirmation) {
         boolean isValidate = true;
 
-        if (!validateName(name, "name", "Name")) {
+        if (!validateName(name, "name", "Name", true)) {
             isValidate = false;
         }
 
@@ -81,7 +81,7 @@ public class UserValidator extends AbstractValidator {
      * @return boolean
      */
     public boolean validateUpdateSettingsForm(String name) {
-        return validateName(name, "user-name", "Name");
+        return validateDefaultName(name, "user-name", "Name", NAME_MESSAGE, false);
     }
 
     /**
@@ -140,8 +140,22 @@ public class UserValidator extends AbstractValidator {
      * @param key
      * @return boolean
      */
-    private boolean validateName(String name, String attributeName, String key) {
-        return validateDefaultName(name, attributeName, key, NAME_MESSAGE, false);
+    private boolean validateName(String name, String attributeName, String key, boolean saveInput) {
+        if (name != null && !name.trim().isEmpty()) {
+            if(saveInput) {
+                this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, name);
+            }
+
+            if (!name.matches(NAME_REGEX)) {
+                this.addErrorMessage(key + " " + NAME_MESSAGE);
+                return false;
+            }
+
+            return true;
+        }
+
+        this.addErrorMessage(key + " is required.");
+        return false;
     }
 
     /**

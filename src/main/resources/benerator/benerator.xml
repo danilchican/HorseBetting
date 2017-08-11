@@ -18,6 +18,7 @@
     <import class="org.databene.benerator.distribution.function.*,
 	org.databene.benerator.primitive.*,org.databene.platform.db.*"/>
     <import class="org.databene.benerator.util.RandomUtil"/>
+    <import class="org.databene.benerator.wrapper.MessageGenerator"/>
 
     <database id="db"
               url="{ftl:${DB_DRIVER}:${DB_CONNECTION}://${DB_HOST}:${DB_PORT}/${DB_DATABASE}?characterEncoding=UTF-8}"
@@ -84,7 +85,7 @@
     <generate type="races" count="{ftl:${MAX_RACES_COUNT}}" consumer="db">
         <variable name="address" generator="AddressGenerator" dataset="world"/>
 
-        <attribute name="title" type="string" unique="true"/>
+        <attribute name="title" type="string" script="{ftl:The race in ${address.country}, ${address.city}}" unique="true"/>
         <attribute name="place" type="string" unique="true"
                    script="{ftl:${address.country}, ${address.city}, ${address.street}}"/>
         <attribute name="min_rate" type="big_decimal" min="10.00" max="500.00" distribution="random"/>
@@ -95,7 +96,7 @@
         <attribute name="started_at" type="date"
                    script="this.get('created_at') + (86400000 * RandomUtil.randomInt(3, 20))"/>
         <attribute name="bet_end_date" type="timestamp" script="this.get('started_at') - 86400000 * 2"/>
-        <generate type="horse_race" minCount="6" maxCount="10" consumer="db">
+        <generate type="horse_race" count="5" consumer="db">
             <id name="id" mode="ignored"/>
             <reference name="horse_id" source="db" unique="true" targetType="horses" distribution="random"/>
             <reference name="race_id" source="db" targetType="horses" script="races.id"/>
