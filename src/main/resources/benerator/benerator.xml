@@ -8,6 +8,10 @@
        defaultLineSeparator="\r\n"
        defaultSeparator=";">
 
+    <comment>Including environment properties</comment>
+
+    <include uri="../config/env.properties"/>
+
     <import platforms="db,csv"/>
     <import defaults="true" domains="organization,address,person,net"/>
     <import class="org.databene.benerator.distribution.function.*,
@@ -15,11 +19,11 @@
     <import class="org.databene.commons.TimeUtil"/>
 
     <database id="db"
-              url="jdbc:mysql://localhost:3306/benerator?characterEncoding=UTF-8"
+              url="{ftl:${DB_DRIVER}:${DB_CONNECTION}://${DB_HOST}:${DB_PORT}/${DB_DATABASE}?characterEncoding=UTF-8}"
               driver="com.mysql.jdbc.Driver"
-              user="root"
-              password="root"
-              catalog="benerator"/>
+              user="{ftl:${DB_USERNAME}}"
+              password="{ftl:${DB_PASSWORD}}"
+              catalog="{ftl:${DB_DATABASE}}"/>
 
     <comment>Generate test users by Benerator</comment>
 
