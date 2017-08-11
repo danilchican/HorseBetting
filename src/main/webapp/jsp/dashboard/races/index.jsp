@@ -1,8 +1,11 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://horsebetting.com/functions" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="layout" %>
 <%@ taglib prefix="ctg" uri="customtags" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${locale}" scope="session"/>
+<fmt:setBundle basename="/localization/lang"/>
 
 <layout:dashboard>
     <!-- page content -->
@@ -42,18 +45,19 @@
                         </div>
                         <div class="x_content">
                             <a href="/dashboard/races/create">
-                                <button type="button" class="btn btn-round btn-success">New Race</button>
+                                <button type="button" class="btn btn-round btn-success"><fmt:message
+                                        key="dashboard.button.races.create"/></button>
                             </a>
                             <!-- start project list -->
                             <table class="table table-striped projects">
                                 <thead>
                                 <tr>
                                     <th style="width: 1%">#</th>
-                                    <th style="width: 25%">Title</th>
-                                    <th>Place</th>
-                                    <th style="width: 10%">Finished</th>
-                                    <th style="width: 10%">Created at</th>
-                                    <th style="width: 20%">Action</th>
+                                    <th style="width: 25%"><fmt:message key="dashboard.form.races.title"/></th>
+                                    <th><fmt:message key="dashboard.form.races.place"/></th>
+                                    <th style="width: 10%"><fmt:message key="dashboard.form.races.is_finished"/></th>
+                                    <th style="width: 10%"><fmt:message key="dashboard.form.races.created_at"/></th>
+                                    <th style="width: 20%"><fmt:message key="dashboard.message.action"/></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -66,15 +70,17 @@
                                         <td>${f:formatDate("yyyy/MM/dd",race.getCreatedAt())}</td>
                                         <td>
                                             <a href="/dashboard/races/view?id=${race.getId()}"
-                                               class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View
+                                               class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> <fmt:message
+                                                    key="button.view"/>
                                             </a>
                                             <a href="/dashboard/races/edit?id=${race.getId()}"
-                                               class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit
+                                               class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> <fmt:message
+                                                    key="button.edit"/>
                                             </a>
                                             <a href="#"
                                                onclick="event.preventDefault(); document.getElementById('delete-race-form-${race.getId()}').submit();"
                                                class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>
-                                                Delete
+                                                <fmt:message key="button.delete"/>
                                             </a>
                                             <form action="/dashboard/races/remove"
                                                   id="delete-race-form-${race.getId()}" method="post"

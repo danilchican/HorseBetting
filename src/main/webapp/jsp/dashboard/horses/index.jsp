@@ -1,7 +1,10 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="layout" %>
 <%@ taglib prefix="ctg" uri="customtags" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${locale}" scope="session"/>
+<fmt:setBundle basename="/localization/lang"/>
 
 <layout:dashboard>
     <!-- page content -->
@@ -40,18 +43,19 @@
                         </div>
                         <div class="x_content">
                             <a href="/dashboard/horses/create">
-                                <button type="button" class="btn btn-round btn-success">New Horse</button>
+                                <button type="button" class="btn btn-round btn-success"><fmt:message
+                                        key="dashboard.button.horses.create"/></button>
                             </a>
                             <!-- start horse list -->
                             <table class="table table-striped projects">
                                 <thead>
                                 <tr>
                                     <th style="width: 1%">#</th>
-                                    <th style="width: 25%">Name</th>
-                                    <th>Suit</th>
-                                    <th style="width: 4%">Age</th>
-                                    <th style="width: 10%">Gender</th>
-                                    <th style="width: 20%">Action</th>
+                                    <th style="width: 25%"><fmt:message key="dashboard.form.horses.name"/></th>
+                                    <th><fmt:message key="dashboard.form.horses.suit"/></th>
+                                    <th style="width: 4%"><fmt:message key="dashboard.form.horses.age"/></th>
+                                    <th style="width: 10%"><fmt:message key="dashboard.form.horses.gender"/></th>
+                                    <th style="width: 20%"><fmt:message key="dashboard.message.action"/></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -64,12 +68,13 @@
                                         <td>${horse.getGenderAsName()}</td>
                                         <td>
                                             <a href="/dashboard/horses/edit?id=${horse.getId()}"
-                                               class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit
+                                               class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> <fmt:message
+                                                    key="button.edit"/>
                                             </a>
                                             <a href="#"
                                                onclick="event.preventDefault(); document.getElementById('delete-horse-form-${horse.getId()}').submit();"
                                                class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>
-                                                Delete
+                                                <fmt:message key="button.delete"/>
                                             </a>
                                             <form action="/dashboard/horses/remove"
                                                   id="delete-horse-form-${horse.getId()}" method="post"

@@ -1,6 +1,9 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="layout" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${locale}" scope="session"/>
+<fmt:setBundle basename="/localization/lang"/>
 
 <layout:dashboard>
     <jsp:attribute name="includeStyles">
@@ -52,9 +55,8 @@
                                       class="form-horizontal form-label-left">
 
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="race-title">Title
-                                            <span
-                                                    class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="race-title"><fmt:message key="dashboard.form.races.title"/>
+                                            <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="text" id="race-title" name="race-title" required="required"
@@ -63,7 +65,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="race-place">Place
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="race-place"><fmt:message key="dashboard.form.races.place"/>
                                             <span
                                                     class="required">*</span>
                                         </label>
@@ -74,20 +76,20 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="race-min-rate">Minimal
-                                            rate ($) <span
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="race-min-rate"><fmt:message key="dashboard.form.races.min_rate"/> ($) <span
                                                     class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="race-min-rate" data-parsley-min="1" step="0.01" name="race-min-rate"
-                                                   required="required" type="number" class="form-control col-md-7 col-xs-12">
+                                            <input id="race-min-rate" data-parsley-min="1" step="0.01"
+                                                   name="race-min-rate" min="0"
+                                                   required="required" type="number"
+                                                   class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                               for="race-track-length">Track
-                                            length (m) <span
+                                               for="race-track-length"><fmt:message key="dashboard.form.races.track_length"/> <span
                                                     class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -99,8 +101,7 @@
 
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                               for="race-bet-end-date">Bet
-                                            end date <span class="required">*</span>
+                                               for="race-bet-end-date"><fmt:message key="dashboard.form.races.bet_end_date"/> <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <div class="input-group date" id="betEndDatePricker">
@@ -114,8 +115,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="race-started-at">Started
-                                            at <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="race-started-at"><fmt:message key="dashboard.form.races.started_at"/> <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <div class="input-group date" id="betStartedAtPricker">
@@ -129,7 +129,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Is finished <span
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"><fmt:message key="dashboard.form.races.is_finished"/> <span
                                                 class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <div id="race-is-finished" class="btn-group" data-toggle="buttons">
@@ -137,13 +137,13 @@
                                                        data-toggle-passive-class="btn-default">
                                                     <input type="radio" required="required" name="race-is-finished"
                                                            value="1">
-                                                    &nbsp; Yes &nbsp;
+                                                    &nbsp; <fmt:message key="button.yes"/> &nbsp;
                                                 </label>
                                                 <label class="btn btn-primary" data-toggle-class="btn-primary"
                                                        data-toggle-passive-class="btn-default">
                                                     <input type="radio" required="required" name="race-is-finished"
                                                            value="0">
-                                                    No
+                                                    <fmt:message key="button.no"/>
                                                 </label>
                                             </div>
                                         </div>
@@ -155,9 +155,12 @@
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                            <button class="btn btn-primary" type="button">Cancel</button>
-                                            <button class="btn btn-primary" type="reset">Reset</button>
-                                            <button type="submit" class="btn btn-success">Submit</button>
+                                            <button class="btn btn-primary" type="button"><fmt:message
+                                                    key="button.cancel"/></button>
+                                            <button class="btn btn-primary" type="reset"><fmt:message
+                                                    key="button.reset"/></button>
+                                            <button type="submit" class="btn btn-success"><fmt:message
+                                                    key="button.save"/></button>
                                         </div>
                                     </div>
                                 </form>

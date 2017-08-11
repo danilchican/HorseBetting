@@ -1,7 +1,10 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="layout" %>
 <%@ taglib prefix="ctg" uri="customtags" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${locale}" scope="session"/>
+<fmt:setBundle basename="/localization/lang"/>
 
 <layout:dashboard>
     <!-- page content -->
@@ -30,7 +33,8 @@
                                   class="form-horizontal form-label-left">
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="horse-name">Name <span
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                           for="horse-name"><fmt:message key="dashboard.form.horses.name"/> <span
                                             class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -41,7 +45,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="horse-age">Age <span
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                           for="horse-age"><fmt:message key="dashboard.form.horses.age"/> <span
                                             class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -53,7 +58,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Suit <span
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"><fmt:message
+                                            key="dashboard.form.horses.suit"/> <span
                                             class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <select required="required" class="form-control" name="horse-suit">
@@ -76,21 +82,24 @@
 
                                 <c:set var="oldGender"><ctg:oldInputFormAttribute name="gender"/></c:set>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender <span
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"><fmt:message
+                                            key="dashboard.form.horses.gender"/> <span
                                             class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div id="gender" class="btn-group" data-toggle="buttons">
-                                            <label class="btn btn-default <c:if test="${oldGender eq 'male'}">active</c:if>" data-toggle-class="btn-primary"
+                                            <label class="btn btn-default <c:if test="${oldGender eq 'male'}">active</c:if>"
+                                                   data-toggle-class="btn-primary"
                                                    data-toggle-passive-class="btn-default">
                                                 <input type="radio" required="required" name="gender" value="male"
                                                        <c:if test="${oldGender eq 'male'}">checked</c:if> >
-                                                &nbsp; Male &nbsp;
+                                                &nbsp; <fmt:message key="dashboard.form.gender.male"/> &nbsp;
                                             </label>
-                                            <label class="btn btn-primary <c:if test="${oldGender eq 'female'}">active</c:if>" data-toggle-class="btn-primary"
+                                            <label class="btn btn-primary <c:if test="${oldGender eq 'female'}">active</c:if>"
+                                                   data-toggle-class="btn-primary"
                                                    data-toggle-passive-class="btn-default">
                                                 <input type="radio" required="required" name="gender" value="female"
                                                        <c:if test="${oldGender eq 'female'}">checked</c:if> >
-                                                Female
+                                                <fmt:message key="dashboard.form.gender.female"/>
                                             </label>
                                         </div>
                                     </div>
@@ -99,9 +108,12 @@
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                        <button class="btn btn-primary" type="button">Cancel</button>
-                                        <button class="btn btn-primary" type="reset">Reset</button>
-                                        <button type="submit" class="btn btn-success">Submit</button>
+                                        <button class="btn btn-primary" type="button"><fmt:message
+                                                key="button.cancel"/></button>
+                                        <button class="btn btn-primary" type="reset"><fmt:message
+                                                key="button.reset"/></button>
+                                        <button type="submit" class="btn btn-success"><fmt:message
+                                                key="button.save"/></button>
                                     </div>
                                 </div>
 
