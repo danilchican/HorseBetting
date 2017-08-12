@@ -41,10 +41,6 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
             ArrayList<String> errors = new ArrayList<>();
             UserDAOImpl userDAO = new UserDAOImpl(true);
 
-            for (Map.Entry<String, String> entry : validator.getOldInput()) {
-                content.insertSessionAttribute(entry.getKey(), entry.getValue());
-            }
-
             User newUser = new User(email, password);
             newUser.setName(name);
 
@@ -59,6 +55,10 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
                     this.authenticate(content, user);
                 } else {
                     transaction.rollback();
+
+                    for (Map.Entry<String, String> entry : validator.getOldInput()) {
+                        content.insertSessionAttribute(entry.getKey(), entry.getValue());
+                    }
 
                     errors.add("User already exists. Change your email.");
                     content.insertSessionAttribute("errors", errors);

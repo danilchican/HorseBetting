@@ -15,6 +15,7 @@
 
         <jsp:include page="${pageContext.request.contextPath}/jsp/dashboard/partials/sidebar.jsp"/>
         <jsp:include page="${pageContext.request.contextPath}/jsp/dashboard/partials/top_nav.jsp"/>
+        <jsp:doBody/>
 
         <!-- footer content -->
         <footer>
