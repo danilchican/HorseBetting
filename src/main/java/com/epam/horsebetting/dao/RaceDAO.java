@@ -19,6 +19,14 @@ public interface RaceDAO {
     Race create(Race race) throws DAOException;
 
     /**
+     * Find race by id.
+     *
+     * @param id
+     * @return race
+     */
+    Race find(int id) throws DAOException;
+
+    /**
      * Find race by title.
      *
      * @param title

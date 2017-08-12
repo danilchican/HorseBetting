@@ -35,6 +35,7 @@ public final class SQLFieldConfig {
         public static final String MIN_RATE = "min_rate";
         public static final String TRACK_LENGTH = "track_length";
         public static final String FINISHED = "is_finished";
+        public static final String BET_END_DATE = "bet_end_date";
         public static final String CREATED_AT = "created_at";
         public static final String STARTED_AT = "started_at";
     }

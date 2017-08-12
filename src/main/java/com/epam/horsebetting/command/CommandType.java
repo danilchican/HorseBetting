@@ -4,10 +4,7 @@ import com.epam.horsebetting.command.auth.*;
 import com.epam.horsebetting.command.horse.*;
 import com.epam.horsebetting.command.profile.ProfilePaymentPresentCommand;
 import com.epam.horsebetting.command.profile.ProfileSettingsPresentCommand;
-import com.epam.horsebetting.command.race.DashboardCreateRaceCommand;
-import com.epam.horsebetting.command.race.DashboardCreateRacePresentCommand;
-import com.epam.horsebetting.command.race.DashboardRacesPresentCommand;
-import com.epam.horsebetting.command.race.RacesPresetCommand;
+import com.epam.horsebetting.command.race.*;
 import com.epam.horsebetting.command.suit.*;
 import com.epam.horsebetting.command.user.*;
 import com.epam.horsebetting.command.dashboard.DashboardPresentCommand;
@@ -65,6 +62,12 @@ public enum CommandType {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {
             ((PageReceiverImpl) getCommand().getReceiver()).presentRacesPage(content);
+        }
+    },
+    RACES_VIEW("races.view::get", new ViewRacePresentCommand(new PageReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((PageReceiverImpl) getCommand().getReceiver()).presentRaceViewPage(content);
         }
     },
     PROFILE_INDEX("profile::get", new ProfilePresentCommand(new PageReceiverImpl())) {

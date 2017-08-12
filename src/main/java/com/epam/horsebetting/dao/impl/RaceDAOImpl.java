@@ -32,6 +32,7 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
             "(`horse_id`, `race_id`, `coefficient`)" + " VALUES (?,?,?);";
     private static final String SQL_SELECT_PART_RACES = "SELECT * FROM `races` ORDER BY `started_at` ASC LIMIT ? OFFSET ?;";
     private static final String SQL_FIND_RACE_BY_TITLE = "SELECT * FROM `races` WHERE `title`=? LIMIT 1;";
+    private static final String SQL_FIND_RACE_BY_ID = "SELECT * FROM `races` WHERE `id`=? LIMIT 1;";
     private static final String SQL_COUNT_RACES = "SELECT COUNT(*) AS `total` FROM `races`;";
     private static final String SQL_SELECT_NEAREST_RACES = "SELECT * FROM `races` WHERE `is_finished` != ?" +
             " AND `started_at` > NOW() ORDER BY `started_at` ASC LIMIT ?;";
@@ -75,6 +76,31 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
         }
 
         return createdRace;
+    }
+
+    /**
+     * Find race by id.
+     *
+     * @param id
+     * @return race
+     */
+    @Override
+    public Race find(int id) throws DAOException {
+        ResultSet resultSet;
+        Race race = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_RACE_BY_ID)) {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                race = extractFrom(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't find race by id[" + id + "]. " + e.getMessage(), e);
+        }
+
+        return race;
     }
 
     /**
@@ -229,6 +255,7 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
         race.setMinRate(raceDataSet.getBigDecimal(SQLFieldConfig.Race.MIN_RATE));
         race.setTrackLength(raceDataSet.getInt(SQLFieldConfig.Race.TRACK_LENGTH));
         race.setFinished(raceDataSet.getBoolean(SQLFieldConfig.Race.FINISHED));
+        race.setBetEndDate(raceDataSet.getTimestamp(SQLFieldConfig.Race.BET_END_DATE));
         race.setStartedAt(raceDataSet.getTimestamp(SQLFieldConfig.Race.STARTED_AT));
         race.setCreatedAt(raceDataSet.getTimestamp(SQLFieldConfig.Race.CREATED_AT));
 

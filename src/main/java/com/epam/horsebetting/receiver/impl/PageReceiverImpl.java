@@ -90,6 +90,49 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
     }
 
     /**
+     * Present race view page.
+     *
+     * @param content
+     */
+    @Override
+    public void presentRaceViewPage(RequestContent content) throws ReceiverException {
+        String idNum = content.findParameter("id");
+
+        // TODO create validators
+
+        RaceDAOImpl raceDAO = new RaceDAOImpl(true);
+        TransactionManager transaction = new TransactionManager(raceDAO);
+        transaction.beginTransaction();
+
+        try {
+            final int id = idNum != null ? Integer.parseInt(idNum) : 1;
+            Race race = raceDAO.find(id);
+
+            if(race == null) {
+                transaction.rollback();
+                throw new ReceiverException("Cannot find race with id=" + id);
+            }
+
+            this.setPageSubTitle(race.getTitle());
+            this.setDefaultContentAttributes(content);
+
+            content.insertRequestAttribute("race", race);
+
+            // TODO извлечь участников
+
+            transaction.commit();
+        } catch (NumberFormatException e) {
+            transaction.rollback();
+            throw new ReceiverException("Cannot convert page to number. GET[page]=" + e.getMessage(), e);
+        } catch (DAOException e) {
+            transaction.rollback();
+            throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        } finally {
+            transaction.endTransaction();
+        }
+    }
+
+    /**
      * Present login page.
      *
      * @param content

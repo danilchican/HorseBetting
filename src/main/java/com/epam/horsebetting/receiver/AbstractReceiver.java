@@ -34,7 +34,7 @@ public abstract class AbstractReceiver {
      *
      * @param content
      */
-    public void setDefaultContentAttributes(RequestContent content) {
+    protected void setDefaultContentAttributes(RequestContent content) {
         content.insertRequestAttribute("pageTitle", PAGE_TITLE);
         content.insertRequestAttribute("pageSubTitle", pageSubTitle);
     }
