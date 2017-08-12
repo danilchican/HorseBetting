@@ -35,9 +35,21 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      * @param content
      */
     @Override
-    public void presentIndexPage(RequestContent content) {
+    public void presentIndexPage(RequestContent content) throws ReceiverException {
         this.setPageSubTitle("Главная");
         this.setDefaultContentAttributes(content);
+
+        RaceDAOImpl raceDAO = new RaceDAOImpl(false);
+        final int limit = 10;
+
+        try {
+            List<Race> races = raceDAO.obtainNearest(limit);
+            content.insertRequestAttribute("races", races);
+
+            LOGGER.log(Level.DEBUG, "Races list: " + Arrays.toString(races.toArray()));
+        } catch (DAOException e) {
+            throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        }
     }
 
     /**

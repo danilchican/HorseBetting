@@ -33,6 +33,8 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
     private static final String SQL_SELECT_PART_RACES = "SELECT * FROM `races` LIMIT ? OFFSET ?;";
     private static final String SQL_FIND_RACE_BY_TITLE = "SELECT * FROM `races` WHERE `title`=? LIMIT 1;";
     private static final String SQL_COUNT_RACES = "SELECT COUNT(*) AS `total` FROM `races`;";
+    private static final String SQL_SELECT_NEAREST_RACES = "SELECT * FROM `races` WHERE `is_finished` != ?" +
+            " AND `started_at` > NOW() ORDER BY `started_at` DESC LIMIT ?;";
 
     /**
      * Default constructor connection.
@@ -131,6 +133,35 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
     }
 
     /**
+     * Obtain nearest of races.
+     *
+     * @param limit
+     * @return races
+     * @throws DAOException
+     */
+    @Override
+    public List<Race> obtainNearest(int limit) throws DAOException {
+        List<Race> foundedRaces = new ArrayList<>();
+        ResultSet races;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_NEAREST_RACES)) {
+            preparedStatement.setBoolean(1, true);
+            preparedStatement.setInt(2, limit);
+            races = preparedStatement.executeQuery();
+
+            while (races.next()) {
+                Race race = extractFrom(races);
+                foundedRaces.add(race);
+                LOGGER.log(Level.DEBUG, "Race was added to list: " + race);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Cannot retrieve races list. " + e.getMessage(), e);
+        }
+
+        return foundedRaces;
+    }
+
+    /**
      * Create horses to race.
      *
      * @param horses
@@ -142,7 +173,7 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
         int affectedHorses[];
 
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_HORSE_RACE)) {
-            for(Map.Entry<Integer, BigDecimal> horse: horses.entrySet()) {
+            for (Map.Entry<Integer, BigDecimal> horse : horses.entrySet()) {
                 statement.setInt(1, horse.getKey());
                 statement.setInt(2, race.getId());
                 statement.setBigDecimal(3, horse.getValue());

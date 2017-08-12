@@ -10,7 +10,7 @@ public interface PageReceiver {
      *
      * @param content
      */
-    void presentIndexPage(RequestContent content);
+    void presentIndexPage(RequestContent content) throws ReceiverException;
 
     /**
      * Present login page.

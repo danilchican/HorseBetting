@@ -20,7 +20,7 @@ import com.epam.horsebetting.request.RequestContent;
 public enum CommandType {
     INDEX_PAGE("index::get", new IndexPageCommand(new PageReceiverImpl())) {
         @Override
-        public void doReceiver(RequestContent content) {
+        public void doReceiver(RequestContent content) throws ReceiverException {
             ((PageReceiverImpl) getCommand().getReceiver()).presentIndexPage(content);
         }
     },
