@@ -19,7 +19,6 @@
                             <th><fmt:message key="dashboard.form.races.title"/></th>
                             <th><fmt:message key="dashboard.form.races.place"/></th>
                             <th><fmt:message key="dashboard.form.races.min_rate"/> ($)</th>
-                            <th><fmt:message key="dashboard.form.races.track_length"/></th>
                             <th><fmt:message key="dashboard.form.races.started_at"/></th>
                         </tr>
                         </thead>
@@ -30,7 +29,6 @@
                                 <td><a href="/races/view?id=${race.getId()}">${race.getTitle()}</a></td>
                                 <td>${race.getPlace()}</td>
                                 <td>${race.getMinRate()}</td>
-                                <td>${race.getTrackLength()}</td>
                                 <td>${f:formatDate("yyyy/MM/dd HH:mm",race.getStartedAt())}</td>
                             </tr>
                         </c:forEach>

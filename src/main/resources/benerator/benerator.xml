@@ -28,11 +28,10 @@
               catalog="{ftl:${DB_DATABASE}}"/>
 
     <bean id="idGen" spec="new IncrementGenerator(1)"/>
-    <bean id="idGenHorseRace" spec="new IncrementGenerator(1)"/>
 
     <bean id="datetime_gen" class="DateTimeGenerator">
-        <property name="minDate" value="2005-06-01"/>
-        <property name="maxDate" value="2017-08-01"/>
+        <property name="minDate" value="2017-01-01"/>
+        <property name="maxDate" value="2018-12-31"/>
         <property name="dateDistribution" value="random"/>
         <property name="minTime" value="00:00:00"/>
         <property name="maxTime" value="23:59:00"/>

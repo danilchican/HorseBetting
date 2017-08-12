@@ -34,7 +34,7 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
     private static final String SQL_FIND_RACE_BY_TITLE = "SELECT * FROM `races` WHERE `title`=? LIMIT 1;";
     private static final String SQL_COUNT_RACES = "SELECT COUNT(*) AS `total` FROM `races`;";
     private static final String SQL_SELECT_NEAREST_RACES = "SELECT * FROM `races` WHERE `is_finished` != ?" +
-            " AND `started_at` > NOW() ORDER BY `started_at` DESC LIMIT ?;";
+            " AND `started_at` > NOW() ORDER BY `started_at` ASC LIMIT ?;";
 
     /**
      * Default constructor connection.
