@@ -1,5 +1,6 @@
 package com.epam.horsebetting.receiver.impl;
 
+import com.epam.horsebetting.config.FormFieldConfig;
 import com.epam.horsebetting.dao.impl.HorseDAOImpl;
 import com.epam.horsebetting.entity.Horse;
 import com.epam.horsebetting.exception.DAOException;
@@ -31,10 +32,10 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
      */
     @Override
     public void createHorse(RequestContent content) throws ReceiverException {
-        String name = content.findParameter("horse-name");
-        String genderAttr = content.findParameter("gender");
-        String ageAttr = content.findParameter("horse-age");
-        String suitAttr = content.findParameter("horse-suit");
+        String name = content.findParameter(FormFieldConfig.Horse.NAME_FIELD);
+        String genderAttr = content.findParameter(FormFieldConfig.Horse.GENDER_FIELD);
+        String ageAttr = content.findParameter(FormFieldConfig.Horse.AGE_FIELD);
+        String suitAttr = content.findParameter(FormFieldConfig.Horse.SUIT_FIELD);
 
         HorseValidator validator = new HorseValidator();
 
@@ -119,7 +120,7 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
         HorseValidator validator = new HorseValidator();
         ArrayList<String> messages = new ArrayList<>();
 
-        String idValue = content.findParameter("horse-id");
+        String idValue = content.findParameter(FormFieldConfig.Horse.ID_FIELD);
 
         if (validator.validateRemoveHorse(idValue)) {
             int id = Integer.parseInt(idValue);
@@ -159,11 +160,11 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
      */
     @Override
     public void updateHorse(RequestContent content) throws ReceiverException {
-        String idAttr = content.findParameter("horse-id");
-        String name = content.findParameter("horse-name");
-        String genderAttr = content.findParameter("gender");
-        String ageAttr = content.findParameter("horse-age");
-        String suitAttr = content.findParameter("horse-suit");
+        String idAttr = content.findParameter(FormFieldConfig.Horse.ID_FIELD);
+        String name = content.findParameter(FormFieldConfig.Horse.NAME_FIELD);
+        String genderAttr = content.findParameter(FormFieldConfig.Horse.GENDER_FIELD);
+        String ageAttr = content.findParameter(FormFieldConfig.Horse.AGE_FIELD);
+        String suitAttr = content.findParameter(FormFieldConfig.Horse.SUIT_FIELD);
 
         HorseValidator validator = new HorseValidator();
 

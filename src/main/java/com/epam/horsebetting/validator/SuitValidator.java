@@ -3,11 +3,6 @@ package com.epam.horsebetting.validator;
 public class SuitValidator extends AbstractValidator {
 
     /**
-     * Regular expressions for variables.
-     */
-    private static final String NAME_REGEX = "[a-zA-Zа-яА-ЯёЁ0-9 ]+";
-
-    /**
      * Validate number of page.
      *
      * @param page
@@ -31,7 +26,7 @@ public class SuitValidator extends AbstractValidator {
      */
     public boolean validateName(String name) {
         if (name != null && !name.trim().isEmpty()) {
-            if (!name.matches(NAME_REGEX)) {
+            if (!name.matches(DEFAULT_NAME_REGEX)) {
                 this.addErrorMessage("Name can contains only characters, numbers and spaces.");
                 return false;
             }

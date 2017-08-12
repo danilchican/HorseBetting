@@ -80,24 +80,24 @@
                                     </div>
                                 </div>
 
-                                <c:set var="oldGender"><ctg:oldInputFormAttribute name="gender"/></c:set>
+                                <c:set var="oldGender"><ctg:oldInputFormAttribute name="horse-gender"/></c:set>
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12"><fmt:message
                                             key="dashboard.form.horses.gender"/> <span
                                             class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <div id="gender" class="btn-group" data-toggle="buttons">
+                                        <div id="horse-gender" class="btn-group" data-toggle="buttons">
                                             <label class="btn btn-default <c:if test="${oldGender eq 'male'}">active</c:if>"
                                                    data-toggle-class="btn-primary"
                                                    data-toggle-passive-class="btn-default">
-                                                <input type="radio" required="required" name="gender" value="male"
+                                                <input type="radio" required="required" name="horse-gender" value="male"
                                                        <c:if test="${oldGender eq 'male'}">checked</c:if> >
                                                 &nbsp; <fmt:message key="dashboard.form.gender.male"/> &nbsp;
                                             </label>
                                             <label class="btn btn-primary <c:if test="${oldGender eq 'female'}">active</c:if>"
                                                    data-toggle-class="btn-primary"
                                                    data-toggle-passive-class="btn-default">
-                                                <input type="radio" required="required" name="gender" value="female"
+                                                <input type="radio" required="required" name="horse-gender" value="female"
                                                        <c:if test="${oldGender eq 'female'}">checked</c:if> >
                                                 <fmt:message key="dashboard.form.gender.female"/>
                                             </label>

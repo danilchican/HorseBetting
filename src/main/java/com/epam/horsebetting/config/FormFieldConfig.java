@@ -16,6 +16,16 @@ public final class FormFieldConfig {
         public static final String NAME_FIELD = "name";
     }
 
+    public final class Horse {
+        private static final String PREFIX = "horse-";
+        public static final String ID_FIELD = PREFIX + "id";
+        public static final String NAME_FIELD = PREFIX + "name";
+        public static final String GENDER_FIELD = PREFIX + "gender";
+        public static final String AGE_FIELD = PREFIX + "age";
+        public static final String SUIT_FIELD = PREFIX + "suit";
+
+    }
+
     public final class Locale {
         public static final String LANG_FIELD = "lang";
     }

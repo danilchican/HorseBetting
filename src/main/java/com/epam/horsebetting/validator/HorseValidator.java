@@ -1,5 +1,6 @@
 package com.epam.horsebetting.validator;
 
+import com.epam.horsebetting.config.FormFieldConfig;
 import com.epam.horsebetting.tag.OldInputFormAttributeTag;
 
 public class HorseValidator extends AbstractValidator {
@@ -16,19 +17,19 @@ public class HorseValidator extends AbstractValidator {
     public boolean validateCreateHorse(String name, String gender, String age, String suitId) {
         boolean isValidate = true;
 
-        if (!validateName(name, "horse-name", "Name")) {
+        if (!validateName(name, FormFieldConfig.Horse.NAME_FIELD, "Name")) {
             isValidate = false;
         }
 
-        if (!validateGender(gender, "gender", "Gender")) {
+        if (!validateGender(gender, FormFieldConfig.Horse.GENDER_FIELD, "Gender")) {
             isValidate = false;
         }
 
-        if (!validateAge(age, "horse-age", "Age")) {
+        if (!validateAge(age, FormFieldConfig.Horse.AGE_FIELD, "Age")) {
             isValidate = false;
         }
 
-        if (!validateSuitId(suitId, "horse-suit", "Suit id")) {
+        if (!validateSuitId(suitId, FormFieldConfig.Horse.SUIT_FIELD, "Suit id")) {
             isValidate = false;
         }
 
@@ -48,23 +49,23 @@ public class HorseValidator extends AbstractValidator {
     public boolean validateUpdateHorse(String id, String name, String gender, String age, String suitId) {
         boolean isValidate = true;
 
-        if (!validateInteger(id, "horse-id", "Horse id", false)) {
+        if (!validateInteger(id, FormFieldConfig.Horse.ID_FIELD, "Horse id", false)) {
             isValidate = false;
         }
 
-        if (!validateName(name, "horse-name", "Name")) {
+        if (!validateName(name, FormFieldConfig.Horse.NAME_FIELD, "Name")) {
             isValidate = false;
         }
 
-        if (!validateGender(gender, "gender", "Gender")) {
+        if (!validateGender(gender, FormFieldConfig.Horse.GENDER_FIELD, "Gender")) {
             isValidate = false;
         }
 
-        if (!validateAge(age, "horse-age", "Age")) {
+        if (!validateAge(age, FormFieldConfig.Horse.AGE_FIELD, "Age")) {
             isValidate = false;
         }
 
-        if (!validateSuitId(suitId, "horse-suit", "Suit id")) {
+        if (!validateSuitId(suitId, FormFieldConfig.Horse.SUIT_FIELD, "Suit id")) {
             isValidate = false;
         }
 
@@ -78,7 +79,7 @@ public class HorseValidator extends AbstractValidator {
      * @return boolean
      */
     public boolean validateRemoveHorse(String id) {
-        return validateInteger(id, "horse-id", "Horse id", true);
+        return validateInteger(id, FormFieldConfig.Horse.ID_FIELD, "Horse id", true);
     }
 
     /**

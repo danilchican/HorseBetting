@@ -10,7 +10,7 @@
     <c:set var="horseName"><ctg:oldInputFormAttribute name="horse-name"/></c:set>
     <c:set var="horseAge"><ctg:oldInputFormAttribute name="horse-age"/></c:set>
     <c:set var="horseSuit"><ctg:oldInputFormAttribute name="horse-suit"/></c:set>
-    <c:set var="horseGender"><ctg:oldInputFormAttribute name="gender"/></c:set>
+    <c:set var="horseGender"><ctg:oldInputFormAttribute name="horse-gender"/></c:set>
 
     <!-- page content -->
     <div class="right_col" role="main">
@@ -93,18 +93,18 @@
                                             key="dashboard.form.horses.gender"/> <span
                                             class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <div id="gender" class="btn-group" data-toggle="buttons">
+                                        <div id="horse-gender" class="btn-group" data-toggle="buttons">
                                             <label class="btn btn-default <c:if test="${(empty horseGender && horse.isMale()) or (!empty horseGender && horseGender eq 'male')}">active</c:if>"
                                                    data-toggle-class="btn-primary"
                                                    data-toggle-passive-class="btn-default">
-                                                <input type="radio" required="required" name="gender" value="male"
+                                                <input type="radio" required="required" name="horse-gender" value="male"
                                                        <c:if test="${(empty horseGender && horse.isMale()) or (!empty horseGender && horseGender eq 'male')}">checked</c:if> >
                                                 &nbsp; <fmt:message key="dashboard.form.gender.male"/> &nbsp;
                                             </label>
                                             <label class="btn btn-primary <c:if test="${(empty horseGender && horse.isFemale()) or (!empty horseGender && horseGender eq 'female')}">active</c:if>"
                                                    data-toggle-class="btn-primary"
                                                    data-toggle-passive-class="btn-default">
-                                                <input type="radio" required="required" name="gender" value="female"
+                                                <input type="radio" required="required" name="horse-gender" value="female"
                                                        <c:if test="${(empty horseGender && horse.isFemale()) or (!empty horseGender && horseGender eq 'female')}">checked</c:if> >
                                                 <fmt:message key="dashboard.form.gender.female"/>
                                             </label>
