@@ -1,5 +1,6 @@
 package com.epam.horsebetting.receiver.impl;
 
+import com.epam.horsebetting.config.FormFieldConfig;
 import com.epam.horsebetting.dao.impl.SuitDAOImpl;
 import com.epam.horsebetting.database.TransactionManager;
 import com.epam.horsebetting.entity.Suit;
@@ -32,7 +33,7 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
      */
     @Override
     public void ajaxObtainSuitsList(RequestContent content) throws ReceiverException {
-        String pageNumber = content.findParameter("page");
+        String pageNumber = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
         SuitValidator validator = new SuitValidator();
 
         ArrayList<String> errors;
@@ -75,7 +76,7 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
         SuitValidator validator = new SuitValidator();
         ArrayList<String> messages = new ArrayList<>();
 
-        String name = content.findParameter("name");
+        String name = content.findParameter(FormFieldConfig.Suit.NAME_FIELD);
 
         if (validator.validateName(name)) {
             Suit suit = new Suit(name);
@@ -125,8 +126,8 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
         ArrayList<String> messages = new ArrayList<>();
         SuitValidator validator = new SuitValidator();
 
-        String idNumber = content.findParameter("id");
-        String name = content.findParameter("name");
+        String idNumber = content.findParameter(FormFieldConfig.Suit.ID_FIELD);
+        String name = content.findParameter(FormFieldConfig.Suit.NAME_FIELD);
 
         if(validator.validateSuit(idNumber, name)) {
             final int id = Integer.parseInt(idNumber);
@@ -164,7 +165,7 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
         ArrayList<String> messages = new ArrayList<>();
         SuitValidator validator = new SuitValidator();
 
-        String idNumber = content.findParameter("id");
+        String idNumber = content.findParameter(FormFieldConfig.Suit.ID_FIELD);
 
         if (validator.validateId(idNumber)) {
             final int id = Integer.parseInt(idNumber);

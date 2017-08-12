@@ -11,6 +11,11 @@ public final class FormFieldConfig {
         public static final String PAYMENT_AMOUNT_FIELD = "payment-amount";
     }
 
+    public final class Suit {
+        public static final String ID_FIELD = "id";
+        public static final String NAME_FIELD = "name";
+    }
+
     public final class Locale {
         public static final String LANG_FIELD = "lang";
     }
