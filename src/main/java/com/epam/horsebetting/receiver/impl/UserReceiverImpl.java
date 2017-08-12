@@ -268,38 +268,6 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
     }
 
     /**
-     * Obtain users list ajax.
-     *
-     * @param content
-     * @throws ReceiverException
-     */
-    @Override
-    public void ajaxObtainUsersList(RequestContent content) throws ReceiverException {
-        int page = 1;
-        String pageNumber = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
-
-        //TODO create validators
-        if(pageNumber != null) {
-            try {
-                page = Integer.parseInt(pageNumber);
-            } catch (NumberFormatException e) {
-                throw new ReceiverException("Page incorrect: " + e.getMessage(), e);
-            }
-        }
-
-        final int step = 10;
-        final int offset = step * (page - 1);
-
-        try(UserDAOImpl userDAO = new UserDAOImpl(false)) {
-            List<User> users = userDAO.obtainPart(step, offset);
-            LOGGER.log(Level.DEBUG, "Users part: " + Arrays.toString(users.toArray()));
-            content.insertJsonAttribute("users", users);
-        } catch (DAOException e) {
-            throw new ReceiverException("Database Error: " + e.getMessage(), e);
-        }
-    }
-
-    /**
      * Check if the user exists.
      *
      * @param user

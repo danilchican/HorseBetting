@@ -55,12 +55,4 @@ public interface UserReceiver {
      * @throws ReceiverException
      */
     void changeLocale(RequestContent content) throws ReceiverException;
-
-    /**
-     * Obtain users list ajax.
-     *
-     * @param content
-     * @throws ReceiverException
-     */
-    void ajaxObtainUsersList(RequestContent content) throws ReceiverException;
 }

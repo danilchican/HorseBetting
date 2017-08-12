@@ -174,12 +174,6 @@ public enum CommandType {
             ((PageReceiverImpl) getCommand().getReceiver()).presentDashboardSuitsPage(content);
         }
     },
-    AJAX_DASHBOARD_USERS_LIST("ajax.dashboard.users::get", new AjaxDashboardUsersListCommand(new UserReceiverImpl())) {
-        @Override
-        public void doReceiver(RequestContent content) throws ReceiverException {
-            ((UserReceiverImpl) getCommand().getReceiver()).ajaxObtainUsersList(content);
-        }
-    },
     AJAX_DASHBOARD_SUITS_LIST("ajax.dashboard.suits::get", new AjaxDashboardSuitsListCommand(new SuitReceiverImpl())) {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {
