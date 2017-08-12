@@ -15,11 +15,13 @@
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" method="POST" action="/auth/register">
                             <div class="form-group">
-                                <label for="name" class="col-md-4 control-label"><fmt:message key="form.register.name"/>
+                                <label for="user-name" class="col-md-4 control-label"><fmt:message
+                                        key="form.profile.name"/>
                                     *</label>
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control"
-                                           value="<ctg:oldInputFormAttribute name="name" />" name="name" required autofocus>
+                                    <input id="user-name" type="text" class="form-control"
+                                           value="<ctg:oldInputFormAttribute name="user-name" />" name="user-name" required
+                                           autofocus>
                                 </div>
                             </div>
 
@@ -45,7 +47,7 @@
                                         key="form.password.confirmation"/> *</label>
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control"
-                                           name="password_confirmation" required>
+                                           name="confirmation" required>
                                 </div>
                             </div>
 

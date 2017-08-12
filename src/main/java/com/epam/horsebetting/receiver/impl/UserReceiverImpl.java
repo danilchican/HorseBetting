@@ -1,5 +1,6 @@
 package com.epam.horsebetting.receiver.impl;
 
+import com.epam.horsebetting.config.FormFieldConfig;
 import com.epam.horsebetting.dao.impl.UserDAOImpl;
 import com.epam.horsebetting.database.TransactionManager;
 import com.epam.horsebetting.entity.User;
@@ -29,10 +30,10 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      * @param content
      */
     public void register(RequestContent content) throws ReceiverException {
-        String name = content.findParameter("name");
-        String email = content.findParameter("email");
-        String password = content.findParameter("password");
-        String passwordConfirmation = content.findParameter("password_confirmation");
+        String name = content.findParameter(FormFieldConfig.User.NAME_FIELD);
+        String email = content.findParameter(FormFieldConfig.User.EMAIL_FIELD);
+        String password = content.findParameter(FormFieldConfig.User.PASSWORD_FIELD);
+        String passwordConfirmation = content.findParameter(FormFieldConfig.User.CONFIRMATION_FIELD);
 
         UserValidator validator = new UserValidator();
 
@@ -91,8 +92,8 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      * @param content
      */
     public void login(RequestContent content) throws ReceiverException {
-        String email = content.findParameter("email");
-        String password = content.findParameter("password");
+        String email = content.findParameter(FormFieldConfig.User.EMAIL_FIELD);
+        String password = content.findParameter(FormFieldConfig.User.PASSWORD_FIELD);
 
         ArrayList<String> errors = new ArrayList<>();
         UserValidator validator = new UserValidator();
@@ -148,7 +149,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      */
     @Override
     public void updateProfileSettings(RequestContent content) throws ReceiverException {
-        String name = content.findParameter("user-name");
+        String name = content.findParameter(FormFieldConfig.User.NAME_FIELD);
 
         ArrayList<String> messages = new ArrayList<>();
         UserValidator validator = new UserValidator();
@@ -181,8 +182,8 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      */
     @Override
     public void updateSecurity(RequestContent content) throws ReceiverException {
-        String password = content.findParameter("password");
-        String confirmation = content.findParameter("password-confirmation");
+        String password = content.findParameter(FormFieldConfig.User.PASSWORD_FIELD);
+        String confirmation = content.findParameter(FormFieldConfig.User.CONFIRMATION_FIELD);
 
         ArrayList<String> messages = new ArrayList<>();
         UserValidator validator = new UserValidator();
@@ -215,7 +216,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      */
     @Override
     public void updateProfileBalance(RequestContent content) throws ReceiverException {
-        String paymentAmount = content.findParameter("payment-amount");
+        String paymentAmount = content.findParameter(FormFieldConfig.User.PAYMENT_AMOUNT_FIELD);
 
         ArrayList<String> messages = new ArrayList<>();
         UserValidator validator = new UserValidator();
@@ -255,7 +256,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
     public void changeLocale(RequestContent content) {
         super.setDefaultContentAttributes(content);
 
-        String language = content.findParameter("lang");
+        String language = content.findParameter(FormFieldConfig.Locale.LANG_FIELD);
         LOGGER.log(Level.DEBUG, "Received language: " + language);
 
         Locale locale = (language != null && language.equals("en"))
@@ -275,7 +276,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
     @Override
     public void ajaxObtainUsersList(RequestContent content) throws ReceiverException {
         int page = 1;
-        String pageNumber = content.findParameter("page");
+        String pageNumber = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
 
         //TODO create validators
         if(pageNumber != null) {

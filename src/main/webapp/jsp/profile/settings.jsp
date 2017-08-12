@@ -14,12 +14,12 @@
             <form action="/profile/settings/update" method="post">
                 <div class="form-group">
                     <label for="user-name"><fmt:message key="form.profile.name"/></label>
-                    <input type="text" id="user-name" name="user-name"
-                           value="${user.getName() != null ? user.getName() : ''}" class="form-control">
+                    <input type="text" name="user-name" id="user-name" value="${user.getName() != null ? user.getName() : ''}"
+                           class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="user-email"><fmt:message key="form.email"/></label>
-                    <input type="text" id="user-email" value="${user.getEmail()}" class="form-control" disabled>
+                    <label for="email"><fmt:message key="form.email"/></label>
+                    <input type="text" id="email" value="${user.getEmail()}" class="form-control" disabled>
                 </div>
                 <div class="form-group">
                     <label for="user-role"><fmt:message key="form.profile.group"/></label>
@@ -43,13 +43,14 @@
             <form action="/profile/security/update" method="post">
                 <div class="form-group">
                     <label for="password"><fmt:message key="form.profile.new_password"/></label>
-                    <input type="password" name="password" id="password" class="form-control">
+                    <input type="password" name="password" id="password" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="password-confirmation"><fmt:message key="form.password.confirmation"/></label>
-                    <input type="password" name="password-confirmation" id="password-confirmation" class="form-control">
+                    <label for="confirmation"><fmt:message key="form.password.confirmation"/></label>
+                    <input type="password" name="confirmation" id="confirmation" class="form-control" required>
                 </div>
-                <button type="submit" class="btn btn-primary save-button"><fmt:message key="button.password.change"/></button>
+                <button type="submit" class="btn btn-primary save-button"><fmt:message
+                        key="button.password.change"/></button>
             </form>
         </div>
     </div>
