@@ -23,7 +23,20 @@ public final class FormFieldConfig {
         public static final String GENDER_FIELD = PREFIX + "gender";
         public static final String AGE_FIELD = PREFIX + "age";
         public static final String SUIT_FIELD = PREFIX + "suit";
+    }
 
+    public final class Race {
+        private static final String PREFIX = "race-";
+        public static final String ID_FIELD = PREFIX + "id";
+        public static final String TITLE_FIELD = PREFIX + "title";
+        public static final String PLACE_FIELD = PREFIX + "place";
+        public static final String MIN_RATE_FIELD = PREFIX + "min-rate";
+        public static final String TRACK_LENGTH_FIELD = PREFIX + "track-length";
+        public static final String FINISHED_FIELD = PREFIX + "is-finished";
+        public static final String BET_END_DATE_FIELD = PREFIX + "bet-end-date";
+        public static final String STARTED_AT_FIELD = PREFIX + "started-at";
+        public static final String SELECTED_HORSES_FIELD = "selected-horses";
+        public static final String HORSE_COEFFICIENTS_FIELD = "horse-coefficients";
     }
 
     public final class Locale {

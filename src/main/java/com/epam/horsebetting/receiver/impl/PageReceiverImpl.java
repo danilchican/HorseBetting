@@ -1,5 +1,6 @@
 package com.epam.horsebetting.receiver.impl;
 
+import com.epam.horsebetting.config.FormFieldConfig;
 import com.epam.horsebetting.dao.impl.HorseDAOImpl;
 import com.epam.horsebetting.dao.impl.RaceDAOImpl;
 import com.epam.horsebetting.dao.impl.SuitDAOImpl;
@@ -117,7 +118,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
         // TODO create validators
 
-        String pageNum = content.findParameter("page");
+        String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
         UserDAOImpl userDAO = new UserDAOImpl(false);
 
         try {
@@ -163,7 +164,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
         // TODO create validators
 
-        String pageNum = content.findParameter("page");
+        String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
         HorseDAOImpl horseDAO = new HorseDAOImpl(false);
 
         try {
@@ -267,7 +268,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
         // TODO create validators
 
-        String pageNum = content.findParameter("page");
+        String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
         RaceDAOImpl raceDAO = new RaceDAOImpl(false);
 
         try {

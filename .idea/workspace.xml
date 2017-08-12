@@ -4,12 +4,8 @@
     <list default="true" id="e9db2c3d-90c7-4a9a-9541-77ab3b3b2a13" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/FormFieldConfig.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/FormFieldConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/HorseReceiverImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/HorseReceiverImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/AbstractValidator.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/AbstractValidator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/HorseValidator.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/HorseValidator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/SuitValidator.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/SuitValidator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/create.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/create.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/edit.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/edit.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/RaceReceiverImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/RaceReceiverImpl.java" />
     </list>
     <ignored path="HorseBetting.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -49,31 +45,29 @@
       <file leaf-file-name="FormFieldConfig.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/FormFieldConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" column="64" selection-start-line="21" selection-start-column="64" selection-end-line="21" selection-end-column="64" />
+            <state relative-caret-position="391">
+              <caret line="37" column="45" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HorseReceiverImpl.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/HorseReceiverImpl.java">
+      <file leaf-file-name="PageReceiverImpl.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="30" column="32" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
+            <state relative-caret-position="238">
+              <caret line="34" column="21" selection-start-line="34" selection-start-column="21" selection-end-line="34" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HorseValidator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/HorseValidator.java">
+      <file leaf-file-name="RaceReceiverImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/RaceReceiverImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="19" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="602">
+              <caret line="63" column="9" selection-start-line="63" selection-start-column="9" selection-end-line="63" selection-end-column="9" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -128,7 +122,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/PageReceiver.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/tags/account.tag" />
         <option value="$PROJECT_DIR$/src/main/webapp/assets/css/styles.css" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/user/ChangePasswordCommand.java" />
@@ -156,7 +149,6 @@
         <option value="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/create.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/index.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/assets/vue/js/dashboard.js" />
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/UserDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/UserDAOImpl.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/assets/dashboard/production/css/custom.min.css" />
@@ -174,11 +166,13 @@
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/SuitReceiverImpl.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/create.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/edit.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/FormFieldConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/AbstractValidator.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/SuitValidator.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/HorseReceiverImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/HorseValidator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/FormFieldConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/RaceReceiverImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" />
       </list>
     </option>
   </component>
@@ -1102,14 +1096,7 @@
       <workItem from="1501775326791" duration="136556000" />
       <workItem from="1502355136487" duration="28634000" />
       <workItem from="1502391118786" duration="47956000" />
-      <workItem from="1502482481969" duration="10533000" />
-    </task>
-    <task id="LOCAL-00145" summary="Added DAO method to create race.">
-      <created>1502194338896</created>
-      <option name="number" value="00145" />
-      <option name="presentableId" value="LOCAL-00145" />
-      <option name="project" value="LOCAL" />
-      <updated>1502194338896</updated>
+      <workItem from="1502482481969" duration="11456000" />
     </task>
     <task id="LOCAL-00146" summary="Created functions tld and helper.">
       <created>1502195324603</created>
@@ -1447,7 +1434,14 @@
       <option name="project" value="LOCAL" />
       <updated>1502528527495</updated>
     </task>
-    <option name="localTasksCounter" value="194" />
+    <task id="LOCAL-00194" summary="Moved Horse variables to constants.">
+      <created>1502529511207</created>
+      <option name="number" value="00194" />
+      <option name="presentableId" value="LOCAL-00194" />
+      <option name="project" value="LOCAL" />
+      <updated>1502529511207</updated>
+    </task>
+    <option name="localTasksCounter" value="195" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1483,7 +1477,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="609413000" />
+    <option name="totallyTimeSpent" value="610336000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1545,7 +1539,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="Modified retrieving resource bundle props." />
     <MESSAGE value="Modified db manager." />
     <MESSAGE value="Improved configs." />
     <MESSAGE value="Added changing locale." />
@@ -1570,7 +1563,8 @@
     <MESSAGE value="Account request attributes moved to constants." />
     <MESSAGE value="Moved unused command." />
     <MESSAGE value="Moved Suit variables to constants." />
-    <option name="LAST_COMMIT_MESSAGE" value="Moved Suit variables to constants." />
+    <MESSAGE value="Moved Horse variables to constants." />
+    <option name="LAST_COMMIT_MESSAGE" value="Moved Horse variables to constants." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1775,14 +1769,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="130" column="30" selection-start-line="130" selection-start-column="30" selection-end-line="130" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/index.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-595">
@@ -1956,14 +1942,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/RaceReceiverImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1598">
-          <caret line="113" column="0" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/edit.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="301">
@@ -2007,14 +1985,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/FormFieldConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="64" selection-start-line="21" selection-start-column="64" selection-end-line="21" selection-end-column="64" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/HorseValidator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -2027,8 +1997,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/HorseReceiverImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="30" column="32" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
+        <state relative-caret-position="221">
+          <caret line="28" column="6" selection-start-line="28" selection-start-column="6" selection-end-line="28" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/RaceReceiverImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="602">
+          <caret line="63" column="9" selection-start-line="63" selection-start-column="9" selection-end-line="63" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/FormFieldConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="37" column="45" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="34" column="21" selection-start-line="34" selection-start-column="21" selection-end-line="34" selection-end-column="21" />
           <folding />
         </state>
       </provider>
