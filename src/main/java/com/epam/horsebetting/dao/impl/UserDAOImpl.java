@@ -1,5 +1,6 @@
 package com.epam.horsebetting.dao.impl;
 
+import com.epam.horsebetting.config.SQLFieldConfig;
 import com.epam.horsebetting.dao.AbstractDAO;
 import com.epam.horsebetting.dao.UserDAO;
 import com.epam.horsebetting.entity.User;
@@ -192,19 +193,20 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     public User extractFrom(ResultSet userDataSet) throws SQLException {
         User user = new User();
 
-        user.setId(userDataSet.getInt("id"));
-        user.setRole(RoleType.findById(userDataSet.getInt("role_id")));
-        user.setBalance(userDataSet.getBigDecimal("balance"));
-        user.setName(userDataSet.getString("name"));
-        user.setEmail(userDataSet.getString("email"));
-        user.setPassword(userDataSet.getString("password"));
-        user.setCreatedAt(userDataSet.getTimestamp("created_at"));
+        user.setId(userDataSet.getInt(SQLFieldConfig.User.ID));
+        user.setRole(RoleType.findById(userDataSet.getInt(SQLFieldConfig.User.ROLE_ID)));
+        user.setBalance(userDataSet.getBigDecimal(SQLFieldConfig.User.BALANCE));
+        user.setName(userDataSet.getString(SQLFieldConfig.User.NAME));
+        user.setEmail(userDataSet.getString(SQLFieldConfig.User.EMAIL));
+        user.setPassword(userDataSet.getString(SQLFieldConfig.User.PASSWORD));
+        user.setCreatedAt(userDataSet.getTimestamp(SQLFieldConfig.User.CREATED_AT));
 
         return user;
     }
 
     /**
-     * Extract user data from result set to user instance
+     * Extract user data from result set
+     * to user instance
      * without password.
      *
      * @param userDataSet
@@ -215,12 +217,12 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     public User extractWithoutPassFrom(ResultSet userDataSet) throws SQLException {
         User user = new User();
 
-        user.setId(userDataSet.getInt("id"));
-        user.setRole(RoleType.findById(userDataSet.getInt("role_id")));
-        user.setBalance(userDataSet.getBigDecimal("balance"));
-        user.setName(userDataSet.getString("name"));
-        user.setEmail(userDataSet.getString("email"));
-        user.setCreatedAt(userDataSet.getTimestamp("created_at"));
+        user.setId(userDataSet.getInt(SQLFieldConfig.User.ID));
+        user.setRole(RoleType.findById(userDataSet.getInt(SQLFieldConfig.User.ROLE_ID)));
+        user.setBalance(userDataSet.getBigDecimal(SQLFieldConfig.User.BALANCE));
+        user.setName(userDataSet.getString(SQLFieldConfig.User.NAME));
+        user.setEmail(userDataSet.getString(SQLFieldConfig.User.EMAIL));
+        user.setCreatedAt(userDataSet.getTimestamp(SQLFieldConfig.User.CREATED_AT));
 
         return user;
     }
@@ -329,7 +331,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
             result = preparedStatement.executeQuery();
 
             while (result.next()) {
-                totalCount = result.getInt("total");
+                totalCount = result.getInt(SQLFieldConfig.TOTAL);
                 LOGGER.log(Level.DEBUG, "Count of users: " + totalCount);
             }
         } catch (SQLException e) {

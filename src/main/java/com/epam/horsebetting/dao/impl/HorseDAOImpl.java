@@ -1,5 +1,6 @@
 package com.epam.horsebetting.dao.impl;
 
+import com.epam.horsebetting.config.SQLFieldConfig;
 import com.epam.horsebetting.dao.AbstractDAO;
 import com.epam.horsebetting.dao.HorseDAO;
 import com.epam.horsebetting.entity.Horse;
@@ -32,7 +33,7 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
     private static final String SQL_SELECT_HORSES = "SELECT * FROM `horses` ";
     private static final String SQL_SELECT_PART_HORSES =
             "SELECT `h`.`id`, `h`.`name`, `h`.`suit_id`,`s`.`name` AS `suit_name`, `h`.`age`, `h`.`gender` " +
-            "FROM `horses` AS `h` LEFT JOIN `suits` AS `s` ON `h`.`suit_id`=`s`.`id` LIMIT ? OFFSET ?;";
+                    "FROM `horses` AS `h` LEFT JOIN `suits` AS `s` ON `h`.`suit_id`=`s`.`id` LIMIT ? OFFSET ?;";
     private static final String SQL_COUNT_HORSES = "SELECT COUNT(*) AS `total` FROM `horses`;";
 
     /**
@@ -239,7 +240,7 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
             result = preparedStatement.executeQuery();
 
             while (result.next()) {
-                totalCount = result.getInt("total");
+                totalCount = result.getInt(SQLFieldConfig.TOTAL);
                 LOGGER.log(Level.DEBUG, "Count of horses: " + totalCount);
             }
         } catch (SQLException e) {
@@ -259,14 +260,15 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
     private Horse extractFrom(ResultSet horseDataSet) throws SQLException {
         Horse horse = new Horse();
 
-        horse.setId(horseDataSet.getInt("id"));
-        horse.setSuitId(horseDataSet.getInt("suit_id"));
-        horse.setName(horseDataSet.getString("name"));
-        horse.setAge(horseDataSet.getByte("age"));
-        horse.setGender(horseDataSet.getBoolean("gender"));
+        horse.setId(horseDataSet.getInt(SQLFieldConfig.Horse.ID));
+        horse.setSuitId(horseDataSet.getInt(SQLFieldConfig.Horse.SUIT_ID));
+        horse.setName(horseDataSet.getString(SQLFieldConfig.Horse.NAME));
+        horse.setAge(horseDataSet.getByte(SQLFieldConfig.Horse.AGE));
+        horse.setGender(horseDataSet.getBoolean(SQLFieldConfig.Horse.GENDER));
 
-        if(hasColumn(horseDataSet, "suit_name")) {
-            horse.insertAttribute("suit_name", horseDataSet.getString("suit_name"));
+        if (hasColumn(horseDataSet, SQLFieldConfig.Horse.SUIT_NAME)) {
+            horse.insertAttribute(SQLFieldConfig.Horse.SUIT_NAME,
+                    horseDataSet.getString(SQLFieldConfig.Horse.SUIT_NAME));
         }
 
         return horse;

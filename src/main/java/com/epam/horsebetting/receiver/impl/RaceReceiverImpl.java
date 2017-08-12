@@ -45,7 +45,6 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
 
         boolean isFinished = "1".equals(content.findParameter(FormFieldConfig.Race.FINISHED_FIELD));
 
-        // TODO move to constant
         SimpleDateFormat dateFormat = new SimpleDateFormat(DateFormatter.DEFAULT_DATE_FORMAT);
         Date parsedDate;
 

@@ -1,5 +1,6 @@
 package com.epam.horsebetting.dao.impl;
 
+import com.epam.horsebetting.config.SQLFieldConfig;
 import com.epam.horsebetting.dao.AbstractDAO;
 import com.epam.horsebetting.dao.SuitDAO;
 import com.epam.horsebetting.entity.Suit;
@@ -187,8 +188,8 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
     public Suit extractFrom(ResultSet suitDataSet) throws SQLException {
         Suit suit = new Suit();
 
-        suit.setId(suitDataSet.getInt("id"));
-        suit.setName(suitDataSet.getString("name"));
+        suit.setId(suitDataSet.getInt(SQLFieldConfig.Suit.ID));
+        suit.setName(suitDataSet.getString(SQLFieldConfig.Suit.NAME));
 
         return suit;
     }

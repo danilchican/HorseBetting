@@ -1,5 +1,6 @@
 package com.epam.horsebetting.dao.impl;
 
+import com.epam.horsebetting.config.SQLFieldConfig;
 import com.epam.horsebetting.dao.AbstractDAO;
 import com.epam.horsebetting.dao.RaceDAO;
 import com.epam.horsebetting.entity.Race;
@@ -172,7 +173,7 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
             result = preparedStatement.executeQuery();
 
             while (result.next()) {
-                totalCount = result.getInt("total");
+                totalCount = result.getInt(SQLFieldConfig.TOTAL);
                 LOGGER.log(Level.DEBUG, "Count of races: " + totalCount);
             }
         } catch (SQLException e) {
@@ -192,14 +193,14 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
     private Race extractFrom(ResultSet raceDataSet) throws SQLException {
         Race race = new Race();
 
-        race.setId(raceDataSet.getInt("id"));
-        race.setTitle(raceDataSet.getString("title"));
-        race.setPlace(raceDataSet.getString("place"));
-        race.setMinRate(raceDataSet.getBigDecimal("min_rate"));
-        race.setTrackLength(raceDataSet.getInt("track_length"));
-        race.setFinished(raceDataSet.getBoolean("is_finished"));
-        race.setStartedAt(raceDataSet.getTimestamp("started_at"));
-        race.setCreatedAt(raceDataSet.getTimestamp("created_at"));
+        race.setId(raceDataSet.getInt(SQLFieldConfig.Race.ID));
+        race.setTitle(raceDataSet.getString(SQLFieldConfig.Race.TITLE));
+        race.setPlace(raceDataSet.getString(SQLFieldConfig.Race.PLACE));
+        race.setMinRate(raceDataSet.getBigDecimal(SQLFieldConfig.Race.MIN_RATE));
+        race.setTrackLength(raceDataSet.getInt(SQLFieldConfig.Race.TRACK_LENGTH));
+        race.setFinished(raceDataSet.getBoolean(SQLFieldConfig.Race.FINISHED));
+        race.setStartedAt(raceDataSet.getTimestamp(SQLFieldConfig.Race.STARTED_AT));
+        race.setCreatedAt(raceDataSet.getTimestamp(SQLFieldConfig.Race.CREATED_AT));
 
         return race;
     }
