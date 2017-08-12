@@ -1,4 +1,4 @@
-package com.epam.horsebetting.util;
+package com.epam.horsebetting.router;
 
 public class Router {
 
