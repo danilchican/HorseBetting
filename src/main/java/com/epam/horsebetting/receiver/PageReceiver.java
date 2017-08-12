@@ -13,6 +13,13 @@ public interface PageReceiver {
     void presentIndexPage(RequestContent content) throws ReceiverException;
 
     /**
+     * Present races page.
+     *
+     * @param content
+     */
+    void presentRacesPage(RequestContent content) throws ReceiverException;
+
+    /**
      * Present login page.
      *
      * @param content

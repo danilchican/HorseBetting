@@ -40,13 +40,50 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         this.setDefaultContentAttributes(content);
 
         RaceDAOImpl raceDAO = new RaceDAOImpl(false);
+
         final int limit = 10;
+        final int offset = 0;
 
         try {
-            List<Race> races = raceDAO.obtainNearest(limit);
+            List<Race> races = raceDAO.obtainNearest(limit, offset);
             content.insertRequestAttribute("races", races);
 
             LOGGER.log(Level.DEBUG, "Races list: " + Arrays.toString(races.toArray()));
+        } catch (DAOException e) {
+            throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Present races page.
+     *
+     * @param content
+     */
+    @Override
+    public void presentRacesPage(RequestContent content) throws ReceiverException {
+        this.setPageSubTitle("Забеги");
+        this.setDefaultContentAttributes(content);
+
+        // TODO create validator
+
+        String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
+        RaceDAOImpl raceDAO = new RaceDAOImpl(false);
+
+        try {
+            final int limit = 15;
+            final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
+            final int offset = (page - 1) * limit;
+            final int totalRaces = raceDAO.getTotalCount();
+
+            List<Race> races = raceDAO.obtainNearest(limit, offset);
+
+            content.insertRequestAttribute("races", races);
+            content.insertRequestAttribute("totalRaces", totalRaces);
+            content.insertRequestAttribute("limitRaces", limit);
+
+            LOGGER.log(Level.DEBUG, "Races list: " + Arrays.toString(races.toArray()));
+        } catch (NumberFormatException e) {
+            throw new ReceiverException("Cannot convert page to number. GET[page]=" + e.getMessage(), e);
         } catch (DAOException e) {
             throw new ReceiverException("Database Error. " + e.getMessage(), e);
         }
@@ -275,10 +312,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardRacesPage(RequestContent content) throws ReceiverException {
-        this.setPageSubTitle("Скачки");
+        this.setPageSubTitle("Забеги");
         this.setDefaultContentAttributes(content);
 
-        // TODO create validators
+        // TODO create validator
 
         String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
         RaceDAOImpl raceDAO = new RaceDAOImpl(false);

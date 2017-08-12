@@ -30,7 +30,7 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
             " VALUES (?,?,?,?,?,?,?);";
     private static final String SQL_INSERT_HORSE_RACE = "INSERT INTO `horse_race` " +
             "(`horse_id`, `race_id`, `coefficient`)" + " VALUES (?,?,?);";
-    private static final String SQL_SELECT_PART_RACES = "SELECT * FROM `races` LIMIT ? OFFSET ?;";
+    private static final String SQL_SELECT_PART_RACES = "SELECT * FROM `races` ORDER BY `started_at` ASC LIMIT ? OFFSET ?;";
     private static final String SQL_FIND_RACE_BY_TITLE = "SELECT * FROM `races` WHERE `title`=? LIMIT 1;";
     private static final String SQL_COUNT_RACES = "SELECT COUNT(*) AS `total` FROM `races`;";
     private static final String SQL_SELECT_NEAREST_RACES = "SELECT * FROM `races` WHERE `is_finished` != ?" +
@@ -123,7 +123,6 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
             while (races.next()) {
                 Race race = extractFrom(races);
                 foundedRaces.add(race);
-                LOGGER.log(Level.DEBUG, "Race was added to list: " + race);
             }
         } catch (SQLException e) {
             throw new DAOException("Cannot retrieve races list. " + e.getMessage(), e);
@@ -136,11 +135,12 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
      * Obtain nearest of races.
      *
      * @param limit
+     * @param offset
      * @return races
      * @throws DAOException
      */
     @Override
-    public List<Race> obtainNearest(int limit) throws DAOException {
+    public List<Race> obtainNearest(int limit, int offset) throws DAOException {
         List<Race> foundedRaces = new ArrayList<>();
         ResultSet races;
 
@@ -152,7 +152,6 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
             while (races.next()) {
                 Race race = extractFrom(races);
                 foundedRaces.add(race);
-                LOGGER.log(Level.DEBUG, "Race was added to list: " + race);
             }
         } catch (SQLException e) {
             throw new DAOException("Cannot retrieve races list. " + e.getMessage(), e);

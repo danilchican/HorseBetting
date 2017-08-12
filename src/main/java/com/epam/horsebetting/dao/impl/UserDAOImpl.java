@@ -94,7 +94,6 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
             while (users.next()) {
                 User user = extractWithoutPassFrom(users);
                 foundedUsers.add(user);
-                LOGGER.log(Level.DEBUG, "User was added to list: " + user);
             }
         } catch (SQLException e) {
             throw new DAOException("Cannot retrieve users list. " + e.getMessage(), e);

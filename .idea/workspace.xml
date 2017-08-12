@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e9db2c3d-90c7-4a9a-9541-77ab3b3b2a13" name="Default" comment="Fixed bug with old input.">
+    <list default="true" id="e9db2c3d-90c7-4a9a-9541-77ab3b3b2a13" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/race/RacesPresetCommand.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/races/index.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/PageConfig.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/PageConfig.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/RaceDAO.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/RaceDAO.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/HorseDAOImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/HorseDAOImpl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/RaceDAOImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/RaceDAOImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/UserDAOImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/UserDAOImpl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/PageReceiver.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/PageReceiver.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/config/pages.properties" afterPath="$PROJECT_DIR$/src/main/resources/config/pages.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/localization/lang_en_US.properties" afterPath="$PROJECT_DIR$/src/main/resources/localization/lang_en_US.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/localization/lang_ru_RU.properties" afterPath="$PROJECT_DIR$/src/main/resources/localization/lang_ru_RU.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jsp/partials/head.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/partials/head.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jsp/welcome.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/welcome.jsp" />
     </list>
     <ignored path="HorseBetting.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,22 +53,41 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="welcome.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/welcome.jsp">
+      <file leaf-file-name="index.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/races/index.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="33" column="65" selection-start-line="33" selection-start-column="65" selection-end-line="33" selection-end-column="65" />
+            <state relative-caret-position="153">
+              <caret line="9" column="10" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PageReceiverImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java">
+      <file leaf-file-name="head.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/partials/head.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+            <state relative-caret-position="170">
+              <caret line="88" column="36" selection-start-line="88" selection-start-column="36" selection-end-line="88" selection-end-column="36" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HorseDAOImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/HorseDAOImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="179">
+              <caret line="193" column="13" selection-start-line="193" selection-start-column="13" selection-end-line="193" selection-end-column="13" />
+              <folding>
+                <marker date="1502546846391" expanded="true" signature="835:901" ph="INSERT INTO `horses`... " />
+                <marker date="1502546846391" expanded="true" signature="957:1032" ph="UPDATE `hors... " />
+                <marker date="1502546846391" expanded="true" signature="1088:1121" ph="DELETE FROM " />
+                <marker date="1502546846391" expanded="true" signature="1181:1224" ph="SELECT * FRO... horses" />
+                <marker date="1502546846391" expanded="true" signature="1286:1331" ph="SELECT * FRO... horses" />
+                <marker date="1502546846391" expanded="true" signature="1388:1410" ph="SELECT * FRO... horses" />
+                <marker date="1502546846391" expanded="true" signature="1484:1691" ph="SELECT `h`.`... horses" />
+                <marker date="1502546846391" expanded="true" signature="1747:1787" ph="SELECT COUNT... horses" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -71,48 +95,63 @@
       <file leaf-file-name="RaceDAOImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/RaceDAOImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="21" column="7" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
+            <state relative-caret-position="196">
+              <caret line="126" column="34" selection-start-line="126" selection-start-column="34" selection-end-line="126" selection-end-column="34" />
               <folding>
-                <marker date="1502542449648" expanded="true" signature="826:980" ph="INSERT INTO `races`... " />
-                <marker date="1502542449648" expanded="true" signature="1041:1141" ph="INSERT INTO `horse_race`... " />
-                <marker date="1502542449648" expanded="true" signature="1202:1240" ph="SELECT * FRO... races" />
-                <marker date="1502542449648" expanded="true" signature="1302:1347" ph="SELECT * FRO... races" />
-                <marker date="1502542449648" expanded="true" signature="1402:1441" ph="SELECT COUNT... races" />
-                <marker date="1502542449648" expanded="true" signature="1505:1628" ph="SELECT * FRO... races" />
+                <marker date="1502546870899" expanded="true" signature="826:980" ph="INSERT INTO `races`... " />
+                <marker date="1502546870899" expanded="true" signature="1041:1141" ph="INSERT INTO `horse_race`... " />
+                <marker date="1502546870899" expanded="true" signature="1202:1266" ph="SELECT * FRO... races" />
+                <marker date="1502546870899" expanded="true" signature="1328:1373" ph="SELECT * FRO... races" />
+                <marker date="1502546870899" expanded="true" signature="1428:1467" ph="SELECT COUNT... races" />
+                <marker date="1502546870899" expanded="true" signature="1531:1653" ph="SELECT * FRO... races" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CommandType.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java">
+      <file leaf-file-name="SuitDAOImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/SuitDAOImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="23" column="76" selection-start-line="23" selection-start-column="76" selection-end-line="23" selection-end-column="76" />
-              <folding />
+            <state relative-caret-position="179">
+              <caret line="46" column="86" selection-start-line="46" selection-start-column="83" selection-end-line="46" selection-end-column="86" />
+              <folding>
+                <marker date="1502532591462" expanded="true" signature="594:631" ph="INSERT INTO `suits`... " />
+                <marker date="1502532591462" expanded="true" signature="686:726" ph="UPDATE `suit... " />
+                <marker date="1502532591462" expanded="true" signature="781:813" ph="DELETE FROM " />
+                <marker date="1502532591462" expanded="true" signature="874:918" ph="SELECT * FRO... suits" />
+                <marker date="1502532591462" expanded="true" signature="974:995" ph="SELECT * FRO... suits" />
+                <marker date="1502532591462" expanded="true" signature="1056:1108" ph="SELECT * FRO... suits" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RaceDAO.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/RaceDAO.java">
+      <file leaf-file-name="UserDAOImpl.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/UserDAOImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="40" column="6" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
-              <folding />
+            <state relative-caret-position="106">
+              <caret line="34" column="46" selection-start-line="34" selection-start-column="46" selection-end-line="34" selection-end-column="46" />
+              <folding>
+                <marker date="1502546871204" expanded="true" signature="919:999" ph="INSERT INTO `users`... " />
+                <marker date="1502546871204" expanded="true" signature="1061:1106" ph="SELECT * FRO... users" />
+                <marker date="1502546871204" expanded="true" signature="1165:1207" ph="SELECT * FRO... users" />
+                <marker date="1502546871204" expanded="true" signature="1263:1325" ph="SELECT * FRO... users" />
+                <marker date="1502546871204" expanded="true" signature="1385:1462" ph="SELECT `id`,... users" />
+                <marker date="1502546871204" expanded="true" signature="1523:1617" ph="SELECT `id`,... users" />
+                <marker date="1502546871204" expanded="true" signature="1681:1721" ph="UPDATE `user... " />
+                <marker date="1502546871204" expanded="true" signature="1785:1829" ph="UPDATE `user... " />
+                <marker date="1502546871204" expanded="true" signature="1892:1935" ph="UPDATE `user... " />
+                <marker date="1502546871204" expanded="true" signature="1990:2029" ph="SELECT COUNT... users" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lang_en_US.properties" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/localization/lang_en_US.properties">
-          <provider editor-type-id="ResourceBundle">
-            <state />
-          </provider>
+      <file leaf-file-name="sidebar.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/profile/partials/sidebar.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="77" column="17" selection-start-line="77" selection-start-column="17" selection-end-line="77" selection-end-column="17" />
+            <state relative-caret-position="102">
+              <caret line="6" column="94" selection-start-line="6" selection-start-column="46" selection-end-line="6" selection-end-column="94" />
               <folding />
             </state>
           </provider>
@@ -125,8 +164,8 @@
       <list>
         <option value="Interface" />
         <option value="Enum" />
-        <option value="Jsp File" />
         <option value="Class" />
+        <option value="Jsp File" />
       </list>
     </option>
   </component>
@@ -148,12 +187,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/resources/benerator/data/horse_names.csv" />
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/benerator/RaceStartedAtGenerator.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/benerator/identities.id.xml" />
-        <option value="$PROJECT_DIR$/src/main/resources/benerator/dbsanity/identities.xml" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/resources/benerator/benerator.xml" />
         <option value="$PROJECT_DIR$/src/main/webapp/jsp/profile/partials/sidebar.jsp" />
         <option value="$PROJECT_DIR$/src/main/resources/config/benerator.properties" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/entity/User.java" />
@@ -184,21 +217,27 @@
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/HorseValidator.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/FormFieldConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/RaceReceiverImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/UserDAOImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/SuitDAOImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/SQLFieldConfig.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/HorseDAOImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/UserReceiverImpl.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/tags/dashboard.tag" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/request/RequestContent.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/localization/lang_ru_RU.properties" />
-        <option value="$PROJECT_DIR$/src/main/resources/localization/lang_en_US.properties" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/partials/head.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/RaceDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/RaceDAOImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/benerator/benerator.xml" />
         <option value="$PROJECT_DIR$/src/main/webapp/jsp/welcome.jsp" />
+        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/race/RacesPresetCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/PageConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/config/pages.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/PageReceiver.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/RaceDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/jsp/races/index.jsp" />
+        <option value="$PROJECT_DIR$/src/main/resources/localization/lang_en_US.properties" />
+        <option value="$PROJECT_DIR$/src/main/resources/localization/lang_ru_RU.properties" />
+        <option value="$PROJECT_DIR$/src/main/webapp/jsp/partials/head.jsp" />
+        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/HorseDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/RaceDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/UserDAOImpl.java" />
       </list>
     </option>
   </component>
@@ -371,40 +410,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="dashboard" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HorseBetting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HorseBettingProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dashboard" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="races" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -435,11 +440,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="dashboard" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="horses" />
+              <option name="myItemId" value="profile" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -458,6 +459,160 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="profile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="partials" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HorseBetting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HorseBettingProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HorseBetting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HorseBettingProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="horsebetting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HorseBetting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HorseBettingProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="horsebetting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dao" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HorseBetting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HorseBettingProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="horsebetting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dao" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="impl" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HorseBetting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HorseBettingProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="horsebetting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="command" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1066,21 +1221,7 @@
       <workItem from="1501775326791" duration="136556000" />
       <workItem from="1502355136487" duration="28634000" />
       <workItem from="1502391118786" duration="47956000" />
-      <workItem from="1502482481969" duration="19725000" />
-    </task>
-    <task id="LOCAL-00150" summary="Created method to get horses list by AJAX.">
-      <created>1502219638672</created>
-      <option name="number" value="00150" />
-      <option name="presentableId" value="LOCAL-00150" />
-      <option name="project" value="LOCAL" />
-      <updated>1502219638672</updated>
-    </task>
-    <task id="LOCAL-00151" summary="Created method to get values of array variable.">
-      <created>1502224702602</created>
-      <option name="number" value="00151" />
-      <option name="presentableId" value="LOCAL-00151" />
-      <option name="project" value="LOCAL" />
-      <updated>1502224702602</updated>
+      <workItem from="1502482481969" duration="23354000" />
     </task>
     <task id="LOCAL-00152" summary="Created view to append horse to race.">
       <created>1502227597230</created>
@@ -1411,7 +1552,21 @@
       <option name="project" value="LOCAL" />
       <updated>1502535947495</updated>
     </task>
-    <option name="localTasksCounter" value="199" />
+    <task id="LOCAL-00199" summary="Created displaying nearest races on index page.">
+      <created>1502543268661</created>
+      <option name="number" value="00199" />
+      <option name="presentableId" value="LOCAL-00199" />
+      <option name="project" value="LOCAL" />
+      <updated>1502543268661</updated>
+    </task>
+    <task id="LOCAL-00200" summary="Fixed view &amp; generation data.">
+      <created>1502544361736</created>
+      <option name="number" value="00200" />
+      <option name="presentableId" value="LOCAL-00200" />
+      <option name="project" value="LOCAL" />
+      <updated>1502544361736</updated>
+    </task>
+    <option name="localTasksCounter" value="201" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1447,7 +1602,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="618605000" />
+    <option name="totallyTimeSpent" value="622234000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1509,8 +1664,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="Restructured profile index." />
-    <MESSAGE value="Added generation active class of profile sidebar menu." />
     <MESSAGE value="Created present profile settings page." />
     <MESSAGE value="Added security block." />
     <MESSAGE value="Created profile payment page." />
@@ -1534,7 +1687,9 @@
     <MESSAGE value="Moved Race variables to constants." />
     <MESSAGE value="Moved SQL variables to constants." />
     <MESSAGE value="Fixed bug with old input." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed bug with old input." />
+    <MESSAGE value="Created displaying nearest races on index page." />
+    <MESSAGE value="Fixed view &amp; generation data." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed view &amp; generation data." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1554,54 +1709,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/assets/vue/components/dashboard/users/ViewUserComponent.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="415">
-          <caret line="34" column="10" selection-start-line="1" selection-start-column="4" selection-end-line="34" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/assets/vue/js/bootstrap.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/assets/vue/js/dashboard.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/UserDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="110" column="26" selection-start-line="110" selection-start-column="26" selection-end-line="110" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/HorseDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="75" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/assets/dashboard/production/css/custom.min.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="0" column="15846" selection-start-line="0" selection-start-column="15846" selection-end-line="0" selection-end-column="15846" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/assets/css/styles.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1658,26 +1765,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/PageConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="14" column="48" selection-start-line="14" selection-start-column="48" selection-end-line="14" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/users/index.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/config/pages.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1791,42 +1882,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/SuitDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="44" column="25" selection-start-line="44" selection-start-column="25" selection-end-line="44" selection-end-column="25" />
-          <folding>
-            <element signature="e#1255#1256#0" expanded="true" />
-            <element signature="e#1294#1295#0" expanded="true" />
-            <marker date="1502532591462" expanded="true" signature="594:631" ph="INSERT INTO `suits`... " />
-            <marker date="1502532591462" expanded="true" signature="686:726" ph="UPDATE `suit... " />
-            <marker date="1502532591462" expanded="true" signature="781:813" ph="DELETE FROM " />
-            <marker date="1502532591462" expanded="true" signature="874:918" ph="SELECT * FRO... suits" />
-            <marker date="1502532591462" expanded="true" signature="974:995" ph="SELECT * FRO... suits" />
-            <marker date="1502532591462" expanded="true" signature="1056:1108" ph="SELECT * FRO... suits" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/HorseDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="41">
-          <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
-          <folding>
-            <element signature="e#1935#1936#0" expanded="true" />
-            <element signature="e#1974#1975#0" expanded="true" />
-            <marker date="1502533007280" expanded="true" signature="835:901" ph="INSERT INTO `horses`... " />
-            <marker date="1502533007280" expanded="true" signature="957:1032" ph="UPDATE `hors... " />
-            <marker date="1502533007280" expanded="true" signature="1088:1121" ph="DELETE FROM " />
-            <marker date="1502533007280" expanded="true" signature="1181:1224" ph="SELECT * FRO... horses" />
-            <marker date="1502533007280" expanded="true" signature="1286:1331" ph="SELECT * FRO... horses" />
-            <marker date="1502533007280" expanded="true" signature="1388:1410" ph="SELECT * FRO... horses" />
-            <marker date="1502533007280" expanded="true" signature="1484:1691" ph="SELECT `h`.`... horses" />
-            <marker date="1502533007280" expanded="true" signature="1747:1787" ph="SELECT COUNT... horses" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/auth/login.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -1840,25 +1895,6 @@
         <state relative-caret-position="102">
           <caret line="17" column="45" selection-start-line="17" selection-start-column="45" selection-end-line="17" selection-end-column="45" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/UserDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="310" column="57" selection-start-line="310" selection-start-column="57" selection-end-line="310" selection-end-column="57" />
-          <folding>
-            <marker date="1502532543572" expanded="true" signature="919:999" ph="INSERT INTO `users`... " />
-            <marker date="1502532543572" expanded="true" signature="1061:1106" ph="SELECT * FRO... users" />
-            <marker date="1502532543572" expanded="true" signature="1165:1207" ph="SELECT * FRO... users" />
-            <marker date="1502532543572" expanded="true" signature="1263:1325" ph="SELECT * FRO... users" />
-            <marker date="1502532543572" expanded="true" signature="1385:1462" ph="SELECT `id`,... users" />
-            <marker date="1502532543572" expanded="true" signature="1523:1617" ph="SELECT `id`,... users" />
-            <marker date="1502532543572" expanded="true" signature="1681:1721" ph="UPDATE `user... " />
-            <marker date="1502532543572" expanded="true" signature="1785:1829" ph="UPDATE `user... " />
-            <marker date="1502532543572" expanded="true" signature="1892:1935" ph="UPDATE `user... " />
-            <marker date="1502532543572" expanded="true" signature="1990:2029" ph="SELECT COUNT... users" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1916,10 +1952,86 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/tags/app.tag">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/index.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="71" selection-start-line="2" selection-start-column="71" selection-end-line="2" selection-end-column="71" />
+        <state relative-caret-position="17">
+          <caret line="61" column="72" selection-start-line="61" selection-start-column="43" selection-end-line="61" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/benerator/benerator.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="32" column="42" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/config/pages.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="32" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/PageConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="13" column="51" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/race/RacesPresetCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="39" column="20" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#893#894#0" expanded="false" />
+            <element signature="e#924#925#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/race/DashboardRacesPresentCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="44" column="39" selection-start-line="44" selection-start-column="39" selection-end-line="44" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/PageReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="55" column="9" selection-start-line="55" selection-start-column="9" selection-end-line="55" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/welcome.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="39" column="25" selection-start-line="0" selection-start-column="0" selection-end-line="64" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/index.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="52" selection-start-line="3" selection-start-column="52" selection-end-line="4" selection-end-column="43" />
           <folding />
         </state>
       </provider>
@@ -1929,8 +2041,8 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+        <state relative-caret-position="174">
+          <caret line="46" column="21" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -1940,80 +2052,123 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="77" column="17" selection-start-line="77" selection-start-column="17" selection-end-line="77" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="23" column="76" selection-start-line="23" selection-start-column="76" selection-end-line="23" selection-end-column="76" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/horses/index.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="61" column="72" selection-start-line="61" selection-start-column="43" selection-end-line="61" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/races/index.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="69" column="44" selection-start-line="69" selection-start-column="44" selection-end-line="69" selection-end-column="93" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/welcome.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="33" column="65" selection-start-line="33" selection-start-column="65" selection-end-line="33" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/RaceDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="21" column="7" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
-          <folding>
-            <marker date="1502542449648" expanded="true" signature="826:980" ph="INSERT INTO `races`... " />
-            <marker date="1502542449648" expanded="true" signature="1041:1141" ph="INSERT INTO `horse_race`... " />
-            <marker date="1502542449648" expanded="true" signature="1202:1240" ph="SELECT * FRO... races" />
-            <marker date="1502542449648" expanded="true" signature="1302:1347" ph="SELECT * FRO... races" />
-            <marker date="1502542449648" expanded="true" signature="1402:1441" ph="SELECT COUNT... races" />
-            <marker date="1502542449648" expanded="true" signature="1505:1628" ph="SELECT * FRO... races" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/partials/head.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="64" selection-start-line="1" selection-start-column="64" selection-end-line="1" selection-end-column="64" />
+        <state relative-caret-position="-13">
+          <caret line="41" column="40" selection-start-line="41" selection-start-column="40" selection-end-line="41" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/RaceDAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="40" column="6" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
+        <state relative-caret-position="136">
+          <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="71" column="13" selection-start-line="71" selection-start-column="13" selection-end-line="71" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/races/index.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="10" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/tags/app.tag">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="74" selection-start-line="2" selection-start-column="74" selection-end-line="2" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/profile/partials/sidebar.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="94" selection-start-line="6" selection-start-column="46" selection-end-line="6" selection-end-column="94" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/partials/head.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="88" column="36" selection-start-line="88" selection-start-column="36" selection-end-line="88" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/HorseDAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="193" column="13" selection-start-line="193" selection-start-column="13" selection-end-line="193" selection-end-column="13" />
+          <folding>
+            <marker date="1502546846391" expanded="true" signature="835:901" ph="INSERT INTO `horses`... " />
+            <marker date="1502546846391" expanded="true" signature="957:1032" ph="UPDATE `hors... " />
+            <marker date="1502546846391" expanded="true" signature="1088:1121" ph="DELETE FROM " />
+            <marker date="1502546846391" expanded="true" signature="1181:1224" ph="SELECT * FRO... horses" />
+            <marker date="1502546846391" expanded="true" signature="1286:1331" ph="SELECT * FRO... horses" />
+            <marker date="1502546846391" expanded="true" signature="1388:1410" ph="SELECT * FRO... horses" />
+            <marker date="1502546846391" expanded="true" signature="1484:1691" ph="SELECT `h`.`... horses" />
+            <marker date="1502546846391" expanded="true" signature="1747:1787" ph="SELECT COUNT... horses" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/RaceDAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="126" column="34" selection-start-line="126" selection-start-column="34" selection-end-line="126" selection-end-column="34" />
+          <folding>
+            <marker date="1502546870899" expanded="true" signature="826:980" ph="INSERT INTO `races`... " />
+            <marker date="1502546870899" expanded="true" signature="1041:1141" ph="INSERT INTO `horse_race`... " />
+            <marker date="1502546870899" expanded="true" signature="1202:1266" ph="SELECT * FRO... races" />
+            <marker date="1502546870899" expanded="true" signature="1328:1373" ph="SELECT * FRO... races" />
+            <marker date="1502546870899" expanded="true" signature="1428:1467" ph="SELECT COUNT... races" />
+            <marker date="1502546870899" expanded="true" signature="1531:1653" ph="SELECT * FRO... races" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/SuitDAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="46" column="86" selection-start-line="46" selection-start-column="83" selection-end-line="46" selection-end-column="86" />
+          <folding>
+            <marker date="1502532591462" expanded="true" signature="594:631" ph="INSERT INTO `suits`... " />
+            <marker date="1502532591462" expanded="true" signature="686:726" ph="UPDATE `suit... " />
+            <marker date="1502532591462" expanded="true" signature="781:813" ph="DELETE FROM " />
+            <marker date="1502532591462" expanded="true" signature="874:918" ph="SELECT * FRO... suits" />
+            <marker date="1502532591462" expanded="true" signature="974:995" ph="SELECT * FRO... suits" />
+            <marker date="1502532591462" expanded="true" signature="1056:1108" ph="SELECT * FRO... suits" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/UserDAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="106">
+          <caret line="34" column="46" selection-start-line="34" selection-start-column="46" selection-end-line="34" selection-end-column="46" />
+          <folding>
+            <marker date="1502546871204" expanded="true" signature="919:999" ph="INSERT INTO `users`... " />
+            <marker date="1502546871204" expanded="true" signature="1061:1106" ph="SELECT * FRO... users" />
+            <marker date="1502546871204" expanded="true" signature="1165:1207" ph="SELECT * FRO... users" />
+            <marker date="1502546871204" expanded="true" signature="1263:1325" ph="SELECT * FRO... users" />
+            <marker date="1502546871204" expanded="true" signature="1385:1462" ph="SELECT `id`,... users" />
+            <marker date="1502546871204" expanded="true" signature="1523:1617" ph="SELECT `id`,... users" />
+            <marker date="1502546871204" expanded="true" signature="1681:1721" ph="UPDATE `user... " />
+            <marker date="1502546871204" expanded="true" signature="1785:1829" ph="UPDATE `user... " />
+            <marker date="1502546871204" expanded="true" signature="1892:1935" ph="UPDATE `user... " />
+            <marker date="1502546871204" expanded="true" signature="1990:2029" ph="SELECT COUNT... users" />
+          </folding>
         </state>
       </provider>
     </entry>

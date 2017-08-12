@@ -191,7 +191,6 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
             while (horses.next()) {
                 Horse horse = extractFrom(horses);
                 foundedHorses.add(horse);
-                LOGGER.log(Level.DEBUG, "Horse was added to list: " + horse);
             }
         } catch (SQLException e) {
             throw new DAOException("Cannot retrieve horses list. " + e.getMessage(), e);

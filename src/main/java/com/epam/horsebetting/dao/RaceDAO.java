@@ -40,10 +40,11 @@ public interface RaceDAO {
      * Obtain nearest of races.
      *
      * @param limit
+     * @param offset
      * @return races
      * @throws DAOException
      */
-    List<Race> obtainNearest(int limit) throws DAOException;
+    List<Race> obtainNearest(int limit, int offset) throws DAOException;
 
     /**
      * Create horses to race.

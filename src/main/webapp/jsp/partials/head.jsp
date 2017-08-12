@@ -39,10 +39,10 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/"><fmt:message key="menubar.home"/></a></li>
-                <li><a href="/races"><fmt:message key="menubar.races"/></a></li>
-                <li><a href="/about"><fmt:message key="menubar.about"/></a></li>
-                <li><a href="/contact"><fmt:message key="menubar.contact"/></a></li>
+                <li class="${commandName eq 'index::get' ? 'active' : ''}"><a href="/"><fmt:message key="menubar.home"/></a></li>
+                <li class="${commandName eq 'races::get' ? 'active' : ''}"><a href="/races"><fmt:message key="menubar.races"/></a></li>
+                <li class="${commandName eq 'about::get' ? 'active' : ''}"><a href="/about"><fmt:message key="menubar.about"/></a></li>
+                <li class="${commandName eq 'contact::get' ? 'active' : ''}"><a href="/contact"><fmt:message key="menubar.contact"/></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -81,8 +81,8 @@
                         </li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="/auth/login"><fmt:message key="menubar.auth.login"/></a></li>
-                        <li><a href="/auth/register"><fmt:message key="menubar.auth.register"/></a></li>
+                        <li class="${commandName eq 'auth.login::get' ? 'active' : ''}"><a href="/auth/login"><fmt:message key="menubar.auth.login"/></a></li>
+                        <li class="${commandName eq 'auth.register::get' ? 'active' : ''}"><a href="/auth/register"><fmt:message key="menubar.auth.register"/></a></li>
                     </c:otherwise>
                 </c:choose>
             </ul>
