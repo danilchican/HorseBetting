@@ -3,6 +3,8 @@ package com.epam.horsebetting.entity;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+import static com.epam.horsebetting.config.SQLFieldConfig.Bet.PARTICIPANT_NAME;
+
 public class Bet extends Entity {
     private int id;
     private int userId;
@@ -70,6 +72,15 @@ public class Bet extends Entity {
      */
     public Timestamp getCreatedAt() {
         return createdAt;
+    }
+
+    /**
+     * Get participant name.
+     *
+     * @return participant name
+     */
+    public String getParticipantName() {
+        return String.valueOf(findAttribute(PARTICIPANT_NAME));
     }
 
     /**

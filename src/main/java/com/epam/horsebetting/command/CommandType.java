@@ -3,6 +3,7 @@ package com.epam.horsebetting.command;
 import com.epam.horsebetting.command.auth.*;
 import com.epam.horsebetting.command.bet.AjaxPlaceBetCommand;
 import com.epam.horsebetting.command.horse.*;
+import com.epam.horsebetting.command.profile.ProfileBetsPresentCommand;
 import com.epam.horsebetting.command.profile.ProfilePaymentPresentCommand;
 import com.epam.horsebetting.command.profile.ProfileSettingsPresentCommand;
 import com.epam.horsebetting.command.race.*;
@@ -111,6 +112,12 @@ public enum CommandType {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {
             ((UserReceiverImpl) getCommand().getReceiver()).updateProfileBalance(content);
+        }
+    },
+    PROFILE_BETS("profile.bets::get", new ProfileBetsPresentCommand(new PageReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((PageReceiverImpl) getCommand().getReceiver()).presentProfileBetsPage(content);
         }
     },
     DASHBOARD_INDEX("dashboard::get", new DashboardPresentCommand(new PageReceiverImpl())) {

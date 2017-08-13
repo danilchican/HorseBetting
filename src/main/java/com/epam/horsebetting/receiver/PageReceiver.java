@@ -62,6 +62,13 @@ public interface PageReceiver {
     void presentProfilePaymentPage(RequestContent content);
 
     /**
+     * Present profile bets page.
+     *
+     * @param content
+     */
+    void presentProfileBetsPage(RequestContent content) throws ReceiverException;
+
+    /**
      * Present dashboard page.
      *
      * @param content

@@ -34,12 +34,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         this.setPageSubTitle("Главная");
         this.setDefaultContentAttributes(content);
 
-        RaceDAOImpl raceDAO = new RaceDAOImpl(false);
-
         final int limit = 10;
         final int offset = 0;
 
-        try {
+        try(RaceDAOImpl raceDAO = new RaceDAOImpl(false)) {
             List<Race> races = raceDAO.obtainNearest(limit, offset);
             content.insertRequestAttribute("races", races);
 
@@ -62,9 +60,8 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         // TODO create validator
 
         String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
-        RaceDAOImpl raceDAO = new RaceDAOImpl(false);
 
-        try {
+        try(RaceDAOImpl raceDAO = new RaceDAOImpl(false)) {
             final int limit = 15;
             final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
             final int offset = (page - 1) * limit;
@@ -185,6 +182,42 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
     }
 
     /**
+     * Present profile bets page.
+     *
+     * @param content
+     */
+    @Override
+    public void presentProfileBetsPage(RequestContent content) throws ReceiverException {
+        this.setPageSubTitle("Ставки");
+        this.setDefaultContentAttributes(content);
+
+        // TODO create validators
+
+        String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
+
+        User authorizedUser = (User)content.findRequestAttribute("user");
+
+        try (BetDAOImpl betDAO = new BetDAOImpl(false)) {
+            final int limit = 10;
+            final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
+            final int offset = (page - 1) * limit;
+            final int totalBets = betDAO.getTotalCount();
+
+            List<Bet> bets = betDAO.obtainPart(authorizedUser.getId(), limit, offset);
+
+            content.insertRequestAttribute("bets", bets);
+            content.insertRequestAttribute("totalBets", totalBets);
+            content.insertRequestAttribute("limitBets", limit);
+
+            LOGGER.log(Level.DEBUG, "Bets list: " + Arrays.toString(bets.toArray()));
+        } catch (NumberFormatException e) {
+            throw new ReceiverException("Cannot convert page to number. GET[page]=" + e.getMessage(), e);
+        } catch (DAOException e) {
+            throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        }
+    }
+
+    /**
      * Present dashboard page.
      *
      * @param content
@@ -208,9 +241,9 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         // TODO create validators
 
         String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
-        UserDAOImpl userDAO = new UserDAOImpl(false);
 
-        try {
+
+        try(UserDAOImpl userDAO = new UserDAOImpl(false)) {
             final int limit = 10;
             final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
             final int offset = (page - 1) * limit;
@@ -254,9 +287,8 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         // TODO create validators
 
         String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
-        HorseDAOImpl horseDAO = new HorseDAOImpl(false);
 
-        try {
+        try(HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
             final int limit = 10;
             final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
             final int offset = (page - 1) * limit;
@@ -358,9 +390,8 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         // TODO create validator
 
         String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
-        RaceDAOImpl raceDAO = new RaceDAOImpl(false);
 
-        try {
+        try(RaceDAOImpl raceDAO = new RaceDAOImpl(false)) {
             final int limit = 10;
             final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
             final int offset = (page - 1) * limit;

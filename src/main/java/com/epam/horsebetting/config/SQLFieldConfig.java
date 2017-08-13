@@ -48,4 +48,13 @@ public final class SQLFieldConfig {
         public static final String IS_WINNER = "is_winner";
         public static final String JOCKEY = "jockey";
     }
+
+    public final class Bet {
+        public static final String ID = "id";
+        public static final String USER_ID = "user_id";
+        public static final String PARTICIPANT_ID = "participant_id";
+        public static final String AMOUNT = "amount";
+        public static final String CREATED_AT = "created_at";
+        public static final String PARTICIPANT_NAME = "participant_name";
+    }
 }

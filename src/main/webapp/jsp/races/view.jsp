@@ -9,7 +9,9 @@
 
 <layout:app>
     <jsp:attribute name="includeScripts">
-        <script src="/assets/js/custom.js"></script>
+        <c:if test="${sessionScope.authorized != null}">
+            <script src="/assets/js/custom.js"></script>
+        </c:if>
     </jsp:attribute>
     <jsp:body>
         <div class="container">
@@ -37,7 +39,9 @@
                                         <th>#</th>
                                         <th><fmt:message key="form.participants.jockey"/></th>
                                         <th><fmt:message key="form.participants.coefficient"/></th>
-                                        <th><fmt:message key="form.participants.place_bet"/></th>
+                                        <c:if test="${sessionScope.authorized != null}">
+                                            <th><fmt:message key="form.participants.place_bet"/></th>
+                                        </c:if>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -46,15 +50,17 @@
                                             <td>${participant.getId()}</td>
                                             <td>${participant.getJockeyName()}</td>
                                             <td>${participant.getCoefficient()}</td>
-                                            <td>
-                                                <button type="button"
-                                                        data-participant="${participant.getId()}"
-                                                        data-coefficient="${participant.getCoefficient()}"
-                                                        data-jockey="${participant.getJockeyName()}"
-                                                        class="btn btn-default place-bet">
-                                                    <fmt:message key="form.participants.place_bet"/>
-                                                </button>
-                                            </td>
+                                            <c:if test="${sessionScope.authorized != null}">
+                                                <td>
+                                                    <button type="button"
+                                                            data-participant="${participant.getId()}"
+                                                            data-coefficient="${participant.getCoefficient()}"
+                                                            data-jockey="${participant.getJockeyName()}"
+                                                            class="btn btn-default place-bet">
+                                                        <fmt:message key="form.participants.place_bet"/>
+                                                    </button>
+                                                </td>
+                                            </c:if>
                                         </tr>
                                     </c:forEach>
                                     </tbody>
@@ -67,56 +73,56 @@
                     </c:otherwise>
                 </c:choose>
             </div>
-            <div class="col-md-5">
-
-            </div>
         </div>
         <!-- /container -->
-        <!-- Place Bet Modal -->
-        <div class="modal fade" id="placeBetModal" tabindex="-1" role="dialog" aria-labelledby="placeBetModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="placeBetModalLabel"><fmt:message key="block.bets.title"/></h4>
-                    </div>
-                    <div class="modal-body">
-                        <div id="messages"></div>
-                        <form>
-                            <input type="hidden" name="participant" id="participant">
-                            <label for="jockey"><fmt:message key="form.participants.jockey"/></label>
-                            <div class="form-group">
-                                <input type="text" value="" id="jockey" class="form-control" disabled>
-                            </div>
 
-                            <label for="coefficient"><fmt:message key="form.participants.coefficient"/></label>
-                            <div class="form-group">
-                                <input type="text" value="" id="coefficient" class="form-control" disabled>
-                            </div>
+        <c:if test="${sessionScope.authorized != null}">
+            <!-- Place Bet Modal -->
+            <div class="modal fade" id="placeBetModal" tabindex="-1" role="dialog" aria-labelledby="placeBetModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="placeBetModalLabel"><fmt:message key="block.bets.title"/></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div id="messages"></div>
+                            <form>
+                                <input type="hidden" name="participant" id="participant">
+                                <label for="jockey"><fmt:message key="form.participants.jockey"/></label>
+                                <div class="form-group">
+                                    <input type="text" value="" id="jockey" class="form-control" disabled>
+                                </div>
 
-                            <label for="bet-amount"><fmt:message key="form.bets.amount"/></label>
-                            <div class="input-group">
-                                <span class="input-group-addon">$</span>
-                                <input type="number" min="${race.getMinRate()}" value="${race.getMinRate()}"
-                                       id="bet-amount"
-                                       name="amount" class="form-control">
-                            </div>
-                            <br/>
-                            <p><b><fmt:message key="form.bets.estimated_returns"/>:</b> <span
-                                    id="estimated-returns"></span></p>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">
-                            <fmt:message key="button.cancel"/>
-                        </button>
-                        <button type="button" class="btn btn-primary" id="place-bet-btn">
-                            <fmt:message key="form.participants.place_bet"/>
-                        </button>
+                                <label for="coefficient"><fmt:message key="form.participants.coefficient"/></label>
+                                <div class="form-group">
+                                    <input type="text" value="" id="coefficient" class="form-control" disabled>
+                                </div>
+
+                                <label for="bet-amount"><fmt:message key="form.bets.amount"/></label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="number" min="${race.getMinRate()}" value="${race.getMinRate()}"
+                                           id="bet-amount"
+                                           name="amount" class="form-control">
+                                </div>
+                                <br/>
+                                <p><b><fmt:message key="form.bets.estimated_returns"/>:</b> <span
+                                        id="estimated-returns"></span></p>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                <fmt:message key="button.cancel"/>
+                            </button>
+                            <button type="button" class="btn btn-primary" id="place-bet-btn">
+                                <fmt:message key="form.participants.place_bet"/>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </c:if>
     </jsp:body>
 </layout:app>
