@@ -48,6 +48,7 @@
                                             <td>${participant.getCoefficient()}</td>
                                             <td>
                                                 <button type="button"
+                                                        data-participant="${participant.getId()}"
                                                         data-coefficient="${participant.getCoefficient()}"
                                                         data-jockey="${participant.getJockeyName()}"
                                                         class="btn btn-default place-bet">
@@ -82,8 +83,8 @@
                     </div>
                     <div class="modal-body">
                         <div id="messages"></div>
-                        <form action="/profile/bets/create" method="post">
-                            <input type="hidden" name="race-id" value="${race.getId()}">
+                        <form>
+                            <input type="hidden" name="participant" id="participant">
                             <label for="jockey"><fmt:message key="form.participants.jockey"/></label>
                             <div class="form-group">
                                 <input type="text" value="" id="jockey" class="form-control" disabled>

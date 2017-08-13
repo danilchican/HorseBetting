@@ -22,7 +22,7 @@ public abstract class AbstractValidator {
     /**
      * Regular expressions for variables.
      */
-    protected static final String DEFAULT_NAME_REGEX = "[a-zA-Zа-яА-ЯёЁ0-9 ]+";
+    static final String DEFAULT_NAME_REGEX = "[a-zA-Zа-яА-ЯёЁ0-9 ]+";
 
     /**
      * Default constructor.

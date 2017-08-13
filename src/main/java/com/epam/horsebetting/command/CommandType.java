@@ -1,6 +1,7 @@
 package com.epam.horsebetting.command;
 
 import com.epam.horsebetting.command.auth.*;
+import com.epam.horsebetting.command.bet.AjaxPlaceBetCommand;
 import com.epam.horsebetting.command.horse.*;
 import com.epam.horsebetting.command.profile.ProfilePaymentPresentCommand;
 import com.epam.horsebetting.command.profile.ProfileSettingsPresentCommand;
@@ -68,6 +69,12 @@ public enum CommandType {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {
             ((PageReceiverImpl) getCommand().getReceiver()).presentRaceViewPage(content);
+        }
+    },
+    AJAX_BETS_PLACE("ajax.bets.place::post", new AjaxPlaceBetCommand(new BetReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((BetReceiverImpl) getCommand().getReceiver()).createBet(content);
         }
     },
     PROFILE_INDEX("profile::get", new ProfilePresentCommand(new PageReceiverImpl())) {

@@ -39,6 +39,12 @@ public final class FormFieldConfig {
         public static final String HORSE_COEFFICIENTS_FIELD = "horse-coefficients";
     }
 
+    public final class Bet {
+        public static final String ID = "id";
+        public static final String PARTICIPANT_ID = "participant_id";
+        public static final String AMOUNT = "amount";
+    }
+
     public final class Locale {
         public static final String LANG_FIELD = "lang";
     }

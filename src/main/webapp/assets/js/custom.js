@@ -5,6 +5,7 @@ $(document).ready(function () {
 
     var inputJockey = $('input#jockey');
     var inputCoefficient = $('input#coefficient');
+    var inputParticipant = $('input#participant');
 
     var amount = $('#bet-amount');
     var estimated = $('#estimated-returns');
@@ -14,9 +15,13 @@ $(document).ready(function () {
     $('.place-bet').click(function () {
         var jockey = $(this).data('jockey');
         coefficient = $(this).data('coefficient');
+        var participant_id = $(this).data('participant');
+
+        console.log("part: " + participant_id);
 
         inputCoefficient.val(coefficient);
         inputJockey.val(jockey);
+        inputParticipant.val(participant_id);
 
         estimated.text((amount.val() * coefficient).toFixed(2) + "$");
 
@@ -33,13 +38,15 @@ $(document).ready(function () {
     placeBetBtn.click(function () {
         $('#messages').empty();
 
-        $.post('/ajax/profile/bets/create', {
-            race_id: $("input[name='race-id']").val(),
-            amount: $("input[name='amount']").val()
-        })
+        var data = {
+            amount: $("input[name='amount']").val(),
+            participant_id: $("input[name='participant']").val(),
+        };
+
+        $.post('/ajax/bets/place', data)
             .done(function (data) {
                 // success callback
-                console.log("data betsCreate:");
+                console.log("data createBet:");
                 console.log(data);
 
                 if (data.success === true) {
@@ -61,17 +68,8 @@ $(document).ready(function () {
                     }
                 }
             })
-            .fail(function (data) {
-                console.log("fail");
-                if (data.errors !== undefined) {
-                    // error callback
-                    var htmlErrors = '<ul class="alert alert-danger">';
-                    $.each(data.errors, function (key, value) {
-                        htmlErrors += '<li>' + value + '</li>';
-                    });
-                    htmlErrors += '</ul></div>';
-                    $('#messages').html(htmlErrors);
-                }
+            .fail(function () {
+                alert('Ошибка сервера. Попробуйте позже.');
             });
 
     });
