@@ -28,6 +28,7 @@
               catalog="{ftl:${DB_DATABASE}}"/>
 
     <bean id="idGen" spec="new IncrementGenerator(1)"/>
+    <bean id="winnerGen" spec="new IncrementGenerator(1)"/>
 
     <bean id="datetime_gen" class="DateTimeGenerator">
         <property name="minDate" value="2017-01-01"/>
@@ -84,7 +85,8 @@
     <generate type="races" count="{ftl:${MAX_RACES_COUNT}}" consumer="db">
         <variable name="address" generator="AddressGenerator" dataset="world"/>
 
-        <attribute name="title" type="string" script="{ftl:The race in ${address.country}, ${address.city}}" unique="true"/>
+        <attribute name="title" type="string" script="{ftl:The race in ${address.country}, ${address.city}}"
+                   unique="true"/>
         <attribute name="place" type="string" unique="true"
                    script="{ftl:${address.country}, ${address.city}, ${address.street}}"/>
         <attribute name="min_rate" type="big_decimal" min="10.00" max="500.00" distribution="random"/>
@@ -95,12 +97,19 @@
         <attribute name="started_at" type="date"
                    script="this.get('created_at') + (86400000 * RandomUtil.randomInt(3, 20))"/>
         <attribute name="bet_end_date" type="timestamp" script="this.get('started_at') - 86400000 * 2"/>
-        <generate type="horse_race" count="5" consumer="db">
+
+        <generate type="participants" count="5" consumer="db">
+            <variable name="gen" generator="new IncrementGenerator(1)"/>
+            <variable name="asd" script="races.is_finished" type="boolean"/>
+
             <id name="id" mode="ignored"/>
             <reference name="horse_id" source="db" unique="true" targetType="horses" distribution="random"/>
             <reference name="race_id" source="db" targetType="horses" script="races.id"/>
             <attribute name="coefficient" type="big_decimal" min="1.2" max="10.00" granularity="0.03"
                        distribution="random"/>
+            <attribute name="is_winner" type="boolean" condition="asd == true"
+                       script="{gen % 5 == 0 ? true : false}"/>
+            <attribute name="is_winner" type="boolean" condition="asd != true" constant="false"/>
         </generate>
     </generate>
 </setup>

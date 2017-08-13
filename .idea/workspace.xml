@@ -2,18 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e9db2c3d-90c7-4a9a-9541-77ab3b3b2a13" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/race/ViewRacePresentCommand.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/races/view.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/PageConfig.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/PageConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/SQLFieldConfig.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/SQLFieldConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/RaceDAO.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/RaceDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/RaceDAOImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/RaceDAOImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/AbstractReceiver.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/AbstractReceiver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/PageReceiver.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/PageReceiver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/config/pages.properties" afterPath="$PROJECT_DIR$/src/main/resources/config/pages.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/benerator/benerator.xml" afterPath="$PROJECT_DIR$/src/main/resources/benerator/benerator.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/benerator/queries/create_tables.sql" afterPath="$PROJECT_DIR$/src/main/resources/benerator/queries/create_tables.sql" />
     </list>
     <ignored path="HorseBetting.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -74,20 +65,30 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RaceDAOImpl.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RaceDAOImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/RaceDAOImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+            <state relative-caret-position="119">
+              <caret line="30" column="24" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
               <folding>
-                <marker date="1502551404604" expanded="true" signature="826:980" ph="INSERT INTO `races`... " />
-                <marker date="1502551404604" expanded="true" signature="1041:1141" ph="INSERT INTO `horse_race`... " />
-                <marker date="1502551404604" expanded="true" signature="1202:1266" ph="SELECT * FRO... races" />
-                <marker date="1502551404604" expanded="true" signature="1328:1373" ph="SELECT * FRO... races" />
-                <marker date="1502551404604" expanded="true" signature="1432:1474" ph="SELECT * FRO... races" />
-                <marker date="1502551404604" expanded="true" signature="1529:1568" ph="SELECT COUNT... races" />
-                <marker date="1502551404604" expanded="true" signature="1632:1754" ph="SELECT * FRO... races" />
+                <marker date="1502560755016" expanded="true" signature="826:980" ph="INSERT INTO `races`... " />
+                <marker date="1502560755016" expanded="true" signature="1041:1141" ph="INSERT INTO `horse_race`... " />
+                <marker date="1502560755016" expanded="true" signature="1202:1266" ph="SELECT * FRO... races" />
+                <marker date="1502560755016" expanded="true" signature="1328:1373" ph="SELECT * FRO... races" />
+                <marker date="1502560755016" expanded="true" signature="1432:1474" ph="SELECT * FRO... races" />
+                <marker date="1502560755016" expanded="true" signature="1529:1568" ph="SELECT COUNT... races" />
+                <marker date="1502560755016" expanded="true" signature="1632:1754" ph="SELECT * FRO... races" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="benerator.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/benerator/benerator.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="214">
+              <caret line="114" column="8" selection-start-line="114" selection-start-column="8" selection-end-line="114" selection-end-column="8" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -173,7 +174,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/UserReceiverImpl.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/tags/dashboard.tag" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/request/RequestContent.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/benerator/benerator.xml" />
         <option value="$PROJECT_DIR$/src/main/webapp/jsp/welcome.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/race/RacesPresetCommand.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/jsp/races/index.jsp" />
@@ -191,8 +191,9 @@
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/RaceDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/CommandType.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/RaceDAOImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/config/SQLFieldConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/RaceDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/benerator/benerator.xml" />
       </list>
     </option>
   </component>
@@ -308,8 +309,26 @@
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
+              <option name="myItemId" value="HorseBetting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HorseBettingProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -331,213 +350,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
+              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HorseBetting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HorseBettingProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="races" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HorseBetting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HorseBettingProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HorseBetting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HorseBettingProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="horsebetting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HorseBetting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HorseBettingProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="horsebetting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dao" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HorseBetting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HorseBettingProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="horsebetting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dao" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="impl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HorseBetting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HorseBettingProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="horsebetting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="command" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HorseBetting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HorseBettingProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="horsebetting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="command" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="race" />
+              <option name="myItemId" value="benerator" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1146,14 +963,7 @@
       <workItem from="1501775326791" duration="136556000" />
       <workItem from="1502355136487" duration="28634000" />
       <workItem from="1502391118786" duration="47956000" />
-      <workItem from="1502482481969" duration="26609000" />
-    </task>
-    <task id="LOCAL-00153" summary="Fixed vue buttons.">
-      <created>1502228156309</created>
-      <option name="number" value="00153" />
-      <option name="presentableId" value="LOCAL-00153" />
-      <option name="project" value="LOCAL" />
-      <updated>1502228156309</updated>
+      <workItem from="1502482481969" duration="39856000" />
     </task>
     <task id="LOCAL-00154" summary="Fixed race horses view.">
       <created>1502269583334</created>
@@ -1491,7 +1301,14 @@
       <option name="project" value="LOCAL" />
       <updated>1502547046626</updated>
     </task>
-    <option name="localTasksCounter" value="202" />
+    <task id="LOCAL-00202" summary="Created base structure of viewing race.">
+      <created>1502556622172</created>
+      <option name="number" value="00202" />
+      <option name="presentableId" value="LOCAL-00202" />
+      <option name="project" value="LOCAL" />
+      <updated>1502556622172</updated>
+    </task>
+    <option name="localTasksCounter" value="203" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1527,7 +1344,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="625489000" />
+    <option name="totallyTimeSpent" value="638736000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1562,7 +1379,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38424438" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5385852" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2730711" sideWeight="0.4785276" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28290468" sideWeight="0.4785276" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28139183" sideWeight="0.5214724" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3279743" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1634,14 +1451,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/horse/DashboardCreateHorsePresentCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/command/user/DashboardUsersPresentCommand.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="296">
@@ -1833,14 +1642,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="61" column="72" selection-start-line="61" selection-start-column="43" selection-end-line="61" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/benerator/benerator.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="32" column="42" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="42" />
           <folding />
         </state>
       </provider>
@@ -2084,17 +1885,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/dao/impl/RaceDAOImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+        <state relative-caret-position="119">
+          <caret line="30" column="24" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
           <folding>
-            <marker date="1502551404604" expanded="true" signature="826:980" ph="INSERT INTO `races`... " />
-            <marker date="1502551404604" expanded="true" signature="1041:1141" ph="INSERT INTO `horse_race`... " />
-            <marker date="1502551404604" expanded="true" signature="1202:1266" ph="SELECT * FRO... races" />
-            <marker date="1502551404604" expanded="true" signature="1328:1373" ph="SELECT * FRO... races" />
-            <marker date="1502551404604" expanded="true" signature="1432:1474" ph="SELECT * FRO... races" />
-            <marker date="1502551404604" expanded="true" signature="1529:1568" ph="SELECT COUNT... races" />
-            <marker date="1502551404604" expanded="true" signature="1632:1754" ph="SELECT * FRO... races" />
+            <marker date="1502560755016" expanded="true" signature="826:980" ph="INSERT INTO `races`... " />
+            <marker date="1502560755016" expanded="true" signature="1041:1141" ph="INSERT INTO `horse_race`... " />
+            <marker date="1502560755016" expanded="true" signature="1202:1266" ph="SELECT * FRO... races" />
+            <marker date="1502560755016" expanded="true" signature="1328:1373" ph="SELECT * FRO... races" />
+            <marker date="1502560755016" expanded="true" signature="1432:1474" ph="SELECT * FRO... races" />
+            <marker date="1502560755016" expanded="true" signature="1529:1568" ph="SELECT COUNT... races" />
+            <marker date="1502560755016" expanded="true" signature="1632:1754" ph="SELECT * FRO... races" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/databene/databene-benerator/0.9.8/databene-benerator-0.9.8.jar!/org/databene/benerator/benerator-0.9.8.xsd">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="667" column="8" selection-start-line="667" selection-start-column="8" selection-end-line="667" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/benerator/benerator.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="114" column="8" selection-start-line="114" selection-start-column="8" selection-end-line="114" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -19,6 +19,47 @@ CREATE SCHEMA IF NOT EXISTS `horsebetting` DEFAULT CHARACTER SET utf8 ;
 USE `horsebetting` ;
 
 -- -----------------------------------------------------
+-- Table `horsebetting`.`roles`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `horsebetting`.`roles` ;
+
+CREATE TABLE IF NOT EXISTS `horsebetting`.`roles` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `horsebetting`.`users`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `horsebetting`.`users` ;
+
+CREATE TABLE IF NOT EXISTS `horsebetting`.`users` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `role_id` INT(10) UNSIGNED NOT NULL,
+  `name` VARCHAR(255) NULL DEFAULT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(60) NOT NULL,
+  `balance` DECIMAL(16,2) NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  INDEX `fk_role_id_idx` (`role_id` ASC),
+  CONSTRAINT `users_role_id_foreign`
+    FOREIGN KEY (`role_id`)
+    REFERENCES `horsebetting`.`roles` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
 -- Table `horsebetting`.`suits`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `horsebetting`.`suits` ;
@@ -79,40 +120,29 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `horsebetting`.`roles`
+-- Table `horsebetting`.`participants`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `horsebetting`.`roles` ;
+DROP TABLE IF EXISTS `horsebetting`.`participants` ;
 
-CREATE TABLE IF NOT EXISTS `horsebetting`.`roles` (
+CREATE TABLE IF NOT EXISTS `horsebetting`.`participants` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `horsebetting`.`users`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `horsebetting`.`users` ;
-
-CREATE TABLE IF NOT EXISTS `horsebetting`.`users` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `role_id` INT(10) UNSIGNED NOT NULL,
-  `name` VARCHAR(255) NULL DEFAULT NULL,
-  `email` VARCHAR(255) NOT NULL,
-  `password` VARCHAR(60) NOT NULL,
-  `balance` DECIMAL(16,2) NOT NULL,
-  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
+  `horse_id` INT(10) UNSIGNED NOT NULL,
+  `race_id` INT(10) UNSIGNED NOT NULL,
+  `coefficient` DECIMAL(4,2) UNSIGNED NOT NULL,
+  `is_winner` TINYINT(1) UNSIGNED NULL DEFAULT NULL,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  INDEX `fk_role_id_idx` (`role_id` ASC),
-  CONSTRAINT `users_role_id_foreign`
-    FOREIGN KEY (`role_id`)
-    REFERENCES `horsebetting`.`roles` (`id`)
+  INDEX `fk_horse_id_idx` (`horse_id` ASC),
+  INDEX `fk_race_id_idx` (`race_id` ASC),
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `horse_race_id_UNIQUE` (`horse_id` ASC, `race_id` ASC),
+  CONSTRAINT `horse_race_horse_id_foreign`
+    FOREIGN KEY (`horse_id`)
+    REFERENCES `horsebetting`.`horses` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `horse_race_race_id_foreign`
+    FOREIGN KEY (`race_id`)
+    REFERENCES `horsebetting`.`races` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -127,57 +157,21 @@ DROP TABLE IF EXISTS `horsebetting`.`bets` ;
 CREATE TABLE IF NOT EXISTS `horsebetting`.`bets` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` INT(10) UNSIGNED NOT NULL,
-  `race_id` INT(10) UNSIGNED NOT NULL,
-  `horse_id` INT(10) UNSIGNED NOT NULL,
+  `participant_id` INT(10) UNSIGNED NOT NULL,
   `amount` DECIMAL(16,2) UNSIGNED NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `fk_user_id_idx` (`user_id` ASC),
-  INDEX `fk_race_id_idx` (`race_id` ASC),
-  INDEX `fk_horse_id_idx` (`horse_id` ASC),
-  CONSTRAINT `bets_horse_id_foreign`
-    FOREIGN KEY (`horse_id`)
-    REFERENCES `horsebetting`.`horses` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `bets_race_id_foreign`
-    FOREIGN KEY (`race_id`)
-    REFERENCES `horsebetting`.`races` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+  INDEX `bets_participant_id_foreign_idx` (`participant_id` ASC),
   CONSTRAINT `bets_user_id_foreign`
     FOREIGN KEY (`user_id`)
     REFERENCES `horsebetting`.`users` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `horsebetting`.`horse_race`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `horsebetting`.`horse_race` ;
-
-CREATE TABLE IF NOT EXISTS `horsebetting`.`horse_race` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `horse_id` INT(10) UNSIGNED NOT NULL,
-  `race_id` INT(10) UNSIGNED NOT NULL,
-  `coefficient` DECIMAL(4,2) UNSIGNED NOT NULL,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  INDEX `fk_horse_id_idx` (`horse_id` ASC),
-  INDEX `fk_race_id_idx` (`race_id` ASC),
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `horse_race_id_UNIQUE` (`horse_id` ASC, `race_id` ASC),
-  CONSTRAINT `horse_race_horse_id_foreign`
-    FOREIGN KEY (`horse_id`)
-    REFERENCES `horsebetting`.`horses` (`id`)
-    ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `horse_race_race_id_foreign`
-    FOREIGN KEY (`race_id`)
-    REFERENCES `horsebetting`.`races` (`id`)
+  CONSTRAINT `bets_participant_id_foreign`
+    FOREIGN KEY (`participant_id`)
+    REFERENCES `horsebetting`.`participants` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
