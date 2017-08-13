@@ -28,8 +28,8 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
     private static final String SQL_ADD_RACE = "INSERT INTO `races` " +
             "(title, place, min_rate, track_length, is_finished, bet_end_date, started_at)" +
             " VALUES (?,?,?,?,?,?,?);";
-    private static final String SQL_INSERT_HORSE_RACE = "INSERT INTO `horse_race` " +
-            "(`horse_id`, `race_id`, `coefficient`)" + " VALUES (?,?,?);";
+    private static final String SQL_INSERT_HORSE_RACE = "INSERT INTO `participants` " +
+            "(`horse_id`, `race_id`, `coefficient`, `is_finished`)" + " VALUES (?,?,?,?);";
     private static final String SQL_SELECT_PART_RACES = "SELECT * FROM `races` ORDER BY `started_at` ASC LIMIT ? OFFSET ?;";
     private static final String SQL_FIND_RACE_BY_TITLE = "SELECT * FROM `races` WHERE `title`=? LIMIT 1;";
     private static final String SQL_FIND_RACE_BY_ID = "SELECT * FROM `races` WHERE `id`=? LIMIT 1;";
@@ -197,6 +197,7 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
     public void createHorsesToRace(HashMap<Integer, BigDecimal> horses, Race race) throws DAOException {
         int affectedHorses[];
 
+        // TODO rewrite to Participant class
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_HORSE_RACE)) {
             for (Map.Entry<Integer, BigDecimal> horse : horses.entrySet()) {
                 statement.setInt(1, horse.getKey());
@@ -246,7 +247,8 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
      * @return race instance
      * @throws SQLException
      */
-    private Race extractFrom(ResultSet raceDataSet) throws SQLException {
+    @Override
+    public Race extractFrom(ResultSet raceDataSet) throws SQLException {
         Race race = new Race();
 
         race.setId(raceDataSet.getInt(SQLFieldConfig.Race.ID));

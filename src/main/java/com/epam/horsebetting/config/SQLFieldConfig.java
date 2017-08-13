@@ -39,4 +39,12 @@ public final class SQLFieldConfig {
         public static final String CREATED_AT = "created_at";
         public static final String STARTED_AT = "started_at";
     }
+
+    public final class Participant {
+        public static final String ID = "id";
+        public static final String HORSE_ID = "horse_id";
+        public static final String RACE_ID = "race_id";
+        public static final String COEFFICIENT = "coefficient";
+        public static final String IS_WINNER = "is_winner";
+    }
 }

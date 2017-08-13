@@ -4,6 +4,8 @@ import com.epam.horsebetting.entity.Race;
 import com.epam.horsebetting.exception.DAOException;
 
 import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -70,4 +72,13 @@ public interface RaceDAO {
      * @throws DAOException
      */
     int getTotalCount() throws DAOException;
+
+    /**
+     * Extract race data from result set to race instance.
+     *
+     * @param raceDataSet
+     * @return race instance
+     * @throws SQLException
+     */
+    Race extractFrom(ResultSet raceDataSet) throws SQLException;
 }

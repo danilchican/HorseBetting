@@ -1,15 +1,9 @@
 package com.epam.horsebetting.receiver.impl;
 
 import com.epam.horsebetting.config.FormFieldConfig;
-import com.epam.horsebetting.dao.impl.HorseDAOImpl;
-import com.epam.horsebetting.dao.impl.RaceDAOImpl;
-import com.epam.horsebetting.dao.impl.SuitDAOImpl;
-import com.epam.horsebetting.dao.impl.UserDAOImpl;
+import com.epam.horsebetting.dao.impl.*;
 import com.epam.horsebetting.database.TransactionManager;
-import com.epam.horsebetting.entity.Horse;
-import com.epam.horsebetting.entity.Race;
-import com.epam.horsebetting.entity.Suit;
-import com.epam.horsebetting.entity.User;
+import com.epam.horsebetting.entity.*;
 import com.epam.horsebetting.exception.DAOException;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.AbstractReceiver;
@@ -19,6 +13,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -101,14 +96,15 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         // TODO create validators
 
         RaceDAOImpl raceDAO = new RaceDAOImpl(true);
-        TransactionManager transaction = new TransactionManager(raceDAO);
+        ParticipantDAOImpl participantDAO = new ParticipantDAOImpl(true);
+        TransactionManager transaction = new TransactionManager(raceDAO, participantDAO);
         transaction.beginTransaction();
 
         try {
             final int id = idNum != null ? Integer.parseInt(idNum) : 1;
             Race race = raceDAO.find(id);
 
-            if(race == null) {
+            if (race == null) {
                 transaction.rollback();
                 throw new ReceiverException("Cannot find race with id=" + id);
             }
@@ -116,9 +112,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
             this.setPageSubTitle(race.getTitle());
             this.setDefaultContentAttributes(content);
 
-            content.insertRequestAttribute("race", race);
+            List<Participant> participants = participantDAO.findByRaceId(race.getId());
 
-            // TODO извлечь участников
+            content.insertRequestAttribute("race", race);
+            content.insertRequestAttribute("participants", participants);
 
             transaction.commit();
         } catch (NumberFormatException e) {
@@ -323,7 +320,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
             final int id = idNum != null ? Integer.parseInt(idNum) : 1;
             Horse horse = horseDAO.find(id);
 
-            if(horse == null) {
+            if (horse == null) {
                 transaction.rollback();
                 throw new ReceiverException("Cannot find horse with id=" + id);
             }

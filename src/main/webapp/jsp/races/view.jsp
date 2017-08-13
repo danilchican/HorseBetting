@@ -10,6 +10,8 @@
 <layout:app>
     <div class="container">
         ${race}
+        <br/>
+        ${participants}
     </div>
     <!-- /container -->
 </layout:app>
