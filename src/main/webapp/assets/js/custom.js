@@ -68,8 +68,18 @@ $(document).ready(function () {
                     }
                 }
             })
-            .fail(function () {
-                alert('Ошибка сервера. Попробуйте позже.');
+            .fail(function (response) {
+                var data = response.responseJSON;
+
+                console.log(data);
+                if (data.errors !== undefined) {
+                    var htmlErrors = '<div class="alert alert-danger">';
+                    htmlErrors += data.errors;
+                    htmlErrors += '</div>';
+                    $('#messages').html(htmlErrors);
+                } else {
+                    alert('Ошибка сервера. Попробуйте позже.');
+                }
             });
 
     });

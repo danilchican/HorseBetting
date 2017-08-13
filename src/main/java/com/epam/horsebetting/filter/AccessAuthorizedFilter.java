@@ -1,5 +1,6 @@
 package com.epam.horsebetting.filter;
 
+import com.google.gson.Gson;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-public class AccessProfileFilter implements Filter {
+public class AccessAuthorizedFilter implements Filter {
 
     /**
      * Logger to write logs.
@@ -26,6 +29,8 @@ public class AccessProfileFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
 
+        HashMap<String, String> errors = new HashMap<>();
+
         HttpSession session = request.getSession();
         Object userObj = session.getAttribute("authorized");
 
@@ -35,7 +40,17 @@ public class AccessProfileFilter implements Filter {
             chain.doFilter(req, resp);
         } else {
             LOGGER.log(Level.DEBUG, "User not authenticated. Redirected to login.");
-            response.sendRedirect("/auth/login");
+
+            if(request.getRequestURI().startsWith("/ajax")) {
+                errors.put("errors", "User not authenticated.");
+                String json = new Gson().toJson(errors);
+
+                response.setContentType("application/json");
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                response.getWriter().write(json);
+            } else {
+                response.sendRedirect("/auth/login");
+            }
         }
     }
 
