@@ -5,27 +5,6 @@
 <fmt:setLocale value="${locale}" scope="session"/>
 <fmt:setBundle basename="/localization/lang"/>
 
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><ctg:pageTitle title="${pageTitle}" subTitle="${pageSubTitle}"/></title>
-    <meta name="_previous" content="${sessionScope._previous}">
-
-    <!-- Bootstrap -->
-    <link href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/fonts.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/styles.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
-<body>
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
@@ -41,7 +20,6 @@
             <ul class="nav navbar-nav">
                 <li class="${commandName eq 'index::get' ? 'active' : ''}"><a href="/"><fmt:message key="menubar.home"/></a></li>
                 <li class="${commandName eq 'races::get' ? 'active' : ''}"><a href="/races"><fmt:message key="menubar.races"/></a></li>
-                <li class="${commandName eq 'about::get' ? 'active' : ''}"><a href="/about"><fmt:message key="menubar.about"/></a></li>
                 <li class="${commandName eq 'contact::get' ? 'active' : ''}"><a href="/contact"><fmt:message key="menubar.contact"/></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

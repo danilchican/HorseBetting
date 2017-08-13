@@ -17,7 +17,9 @@ public class ParticipantDAOImpl extends AbstractDAO<Participant> implements Part
     /**
      * SQL queries for ParticipantDAOImpl.
      */
-    private static final String SQL_FIND_PARTICIPANTS_BY_RACE_ID = "SELECT * FROM `participants` WHERE `race_id`=?;";
+    private static final String SQL_FIND_PARTICIPANTS_BY_RACE_ID = "SELECT `p`.`id`, `p`.`horse_id`, " +
+            "`p`.`race_id`, `p`.`coefficient`, `p`.`is_winner`, `h`.`name` AS `jockey` FROM `participants` AS `p` " +
+            "LEFT JOIN `horses` AS `h` ON `p`.`horse_id`=`h`.`id` WHERE `p`.`race_id`=?;";
 
     /**
      * Default constructor connection.
@@ -82,6 +84,11 @@ public class ParticipantDAOImpl extends AbstractDAO<Participant> implements Part
         participant.setRaceId(dataSet.getInt(SQLFieldConfig.Participant.RACE_ID));
         participant.setCoefficient(dataSet.getBigDecimal(SQLFieldConfig.Participant.COEFFICIENT));
         participant.setWinner(dataSet.getBoolean(SQLFieldConfig.Participant.IS_WINNER));
+
+        if (hasColumn(dataSet, SQLFieldConfig.Participant.JOCKEY)) {
+            participant.insertAttribute(SQLFieldConfig.Participant.JOCKEY,
+                    dataSet.getString(SQLFieldConfig.Participant.JOCKEY));
+        }
 
         return participant;
     }

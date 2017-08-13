@@ -46,5 +46,6 @@ public final class SQLFieldConfig {
         public static final String RACE_ID = "race_id";
         public static final String COEFFICIENT = "coefficient";
         public static final String IS_WINNER = "is_winner";
+        public static final String JOCKEY = "jockey";
     }
 }

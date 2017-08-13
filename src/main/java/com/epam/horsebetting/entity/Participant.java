@@ -2,6 +2,8 @@ package com.epam.horsebetting.entity;
 
 import java.math.BigDecimal;
 
+import static com.epam.horsebetting.config.SQLFieldConfig.Participant.JOCKEY;
+
 public class Participant extends Entity {
     private int id;
     private int horseId;
@@ -66,6 +68,15 @@ public class Participant extends Entity {
      */
     public boolean isWinner() {
         return isWinner;
+    }
+
+    /**
+     * Get jockey name.
+     *
+     * @return jockey name
+     */
+    public String getJockeyName() {
+        return String.valueOf(findAttribute(JOCKEY));
     }
 
     /**

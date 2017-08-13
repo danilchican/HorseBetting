@@ -3,7 +3,7 @@
 <div class="container">
     <hr />
     <footer>
-        <p>© Company 2017</p>
+        <p>© HorseBetting 2017</p>
     </footer>
 </div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -11,5 +11,3 @@
 
 <!-- Compiled plugins -->
 <script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
-</body>
-</html>

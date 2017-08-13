@@ -1,5 +1,7 @@
 package com.epam.horsebetting.entity;
 
+import static com.epam.horsebetting.config.SQLFieldConfig.Horse.SUIT_NAME;
+
 public class Horse extends Entity {
     private int id;
     private int suitId;
@@ -92,7 +94,7 @@ public class Horse extends Entity {
      * @return suit name
      */
     public String getSuitName() {
-        return String.valueOf(findAttribute("suit_name"));
+        return String.valueOf(findAttribute(SUIT_NAME));
     }
 
     /**
