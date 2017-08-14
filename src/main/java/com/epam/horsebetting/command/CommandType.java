@@ -54,6 +54,18 @@ public enum CommandType {
             ((UserReceiverImpl) getCommand().getReceiver()).logout(content);
         }
     },
+    RESET_PASSWORD("password.reset::get", new ResetPasswordPresentCommand(new PageReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) {
+            ((PageReceiverImpl) getCommand().getReceiver()).presentResetPasswordPage(content);
+        }
+    },
+    RESET_PASSWORD_FORM("password.reset::post", new ResetPasswordCommand(new UserReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((UserReceiverImpl) getCommand().getReceiver()).resetPassword(content);
+        }
+    },
     CHANGE_LOCALE("locale.change::get", new ChangeLocaleCommand(new UserReceiverImpl())) {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {

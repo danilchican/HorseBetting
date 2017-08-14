@@ -134,6 +134,16 @@ public class UserValidator extends AbstractValidator {
     }
 
     /**
+     * Validate reset password form.
+     *
+     * @param email
+     * @return boolean
+     */
+    public boolean validateResetPasswordForm(String email) {
+        return validateEmail(email, FormFieldConfig.User.EMAIL_FIELD, "Email");
+    }
+
+    /**
      * Validate name. Not required.
      *
      * @param name

@@ -49,6 +49,13 @@ public interface UserReceiver {
     void updateProfileBalance(RequestContent content) throws ReceiverException;
 
     /**
+     * Reset password by sending reset link to email.
+     *
+     * @param content
+     */
+    void resetPassword(RequestContent content) throws ReceiverException;
+
+    /**
      * Change locale.
      *
      * @param content

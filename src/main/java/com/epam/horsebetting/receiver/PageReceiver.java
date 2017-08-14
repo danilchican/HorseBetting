@@ -41,6 +41,13 @@ public interface PageReceiver {
     void presentRegisterPage(RequestContent content);
 
     /**
+     * Present reset password page.
+     *
+     * @param content
+     */
+    void presentResetPasswordPage(RequestContent content);
+
+    /**
      * Present profile page.
      *
      * @param content

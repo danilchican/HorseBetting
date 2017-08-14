@@ -149,6 +149,17 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
     }
 
     /**
+     * Present reset password page.
+     *
+     * @param content
+     */
+    @Override
+    public void presentResetPasswordPage(RequestContent content) {
+        this.setPageSubTitle("Восстановление пароля");
+        this.setDefaultContentAttributes(content);
+    }
+
+    /**
      * Present profile page.
      *
      * @param content
