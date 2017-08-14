@@ -25,6 +25,8 @@ public class BetDAOImpl extends AbstractDAO<Bet> implements BetDAO {
     /**
      * SQL queries for BetDAOImpl.
      */
+    private static final String SQL_FIND_BET_BY_ID = "SELECT * FROM `bets` WHERE `id`=? LIMIT 1;";
+    private static final String SQL_REMOVE_BET_BY_ID = "DELETE FROM `bets` WHERE `id`=?;";
     private static final String SQL_ADD_BET = "INSERT INTO `bets` (user_id, participant_id, amount) VALUES (?,?,?);";
     private static final String SQL_SELECT_PART_BETS = "SELECT `b`.`id`, `b`.`user_id`, `b`.`participant_id`, " +
             "`b`.`amount`, `b`.`created_at`, `h`.`name` AS `participant_name` FROM `bets` AS `b` " +
@@ -61,6 +63,50 @@ public class BetDAOImpl extends AbstractDAO<Bet> implements BetDAO {
             }
         } catch (SQLException e) {
             throw new DAOException("Can't add a new bet. " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Find bet by id.
+     *
+     * @param id
+     * @return bet
+     */
+    @Override
+    public Bet find(int id) throws DAOException {
+        ResultSet resultSet;
+        Bet bet = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_BET_BY_ID)) {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                bet = extractFrom(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't find bet by id[" + id + "]. " + e.getMessage(), e);
+        }
+
+        return bet;
+    }
+
+    /**
+     * Remove bet by id.
+     *
+     * @param id
+     * @throws DAOException
+     */
+    @Override
+    public void remove(int id) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_REMOVE_BET_BY_ID)) {
+            preparedStatement.setInt(1, id);
+
+            if (preparedStatement.executeUpdate() != 1) {
+                throw new DAOException("Can't remove bet from the database.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't remove bet. " + e.getMessage(), e);
         }
     }
 

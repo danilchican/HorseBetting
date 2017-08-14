@@ -17,6 +17,22 @@ public interface BetDAO {
     void create(Bet bet, int userId) throws DAOException;
 
     /**
+     * Find bet by id.
+     *
+     * @param id
+     * @return bet
+     */
+    Bet find(int id) throws DAOException;
+
+    /**
+     * Remove bet by id.
+     *
+     * @param id
+     * @throws DAOException
+     */
+    void remove(int id) throws DAOException;
+
+    /**
      * Obtain part of bets.
      *
      * @param userId

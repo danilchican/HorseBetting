@@ -12,4 +12,12 @@ public interface BetReceiver {
      * @throws ReceiverException
      */
     void createBet(RequestContent content) throws ReceiverException;
+
+    /**
+     * Remove a bet.
+     *
+     * @param content
+     * @throws ReceiverException
+     */
+    void removeBet(RequestContent content) throws ReceiverException;
 }

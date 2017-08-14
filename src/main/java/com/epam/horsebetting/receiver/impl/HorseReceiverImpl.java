@@ -138,17 +138,14 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
                 }
 
                 content.insertSessionAttribute("messages", messages);
-                content.insertSessionAttribute("success", result);
             } catch (DAOException e) {
                 messages.add("Can't remove current horse");
                 content.insertSessionAttribute("errors", messages);
-                content.insertSessionAttribute("success", false);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
         } else {
             content.insertSessionAttribute("errors", validator.getErrors());
-            content.insertSessionAttribute("success", false);
         }
     }
 

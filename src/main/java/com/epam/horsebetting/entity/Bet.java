@@ -127,4 +127,14 @@ public class Bet extends Entity {
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
+
+    @Override
+    public String toString() {
+        return "Bet{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", participantId=" + participantId +
+                ", amount=" + amount +
+                ", createdAt=" + createdAt + "}";
+    }
 }

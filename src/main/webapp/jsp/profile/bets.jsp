@@ -25,13 +25,22 @@
                         <tbody>
                         <c:forEach items="${bets}" var="bet">
                             <tr>
-                                <td>${bet.getId()}</td>
-                                <td><a href="/profile/bets/view?id=${bet.getId()}">${bet.getParticipantName()}</a></td>
+                                <td><a href="/profile/bets/view?id=${bet.getId()}">${bet.getId()}</a></td>
+                                <td>${bet.getParticipantName()}</td>
                                 <td>${bet.getAmount()}</td>
                                 <td>${f:formatDate("yyyy/MM/dd HH:mm",bet.getCreatedAt())}</td>
                                 <td>
-                                    <button class="btn btn-primary btn-xs"><fmt:message key="button.edit"/></button>
-                                    <button class="btn btn-danger btn-xs"><fmt:message key="button.delete"/></button>
+                                    <a href="/profile/bets/view?id=${bet.getId()}" class="btn btn-success btn-xs">
+                                        <fmt:message key="button.view"/>
+                                    </a>
+                                    <a href="/profile/bets/edit?id=${bet.getId()}" class="btn btn-primary btn-xs">
+                                        <fmt:message key="button.edit"/>
+                                    </a>
+                                    <form action="/profile/bets/remove" method="post" style="display:initial">
+                                        <input type="hidden" name="id" value="${bet.getId()}">
+                                        <button class="btn btn-danger btn-xs"><fmt:message
+                                                key="button.delete"/></button>
+                                    </form>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -46,7 +55,7 @@
             </div>
         </c:when>
         <c:otherwise>
-            <h4>Haven't any races</h4>
+            <h4>Haven't any bets</h4>
         </c:otherwise>
     </c:choose>
 </layout:account>

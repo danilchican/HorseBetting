@@ -28,6 +28,16 @@ public class BetValidator extends AbstractValidator {
     }
 
     /**
+     * Validate bet id.
+     *
+     * @param id
+     * @return boolean
+     */
+    public boolean validateId(String id) {
+        return validateInteger(id, FormFieldConfig.Bet.ID, "Id", false);
+    }
+
+    /**
      * Validate amount.
      *
      * @param number
