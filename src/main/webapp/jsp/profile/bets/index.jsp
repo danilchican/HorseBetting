@@ -33,9 +33,6 @@
                                     <a href="/profile/bets/view?id=${bet.getId()}" class="btn btn-success btn-xs">
                                         <fmt:message key="button.view"/>
                                     </a>
-                                    <a href="/profile/bets/edit?id=${bet.getId()}" class="btn btn-primary btn-xs">
-                                        <fmt:message key="button.edit"/>
-                                    </a>
                                     <form action="/profile/bets/remove" method="post" style="display:initial">
                                         <input type="hidden" name="id" value="${bet.getId()}">
                                         <button class="btn btn-danger btn-xs"><fmt:message

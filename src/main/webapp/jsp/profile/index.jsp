@@ -13,6 +13,7 @@
                 <li><b><fmt:message key="form.email"/>:</b> ${user.getEmail()}</li>
                 <li><b><fmt:message key="form.profile.group"/>:</b> ${user.getRoleName()}</li>
                 <li><b><fmt:message key="profile.payment.current_balance"/>:</b> ${user.getBalance()}$</li>
+                <li><b><fmt:message key="profile.bets.count"/>:</b> ${totalUserBets}</li>
             </ul>
         </div>
         <div class="row">

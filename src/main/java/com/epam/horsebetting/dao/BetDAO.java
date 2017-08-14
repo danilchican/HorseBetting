@@ -50,4 +50,12 @@ public interface BetDAO {
      * @throws DAOException
      */
     int getTotalCount() throws DAOException;
+
+    /**
+     * Get total count of bets for user.
+     *
+     * @return total count for user
+     * @throws DAOException
+     */
+    int getTotalForUser(int id) throws DAOException;
 }

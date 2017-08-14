@@ -20,6 +20,9 @@ public class ParticipantDAOImpl extends AbstractDAO<Participant> implements Part
     private static final String SQL_FIND_PARTICIPANTS_BY_RACE_ID = "SELECT `p`.`id`, `p`.`horse_id`, " +
             "`p`.`race_id`, `p`.`coefficient`, `p`.`is_winner`, `h`.`name` AS `jockey` FROM `participants` AS `p` " +
             "LEFT JOIN `horses` AS `h` ON `p`.`horse_id`=`h`.`id` WHERE `p`.`race_id`=?;";
+    private static final String SQL_FIND_PARTICIPANT_BY_ID = "SELECT `p`.`id`, `p`.`horse_id`, " +
+            "`p`.`race_id`, `p`.`coefficient`, `p`.`is_winner`, `h`.`name` AS `jockey` FROM `participants` AS `p` " +
+            "LEFT JOIN `horses` AS `h` ON `p`.`horse_id`=`h`.`id` WHERE `p`.`id`=?;";
 
     /**
      * Default constructor connection.
@@ -40,6 +43,32 @@ public class ParticipantDAOImpl extends AbstractDAO<Participant> implements Part
     @Override
     public Participant create(Participant participant) throws DAOException {
         return null;
+    }
+
+    /**
+     * Find a participant by id.
+     *
+     * @param id
+     * @return participant
+     * @throws DAOException
+     */
+    @Override
+    public Participant find(int id) throws DAOException {
+        ResultSet resultSet;
+        Participant participant = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_PARTICIPANT_BY_ID)) {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                participant = extractFrom(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't find participant by id[" + id + "]. " + e.getMessage(), e);
+        }
+
+        return participant;
     }
 
     /**

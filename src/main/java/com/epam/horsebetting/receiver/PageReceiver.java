@@ -52,7 +52,7 @@ public interface PageReceiver {
      *
      * @param content
      */
-    void presentProfilePage(RequestContent content);
+    void presentProfilePage(RequestContent content) throws ReceiverException;
 
     /**
      * Present profile settings page.
@@ -74,6 +74,13 @@ public interface PageReceiver {
      * @param content
      */
     void presentProfileBetsPage(RequestContent content) throws ReceiverException;
+
+    /**
+     * Present profile view bet page.
+     *
+     * @param content
+     */
+    void presentProfileViewBetPage(RequestContent content) throws ReceiverException;
 
     /**
      * Present dashboard page.

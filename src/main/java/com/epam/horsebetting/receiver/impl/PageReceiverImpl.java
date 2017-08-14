@@ -1,6 +1,7 @@
 package com.epam.horsebetting.receiver.impl;
 
 import com.epam.horsebetting.config.FormFieldConfig;
+import com.epam.horsebetting.dao.BetDAO;
 import com.epam.horsebetting.dao.impl.*;
 import com.epam.horsebetting.database.TransactionManager;
 import com.epam.horsebetting.entity.*;
@@ -37,7 +38,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         final int limit = 10;
         final int offset = 0;
 
-        try(RaceDAOImpl raceDAO = new RaceDAOImpl(false)) {
+        try (RaceDAOImpl raceDAO = new RaceDAOImpl(false)) {
             List<Race> races = raceDAO.obtainNearest(limit, offset);
             content.insertRequestAttribute("races", races);
 
@@ -61,7 +62,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
         String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
 
-        try(RaceDAOImpl raceDAO = new RaceDAOImpl(false)) {
+        try (RaceDAOImpl raceDAO = new RaceDAOImpl(false)) {
             final int limit = 15;
             final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
             final int offset = (page - 1) * limit;
@@ -165,9 +166,19 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      * @param content
      */
     @Override
-    public void presentProfilePage(RequestContent content) {
+    public void presentProfilePage(RequestContent content) throws ReceiverException {
         this.setPageSubTitle("Личный кабинет");
         this.setDefaultContentAttributes(content);
+
+        try (BetDAOImpl betDAO = new BetDAOImpl(false)) {
+            User authorizedUser = (User) content.findRequestAttribute("user");
+            final int id = authorizedUser.getId();
+            final int totalUserBets = betDAO.getTotalForUser(id);
+
+            content.insertRequestAttribute("totalUserBets", totalUserBets);
+        } catch (DAOException e) {
+            throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        }
     }
 
     /**
@@ -206,7 +217,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
         String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
 
-        User authorizedUser = (User)content.findRequestAttribute("user");
+        User authorizedUser = (User) content.findRequestAttribute("user");
 
         try (BetDAOImpl betDAO = new BetDAOImpl(false)) {
             final int limit = 10;
@@ -225,6 +236,63 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
             throw new ReceiverException("Cannot convert page to number. GET[page]=" + e.getMessage(), e);
         } catch (DAOException e) {
             throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Present profile view bet page.
+     *
+     * @param content
+     */
+    @Override
+    public void presentProfileViewBetPage(RequestContent content) throws ReceiverException {
+        String idNum = content.findParameter("id");
+
+        this.setPageSubTitle("Ставка #" + idNum);
+        this.setDefaultContentAttributes(content);
+
+        // TODO create validators
+
+        BetDAOImpl betDAO = new BetDAOImpl(true);
+        RaceDAOImpl raceDAO = new RaceDAOImpl(true);
+        ParticipantDAOImpl participantDAO = new ParticipantDAOImpl(true);
+
+        TransactionManager transaction = new TransactionManager(betDAO, raceDAO, participantDAO);
+        transaction.beginTransaction();
+
+        try {
+            final int id = Integer.parseInt(idNum);
+            Bet bet = betDAO.find(id);
+
+            if (bet == null) {
+                transaction.rollback();
+                throw new ReceiverException("Cannot find bet with id=" + id);
+            }
+
+            Participant participant = participantDAO.find(bet.getParticipantId());
+
+            if (participant == null) {
+                transaction.rollback();
+                throw new ReceiverException("Cannot find participant with id=" + bet.getParticipantId());
+            }
+
+            Race race = raceDAO.find(participant.getRaceId());
+
+            if (race == null) {
+                transaction.rollback();
+                throw new ReceiverException("Cannot find race with id=" + participant.getRaceId());
+            }
+
+            transaction.commit();
+
+            content.insertRequestAttribute("bet", bet);
+            content.insertRequestAttribute("race", race);
+            content.insertRequestAttribute("participant", participant);
+        } catch (DAOException e) {
+            transaction.rollback();
+            throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        } finally {
+            transaction.endTransaction();
         }
     }
 
@@ -254,7 +322,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
 
 
-        try(UserDAOImpl userDAO = new UserDAOImpl(false)) {
+        try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
             final int limit = 10;
             final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
             final int offset = (page - 1) * limit;
@@ -299,7 +367,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
         String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
 
-        try(HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
+        try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
             final int limit = 10;
             final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
             final int offset = (page - 1) * limit;
@@ -402,7 +470,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
         String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
 
-        try(RaceDAOImpl raceDAO = new RaceDAOImpl(false)) {
+        try (RaceDAOImpl raceDAO = new RaceDAOImpl(false)) {
             final int limit = 10;
             final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
             final int offset = (page - 1) * limit;

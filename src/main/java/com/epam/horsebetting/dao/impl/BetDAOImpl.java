@@ -34,6 +34,7 @@ public class BetDAOImpl extends AbstractDAO<Bet> implements BetDAO {
             "JOIN `horses` AS `h` ON `p`.`horse_id`=`h`.`id` " +
             "WHERE `b`.`user_id`=? LIMIT ? OFFSET ?;";
     private static final String SQL_COUNT_BETS = "SELECT COUNT(*) AS `total` FROM `bets`;";
+    private static final String SQL_COUNT_BETS_FOR_USER = "SELECT COUNT(*) AS `total` FROM `bets` WHERE `user_id`=?;";
 
     /**
      * Default constructor connection.
@@ -161,6 +162,33 @@ public class BetDAOImpl extends AbstractDAO<Bet> implements BetDAO {
             }
         } catch (SQLException e) {
             throw new DAOException("Cannot retrieve total count. " + e.getMessage(), e);
+        }
+
+        return totalCount;
+    }
+
+    /**
+     * Get total count of bets for user.
+     *
+     * @param id
+     * @return total count for user
+     * @throws DAOException
+     */
+    @Override
+    public int getTotalForUser(int id) throws DAOException {
+        ResultSet result;
+        int totalCount = 0;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_COUNT_BETS_FOR_USER)) {
+            preparedStatement.setInt(1, id);
+            result = preparedStatement.executeQuery();
+
+            while (result.next()) {
+                totalCount = result.getInt(SQLFieldConfig.TOTAL);
+                LOGGER.log(Level.DEBUG, "Count of user's bets: " + totalCount);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Cannot retrieve total count of user's bets. " + e.getMessage(), e);
         }
 
         return totalCount;

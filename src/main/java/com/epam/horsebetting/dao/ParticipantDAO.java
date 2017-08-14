@@ -19,6 +19,15 @@ public interface ParticipantDAO {
     Participant create(Participant participant) throws DAOException;
 
     /**
+     * Find a participant by id.
+     *
+     * @param id
+     * @return participant
+     * @throws DAOException
+     */
+    Participant find(int id) throws DAOException;
+
+    /**
      * Find participant by race id.
      *
      * @param id
