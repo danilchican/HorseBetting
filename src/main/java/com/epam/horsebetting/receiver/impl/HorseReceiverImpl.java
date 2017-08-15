@@ -1,6 +1,7 @@
 package com.epam.horsebetting.receiver.impl;
 
 import com.epam.horsebetting.config.FormFieldConfig;
+import com.epam.horsebetting.config.MessageConfig;
 import com.epam.horsebetting.dao.impl.HorseDAOImpl;
 import com.epam.horsebetting.entity.Horse;
 import com.epam.horsebetting.exception.DAOException;
@@ -8,6 +9,7 @@ import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.AbstractReceiver;
 import com.epam.horsebetting.receiver.HorseReceiver;
 import com.epam.horsebetting.request.RequestContent;
+import com.epam.horsebetting.util.MessageWrapper;
 import com.epam.horsebetting.validator.HorseValidator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver {
@@ -38,13 +41,15 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
         String suitAttr = content.findParameter(FormFieldConfig.Horse.SUIT_FIELD);
 
         HorseValidator validator = new HorseValidator();
+        MessageWrapper messages = new MessageWrapper();
+
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateCreateHorse(name, genderAttr, ageAttr, suitAttr)) {
             boolean gender = "male".equals(genderAttr);
             byte age = Byte.parseByte(ageAttr);
             int suitId = Integer.parseInt(suitAttr);
-
-            ArrayList<String> messages = new ArrayList<>();
 
             Horse horse = new Horse(name);
 
@@ -57,12 +62,12 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
             try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
                 Horse createdHorse = horseDAO.create(horse);
 
-                messages.add("Horse has been created successfully.");
+                messages.add(messageResource.get("dashboard.horse.create.success"));
                 content.insertSessionAttribute("messages", messages);
 
                 LOGGER.log(Level.DEBUG, "Created horse: " + createdHorse);
             } catch (DAOException e) {
-                messages.add("Can't create new horse.");
+                messages.add(messageResource.get("dashboard.horse.create.fail"));
                 content.insertSessionAttribute("errors", messages);
 
                 LOGGER.log(Level.DEBUG, "Old input values: " + validator.getOldInput());
@@ -92,7 +97,10 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
      */
     @Override
     public void ajaxObtainHorsesList(RequestContent content) throws ReceiverException {
-        ArrayList<String> errors = new ArrayList<>();
+        MessageWrapper messages = new MessageWrapper();
+
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
 
         try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
             List<Horse> horses = horseDAO.findAll();
@@ -100,10 +108,10 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
             content.insertJsonAttribute("success", true);
             content.insertJsonAttribute("horses", horses);
         } catch (DAOException e) {
-            errors.add("Something went wrong...");
+            messages.add(messageResource.get("error.undefined"));
 
             content.insertJsonAttribute("success", false);
-            content.insertJsonAttribute("errors", errors);
+            content.insertJsonAttribute("errors", messages);
 
             throw new ReceiverException("Database Error: " + e.getMessage(), e);
         }
@@ -117,10 +125,13 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
      */
     @Override
     public void removeHorse(RequestContent content) throws ReceiverException {
-        HorseValidator validator = new HorseValidator();
-        ArrayList<String> messages = new ArrayList<>();
-
         String idValue = content.findParameter(FormFieldConfig.Horse.ID_FIELD);
+
+        HorseValidator validator = new HorseValidator();
+        MessageWrapper messages = new MessageWrapper();
+
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateRemoveHorse(idValue)) {
             int id = Integer.parseInt(idValue);
@@ -129,17 +140,12 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
             LOGGER.log(Level.DEBUG, "Want remove horse: " + suit);
 
             try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
-                boolean result = horseDAO.remove(suit);
+                horseDAO.remove(suit);
 
-                if (result) {
-                    messages.add("Horse removed successfully");
-                } else {
-                    messages.add("Can't remove current horse");
-                }
-
+                messages.add(messageResource.get("dashboard.horse.remove.success"));
                 content.insertSessionAttribute("messages", messages);
             } catch (DAOException e) {
-                messages.add("Can't remove current horse");
+                messages.add(messageResource.get("dashboard.horse.remove.fail"));
                 content.insertSessionAttribute("errors", messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
@@ -164,6 +170,10 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
         String suitAttr = content.findParameter(FormFieldConfig.Horse.SUIT_FIELD);
 
         HorseValidator validator = new HorseValidator();
+        MessageWrapper messages = new MessageWrapper();
+
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateUpdateHorse(idAttr, name, genderAttr, ageAttr, suitAttr)) {
             int id = Integer.parseInt(idAttr);
@@ -181,15 +191,13 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
 
             LOGGER.log(Level.DEBUG, "Want update horse: " + horse);
 
-            ArrayList<String> messages = new ArrayList<>();
-
             try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
                 horseDAO.update(horse);
 
-                messages.add("Horse updated successfully");
+                messages.add(messageResource.get("dashboard.horse.update.success"));
                 content.insertSessionAttribute("messages", messages);
             } catch (DAOException e) {
-                messages.add("Something went wrong...");
+                messages.add(messageResource.get("dashboard.horse.update.fail"));
                 content.insertSessionAttribute("errors", messages);
 
                 for (Map.Entry<String, String> entry : validator.getOldInput()) {

@@ -216,7 +216,6 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         // TODO create validators
 
         String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
-
         User authorizedUser = (User) content.findRequestAttribute("user");
 
         try (BetDAOImpl betDAO = new BetDAOImpl(false)) {

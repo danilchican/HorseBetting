@@ -102,19 +102,16 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
      * Remove horse.
      *
      * @param horse
-     * @return boolean
      * @throws DAOException
      */
     @Override
-    public boolean remove(Horse horse) throws DAOException {
+    public void remove(Horse horse) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_REMOVE_HORSE)) {
             preparedStatement.setInt(1, horse.getId());
 
             if (preparedStatement.executeUpdate() != 1) {
                 throw new DAOException("Can't remove horse from the database.");
             }
-
-            return true;
         } catch (SQLException e) {
             throw new DAOException("Can't remove horse. " + e.getMessage(), e);
         }

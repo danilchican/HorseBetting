@@ -28,10 +28,9 @@ public interface HorseDAO {
      * Remove horse.
      *
      * @param horse
-     * @return boolean
      * @throws DAOException
      */
-    boolean remove(Horse horse) throws DAOException;
+    void remove(Horse horse) throws DAOException;
 
     /**
      * Find horse by id.
