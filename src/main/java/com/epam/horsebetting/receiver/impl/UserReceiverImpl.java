@@ -1,6 +1,7 @@
 package com.epam.horsebetting.receiver.impl;
 
 import com.epam.horsebetting.config.FormFieldConfig;
+import com.epam.horsebetting.config.MessageConfig;
 import com.epam.horsebetting.dao.impl.UserDAOImpl;
 import com.epam.horsebetting.database.TransactionManager;
 import com.epam.horsebetting.entity.User;
@@ -10,6 +11,7 @@ import com.epam.horsebetting.receiver.AbstractReceiver;
 import com.epam.horsebetting.receiver.UserReceiver;
 import com.epam.horsebetting.request.RequestContent;
 import com.epam.horsebetting.util.MailSender;
+import com.epam.horsebetting.util.MessageWrapper;
 import com.epam.horsebetting.validator.UserValidator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -40,9 +42,12 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         UserValidator validator = new UserValidator();
 
         if (validator.validateRegistrationForm(name, email, password, passwordConfirmation)) {
-            ArrayList<String> errors = new ArrayList<>();
-            UserDAOImpl userDAO = new UserDAOImpl(true);
+            MessageWrapper messages = new MessageWrapper();
 
+            Locale locale = (Locale)content.findSessionAttribute("locale");
+            MessageConfig messageResource = new MessageConfig(locale);
+
+            UserDAOImpl userDAO = new UserDAOImpl(true);
             User newUser = new User(email, password);
             newUser.setName(name);
 
@@ -62,16 +67,16 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
                         content.insertSessionAttribute(entry.getKey(), entry.getValue());
                     }
 
-                    errors.add("User already exists. Change your email.");
-                    content.insertSessionAttribute("errors", errors);
+                    messages.add(messageResource.get("user.exists"));
+                    content.insertSessionAttribute("errors", messages);
 
                     throw new ReceiverException("Cannot register user. User already exists.");
                 }
             } catch (DAOException e) {
                 transaction.rollback();
 
-                errors.add("Can't create new user.");
-                content.insertSessionAttribute("errors", errors);
+                messages.add(messageResource.get("user.default.error"));
+                content.insertSessionAttribute("errors", messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             } finally {
@@ -97,8 +102,11 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         String email = content.findParameter(FormFieldConfig.User.EMAIL_FIELD);
         String password = content.findParameter(FormFieldConfig.User.PASSWORD_FIELD);
 
-        ArrayList<String> errors = new ArrayList<>();
         UserValidator validator = new UserValidator();
+        MessageWrapper messages = new MessageWrapper();
+
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateLoginForm(email, password)) {
             User user;
@@ -106,15 +114,15 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
             try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
                 user = userDAO.attempt(email, password);
             } catch (DAOException e) {
-                errors.add("Can't login with your credentials.");
-                content.insertSessionAttribute("errors", errors);
+                messages.add(messageResource.get("user.credentials.fail"));
+                content.insertSessionAttribute("errors", messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
 
             if (user == null) {
-                errors.add("User does not exists or credentials are not correct.");
-                content.insertSessionAttribute("errors", errors);
+                messages.add(messageResource.get("user.credentials.fail"));
+                content.insertSessionAttribute("errors", messages);
 
                 throw new ReceiverException("Cannot authenticate user. User is null.");
             }
@@ -153,8 +161,11 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
     public void updateProfileSettings(RequestContent content) throws ReceiverException {
         String name = content.findParameter(FormFieldConfig.User.NAME_FIELD);
 
-        ArrayList<String> messages = new ArrayList<>();
         UserValidator validator = new UserValidator();
+        MessageWrapper messages = new MessageWrapper();
+
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateUpdateSettingsForm(name)) {
             User authorizedUser = (User) content.findRequestAttribute("user");
@@ -163,10 +174,10 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
             try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
                 userDAO.updateSettings(authorizedUser);
 
-                messages.add("Profile settings updated successfully.");
+                messages.add(messageResource.get("profile.settings.update.success"));
                 content.insertSessionAttribute("messages", messages);
             } catch (DAOException e) {
-                messages.add("Can't update user settings.");
+                messages.add(messageResource.get("profile.settings.update.fail"));
                 content.insertSessionAttribute("errors", messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
@@ -187,8 +198,11 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         String password = content.findParameter(FormFieldConfig.User.PASSWORD_FIELD);
         String confirmation = content.findParameter(FormFieldConfig.User.CONFIRMATION_FIELD);
 
-        ArrayList<String> messages = new ArrayList<>();
         UserValidator validator = new UserValidator();
+        MessageWrapper messages = new MessageWrapper();
+
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateSecurityForm(password, confirmation)) {
             User authorizedUser = (User) content.findRequestAttribute("user");
@@ -197,10 +211,10 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
             try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
                 userDAO.updateSecurity(authorizedUser);
 
-                messages.add("Password changed successfully.");
+                messages.add(messageResource.get("profile.password.change.success"));
                 content.insertSessionAttribute("messages", messages);
             } catch (DAOException e) {
-                messages.add("Can't change the password.");
+                messages.add(messageResource.get("profile.password.change.fail"));
                 content.insertSessionAttribute("errors", messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
@@ -220,8 +234,11 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
     public void updateProfileBalance(RequestContent content) throws ReceiverException {
         String paymentAmount = content.findParameter(FormFieldConfig.User.PAYMENT_AMOUNT_FIELD);
 
-        ArrayList<String> messages = new ArrayList<>();
         UserValidator validator = new UserValidator();
+        MessageWrapper messages = new MessageWrapper();
+
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateUpdateProfileBalanceForm(paymentAmount)) {
             User authorizedUser = (User) content.findRequestAttribute("user");
@@ -234,10 +251,10 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
             try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
                 userDAO.updateBalance(authorizedUser);
 
-                messages.add("Profile balance updated successfully.");
+                messages.add(messageResource.get("profile.payment.replenish.success"));
                 content.insertSessionAttribute("messages", messages);
             } catch (DAOException e) {
-                messages.add("Can't update user balance.");
+                messages.add(messageResource.get("profile.payment.replenish.fail"));
                 content.insertSessionAttribute("errors", messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
@@ -249,7 +266,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
     }
 
     /**
-     * Reset password by sending reset link to email.
+     * TODO Reset password by sending reset link to email.
      *
      * @param content
      */

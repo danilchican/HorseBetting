@@ -1,6 +1,7 @@
 package com.epam.horsebetting.validator;
 
 import com.epam.horsebetting.tag.OldInputFormAttributeTag;
+import com.epam.horsebetting.util.MessageWrapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +13,7 @@ public abstract class AbstractValidator {
     /**
      * List of errors.
      */
-    private ArrayList<String> errors;
+    private MessageWrapper errors;
 
     /**
      * Old input from data.
@@ -28,7 +29,7 @@ public abstract class AbstractValidator {
      * Default constructor.
      */
     AbstractValidator() {
-        this.errors = new ArrayList<>();
+        this.errors = new MessageWrapper();
         this.oldInput = new HashMap<>();
     }
 
@@ -56,7 +57,7 @@ public abstract class AbstractValidator {
      *
      * @return errors
      */
-    public ArrayList<String> getErrors() {
+    public MessageWrapper getErrors() {
         return errors;
     }
 
