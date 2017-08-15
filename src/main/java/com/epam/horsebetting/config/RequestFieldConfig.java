@@ -1,6 +1,6 @@
 package com.epam.horsebetting.config;
 
-public final class FormFieldConfig {
+public final class RequestFieldConfig {
 
     public final class User {
         private static final String PREFIX = "user-";
@@ -45,11 +45,10 @@ public final class FormFieldConfig {
         public static final String AMOUNT = "amount";
     }
 
-    public final class Locale {
+    public final class Common {
         public static final String LANG_FIELD = "lang";
-    }
-
-    public final class Pagination {
         public static final String PAGE_FIELD = "page";
+        public static final String REQUEST_ID = "id";
+        public static final String SESSION_LOCALE = "locale";
     }
 }

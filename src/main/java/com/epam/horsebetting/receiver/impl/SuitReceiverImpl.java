@@ -1,6 +1,6 @@
 package com.epam.horsebetting.receiver.impl;
 
-import com.epam.horsebetting.config.FormFieldConfig;
+import com.epam.horsebetting.config.RequestFieldConfig;
 import com.epam.horsebetting.config.MessageConfig;
 import com.epam.horsebetting.dao.impl.SuitDAOImpl;
 import com.epam.horsebetting.database.TransactionManager;
@@ -16,10 +16,11 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_LOCALE;
 
 public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
 
@@ -36,12 +37,12 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
      */
     @Override
     public void ajaxObtainSuitsList(RequestContent content) throws ReceiverException {
-        String pageNumber = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
+        String pageNumber = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
 
         SuitValidator validator = new SuitValidator();
         MessageWrapper messages = new MessageWrapper();
 
-        Locale locale = (Locale)content.findSessionAttribute("locale");
+        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validatePage(pageNumber)) {
@@ -79,12 +80,12 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
      */
     @Override
     public void createSuit(RequestContent content) throws ReceiverException {
-        String name = content.findParameter(FormFieldConfig.Suit.NAME_FIELD);
+        String name = content.findParameter(RequestFieldConfig.Suit.NAME_FIELD);
 
         SuitValidator validator = new SuitValidator();
         MessageWrapper messages = new MessageWrapper();
 
-        Locale locale = (Locale)content.findSessionAttribute("locale");
+        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateName(name)) {
@@ -133,13 +134,13 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
      */
     @Override
     public void updateSuit(RequestContent content) throws ReceiverException {
-        String idNumber = content.findParameter(FormFieldConfig.Suit.ID_FIELD);
-        String name = content.findParameter(FormFieldConfig.Suit.NAME_FIELD);
+        String idNumber = content.findParameter(RequestFieldConfig.Suit.ID_FIELD);
+        String name = content.findParameter(RequestFieldConfig.Suit.NAME_FIELD);
 
         MessageWrapper messages = new MessageWrapper();
         SuitValidator validator = new SuitValidator();
 
-        Locale locale = (Locale)content.findSessionAttribute("locale");
+        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         if(validator.validateSuit(idNumber, name)) {
@@ -175,12 +176,12 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
      */
     @Override
     public void removeSuit(RequestContent content) throws ReceiverException {
-        String idNumber = content.findParameter(FormFieldConfig.Suit.ID_FIELD);
+        String idNumber = content.findParameter(RequestFieldConfig.Suit.ID_FIELD);
 
         SuitValidator validator = new SuitValidator();
         MessageWrapper messages = new MessageWrapper();
 
-        Locale locale = (Locale)content.findSessionAttribute("locale");
+        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateId(idNumber)) {

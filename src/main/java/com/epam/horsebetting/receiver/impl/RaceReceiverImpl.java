@@ -1,6 +1,6 @@
 package com.epam.horsebetting.receiver.impl;
 
-import com.epam.horsebetting.config.FormFieldConfig;
+import com.epam.horsebetting.config.RequestFieldConfig;
 import com.epam.horsebetting.dao.impl.RaceDAOImpl;
 import com.epam.horsebetting.database.TransactionManager;
 import com.epam.horsebetting.entity.Race;
@@ -37,13 +37,13 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
      */
     @Override
     public void createRace(RequestContent content) throws ReceiverException {
-        String title = content.findParameter(FormFieldConfig.Race.TITLE_FIELD);
-        String place = content.findParameter(FormFieldConfig.Race.PLACE_FIELD);
+        String title = content.findParameter(RequestFieldConfig.Race.TITLE_FIELD);
+        String place = content.findParameter(RequestFieldConfig.Race.PLACE_FIELD);
 
-        BigDecimal minRate = new BigDecimal(content.findParameter(FormFieldConfig.Race.MIN_RATE_FIELD));
-        int trackLength = Integer.parseInt(content.findParameter(FormFieldConfig.Race.TRACK_LENGTH_FIELD));
+        BigDecimal minRate = new BigDecimal(content.findParameter(RequestFieldConfig.Race.MIN_RATE_FIELD));
+        int trackLength = Integer.parseInt(content.findParameter(RequestFieldConfig.Race.TRACK_LENGTH_FIELD));
 
-        boolean isFinished = "1".equals(content.findParameter(FormFieldConfig.Race.FINISHED_FIELD));
+        boolean isFinished = "1".equals(content.findParameter(RequestFieldConfig.Race.FINISHED_FIELD));
 
         SimpleDateFormat dateFormat = new SimpleDateFormat(DateFormatter.DEFAULT_DATE_FORMAT);
         Date parsedDate;
@@ -52,10 +52,10 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
         Timestamp startedAt;
 
         try {
-            parsedDate = dateFormat.parse(content.findParameter(FormFieldConfig.Race.BET_END_DATE_FIELD));
+            parsedDate = dateFormat.parse(content.findParameter(RequestFieldConfig.Race.BET_END_DATE_FIELD));
             betEndDate = new Timestamp(parsedDate.getTime());
 
-            parsedDate = dateFormat.parse(content.findParameter(FormFieldConfig.Race.STARTED_AT_FIELD));
+            parsedDate = dateFormat.parse(content.findParameter(RequestFieldConfig.Race.STARTED_AT_FIELD));
             startedAt = new Timestamp(parsedDate.getTime());
         } catch (ParseException e) {
             // TODO fix
@@ -65,8 +65,8 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
         // TODO add checking of numbers
         HashMap<Integer, BigDecimal> raceHorses = new HashMap<>();
 
-        String[] horses = content.findParameterValues(FormFieldConfig.Race.SELECTED_HORSES_FIELD);
-        String[] coeffs = content.findParameterValues(FormFieldConfig.Race.HORSE_COEFFICIENTS_FIELD);
+        String[] horses = content.findParameterValues(RequestFieldConfig.Race.SELECTED_HORSES_FIELD);
+        String[] coeffs = content.findParameterValues(RequestFieldConfig.Race.HORSE_COEFFICIENTS_FIELD);
 
         if(horses.length == coeffs.length) {
             for (int i = 0; i < horses.length; i++) {

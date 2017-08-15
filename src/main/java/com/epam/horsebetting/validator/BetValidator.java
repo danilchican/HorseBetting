@@ -1,6 +1,6 @@
 package com.epam.horsebetting.validator;
 
-import com.epam.horsebetting.config.FormFieldConfig;
+import com.epam.horsebetting.config.RequestFieldConfig;
 
 import java.math.BigDecimal;
 
@@ -20,7 +20,7 @@ public class BetValidator extends AbstractValidator {
             isValidate = false;
         }
 
-        if (!validateInteger(participantId, FormFieldConfig.Bet.PARTICIPANT_ID, "Participant id", false)) {
+        if (!validateInteger(participantId, RequestFieldConfig.Bet.PARTICIPANT_ID, "Participant id", false)) {
             isValidate = false;
         }
 
@@ -34,7 +34,7 @@ public class BetValidator extends AbstractValidator {
      * @return boolean
      */
     public boolean validateId(String id) {
-        return validateInteger(id, FormFieldConfig.Bet.ID, "Id", false);
+        return validateInteger(id, RequestFieldConfig.Bet.ID, "Id", false);
     }
 
     /**

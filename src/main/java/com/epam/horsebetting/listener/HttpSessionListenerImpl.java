@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import java.util.Locale;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_LOCALE;
+
 @WebListener
 public class HttpSessionListenerImpl implements HttpSessionListener {
 
@@ -20,7 +22,7 @@ public class HttpSessionListenerImpl implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent event) {
         Locale locale = new Locale("ru", "RU");
-        event.getSession().setAttribute("locale", locale);
+        event.getSession().setAttribute(SESSION_LOCALE, locale);
         LOGGER.log(Level.INFO, "Created locale by default: " + locale);
     }
 

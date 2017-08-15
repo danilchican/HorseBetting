@@ -1,6 +1,6 @@
 package com.epam.horsebetting.receiver.impl;
 
-import com.epam.horsebetting.config.FormFieldConfig;
+import com.epam.horsebetting.config.RequestFieldConfig;
 import com.epam.horsebetting.dao.impl.BetDAOImpl;
 import com.epam.horsebetting.dao.impl.UserDAOImpl;
 import com.epam.horsebetting.database.TransactionManager;
@@ -37,8 +37,8 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
         BetValidator validator = new BetValidator();
         ArrayList<String> messages = new ArrayList<>();
 
-        String amount = content.findParameter(FormFieldConfig.Bet.AMOUNT);
-        String participant = content.findParameter(FormFieldConfig.Bet.PARTICIPANT_ID);
+        String amount = content.findParameter(RequestFieldConfig.Bet.AMOUNT);
+        String participant = content.findParameter(RequestFieldConfig.Bet.PARTICIPANT_ID);
 
         // TODO create validate participant existing
         if (validator.validateCreateBet(amount, participant)) {
@@ -93,7 +93,7 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
         BetValidator validator = new BetValidator();
         ArrayList<String> messages = new ArrayList<>();
 
-        String idAttr = content.findParameter(FormFieldConfig.Bet.ID);
+        String idAttr = content.findParameter(RequestFieldConfig.Bet.ID);
 
         // TODO create validate id existing
         // TODO remove only if race not started!!!

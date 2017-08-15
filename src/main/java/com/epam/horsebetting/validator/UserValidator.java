@@ -1,6 +1,6 @@
 package com.epam.horsebetting.validator;
 
-import com.epam.horsebetting.config.FormFieldConfig;
+import com.epam.horsebetting.config.RequestFieldConfig;
 import com.epam.horsebetting.tag.OldInputFormAttributeTag;
 
 import java.math.BigDecimal;
@@ -35,11 +35,11 @@ public class UserValidator extends AbstractValidator {
     public boolean validateRegistrationForm(String name, String email, String password, String passwordConfirmation) {
         boolean isValidate = true;
 
-        if (!validateName(name, FormFieldConfig.User.NAME_FIELD, "Name", true)) {
+        if (!validateName(name, RequestFieldConfig.User.NAME_FIELD, "Name", true)) {
             isValidate = false;
         }
 
-        if (!validateEmail(email, FormFieldConfig.User.EMAIL_FIELD, "Email")) {
+        if (!validateEmail(email, RequestFieldConfig.User.EMAIL_FIELD, "Email")) {
             isValidate = false;
         }
 
@@ -64,7 +64,7 @@ public class UserValidator extends AbstractValidator {
     public boolean validateLoginForm(String email, String password) {
         boolean isValidate = true;
 
-        if (!validateEmail(email, FormFieldConfig.User.EMAIL_FIELD, "Email")) {
+        if (!validateEmail(email, RequestFieldConfig.User.EMAIL_FIELD, "Email")) {
             isValidate = false;
         }
 
@@ -82,7 +82,7 @@ public class UserValidator extends AbstractValidator {
      * @return boolean
      */
     public boolean validateUpdateSettingsForm(String name) {
-        return validateDefaultName(name, FormFieldConfig.User.NAME_FIELD, "Name", NAME_MESSAGE, false);
+        return validateDefaultName(name, RequestFieldConfig.User.NAME_FIELD, "Name", NAME_MESSAGE, false);
     }
 
     /**
@@ -140,7 +140,7 @@ public class UserValidator extends AbstractValidator {
      * @return boolean
      */
     public boolean validateResetPasswordForm(String email) {
-        return validateEmail(email, FormFieldConfig.User.EMAIL_FIELD, "Email");
+        return validateEmail(email, RequestFieldConfig.User.EMAIL_FIELD, "Email");
     }
 
     /**

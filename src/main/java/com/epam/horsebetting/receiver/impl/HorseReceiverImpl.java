@@ -1,6 +1,6 @@
 package com.epam.horsebetting.receiver.impl;
 
-import com.epam.horsebetting.config.FormFieldConfig;
+import com.epam.horsebetting.config.RequestFieldConfig;
 import com.epam.horsebetting.config.MessageConfig;
 import com.epam.horsebetting.dao.impl.HorseDAOImpl;
 import com.epam.horsebetting.entity.Horse;
@@ -15,10 +15,11 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_LOCALE;
 
 public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver {
 
@@ -35,15 +36,15 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
      */
     @Override
     public void createHorse(RequestContent content) throws ReceiverException {
-        String name = content.findParameter(FormFieldConfig.Horse.NAME_FIELD);
-        String genderAttr = content.findParameter(FormFieldConfig.Horse.GENDER_FIELD);
-        String ageAttr = content.findParameter(FormFieldConfig.Horse.AGE_FIELD);
-        String suitAttr = content.findParameter(FormFieldConfig.Horse.SUIT_FIELD);
+        String name = content.findParameter(RequestFieldConfig.Horse.NAME_FIELD);
+        String genderAttr = content.findParameter(RequestFieldConfig.Horse.GENDER_FIELD);
+        String ageAttr = content.findParameter(RequestFieldConfig.Horse.AGE_FIELD);
+        String suitAttr = content.findParameter(RequestFieldConfig.Horse.SUIT_FIELD);
 
         HorseValidator validator = new HorseValidator();
         MessageWrapper messages = new MessageWrapper();
 
-        Locale locale = (Locale)content.findSessionAttribute("locale");
+        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateCreateHorse(name, genderAttr, ageAttr, suitAttr)) {
@@ -99,7 +100,7 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
     public void ajaxObtainHorsesList(RequestContent content) throws ReceiverException {
         MessageWrapper messages = new MessageWrapper();
 
-        Locale locale = (Locale)content.findSessionAttribute("locale");
+        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
@@ -125,12 +126,12 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
      */
     @Override
     public void removeHorse(RequestContent content) throws ReceiverException {
-        String idValue = content.findParameter(FormFieldConfig.Horse.ID_FIELD);
+        String idValue = content.findParameter(RequestFieldConfig.Horse.ID_FIELD);
 
         HorseValidator validator = new HorseValidator();
         MessageWrapper messages = new MessageWrapper();
 
-        Locale locale = (Locale)content.findSessionAttribute("locale");
+        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateRemoveHorse(idValue)) {
@@ -163,16 +164,16 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
      */
     @Override
     public void updateHorse(RequestContent content) throws ReceiverException {
-        String idAttr = content.findParameter(FormFieldConfig.Horse.ID_FIELD);
-        String name = content.findParameter(FormFieldConfig.Horse.NAME_FIELD);
-        String genderAttr = content.findParameter(FormFieldConfig.Horse.GENDER_FIELD);
-        String ageAttr = content.findParameter(FormFieldConfig.Horse.AGE_FIELD);
-        String suitAttr = content.findParameter(FormFieldConfig.Horse.SUIT_FIELD);
+        String idAttr = content.findParameter(RequestFieldConfig.Horse.ID_FIELD);
+        String name = content.findParameter(RequestFieldConfig.Horse.NAME_FIELD);
+        String genderAttr = content.findParameter(RequestFieldConfig.Horse.GENDER_FIELD);
+        String ageAttr = content.findParameter(RequestFieldConfig.Horse.AGE_FIELD);
+        String suitAttr = content.findParameter(RequestFieldConfig.Horse.SUIT_FIELD);
 
         HorseValidator validator = new HorseValidator();
         MessageWrapper messages = new MessageWrapper();
 
-        Locale locale = (Locale)content.findSessionAttribute("locale");
+        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateUpdateHorse(idAttr, name, genderAttr, ageAttr, suitAttr)) {

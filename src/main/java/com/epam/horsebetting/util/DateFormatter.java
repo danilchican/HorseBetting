@@ -2,7 +2,6 @@ package com.epam.horsebetting.util;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class DateFormatter {

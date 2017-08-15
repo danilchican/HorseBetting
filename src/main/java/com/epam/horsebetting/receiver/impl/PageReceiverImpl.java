@@ -1,6 +1,6 @@
 package com.epam.horsebetting.receiver.impl;
 
-import com.epam.horsebetting.config.FormFieldConfig;
+import com.epam.horsebetting.config.RequestFieldConfig;
 import com.epam.horsebetting.config.MessageConfig;
 import com.epam.horsebetting.dao.impl.*;
 import com.epam.horsebetting.database.TransactionManager;
@@ -19,6 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_LOCALE;
+
 public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
     /**
@@ -33,7 +35,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentIndexPage(RequestContent content) throws ReceiverException {
-        Locale locale = (Locale) content.findSessionAttribute("locale");
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.index"));
@@ -59,14 +61,14 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentRacesPage(RequestContent content) throws ReceiverException {
-        String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
+        String pageNum = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
         CommonValidator validator = new CommonValidator();
 
         if (!validator.validatePage(pageNum)) {
             throw new ReceiverException("GET[page=" + pageNum + "] is incorrect.");
         }
 
-        Locale locale = (Locale) content.findSessionAttribute("locale");
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.races.index"));
@@ -97,7 +99,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentRaceViewPage(RequestContent content) throws ReceiverException {
-        String idNum = content.findParameter("id");
+        String idNum = content.findParameter(RequestFieldConfig.Common.REQUEST_ID);
         CommonValidator validator = new CommonValidator();
 
         if (!validator.validateId(idNum)) {
@@ -145,7 +147,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentLoginPage(RequestContent content) {
-        Locale locale = (Locale) content.findSessionAttribute("locale");
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.auth.login"));
@@ -159,7 +161,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentRegisterPage(RequestContent content) {
-        Locale locale = (Locale) content.findSessionAttribute("locale");
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.auth.register"));
@@ -173,7 +175,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentResetPasswordPage(RequestContent content) {
-        Locale locale = (Locale) content.findSessionAttribute("locale");
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.password.reset"));
@@ -187,7 +189,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentProfilePage(RequestContent content) throws ReceiverException {
-        Locale locale = (Locale) content.findSessionAttribute("locale");
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.profile.index"));
@@ -211,7 +213,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentProfileSettingsPage(RequestContent content) {
-        Locale locale = (Locale) content.findSessionAttribute("locale");
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.profile.settings"));
@@ -225,7 +227,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentProfilePaymentPage(RequestContent content) {
-        Locale locale = (Locale) content.findSessionAttribute("locale");
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.profile.payment"));
@@ -239,14 +241,14 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentProfileBetsPage(RequestContent content) throws ReceiverException {
-        String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
+        String pageNum = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
         CommonValidator validator = new CommonValidator();
 
         if (!validator.validatePage(pageNum)) {
             throw new ReceiverException("GET[page=" + pageNum + "] is incorrect.");
         }
 
-        Locale locale = (Locale) content.findSessionAttribute("locale");
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.profile.bets"));
@@ -281,14 +283,14 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentProfileViewBetPage(RequestContent content) throws ReceiverException {
-        String idNum = content.findParameter("id");
+        String idNum = content.findParameter(RequestFieldConfig.Common.REQUEST_ID);
         CommonValidator validator = new CommonValidator();
 
         if (!validator.validateId(idNum)) {
             throw new ReceiverException("GET[id=" + idNum + "] is incorrect.");
         }
 
-        Locale locale = (Locale) content.findSessionAttribute("locale");
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.profile.bets.view") + "# " + idNum);
@@ -344,7 +346,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardPage(RequestContent content) {
-        Locale locale = (Locale) content.findSessionAttribute("locale");
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.dashboard.index"));
@@ -358,14 +360,14 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardUsersPage(RequestContent content) throws ReceiverException {
-        String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
+        String pageNum = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
         CommonValidator validator = new CommonValidator();
 
         if (!validator.validatePage(pageNum)) {
             throw new ReceiverException("GET[page=" + pageNum + "] is incorrect.");
         }
 
-        Locale locale = (Locale) content.findSessionAttribute("locale");
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.dashboard.users.index"));
@@ -398,7 +400,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardSuitsPage(RequestContent content) throws ReceiverException {
-        Locale locale = (Locale) content.findSessionAttribute("locale");
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.dashboard.suits.index"));
@@ -412,14 +414,14 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardHorsesPage(RequestContent content) throws ReceiverException {
-        String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
+        String pageNum = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
         CommonValidator validator = new CommonValidator();
 
         if (!validator.validatePage(pageNum)) {
             throw new ReceiverException("GET[page=" + pageNum + "] is incorrect.");
         }
 
-        Locale locale = (Locale) content.findSessionAttribute("locale");
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.dashboard.horses.index"));
@@ -452,7 +454,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardHorseCreatePage(RequestContent content) throws ReceiverException {
-        Locale locale = (Locale) content.findSessionAttribute("locale");
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.dashboard.horses.create"));
@@ -475,14 +477,14 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardHorseEditPage(RequestContent content) throws ReceiverException {
-        String idNum = content.findParameter("id");
+        String idNum = content.findParameter(RequestFieldConfig.Common.REQUEST_ID);
         CommonValidator validator = new CommonValidator();
 
         if (!validator.validateId(idNum)) {
             throw new ReceiverException("GET[id=" + idNum + "] is incorrect.");
         }
 
-        Locale locale = (Locale) content.findSessionAttribute("locale");
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.dashboard.horses.edit"));
@@ -530,14 +532,14 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardRacesPage(RequestContent content) throws ReceiverException {
-        String pageNum = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
+        String pageNum = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
         CommonValidator validator = new CommonValidator();
 
         if (!validator.validatePage(pageNum)) {
             throw new ReceiverException("GET[page=" + pageNum + "] is incorrect.");
         }
 
-        Locale locale = (Locale) content.findSessionAttribute("locale");
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.dashboard.races.index"));
@@ -570,7 +572,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardRaceCreatePage(RequestContent content) throws ReceiverException {
-        Locale locale = (Locale) content.findSessionAttribute("locale");
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.dashboard.races.create"));

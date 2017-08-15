@@ -1,6 +1,6 @@
 package com.epam.horsebetting.receiver.impl;
 
-import com.epam.horsebetting.config.FormFieldConfig;
+import com.epam.horsebetting.config.RequestFieldConfig;
 import com.epam.horsebetting.config.MessageConfig;
 import com.epam.horsebetting.dao.impl.UserDAOImpl;
 import com.epam.horsebetting.database.TransactionManager;
@@ -21,6 +21,8 @@ import javax.mail.*;
 import java.math.BigDecimal;
 import java.util.*;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_LOCALE;
+
 public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
     /**
@@ -34,17 +36,17 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      * @param content
      */
     public void register(RequestContent content) throws ReceiverException {
-        String name = content.findParameter(FormFieldConfig.User.NAME_FIELD);
-        String email = content.findParameter(FormFieldConfig.User.EMAIL_FIELD);
-        String password = content.findParameter(FormFieldConfig.User.PASSWORD_FIELD);
-        String passwordConfirmation = content.findParameter(FormFieldConfig.User.CONFIRMATION_FIELD);
+        String name = content.findParameter(RequestFieldConfig.User.NAME_FIELD);
+        String email = content.findParameter(RequestFieldConfig.User.EMAIL_FIELD);
+        String password = content.findParameter(RequestFieldConfig.User.PASSWORD_FIELD);
+        String passwordConfirmation = content.findParameter(RequestFieldConfig.User.CONFIRMATION_FIELD);
 
         UserValidator validator = new UserValidator();
 
         if (validator.validateRegistrationForm(name, email, password, passwordConfirmation)) {
             MessageWrapper messages = new MessageWrapper();
 
-            Locale locale = (Locale)content.findSessionAttribute("locale");
+            Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
             MessageConfig messageResource = new MessageConfig(locale);
 
             UserDAOImpl userDAO = new UserDAOImpl(true);
@@ -99,13 +101,13 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      * @param content
      */
     public void login(RequestContent content) throws ReceiverException {
-        String email = content.findParameter(FormFieldConfig.User.EMAIL_FIELD);
-        String password = content.findParameter(FormFieldConfig.User.PASSWORD_FIELD);
+        String email = content.findParameter(RequestFieldConfig.User.EMAIL_FIELD);
+        String password = content.findParameter(RequestFieldConfig.User.PASSWORD_FIELD);
 
         UserValidator validator = new UserValidator();
         MessageWrapper messages = new MessageWrapper();
 
-        Locale locale = (Locale)content.findSessionAttribute("locale");
+        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateLoginForm(email, password)) {
@@ -159,12 +161,12 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      */
     @Override
     public void updateProfileSettings(RequestContent content) throws ReceiverException {
-        String name = content.findParameter(FormFieldConfig.User.NAME_FIELD);
+        String name = content.findParameter(RequestFieldConfig.User.NAME_FIELD);
 
         UserValidator validator = new UserValidator();
         MessageWrapper messages = new MessageWrapper();
 
-        Locale locale = (Locale)content.findSessionAttribute("locale");
+        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateUpdateSettingsForm(name)) {
@@ -195,13 +197,13 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      */
     @Override
     public void updateSecurity(RequestContent content) throws ReceiverException {
-        String password = content.findParameter(FormFieldConfig.User.PASSWORD_FIELD);
-        String confirmation = content.findParameter(FormFieldConfig.User.CONFIRMATION_FIELD);
+        String password = content.findParameter(RequestFieldConfig.User.PASSWORD_FIELD);
+        String confirmation = content.findParameter(RequestFieldConfig.User.CONFIRMATION_FIELD);
 
         UserValidator validator = new UserValidator();
         MessageWrapper messages = new MessageWrapper();
 
-        Locale locale = (Locale)content.findSessionAttribute("locale");
+        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateSecurityForm(password, confirmation)) {
@@ -232,12 +234,12 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      */
     @Override
     public void updateProfileBalance(RequestContent content) throws ReceiverException {
-        String paymentAmount = content.findParameter(FormFieldConfig.User.PAYMENT_AMOUNT_FIELD);
+        String paymentAmount = content.findParameter(RequestFieldConfig.User.PAYMENT_AMOUNT_FIELD);
 
         UserValidator validator = new UserValidator();
         MessageWrapper messages = new MessageWrapper();
 
-        Locale locale = (Locale)content.findSessionAttribute("locale");
+        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateUpdateProfileBalanceForm(paymentAmount)) {
@@ -272,7 +274,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      */
     @Override
     public void resetPassword(RequestContent content) throws ReceiverException {
-        String email = content.findParameter(FormFieldConfig.User.EMAIL_FIELD);
+        String email = content.findParameter(RequestFieldConfig.User.EMAIL_FIELD);
 
         ArrayList<String> messages = new ArrayList<>();
         UserValidator validator = new UserValidator();
@@ -335,14 +337,14 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
     public void changeLocale(RequestContent content) {
         super.setDefaultContentAttributes(content);
 
-        String language = content.findParameter(FormFieldConfig.Locale.LANG_FIELD);
+        String language = content.findParameter(RequestFieldConfig.Common.LANG_FIELD);
         LOGGER.log(Level.DEBUG, "Received language: " + language);
 
         Locale locale = (language != null && language.equals("en"))
                 ? new Locale("en", "US")
                 : new Locale("ru", "RU");
 
-        content.insertSessionAttribute("locale", locale);
+        content.insertSessionAttribute(SESSION_LOCALE, locale);
         LOGGER.log(Level.INFO, "The new locale was set: " + locale);
     }
 
