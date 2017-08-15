@@ -1,6 +1,7 @@
 package com.epam.horsebetting.receiver.impl;
 
 import com.epam.horsebetting.config.FormFieldConfig;
+import com.epam.horsebetting.config.MessageConfig;
 import com.epam.horsebetting.dao.BetDAO;
 import com.epam.horsebetting.dao.impl.*;
 import com.epam.horsebetting.database.TransactionManager;
@@ -10,6 +11,7 @@ import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.AbstractReceiver;
 import com.epam.horsebetting.receiver.PageReceiver;
 import com.epam.horsebetting.request.RequestContent;
+import com.epam.horsebetting.util.MessageWrapper;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
@@ -32,7 +35,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentIndexPage(RequestContent content) throws ReceiverException {
-        this.setPageSubTitle("Главная");
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.index"));
         this.setDefaultContentAttributes(content);
 
         final int limit = 10;
@@ -55,7 +61,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentRacesPage(RequestContent content) throws ReceiverException {
-        this.setPageSubTitle("Забеги");
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.races.index"));
         this.setDefaultContentAttributes(content);
 
         // TODO create validator
@@ -134,7 +143,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentLoginPage(RequestContent content) {
-        this.setPageSubTitle("Авторизация");
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.auth.login"));
         this.setDefaultContentAttributes(content);
     }
 
@@ -145,7 +157,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentRegisterPage(RequestContent content) {
-        this.setPageSubTitle("Регистрация");
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.auth.register"));
         this.setDefaultContentAttributes(content);
     }
 
@@ -156,7 +171,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentResetPasswordPage(RequestContent content) {
-        this.setPageSubTitle("Восстановление пароля");
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.password.reset"));
         this.setDefaultContentAttributes(content);
     }
 
@@ -167,7 +185,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentProfilePage(RequestContent content) throws ReceiverException {
-        this.setPageSubTitle("Личный кабинет");
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.profile.index"));
         this.setDefaultContentAttributes(content);
 
         try (BetDAOImpl betDAO = new BetDAOImpl(false)) {
@@ -188,7 +209,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentProfileSettingsPage(RequestContent content) {
-        this.setPageSubTitle("Настройки");
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.profile.settings"));
         this.setDefaultContentAttributes(content);
     }
 
@@ -199,7 +223,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentProfilePaymentPage(RequestContent content) {
-        this.setPageSubTitle("Пополнение баланса");
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.profile.payment"));
         this.setDefaultContentAttributes(content);
     }
 
@@ -210,7 +237,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentProfileBetsPage(RequestContent content) throws ReceiverException {
-        this.setPageSubTitle("Ставки");
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.profile.bets"));
         this.setDefaultContentAttributes(content);
 
         // TODO create validators
@@ -245,12 +275,15 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentProfileViewBetPage(RequestContent content) throws ReceiverException {
+        // TODO create validators
         String idNum = content.findParameter("id");
 
-        this.setPageSubTitle("Ставка #" + idNum);
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.profile.bets.view") + "# " + idNum);
         this.setDefaultContentAttributes(content);
 
-        // TODO create validators
 
         BetDAOImpl betDAO = new BetDAOImpl(true);
         RaceDAOImpl raceDAO = new RaceDAOImpl(true);
@@ -302,7 +335,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardPage(RequestContent content) {
-        this.setPageSubTitle("Админ-панель");
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.dashboard.index"));
         this.setDefaultContentAttributes(content);
     }
 
@@ -313,7 +349,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardUsersPage(RequestContent content) throws ReceiverException {
-        this.setPageSubTitle("Пользователи");
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.dashboard.users.index"));
         this.setDefaultContentAttributes(content);
 
         // TODO create validators
@@ -348,7 +387,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardSuitsPage(RequestContent content) throws ReceiverException {
-        this.setPageSubTitle("Масти лошадей");
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.dashboard.suits.index"));
         this.setDefaultContentAttributes(content);
     }
 
@@ -359,7 +401,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardHorsesPage(RequestContent content) throws ReceiverException {
-        this.setPageSubTitle("Лошади");
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.dashboard.horses.index"));
         this.setDefaultContentAttributes(content);
 
         // TODO create validators
@@ -393,7 +438,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardHorseCreatePage(RequestContent content) throws ReceiverException {
-        this.setPageSubTitle("Создание лошади");
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.dashboard.horses.create"));
         this.setDefaultContentAttributes(content);
 
         try (SuitDAOImpl suitDAO = new SuitDAOImpl(false)) {
@@ -413,7 +461,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardHorseEditPage(RequestContent content) throws ReceiverException {
-        this.setPageSubTitle("Редактирование лошади");
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.dashboard.horses.edit"));
         this.setDefaultContentAttributes(content);
 
         // TODO create validators
@@ -462,7 +513,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardRacesPage(RequestContent content) throws ReceiverException {
-        this.setPageSubTitle("Забеги");
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.dashboard.races.index"));
         this.setDefaultContentAttributes(content);
 
         // TODO create validator
@@ -496,7 +550,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardRaceCreatePage(RequestContent content) throws ReceiverException {
-        this.setPageSubTitle("Создание забега");
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.dashboard.races.create"));
         this.setDefaultContentAttributes(content);
     }
 }
