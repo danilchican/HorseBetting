@@ -29,7 +29,7 @@
                                 <td><a href="/races/view?id=${race.getId()}">${race.getTitle()}</a></td>
                                 <td>${race.getPlace()}</td>
                                 <td>${race.getMinRate()}</td>
-                                <td>${f:formatDate("yyyy/MM/dd HH:mm",race.getStartedAt())}</td>
+                                <td>${f:formatDate(race.getStartedAt(),locale)}</td>
                             </tr>
                         </c:forEach>
                         </tbody>

@@ -14,7 +14,8 @@
             <form action="/profile/settings/update" method="post">
                 <div class="form-group">
                     <label for="user-name"><fmt:message key="form.profile.name"/></label>
-                    <input type="text" name="user-name" id="user-name" value="${user.getName() != null ? user.getName() : ''}"
+                    <input type="text" name="user-name" id="user-name"
+                           value="${user.getName() != null ? user.getName() : ''}"
                            class="form-control" required>
                 </div>
                 <div class="form-group">
@@ -28,7 +29,7 @@
                 <div class="form-group">
                     <label for="user-registration-date"><fmt:message key="form.profile.register_date"/></label>
                     <input type="text" id="user-registration-date"
-                           value="${f:formatDate("yyyy-MM-dd HH:mm",user.getRegistrationDate())}" class="form-control"
+                           value="${f:formatDate(user.getRegistrationDate(),locale)}" class="form-control"
                            disabled>
                 </div>
                 <button type="submit" class="btn btn-primary save-button"><fmt:message key="button.save"/></button>

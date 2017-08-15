@@ -20,7 +20,7 @@
         </p>
         <p><b><fmt:message key="dashboard.form.races.place"/>:</b> ${race.getPlace()}</p>
         <p><b><fmt:message key="form.bets.participant"/>:</b> ${participant.getJockeyName()}</p>
-        <p><b><fmt:message key="form.bets.created_at"/>:</b> ${f:formatDate("yyyy/MM/dd HH:mm",bet.getCreatedAt())}</p>
+        <p><b><fmt:message key="form.bets.created_at"/>:</b> ${f:formatDate(bet.getCreatedAt(), locale)}</p>
         <!-- TODO if race is finished then display `is_winner` else display `in progress` text -->
     </div>
 </layout:account>

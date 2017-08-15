@@ -28,7 +28,7 @@
                                 <td><a href="/profile/bets/view?id=${bet.getId()}">${bet.getId()}</a></td>
                                 <td>${bet.getParticipantName()}</td>
                                 <td>${bet.getAmount()}</td>
-                                <td>${f:formatDate("yyyy/MM/dd HH:mm",bet.getCreatedAt())}</td>
+                                <td>${f:formatDate(bet.getCreatedAt(), locale)}</td>
                                 <td>
                                     <a href="/profile/bets/view?id=${bet.getId()}" class="btn btn-success btn-xs">
                                         <fmt:message key="button.view"/>

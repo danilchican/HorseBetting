@@ -67,7 +67,7 @@
                                         <td>${race.getTitle()}</td>
                                         <td>${race.getPlace()}</td>
                                         <td>${race.isFinished() ? "Yes" : "No"}</td>
-                                        <td>${f:formatDate("yyyy/MM/dd",race.getCreatedAt())}</td>
+                                        <td>${f:formatDate(race.getCreatedAt(), locale)}</td>
                                         <td>
                                             <a href="/dashboard/races/view?id=${race.getId()}"
                                                class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> <fmt:message
