@@ -38,6 +38,7 @@ public class ResetPasswordPresentCommand extends AbstractCommand {
     public void execute(RequestContent request) throws IllegalCommandTypeException {
         String commandName = String.valueOf(request.findRequestAttribute(COMMAND_INSTANCE_NAME));
         String page;
+        Router router;
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);
@@ -47,7 +48,7 @@ public class ResetPasswordPresentCommand extends AbstractCommand {
             LOGGER.log(Level.ERROR, e);
         }
 
-        Router router = new Router(page, Router.RouteType.FORWARD);
+        router = new Router(page, Router.RouteType.REDIRECT);
         request.insertRequestAttribute(Router.ROUTER_INSTANCE_NAME, router);
     }
 }

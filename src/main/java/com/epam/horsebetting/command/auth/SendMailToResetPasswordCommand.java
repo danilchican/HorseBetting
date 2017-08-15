@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ResetPasswordCommand extends AbstractCommand {
+public class SendMailToResetPasswordCommand extends AbstractCommand {
 
     /**
      * Logger to write logs.
@@ -23,7 +23,7 @@ public class ResetPasswordCommand extends AbstractCommand {
      *
      * @param receiver
      */
-    public ResetPasswordCommand(AbstractReceiver receiver) {
+    public SendMailToResetPasswordCommand(AbstractReceiver receiver) {
         super(receiver);
     }
 
@@ -36,13 +36,11 @@ public class ResetPasswordCommand extends AbstractCommand {
     @Override
     public void execute(RequestContent request) throws IllegalCommandTypeException {
         String commandName = String.valueOf(request.findRequestAttribute(COMMAND_INSTANCE_NAME));
-        Router router;
+        Router router = new Router("/password/reset", Router.RouteType.REDIRECT);
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);
-            router = new Router("/profile", Router.RouteType.REDIRECT);
         } catch (ReceiverException e) {
-            router = new Router(request.findHeader("referer"), Router.RouteType.REDIRECT);
             LOGGER.log(Level.ERROR, e);
         }
 

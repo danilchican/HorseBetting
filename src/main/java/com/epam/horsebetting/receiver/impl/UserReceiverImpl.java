@@ -1,15 +1,19 @@
 package com.epam.horsebetting.receiver.impl;
 
+import com.epam.horsebetting.config.EnvironmentConfig;
 import com.epam.horsebetting.config.RequestFieldConfig;
 import com.epam.horsebetting.config.MessageConfig;
+import com.epam.horsebetting.dao.impl.PasswordRecoverDAOImpl;
 import com.epam.horsebetting.dao.impl.UserDAOImpl;
 import com.epam.horsebetting.database.TransactionManager;
+import com.epam.horsebetting.entity.PasswordRecover;
 import com.epam.horsebetting.entity.User;
 import com.epam.horsebetting.exception.DAOException;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.AbstractReceiver;
 import com.epam.horsebetting.receiver.UserReceiver;
 import com.epam.horsebetting.request.RequestContent;
+import com.epam.horsebetting.util.HashManager;
 import com.epam.horsebetting.util.MailSender;
 import com.epam.horsebetting.util.MessageWrapper;
 import com.epam.horsebetting.validator.UserValidator;
@@ -46,7 +50,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         if (validator.validateRegistrationForm(name, email, password, passwordConfirmation)) {
             MessageWrapper messages = new MessageWrapper();
 
-            Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
+            Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
             MessageConfig messageResource = new MessageConfig(locale);
 
             UserDAOImpl userDAO = new UserDAOImpl(true);
@@ -107,7 +111,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         UserValidator validator = new UserValidator();
         MessageWrapper messages = new MessageWrapper();
 
-        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateLoginForm(email, password)) {
@@ -166,7 +170,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         UserValidator validator = new UserValidator();
         MessageWrapper messages = new MessageWrapper();
 
-        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateUpdateSettingsForm(name)) {
@@ -203,7 +207,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         UserValidator validator = new UserValidator();
         MessageWrapper messages = new MessageWrapper();
 
-        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateSecurityForm(password, confirmation)) {
@@ -239,7 +243,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         UserValidator validator = new UserValidator();
         MessageWrapper messages = new MessageWrapper();
 
-        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateUpdateProfileBalanceForm(paymentAmount)) {
@@ -268,53 +272,80 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
     }
 
     /**
-     * TODO Reset password by sending reset link to email.
+     * Send email to reset password by link.
      *
      * @param content
      */
     @Override
-    public void resetPassword(RequestContent content) throws ReceiverException {
+    public void sendEmailToResetPassword(RequestContent content) throws ReceiverException {
         String email = content.findParameter(RequestFieldConfig.User.EMAIL_FIELD);
 
-        ArrayList<String> messages = new ArrayList<>();
+        MessageWrapper messages = new MessageWrapper();
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+        MessageConfig messageResource = new MessageConfig(locale);
+
         UserValidator validator = new UserValidator();
 
         if (validator.validateResetPasswordForm(email)) {
             User user = new User();
             user.setEmail(email);
 
-            try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
-                if (isUserExists(userDAO, user)) {
-                    String message = "";
-                    // TODO create generation message
+            UserDAOImpl userDAO = new UserDAOImpl(true);
+            PasswordRecoverDAOImpl recoverDAO = new PasswordRecoverDAOImpl(true);
 
-                    try {
-                        MailSender mail = new MailSender();
-                        mail.send(email, "Reset password", message);
+            TransactionManager transaction = new TransactionManager(userDAO, recoverDAO);
+            transaction.beginTransaction();
 
-                        messages.add("Email is successfully sent.");
-                        content.insertSessionAttribute("messages", messages);
-                    } catch (MessagingException e) {
-                        messages.add("Cannot send password link. Please try later.");
-                        content.insertSessionAttribute("errors", messages);
+            try {
+                if ((user = userDAO.findByEmail(email)) != null) {
+                    EnvironmentConfig envResource = new EnvironmentConfig();
 
-                        throw new ReceiverException("Send message to email error: " + e.getMessage(), e);
-                    }
+                    String hashData = user.getId() + user.getEmail() + user.getPassword();
+                    String token = HashManager.make(hashData);
+
+                    PasswordRecover recover = new PasswordRecover(user.getEmail(), token);
+                    recoverDAO.create(recover);
+
+                    String message = String.format(
+                            "%s <a href=\"%s/password/link?token=%s\">%s/password/link?token=%s</a>",
+                            messageResource.get("password.reset.message"),
+                            envResource.obtainURL(), token,
+                            envResource.obtainURL(), token
+                    );
+
+                    MailSender mail = new MailSender();
+                    mail.send(email, messageResource.get("password.reset.subject"), message);
+
+                    messages.add(messageResource.get("password.reset.notification.success"));
+                    content.insertSessionAttribute("messages", messages);
                 } else {
+                    transaction.rollback();
+
                     for (Map.Entry<String, String> entry : validator.getOldInput()) {
                         content.insertSessionAttribute(entry.getKey(), entry.getValue());
                     }
 
-                    messages.add("User does not exist with this email.");
+                    messages.add(messageResource.get("user.credentials.fail"));
                     content.insertSessionAttribute("errors", messages);
 
                     throw new ReceiverException("Cannot send reset password link. User does not exist.");
                 }
+            } catch (MessagingException e) {
+                transaction.rollback();
+
+                messages.add(messageResource.get("password.reset.notification.fail"));
+                content.insertSessionAttribute("errors", messages);
+
+                throw new ReceiverException("Send message to email error: " + e.getMessage(), e);
             } catch (DAOException e) {
-                messages.add("Can't find user with this email.");
+                transaction.rollback();
+
+                messages.add(messageResource.get("user.credentials.fail"));
                 content.insertSessionAttribute("errors", messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
+            } finally {
+                transaction.endTransaction();
             }
         } else {
             content.insertSessionAttribute("errors", validator.getErrors());
@@ -325,6 +356,16 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
             throw new ReceiverException("Invalid email to reset password.");
         }
+    }
+
+    /**
+     * Reset password.
+     *
+     * @param content
+     */
+    @Override
+    public void resetPassword(RequestContent content) throws ReceiverException {
+        // TODO reset password
     }
 
     /**
@@ -356,9 +397,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      * @throws DAOException
      */
     private boolean isUserExists(UserDAOImpl userDAO, User user) throws DAOException {
-        User foundedUser = userDAO.findByEmail(user.getEmail());
-
-        return foundedUser != null;
+        return userDAO.findByEmail(user.getEmail()) != null;
     }
 
     /**
@@ -369,7 +408,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      * @throws ReceiverException
      */
     private void authenticate(RequestContent content, User user) throws ReceiverException {
-        LOGGER.log(Level.DEBUG, "Auth user: " + user);
+        LOGGER.log(Level.DEBUG, "Authorized user: " + user);
         content.insertSessionAttribute("authorized", user.getId());
     }
 }

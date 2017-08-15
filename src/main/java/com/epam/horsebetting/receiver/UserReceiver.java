@@ -49,7 +49,14 @@ public interface UserReceiver {
     void updateProfileBalance(RequestContent content) throws ReceiverException;
 
     /**
-     * Reset password by sending reset link to email.
+     * Send email to reset password by link.
+     *
+     * @param content
+     */
+    void sendEmailToResetPassword(RequestContent content) throws ReceiverException;
+
+    /**
+     * Reset password.
      *
      * @param content
      */

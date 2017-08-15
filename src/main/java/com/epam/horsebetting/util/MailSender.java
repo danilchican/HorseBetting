@@ -75,7 +75,7 @@ public class MailSender {
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
 
         message.setSubject(subject);
-        message.setText(messageText);
+        message.setContent(messageText, "text/html; charset=utf-8");
 
         Transport.send(message);
     }

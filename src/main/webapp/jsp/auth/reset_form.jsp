@@ -13,21 +13,17 @@
                 <div class="panel panel-default">
                     <div class="panel-heading"><fmt:message key="block.password.reset.title"/></div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="/password/email">
+                        <form class="form-horizontal" role="form" method="POST" action="/password/reset">
                             <div class="form-group">
-                                <label for="email" class="col-md-4 control-label"><fmt:message
-                                        key="form.email"/></label>
-                                <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" name="email"
-                                           value="<ctg:oldInputFormAttribute name="email" />" required autofocus>
-                                </div>
+                                <label for="password"><fmt:message key="form.profile.new_password"/></label>
+                                <input type="password" name="password" id="password" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <div class="col-md-8 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary"><fmt:message
-                                            key="button.password.send_password"/></button>
-                                </div>
+                                <label for="confirmation"><fmt:message key="form.password.confirmation"/></label>
+                                <input type="password" name="confirmation" id="confirmation" class="form-control" required>
                             </div>
+                            <button type="submit" class="btn btn-primary save-button"><fmt:message
+                                    key="button.password.change"/></button>
                         </form>
                     </div>
                 </div>

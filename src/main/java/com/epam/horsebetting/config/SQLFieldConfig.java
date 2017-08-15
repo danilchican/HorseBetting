@@ -57,4 +57,10 @@ public final class SQLFieldConfig {
         public static final String CREATED_AT = "created_at";
         public static final String PARTICIPANT_NAME = "participant_name";
     }
+
+    public final class PasswordRecover {
+        public static final String EMAIL = "email";
+        public static final String TOKEN = "token";
+        public static final String CREATED_AT = "created_at";
+    }
 }

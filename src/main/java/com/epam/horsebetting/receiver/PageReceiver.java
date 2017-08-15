@@ -48,6 +48,13 @@ public interface PageReceiver {
     void presentResetPasswordPage(RequestContent content);
 
     /**
+     * Present password to reset by link page.
+     *
+     * @param content
+     */
+    void presentResetLinkPasswordPage(RequestContent content) throws ReceiverException;
+
+    /**
      * Present profile page.
      *
      * @param content

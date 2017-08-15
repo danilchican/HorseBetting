@@ -183,6 +183,34 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
     }
 
     /**
+     * Present password to reset by link page.
+     *
+     * @param content
+     */
+    @Override
+    public void presentResetLinkPasswordPage(RequestContent content) throws ReceiverException {
+        String token = content.findParameter(RequestFieldConfig.Common.PASSWORD_RESET_TOKEN);
+
+        if (token == null) {
+            throw new ReceiverException("Token does not exist.");
+        }
+
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.password.reset"));
+        this.setDefaultContentAttributes(content);
+
+        try (PasswordRecoverDAOImpl recoverDAO = new PasswordRecoverDAOImpl(false)) {
+            if(recoverDAO.findByToken(token) == null) {
+                throw new ReceiverException("Token expired or does not exist.");
+            }
+        } catch (DAOException e) {
+            throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        }
+    }
+
+    /**
      * Present profile page.
      *
      * @param content
