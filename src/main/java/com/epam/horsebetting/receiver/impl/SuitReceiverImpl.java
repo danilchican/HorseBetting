@@ -1,6 +1,7 @@
 package com.epam.horsebetting.receiver.impl;
 
 import com.epam.horsebetting.config.FormFieldConfig;
+import com.epam.horsebetting.config.MessageConfig;
 import com.epam.horsebetting.dao.impl.SuitDAOImpl;
 import com.epam.horsebetting.database.TransactionManager;
 import com.epam.horsebetting.entity.Suit;
@@ -9,6 +10,7 @@ import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.AbstractReceiver;
 import com.epam.horsebetting.receiver.SuitReceiver;
 import com.epam.horsebetting.request.RequestContent;
+import com.epam.horsebetting.util.MessageWrapper;
 import com.epam.horsebetting.validator.SuitValidator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
 
@@ -34,9 +37,12 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
     @Override
     public void ajaxObtainSuitsList(RequestContent content) throws ReceiverException {
         String pageNumber = content.findParameter(FormFieldConfig.Pagination.PAGE_FIELD);
-        SuitValidator validator = new SuitValidator();
 
-        ArrayList<String> errors;
+        SuitValidator validator = new SuitValidator();
+        MessageWrapper messages = new MessageWrapper();
+
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validatePage(pageNumber)) {
             final int step = 10;
@@ -51,11 +57,11 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
 
                 LOGGER.log(Level.DEBUG, "Obtained suits part: " + Arrays.toString(suits.toArray()));
             } catch (DAOException e) {
-                errors = new ArrayList<>();
-                errors.add("Something went wrong...");
+
+                messages.add(messageResource.get("error.undefined"));
 
                 content.insertJsonAttribute("success", false);
-                content.insertJsonAttribute("errors", errors);
+                content.insertJsonAttribute("errors", messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
@@ -73,10 +79,13 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
      */
     @Override
     public void createSuit(RequestContent content) throws ReceiverException {
-        SuitValidator validator = new SuitValidator();
-        ArrayList<String> messages = new ArrayList<>();
-
         String name = content.findParameter(FormFieldConfig.Suit.NAME_FIELD);
+
+        SuitValidator validator = new SuitValidator();
+        MessageWrapper messages = new MessageWrapper();
+
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateName(name)) {
             Suit suit = new Suit(name);
@@ -93,15 +102,16 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
                 transaction.commit();
                 LOGGER.log(Level.DEBUG, "Created suit: " + createdSuit);
 
-                messages.add("Suit created successfully");
+                messages.add(messageResource.get("dashboard.suit.create.success"));
 
                 content.insertJsonAttribute("suit", createdSuit);
                 content.insertJsonAttribute("messages", messages);
+                LOGGER.log(Level.DEBUG, "Messages: " + messages.findAll());
                 content.insertJsonAttribute("success", true);
             } catch (DAOException e) {
                 transaction.rollback();
 
-                messages.add("Can't create suit.");
+                messages.add(messageResource.get("dashboard.suit.create.fail"));
                 content.insertJsonAttribute("errors", messages);
                 content.insertJsonAttribute("success", false);
 
@@ -123,11 +133,14 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
      */
     @Override
     public void updateSuit(RequestContent content) throws ReceiverException {
-        ArrayList<String> messages = new ArrayList<>();
-        SuitValidator validator = new SuitValidator();
-
         String idNumber = content.findParameter(FormFieldConfig.Suit.ID_FIELD);
         String name = content.findParameter(FormFieldConfig.Suit.NAME_FIELD);
+
+        MessageWrapper messages = new MessageWrapper();
+        SuitValidator validator = new SuitValidator();
+
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
 
         if(validator.validateSuit(idNumber, name)) {
             final int id = Integer.parseInt(idNumber);
@@ -138,11 +151,11 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
             try (SuitDAOImpl suitDAO = new SuitDAOImpl(false)) {
                 suitDAO.update(suit);
 
-                messages.add("Suit updated successfully");
+                messages.add(messageResource.get("dashboard.suit.update.success"));
                 content.insertJsonAttribute("messages", messages);
                 content.insertJsonAttribute("success", true);
             } catch (DAOException e) {
-                messages.add("Can't update current suit");
+                messages.add(messageResource.get("dashboard.suit.update.fail"));
                 content.insertJsonAttribute("errors", messages);
                 content.insertJsonAttribute("success", false);
 
@@ -162,10 +175,13 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
      */
     @Override
     public void removeSuit(RequestContent content) throws ReceiverException {
-        ArrayList<String> messages = new ArrayList<>();
-        SuitValidator validator = new SuitValidator();
-
         String idNumber = content.findParameter(FormFieldConfig.Suit.ID_FIELD);
+
+        SuitValidator validator = new SuitValidator();
+        MessageWrapper messages = new MessageWrapper();
+
+        Locale locale = (Locale)content.findSessionAttribute("locale");
+        MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateId(idNumber)) {
             final int id = Integer.parseInt(idNumber);
@@ -176,11 +192,11 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
             try (SuitDAOImpl suitDAO = new SuitDAOImpl(false)) {
                 suitDAO.remove(suit);
 
-                messages.add("Suit removed successfully");
+                messages.add(messageResource.get("dashboard.suit.remove.success"));
                 content.insertJsonAttribute("messages", messages);
                 content.insertJsonAttribute("success", true);
             } catch (DAOException e) {
-                messages.add("Can't remove current suit");
+                messages.add(messageResource.get("dashboard.suit.remove.fail"));
                 content.insertJsonAttribute("errors", messages);
                 content.insertJsonAttribute("success", false);
 

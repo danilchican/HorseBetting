@@ -56,6 +56,7 @@ public class AjaxController extends HttpServlet {
 
         json = new Gson().toJson(content.getJsonData());
 
+        response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         response.getWriter().write(json);
     }
