@@ -1,7 +1,7 @@
 package com.epam.horsebetting.controller;
 
 import com.epam.horsebetting.command.AbstractCommand;
-import com.epam.horsebetting.exception.IllegalCommandTypeException;
+import com.epam.horsebetting.exception.CommandTypeNotFoundException;
 import com.epam.horsebetting.request.RequestContent;
 import com.epam.horsebetting.exception.RouteNotFoundException;
 import com.epam.horsebetting.router.Router;
@@ -65,7 +65,7 @@ public class MainController extends HttpServlet {
                     request.getRequestDispatcher(router.getRoute()).forward(request, response);
                     break;
             }
-        } catch (IllegalCommandTypeException | RouteNotFoundException e) {
+        } catch (CommandTypeNotFoundException | RouteNotFoundException e) {
             LOGGER.log(Level.ERROR, e.getMessage(), e);
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }

@@ -2,14 +2,14 @@ package com.epam.horsebetting.exception;
 
 import java.security.PrivilegedActionException;
 
-public class IllegalCommandTypeException extends Exception {
+public class CommandTypeNotFoundException extends Exception {
 
     /**
      * Constructs a new exception with {@code null} as its detail message.
      * The cause is not initialized, and may subsequently be initialized by a
      * call to {@link #initCause}.
      */
-    public IllegalCommandTypeException() {
+    public CommandTypeNotFoundException() {
     }
 
     /**
@@ -20,7 +20,7 @@ public class IllegalCommandTypeException extends Exception {
      * @param message the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
-    public IllegalCommandTypeException(String message) {
+    public CommandTypeNotFoundException(String message) {
         super(message);
     }
 
@@ -37,7 +37,7 @@ public class IllegalCommandTypeException extends Exception {
      *                permitted, and indicates that the cause is nonexistent or
      *                unknown.)
      */
-    public IllegalCommandTypeException(String message, Throwable cause) {
+    public CommandTypeNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -54,7 +54,7 @@ public class IllegalCommandTypeException extends Exception {
      *              permitted, and indicates that the cause is nonexistent or
      *              unknown.)
      */
-    public IllegalCommandTypeException(Throwable cause) {
+    public CommandTypeNotFoundException(Throwable cause) {
         super(cause);
     }
 }

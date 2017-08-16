@@ -1,6 +1,6 @@
 package com.epam.horsebetting.command;
 
-import com.epam.horsebetting.exception.IllegalCommandTypeException;
+import com.epam.horsebetting.exception.CommandTypeNotFoundException;
 import com.epam.horsebetting.receiver.AbstractReceiver;
 import com.epam.horsebetting.request.RequestContent;
 
@@ -50,5 +50,5 @@ public abstract class AbstractCommand {
      * @param request
      * @see RequestContent
      */
-    public abstract void execute(RequestContent request) throws IllegalCommandTypeException;
+    public abstract void execute(RequestContent request) throws CommandTypeNotFoundException;
 }

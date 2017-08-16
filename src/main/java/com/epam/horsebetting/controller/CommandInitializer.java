@@ -2,7 +2,7 @@ package com.epam.horsebetting.controller;
 
 import com.epam.horsebetting.command.AbstractCommand;
 import com.epam.horsebetting.command.CommandType;
-import com.epam.horsebetting.exception.IllegalCommandTypeException;
+import com.epam.horsebetting.exception.CommandTypeNotFoundException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,9 +31,9 @@ class CommandInitializer {
      *
      * @param request
      * @return command instance
-     * @throws IllegalCommandTypeException
+     * @throws CommandTypeNotFoundException
      */
-    static AbstractCommand init(HttpServletRequest request) throws IllegalCommandTypeException {
+    static AbstractCommand init(HttpServletRequest request) throws CommandTypeNotFoundException {
         String uri = request.getRequestURI();
 
         if(uri.endsWith("/")) {

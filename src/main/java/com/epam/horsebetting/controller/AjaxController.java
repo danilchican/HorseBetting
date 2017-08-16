@@ -1,7 +1,7 @@
 package com.epam.horsebetting.controller;
 
 import com.epam.horsebetting.command.AbstractCommand;
-import com.epam.horsebetting.exception.IllegalCommandTypeException;
+import com.epam.horsebetting.exception.CommandTypeNotFoundException;
 import com.epam.horsebetting.request.RequestContent;
 import com.google.gson.Gson;
 import org.apache.logging.log4j.Level;
@@ -47,7 +47,7 @@ public class AjaxController extends HttpServlet {
 
             content.extractValues(request);
             command.execute(content);
-        } catch (IllegalCommandTypeException e) {
+        } catch (CommandTypeNotFoundException e) {
             LOGGER.log(Level.ERROR, e.getMessage(), e);
 
             errors.add("Route does not exist.");

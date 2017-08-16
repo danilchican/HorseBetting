@@ -14,7 +14,7 @@ import com.epam.horsebetting.command.user.*;
 import com.epam.horsebetting.command.dashboard.DashboardPresentCommand;
 import com.epam.horsebetting.command.locale.ChangeLocaleCommand;
 import com.epam.horsebetting.command.profile.ProfilePresentCommand;
-import com.epam.horsebetting.exception.IllegalCommandTypeException;
+import com.epam.horsebetting.exception.CommandTypeNotFoundException;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.impl.*;
 import com.epam.horsebetting.request.RequestContent;
@@ -313,13 +313,13 @@ public enum CommandType {
      * @param tag
      * @return
      */
-    public static CommandType findByTag(String tag) throws IllegalCommandTypeException {
+    public static CommandType findByTag(String tag) throws CommandTypeNotFoundException {
         for (CommandType type : CommandType.values()) {
             if (tag.equals(type.getValue())) {
                 return type;
             }
         }
 
-        throw new IllegalCommandTypeException("Command[" + tag + "] not found.");
+        throw new CommandTypeNotFoundException("Command[" + tag + "] not found.");
     }
 }

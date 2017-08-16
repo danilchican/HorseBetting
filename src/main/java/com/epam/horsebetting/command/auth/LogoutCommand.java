@@ -1,7 +1,7 @@
 package com.epam.horsebetting.command.auth;
 
 import com.epam.horsebetting.command.AbstractCommand;
-import com.epam.horsebetting.exception.IllegalCommandTypeException;
+import com.epam.horsebetting.exception.CommandTypeNotFoundException;
 import com.epam.horsebetting.request.RequestContent;
 import com.epam.horsebetting.command.CommandType;
 import com.epam.horsebetting.exception.ReceiverException;
@@ -34,7 +34,7 @@ public class LogoutCommand extends AbstractCommand {
      * @see RequestContent
      */
     @Override
-    public void execute(RequestContent request) throws IllegalCommandTypeException {
+    public void execute(RequestContent request) throws CommandTypeNotFoundException {
         String commandName = String.valueOf(request.findRequestAttribute(COMMAND_INSTANCE_NAME));
         Router router;
 
