@@ -14,6 +14,14 @@ public interface PasswordRecoverDAO {
     void create(PasswordRecover recover) throws DAOException;
 
     /**
+     * Remove a recover.
+     *
+     * @param recover
+     * @throws DAOException
+     */
+    void remove(PasswordRecover recover) throws DAOException;
+
+    /**
      * Find recover by token.
      *
      * @param token

@@ -3,6 +3,8 @@ package com.epam.horsebetting.entity;
 import java.sql.Timestamp;
 
 public class PasswordRecover extends Entity {
+    private int id;
+
     private String email;
     private String token;
 
@@ -23,6 +25,15 @@ public class PasswordRecover extends Entity {
     public PasswordRecover(String email, String token) {
         setEmail(email);
         setToken(token);
+    }
+
+    /**
+     * Get id.
+     *
+     * @return id
+     */
+    public int getId() {
+        return id;
     }
 
     /**
@@ -50,6 +61,15 @@ public class PasswordRecover extends Entity {
      */
     public Timestamp getCreatedAt() {
         return createdAt;
+    }
+
+    /**
+     * Set id.
+     *
+     * @param id
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**

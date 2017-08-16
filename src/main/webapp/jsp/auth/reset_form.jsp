@@ -14,13 +14,19 @@
                     <div class="panel-heading"><fmt:message key="block.password.reset.title"/></div>
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" method="POST" action="/password/reset">
+                            <input type="hidden" name="token" value="${token}">
                             <div class="form-group">
-                                <label for="password"><fmt:message key="form.profile.new_password"/></label>
-                                <input type="password" name="password" id="password" class="form-control" required>
+                                <div class="col-md-12">
+                                    <label for="password"><fmt:message key="form.profile.new_password"/></label>
+                                    <input type="password" name="password" id="password" class="form-control" required>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label for="confirmation"><fmt:message key="form.password.confirmation"/></label>
-                                <input type="password" name="confirmation" id="confirmation" class="form-control" required>
+                                <div class="col-md-12">
+                                    <label for="confirmation"><fmt:message key="form.password.confirmation"/></label>
+                                    <input type="password" name="confirmation" id="confirmation" class="form-control"
+                                           required>
+                                </div>
                             </div>
                             <button type="submit" class="btn btn-primary save-button"><fmt:message
                                     key="button.password.change"/></button>

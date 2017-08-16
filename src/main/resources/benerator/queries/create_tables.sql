@@ -208,10 +208,14 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `horsebetting`.`password_resets` ;
 
 CREATE TABLE IF NOT EXISTS `horsebetting`.`password_resets` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(255) NOT NULL,
   `token` VARCHAR(255) NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  INDEX `email_idx` (`email` ASC))
+  INDEX `password_resets_token_idx` (`token` ASC),
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  UNIQUE INDEX `token_UNIQUE` (`token` ASC))
 ENGINE = InnoDB;
 
 

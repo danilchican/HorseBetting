@@ -24,6 +24,7 @@ public class PasswordRecoverDAOImpl extends AbstractDAO<PasswordRecover>  implem
      */
     private static final String SQL_ADD_RECOVER = "INSERT INTO `password_resets` (email, token) VALUES (?,?);";
     private static final String SQL_FIND_RECOVER_BY_TOKEN = "SELECT * FROM `password_resets` WHERE `token`=? LIMIT 1;";
+    private static final String SQL_REMOVE_RECOVER = "DELETE FROM `password_resets` WHERE `token`=?;";
 
     /**
      * Default constructor connection.
@@ -51,6 +52,25 @@ public class PasswordRecoverDAOImpl extends AbstractDAO<PasswordRecover>  implem
             }
         } catch (SQLException e) {
             throw new DAOException("Can't add a new recover. " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Remove a recover.
+     *
+     * @param recover
+     * @throws DAOException
+     */
+    @Override
+    public void remove(PasswordRecover recover) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_REMOVE_RECOVER)) {
+            preparedStatement.setString(1, recover.getToken());
+
+            if (preparedStatement.executeUpdate() != 1) {
+                throw new DAOException("Can't remove recover from the database.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't remove recover. " + e.getMessage(), e);
         }
     }
 
@@ -89,6 +109,7 @@ public class PasswordRecoverDAOImpl extends AbstractDAO<PasswordRecover>  implem
     private PasswordRecover extractFrom(ResultSet dataSet) throws SQLException {
         PasswordRecover recover = new PasswordRecover();
 
+        recover.setId(dataSet.getInt(SQLFieldConfig.PasswordRecover.ID));
         recover.setEmail(dataSet.getString(SQLFieldConfig.PasswordRecover.EMAIL));
         recover.setToken(dataSet.getString(SQLFieldConfig.PasswordRecover.TOKEN));
         recover.setCreatedAt(dataSet.getTimestamp(SQLFieldConfig.PasswordRecover.CREATED_AT));

@@ -59,6 +59,7 @@ public final class SQLFieldConfig {
     }
 
     public final class PasswordRecover {
+        public static final String ID = "id";
         public static final String EMAIL = "email";
         public static final String TOKEN = "token";
         public static final String CREATED_AT = "created_at";

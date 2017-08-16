@@ -205,6 +205,8 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
             if(recoverDAO.findByToken(token) == null) {
                 throw new ReceiverException("Token expired or does not exist.");
             }
+
+            content.insertRequestAttribute(RequestFieldConfig.Common.PASSWORD_RESET_TOKEN, token);
         } catch (DAOException e) {
             throw new ReceiverException("Database Error. " + e.getMessage(), e);
         }

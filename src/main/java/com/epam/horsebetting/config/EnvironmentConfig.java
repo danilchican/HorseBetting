@@ -12,7 +12,7 @@ public class EnvironmentConfig {
     private enum EnvironmentProperties {
         APP_URL, APP_NAME, APP_LOCALE,
         MAIL_HOST, MAIL_PORT, MAIL_SENDER, MAIL_PASSWORD,
-        MAIL_AUTH, MAIL_STARTTLS_ENABLE
+        MAIL_AUTH, MAIL_STARTTLS_ENABLE, TOKEN_EXPIRE_TIME
     }
 
     /**
@@ -41,6 +41,7 @@ public class EnvironmentConfig {
     private static final String DEFAULT_APP_URL = "http://localhost:8080";
     private static final String DEFAULT_APP_NAME = "No Name App";
     private static final String DEFAULT_APP_LOCALE = "ru";
+    private static final String DEFAULT_TOKEN_EXPIRE_TIME = "1";
 
     /**
      * Default mail variables.
@@ -84,6 +85,15 @@ public class EnvironmentConfig {
      */
     public String obtainLocale() {
         return retrievePropValue(EnvironmentProperties.APP_LOCALE, DEFAULT_APP_LOCALE);
+    }
+
+    /**
+     * Find expiration time.
+     *
+     * @return expiration time
+     */
+    public String obtainTokenExpirationTime() {
+        return retrievePropValue(EnvironmentProperties.TOKEN_EXPIRE_TIME, DEFAULT_TOKEN_EXPIRE_TIME);
     }
 
     /**

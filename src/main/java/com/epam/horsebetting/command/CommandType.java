@@ -62,7 +62,7 @@ public enum CommandType {
             ((PageReceiverImpl) getCommand().getReceiver()).presentResetPasswordPage(content);
         }
     },
-    RESET_PASSWORD_FORM("password.reset::post", new ResetPasswordPresentCommand(new UserReceiverImpl())) {
+    RESET_PASSWORD_FORM("password.reset::post", new ResetPasswordCommand(new UserReceiverImpl())) {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {
             ((UserReceiverImpl) getCommand().getReceiver()).resetPassword(content);

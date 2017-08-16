@@ -36,7 +36,6 @@ public class SendMailToResetPasswordCommand extends AbstractCommand {
     @Override
     public void execute(RequestContent request) throws IllegalCommandTypeException {
         String commandName = String.valueOf(request.findRequestAttribute(COMMAND_INSTANCE_NAME));
-        Router router = new Router("/password/reset", Router.RouteType.REDIRECT);
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);
@@ -44,6 +43,7 @@ public class SendMailToResetPasswordCommand extends AbstractCommand {
             LOGGER.log(Level.ERROR, e);
         }
 
+        Router router = new Router("/password/reset", Router.RouteType.REDIRECT);
         request.insertRequestAttribute(Router.ROUTER_INSTANCE_NAME, router);
     }
 }

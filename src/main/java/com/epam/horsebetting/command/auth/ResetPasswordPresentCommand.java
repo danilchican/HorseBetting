@@ -48,7 +48,7 @@ public class ResetPasswordPresentCommand extends AbstractCommand {
             LOGGER.log(Level.ERROR, e);
         }
 
-        router = new Router(page, Router.RouteType.REDIRECT);
+        router = new Router(page, Router.RouteType.FORWARD);
         request.insertRequestAttribute(Router.ROUTER_INSTANCE_NAME, router);
     }
 }

@@ -13,6 +13,7 @@ import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.AbstractReceiver;
 import com.epam.horsebetting.receiver.UserReceiver;
 import com.epam.horsebetting.request.RequestContent;
+import com.epam.horsebetting.util.DateFormatter;
 import com.epam.horsebetting.util.HashManager;
 import com.epam.horsebetting.util.MailSender;
 import com.epam.horsebetting.util.MessageWrapper;
@@ -23,7 +24,9 @@ import org.apache.logging.log4j.Logger;
 
 import javax.mail.*;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_LOCALE;
 
@@ -300,7 +303,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
                 if ((user = userDAO.findByEmail(email)) != null) {
                     EnvironmentConfig envResource = new EnvironmentConfig();
 
-                    String hashData = user.getId() + user.getEmail() + user.getPassword();
+                    String hashData = user.getId() + user.getEmail() + user.getPassword() + new Date().getTime();
                     String token = HashManager.make(hashData);
 
                     PasswordRecover recover = new PasswordRecover(user.getEmail(), token);
@@ -365,7 +368,76 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      */
     @Override
     public void resetPassword(RequestContent content) throws ReceiverException {
-        // TODO reset password
+        String token = content.findParameter(RequestFieldConfig.Common.PASSWORD_RESET_TOKEN);
+        String password = content.findParameter(RequestFieldConfig.User.PASSWORD_FIELD);
+        String confirmation = content.findParameter(RequestFieldConfig.User.CONFIRMATION_FIELD);
+
+        if (token == null) {
+            throw new ReceiverException("Token does not exist.");
+        }
+
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+        MessageConfig messageResource = new MessageConfig(locale);
+        MessageWrapper messages = new MessageWrapper();
+
+        EnvironmentConfig env = new EnvironmentConfig();
+        UserValidator validator = new UserValidator();
+
+        UserDAOImpl userDAO = new UserDAOImpl(true);
+        PasswordRecoverDAOImpl recoverDAO = new PasswordRecoverDAOImpl(true);
+
+        TransactionManager transaction = new TransactionManager(userDAO, recoverDAO);
+        transaction.beginTransaction();
+
+        try {
+            PasswordRecover recover = recoverDAO.findByToken(token);
+
+            if (recover == null) {
+                transaction.rollback();
+                throw new ReceiverException("Cannot find recover by token[" + token + "].");
+            }
+
+            final int oneHour = 36_000_00;
+            final int minutesPerHour = 60;
+
+            Timestamp currDate = new Timestamp(new Date().getTime() + oneHour);
+
+            final int maxExpireMinutes = Integer.parseInt(env.obtainTokenExpirationTime()) * minutesPerHour;
+            final int currentDiffMinutes = (int) DateFormatter.calcDateDiff(recover.getCreatedAt(), currDate, TimeUnit.MINUTES);
+
+            if (currentDiffMinutes > maxExpireMinutes) {
+                transaction.rollback();
+                throw new ReceiverException("Token expired.");
+            }
+
+            if (validator.validateSecurityForm(password, confirmation)) {
+                User user = userDAO.findByEmail(recover.getEmail());
+                user.setPassword(password);
+
+                userDAO.updateSecurity(user);
+                recoverDAO.remove(recover);
+
+                transaction.commit();
+                this.authenticate(content, user);
+
+                messages.add(messageResource.get("profile.password.change.success"));
+                content.insertSessionAttribute("messages", messages);
+            } else {
+                transaction.rollback();
+
+                content.insertSessionAttribute("errors", validator.getErrors());
+                throw new ReceiverException("Invalid user data.");
+            }
+        } catch (DAOException e) {
+            transaction.rollback();
+
+            messages.add(messageResource.get("profile.password.change.fail"));
+            content.insertSessionAttribute("messages", messages);
+
+            throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        } finally {
+            transaction.endTransaction();
+        }
     }
 
     /**
