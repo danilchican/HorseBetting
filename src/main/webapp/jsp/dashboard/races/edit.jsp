@@ -167,8 +167,8 @@
 
                                     <div class="form-group">
                                         <label for="race-status" class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            <fmt:message key="dashboard.form.races.status"/> <span
-                                                class="required">*</span>
+                                            <fmt:message key="dashboard.form.races.status"/>
+                                            <c:if test="${race.isAvailable()}"><span class="required">*</span></c:if>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <select id="race-status" required="required" class="form-control"
@@ -207,6 +207,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">
                                                         <fmt:message key="form.participants.coefficient"/>
+                                                        <c:if test="${race.isAvailable()}"><span class="required">*</span></c:if>
                                                     </label>
                                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                                         <input data-parsley-min="1"

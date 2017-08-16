@@ -66,7 +66,10 @@
                                         <td>${race.getId()}</td>
                                         <td>${race.getTitle()}</td>
                                         <td>${race.getPlace()}</td>
-                                        <td>${!race.isAvailable() ? race.getStatusTitle() : "Expect"}</td>
+                                        <td>
+                                            <fmt:message
+                                                    key="races.status.${!race.isAvailable() ? race.getStatus() : 'expect'}"/>
+                                        </td>
                                         <td>${f:formatDate(race.getCreatedAt(), locale)}</td>
                                         <td>
                                             <a href="/races/view?id=${race.getId()}"
