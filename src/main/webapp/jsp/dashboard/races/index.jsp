@@ -66,10 +66,10 @@
                                         <td>${race.getId()}</td>
                                         <td>${race.getTitle()}</td>
                                         <td>${race.getPlace()}</td>
-                                        <td>${race.isFinished() ? "Yes" : "No"}</td>
+                                        <td>${race.getStatus() != null ? race.getStatus() : "Expect"}</td>
                                         <td>${f:formatDate(race.getCreatedAt(), locale)}</td>
                                         <td>
-                                            <a href="/dashboard/races/view?id=${race.getId()}"
+                                            <a href="/races/view?id=${race.getId()}"
                                                class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> <fmt:message
                                                     key="button.view"/>
                                             </a>
@@ -77,16 +77,6 @@
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> <fmt:message
                                                     key="button.edit"/>
                                             </a>
-                                            <a href="#"
-                                               onclick="event.preventDefault(); document.getElementById('delete-race-form-${race.getId()}').submit();"
-                                               class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>
-                                                <fmt:message key="button.delete"/>
-                                            </a>
-                                            <form action="/dashboard/races/remove"
-                                                  id="delete-race-form-${race.getId()}" method="post"
-                                                  style="display: none;">
-                                                <input type="hidden" name="race-id" value="${race.getId()}">
-                                            </form>
                                         </td>
                                     </tr>
                                 </c:forEach>

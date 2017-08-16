@@ -26,15 +26,15 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
      * SQL queries for RaceDAOImpl.
      */
     private static final String SQL_ADD_RACE = "INSERT INTO `races` " +
-            "(title, place, min_rate, track_length, is_finished, bet_end_date, started_at)" +
-            " VALUES (?,?,?,?,?,?,?);";
+            "(title, place, min_rate, track_length, bet_end_date, started_at)" +
+            " VALUES (?,?,?,?,?,?);";
     private static final String SQL_INSERT_HORSE_RACE = "INSERT INTO `participants` " +
-            "(`horse_id`, `race_id`, `coefficient`, `is_finished`)" + " VALUES (?,?,?,?);";
+            "(`horse_id`, `race_id`, `coefficient`)" + " VALUES (?,?,?);";
     private static final String SQL_SELECT_PART_RACES = "SELECT * FROM `races` ORDER BY `started_at` ASC LIMIT ? OFFSET ?;";
     private static final String SQL_FIND_RACE_BY_TITLE = "SELECT * FROM `races` WHERE `title`=? LIMIT 1;";
     private static final String SQL_FIND_RACE_BY_ID = "SELECT * FROM `races` WHERE `id`=? LIMIT 1;";
     private static final String SQL_COUNT_RACES = "SELECT COUNT(*) AS `total` FROM `races`;";
-    private static final String SQL_SELECT_NEAREST_RACES = "SELECT * FROM `races` WHERE `is_finished` != ?" +
+    private static final String SQL_SELECT_NEAREST_RACES = "SELECT * FROM `races` WHERE `status` != ?" +
             " AND `started_at` > NOW() ORDER BY `started_at` ASC LIMIT ?;";
 
     /**
@@ -62,9 +62,8 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
             preparedStatement.setString(2, race.getPlace());
             preparedStatement.setBigDecimal(3, race.getMinRate());
             preparedStatement.setInt(4, race.getTrackLength());
-            preparedStatement.setBoolean(5, race.isFinished());
-            preparedStatement.setTimestamp(6, race.getBetEndDate());
-            preparedStatement.setTimestamp(7, race.getStartedAt());
+            preparedStatement.setTimestamp(5, race.getBetEndDate());
+            preparedStatement.setTimestamp(6, race.getStartedAt());
 
             if (preparedStatement.executeUpdate() != 1) {
                 throw new DAOException("Can't add a new race to the database.");
@@ -256,7 +255,7 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
         race.setPlace(raceDataSet.getString(SQLFieldConfig.Race.PLACE));
         race.setMinRate(raceDataSet.getBigDecimal(SQLFieldConfig.Race.MIN_RATE));
         race.setTrackLength(raceDataSet.getInt(SQLFieldConfig.Race.TRACK_LENGTH));
-        race.setFinished(raceDataSet.getBoolean(SQLFieldConfig.Race.FINISHED));
+        race.setStatus(raceDataSet.getString(SQLFieldConfig.Race.STATUS));
         race.setBetEndDate(raceDataSet.getTimestamp(SQLFieldConfig.Race.BET_END_DATE));
         race.setStartedAt(raceDataSet.getTimestamp(SQLFieldConfig.Race.STARTED_AT));
         race.setCreatedAt(raceDataSet.getTimestamp(SQLFieldConfig.Race.CREATED_AT));

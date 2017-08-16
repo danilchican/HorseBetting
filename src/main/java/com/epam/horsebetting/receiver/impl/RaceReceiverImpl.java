@@ -1,5 +1,6 @@
 package com.epam.horsebetting.receiver.impl;
 
+import com.epam.horsebetting.config.MessageConfig;
 import com.epam.horsebetting.config.RequestFieldConfig;
 import com.epam.horsebetting.dao.impl.RaceDAOImpl;
 import com.epam.horsebetting.database.TransactionManager;
@@ -10,6 +11,8 @@ import com.epam.horsebetting.receiver.AbstractReceiver;
 import com.epam.horsebetting.receiver.RaceReceiver;
 import com.epam.horsebetting.request.RequestContent;
 import com.epam.horsebetting.util.DateFormatter;
+import com.epam.horsebetting.util.MessageWrapper;
+import com.epam.horsebetting.validator.RaceValidator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,9 +21,9 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
+
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_LOCALE;
 
 public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
 
@@ -37,85 +40,107 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
      */
     @Override
     public void createRace(RequestContent content) throws ReceiverException {
-        String title = content.findParameter(RequestFieldConfig.Race.TITLE_FIELD);
-        String place = content.findParameter(RequestFieldConfig.Race.PLACE_FIELD);
-
-        BigDecimal minRate = new BigDecimal(content.findParameter(RequestFieldConfig.Race.MIN_RATE_FIELD));
-        int trackLength = Integer.parseInt(content.findParameter(RequestFieldConfig.Race.TRACK_LENGTH_FIELD));
-
-        boolean isFinished = "1".equals(content.findParameter(RequestFieldConfig.Race.FINISHED_FIELD));
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+        MessageConfig messageResource = new MessageConfig(locale);
+        MessageWrapper messages = new MessageWrapper();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat(DateFormatter.DEFAULT_DATE_FORMAT);
-        Date parsedDate;
 
-        Timestamp betEndDate;
-        Timestamp startedAt;
+        String title = content.findParameter(RequestFieldConfig.Race.TITLE_FIELD);
+        String place = content.findParameter(RequestFieldConfig.Race.PLACE_FIELD);
+        String minRateAttr = content.findParameter(RequestFieldConfig.Race.MIN_RATE_FIELD);
+        String trackLengthAttr = content.findParameter(RequestFieldConfig.Race.TRACK_LENGTH_FIELD);
+        String betEndDateAttr = content.findParameter(RequestFieldConfig.Race.BET_END_DATE_FIELD);
+        String startedAtAttr = content.findParameter(RequestFieldConfig.Race.STARTED_AT_FIELD);
 
-        try {
-            parsedDate = dateFormat.parse(content.findParameter(RequestFieldConfig.Race.BET_END_DATE_FIELD));
-            betEndDate = new Timestamp(parsedDate.getTime());
+        RaceValidator validator = new RaceValidator();
 
-            parsedDate = dateFormat.parse(content.findParameter(RequestFieldConfig.Race.STARTED_AT_FIELD));
-            startedAt = new Timestamp(parsedDate.getTime());
-        } catch (ParseException e) {
-            // TODO fix
-            throw new ReceiverException("Cannot retrieve dates.");
-        }
+        if (validator.validateCreateRaceForm(title, place, minRateAttr, trackLengthAttr, betEndDateAttr, startedAtAttr)) {
+            BigDecimal minRate = new BigDecimal(minRateAttr);
+            int trackLength = Integer.parseInt(trackLengthAttr);
 
-        // TODO add checking of numbers
-        HashMap<Integer, BigDecimal> raceHorses = new HashMap<>();
+            RaceDAOImpl raceDAO = new RaceDAOImpl(true);
+            TransactionManager transaction = new TransactionManager(raceDAO);
 
-        String[] horses = content.findParameterValues(RequestFieldConfig.Race.SELECTED_HORSES_FIELD);
-        String[] coeffs = content.findParameterValues(RequestFieldConfig.Race.HORSE_COEFFICIENTS_FIELD);
+            try {
+                Date parsedDate = dateFormat.parse(betEndDateAttr);
+                Timestamp betEndDate = new Timestamp(parsedDate.getTime());
 
-        if(horses.length == coeffs.length) {
-            for (int i = 0; i < horses.length; i++) {
-                raceHorses.put(Integer.parseInt(horses[i]), new BigDecimal(coeffs[i]));
+                parsedDate = dateFormat.parse(startedAtAttr);
+                Timestamp startedAt = new Timestamp(parsedDate.getTime());
+
+                HashMap<Integer, BigDecimal> raceHorses = new HashMap<>();
+
+                String[] jockeys = content.findParameterValues(RequestFieldConfig.Race.SELECTED_HORSES_FIELD);
+                String[] coeffs = content.findParameterValues(RequestFieldConfig.Race.HORSE_COEFFICIENTS_FIELD);
+
+                if (validator.validateJockeys(jockeys, coeffs)) {
+                    for (int i = 0; i < jockeys.length; i++) {
+                        raceHorses.put(Integer.parseInt(jockeys[i]), new BigDecimal(coeffs[i]));
+                    }
+                } else {
+                    for (Map.Entry<String, String> entry : validator.getOldInput()) {
+                        content.insertSessionAttribute(entry.getKey(), entry.getValue());
+                    }
+
+                    content.insertSessionAttribute("errors", validator.getErrors());
+                    throw new ReceiverException("Race horses are not completed.");
+                }
+
+                Race race = new Race();
+
+                race.setTitle(title);
+                race.setPlace(place);
+                race.setMinRate(minRate);
+                race.setTrackLength(trackLength);
+                race.setBetEndDate(betEndDate);
+                race.setStartedAt(startedAt);
+
+                LOGGER.log(Level.DEBUG, "Want create race: " + race);
+
+                transaction.beginTransaction();
+
+                Race createdRace = raceDAO.create(race);
+                raceDAO.createHorsesToRace(raceHorses, createdRace);
+
+                transaction.commit();
+
+                messages.add(messageResource.get("dashboard.race.create.success"));
+                content.insertSessionAttribute("messages", messages);
+
+                LOGGER.log(Level.DEBUG, "Created race: " + createdRace);
+            } catch (ParseException e) {
+                transaction.rollback();
+
+                for (Map.Entry<String, String> entry : validator.getOldInput()) {
+                    content.insertSessionAttribute(entry.getKey(), entry.getValue());
+                }
+
+                messages.add(messageResource.get("dashboard.race.create.parse.fail"));
+                content.insertSessionAttribute("messages", messages);
+
+                throw new ReceiverException("Cannot parse timestamps.");
+            } catch (DAOException e) {
+                transaction.rollback();
+
+                for (Map.Entry<String, String> entry : validator.getOldInput()) {
+                    content.insertSessionAttribute(entry.getKey(), entry.getValue());
+                }
+
+                messages.add(messageResource.get("dashboard.race.create.fail"));
+                content.insertSessionAttribute("errors", messages);
+
+                throw new ReceiverException("Database Error: " + e.getMessage(), e);
+            } finally {
+                transaction.endTransaction();
             }
         } else {
-            // TODO fix
-            throw new ReceiverException("Race horses are not completed.");
-        }
+            for (Map.Entry<String, String> entry : validator.getOldInput()) {
+                content.insertSessionAttribute(entry.getKey(), entry.getValue());
+            }
 
-        // TODO Create validators
-
-        Race race = new Race();
-
-        race.setTitle(title);
-        race.setPlace(place);
-        race.setMinRate(minRate);
-        race.setTrackLength(trackLength);
-        race.setFinished(isFinished);
-
-        race.setBetEndDate(betEndDate);
-        race.setStartedAt(startedAt);
-
-        LOGGER.log(Level.DEBUG, "Want create race: " + race);
-        ArrayList<String> errors = new ArrayList<>();
-
-        RaceDAOImpl raceDAO = new RaceDAOImpl(true);
-
-        TransactionManager transaction = new TransactionManager(raceDAO);
-        transaction.beginTransaction();
-
-        try {
-            Race createdRace = raceDAO.create(race);
-            LOGGER.log(Level.DEBUG, "Created race: " + createdRace);
-
-            // TODO save horses
-            raceDAO.createHorsesToRace(raceHorses, createdRace);
-
-            transaction.commit();
-        } catch (DAOException e) {
-            transaction.rollback();
-
-            errors.add("Can't create new race.");
-            content.insertSessionAttribute("errors", errors);
-
-            // TODO add saving old inputs
-            throw new ReceiverException("Database Error: " + e.getMessage(), e);
-        } finally {
-            transaction.endTransaction();
+            content.insertSessionAttribute("errors", validator.getErrors());
+            throw new ReceiverException("Race data is invalid.");
         }
     }
 }

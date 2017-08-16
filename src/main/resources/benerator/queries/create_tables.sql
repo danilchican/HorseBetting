@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `horsebetting`.`races` (
   `place` VARCHAR(80) NOT NULL,
   `min_rate` DECIMAL(16,2) UNSIGNED NOT NULL,
   `track_length` INT(10) UNSIGNED NOT NULL,
-  `is_finished` TINYINT(1) UNSIGNED NOT NULL,
+  `status` ENUM('completed', 'failed') NULL DEFAULT NULL COMMENT 'Enum type to check result of race.\nFailed type means that the race did not take place.\nCompleted: the race has been successfully finished.\nNull: the race is not/already started.',
   `bet_end_date` DATETIME NOT NULL COMMENT 'End date receiving bettings.',
   `started_at` DATETIME NOT NULL COMMENT 'Start date of race.',
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

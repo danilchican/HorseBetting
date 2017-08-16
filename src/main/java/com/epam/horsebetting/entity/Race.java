@@ -7,7 +7,7 @@ public class Race extends Entity {
     private int id;
     private int trackLength;
 
-    private boolean isFinished;
+    private String status;
 
     private String title;
     private String place;
@@ -37,12 +37,12 @@ public class Race extends Entity {
     }
 
     /**
-     * Check if race is finished.
+     * Get status of a race.
      *
-     * @return finished flag
+     * @return status
      */
-    public boolean isFinished() {
-        return isFinished;
+    public String getStatus() {
+        return status;
     }
 
     /**
@@ -118,12 +118,12 @@ public class Race extends Entity {
     }
 
     /**
-     * Set finished flag.
+     * Set status of race.
      *
-     * @param finished
+     * @param status
      */
-    public void setFinished(boolean finished) {
-        isFinished = finished;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     /**
@@ -185,7 +185,7 @@ public class Race extends Entity {
         return "Race{" +
                 "id=" + id +
                 ", trackLength=" + trackLength +
-                ", isFinished=" + isFinished +
+                ", status=" + status +
                 ", title='" + title + '\'' +
                 ", place='" + place + '\'' +
                 ", minRate=" + minRate +

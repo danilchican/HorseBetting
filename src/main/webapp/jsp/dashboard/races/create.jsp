@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="layout" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${locale}" scope="session"/>
 <fmt:setBundle basename="/localization/lang"/>
@@ -55,32 +56,39 @@
                                       class="form-horizontal form-label-left">
 
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="race-title"><fmt:message key="dashboard.form.races.title"/>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                               for="race-title"><fmt:message key="dashboard.form.races.title"/>
                                             <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="race-title" name="race-title" required="required"
+                                            <input type="text" id="race-title"
+                                                   value="<ctg:oldInputFormAttribute name="race-title" />"
+                                                   name="race-title" required="required"
                                                    class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="race-place"><fmt:message key="dashboard.form.races.place"/>
-                                            <span
-                                                    class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                               for="race-place"><fmt:message key="dashboard.form.races.place"/>
+                                            <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="race-place" name="race-place" required="required" type="text"
+                                            <input id="race-place"
+                                                   value="<ctg:oldInputFormAttribute name="race-place" />"
+                                                   name="race-place" required="required" type="text"
                                                    class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="race-min-rate"><fmt:message key="dashboard.form.races.min_rate"/> ($) <span
-                                                    class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                               for="race-min-rate"><fmt:message key="dashboard.form.races.min_rate"/>
+                                            ($) <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input id="race-min-rate" data-parsley-min="1" step="0.01"
+                                                   value="<ctg:oldInputFormAttribute name="race-min-rate" />"
                                                    name="race-min-rate" min="0"
                                                    required="required" type="number"
                                                    class="form-control col-md-7 col-xs-12">
@@ -89,11 +97,14 @@
 
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                               for="race-track-length"><fmt:message key="dashboard.form.races.track_length"/> <span
-                                                    class="required">*</span>
+                                               for="race-track-length"><fmt:message
+                                                key="dashboard.form.races.track_length"/> <span
+                                                class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="race-track-length" data-parsley-min="1" name="race-track-length"
+                                            <input id="race-track-length" data-parsley-min="1"
+                                                   value="<ctg:oldInputFormAttribute name="race-track-length" />"
+                                                   name="race-track-length"
                                                    required="required" data-parsley-type="integer"
                                                    type="number" class="form-control col-md-7 col-xs-12">
                                         </div>
@@ -101,11 +112,15 @@
 
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                               for="race-bet-end-date"><fmt:message key="dashboard.form.races.bet_end_date"/> <span class="required">*</span>
+                                               for="race-bet-end-date"><fmt:message
+                                                key="dashboard.form.races.bet_end_date"/> <span
+                                                class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <div class="input-group date" id="betEndDatePricker">
-                                                <input id="race-bet-end-date" name="race-bet-end-date" type="text"
+                                                <input id="race-bet-end-date"
+                                                       value="<ctg:oldInputFormAttribute name="race-bet-end-date" />"
+                                                       name="race-bet-end-date" type="text"
                                                        class="form-control col-md-7 col-xs-12" required="required">
                                                 <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
@@ -115,36 +130,19 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="race-started-at"><fmt:message key="dashboard.form.races.started_at"/> <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                               for="race-started-at"><fmt:message
+                                                key="dashboard.form.races.started_at"/> <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <div class="input-group date" id="betStartedAtPricker">
-                                                <input id="race-started-at" name="race-started-at" type="text"
+                                                <input id="race-started-at"
+                                                       value="<ctg:oldInputFormAttribute name="rarace-started-at" />"
+                                                       name="race-started-at" type="text"
                                                        class="form-control col-md-7 col-xs-12" required="required">
                                                 <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"><fmt:message key="dashboard.form.races.is_finished"/> <span
-                                                class="required">*</span></label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <div id="race-is-finished" class="btn-group" data-toggle="buttons">
-                                                <label class="btn btn-default" data-toggle-class="btn-primary"
-                                                       data-toggle-passive-class="btn-default">
-                                                    <input type="radio" required="required" name="race-is-finished"
-                                                           value="1">
-                                                    &nbsp; <fmt:message key="button.yes"/> &nbsp;
-                                                </label>
-                                                <label class="btn btn-primary" data-toggle-class="btn-primary"
-                                                       data-toggle-passive-class="btn-default">
-                                                    <input type="radio" required="required" name="race-is-finished"
-                                                           value="0">
-                                                    <fmt:message key="button.no"/>
-                                                </label>
                                             </div>
                                         </div>
                                     </div>

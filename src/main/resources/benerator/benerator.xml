@@ -91,23 +91,24 @@
                    script="{ftl:${address.country}, ${address.city}, ${address.street}}"/>
         <attribute name="min_rate" type="big_decimal" min="10.00" max="500.00" distribution="random"/>
         <attribute name="track_length" type="int" min="500" max="10000" distribution="random"/>
-        <attribute name="is_finished" type="boolean" distribution="random"/>
 
         <attribute name="created_at" type="date" generator="datetime_gen"/>
         <attribute name="started_at" type="date"
                    script="this.get('created_at') + (86400000 * RandomUtil.randomInt(3, 20))"/>
         <attribute name="bet_end_date" type="timestamp" script="this.get('started_at') - 86400000 * 2"/>
 
+        <attribute name="status" type="string" values="'completed','failed'" nullQuota="0.5"/>
+
         <generate type="participants" count="5" consumer="db">
             <variable name="gen" generator="new IncrementGenerator(1)"/>
-            <variable name="asd" script="races.is_finished" type="boolean"/>
+            <variable name="asd" script="races.status" type="string"/>
 
             <id name="id" mode="ignored"/>
             <reference name="horse_id" source="db" unique="true" targetType="horses" distribution="random"/>
             <reference name="race_id" source="db" targetType="horses" script="races.id"/>
             <attribute name="coefficient" type="big_decimal" min="1.2" max="10.00" granularity="0.03"
                        distribution="random"/>
-            <attribute name="is_winner" type="boolean" condition="asd == true"
+            <attribute name="is_winner" type="boolean" condition="asd == 'finished'"
                        script="{gen % 5 == 0 ? true : false}"/>
             <attribute name="is_winner" type="boolean" condition="asd != true" constant="false"/>
         </generate>

@@ -43,13 +43,12 @@ public class IndexPageCommand extends AbstractCommand {
         try {
             page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.WELCOME);
             receiver.action(CommandType.findByTag(commandName), request);
-            router = new Router(page, Router.RouteType.FORWARD);
         } catch (ReceiverException e) {
             page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.NOT_FOUND);
-            router = new Router(page, Router.RouteType.REDIRECT);
             LOGGER.log(Level.ERROR, e);
         }
 
+        router = new Router(page, Router.RouteType.FORWARD);
         request.insertRequestAttribute(Router.ROUTER_INSTANCE_NAME, router);
     }
 }
