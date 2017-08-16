@@ -28,8 +28,7 @@ import java.sql.Timestamp;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_AUTHORIZED;
-import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_LOCALE;
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.*;
 
 public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
@@ -78,7 +77,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
                     }
 
                     messages.add(messageResource.get("user.exists"));
-                    content.insertSessionAttribute("errors", messages);
+                    content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
                     throw new ReceiverException("Cannot register user. User already exists.");
                 }
@@ -86,14 +85,14 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
                 transaction.rollback();
 
                 messages.add(messageResource.get("user.default.error"));
-                content.insertSessionAttribute("errors", messages);
+                content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             } finally {
                 transaction.endTransaction();
             }
         } else {
-            content.insertSessionAttribute("errors", validator.getErrors());
+            content.insertSessionAttribute(REQUEST_ERRORS, validator.getErrors());
 
             for (Map.Entry<String, String> entry : validator.getOldInput()) {
                 content.insertSessionAttribute(entry.getKey(), entry.getValue());
@@ -125,21 +124,21 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
                 user = userDAO.attempt(email, password);
             } catch (DAOException e) {
                 messages.add(messageResource.get("user.credentials.fail"));
-                content.insertSessionAttribute("errors", messages);
+                content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
 
             if (user == null) {
                 messages.add(messageResource.get("user.credentials.fail"));
-                content.insertSessionAttribute("errors", messages);
+                content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
                 throw new ReceiverException("Cannot authenticate user. User is null.");
             }
 
             this.authenticate(content, user);
         } else {
-            content.insertSessionAttribute("errors", validator.getErrors());
+            content.insertSessionAttribute(REQUEST_ERRORS, validator.getErrors());
 
             for (Map.Entry<String, String> entry : validator.getOldInput()) {
                 content.insertSessionAttribute(entry.getKey(), entry.getValue());
@@ -185,15 +184,15 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
                 userDAO.updateSettings(authorizedUser);
 
                 messages.add(messageResource.get("profile.settings.update.success"));
-                content.insertSessionAttribute("messages", messages);
+                content.insertSessionAttribute(REQUEST_MESSAGES, messages);
             } catch (DAOException e) {
                 messages.add(messageResource.get("profile.settings.update.fail"));
-                content.insertSessionAttribute("errors", messages);
+                content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
         } else {
-            content.insertSessionAttribute("errors", validator.getErrors());
+            content.insertSessionAttribute(REQUEST_ERRORS, validator.getErrors());
             throw new ReceiverException("Invalid user data.");
         }
     }
@@ -222,15 +221,15 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
                 userDAO.updateSecurity(authorizedUser);
 
                 messages.add(messageResource.get("profile.password.change.success"));
-                content.insertSessionAttribute("messages", messages);
+                content.insertSessionAttribute(REQUEST_MESSAGES, messages);
             } catch (DAOException e) {
                 messages.add(messageResource.get("profile.password.change.fail"));
-                content.insertSessionAttribute("errors", messages);
+                content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
         } else {
-            content.insertSessionAttribute("errors", validator.getErrors());
+            content.insertSessionAttribute(REQUEST_ERRORS, validator.getErrors());
             throw new ReceiverException("Invalid user data.");
         }
     }
@@ -262,15 +261,15 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
                 userDAO.updateBalance(authorizedUser);
 
                 messages.add(messageResource.get("profile.payment.replenish.success"));
-                content.insertSessionAttribute("messages", messages);
+                content.insertSessionAttribute(REQUEST_MESSAGES, messages);
             } catch (DAOException e) {
                 messages.add(messageResource.get("profile.payment.replenish.fail"));
-                content.insertSessionAttribute("errors", messages);
+                content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
         } else {
-            content.insertSessionAttribute("errors", validator.getErrors());
+            content.insertSessionAttribute(REQUEST_ERRORS, validator.getErrors());
             throw new ReceiverException("Invalid user data.");
         }
     }
@@ -321,7 +320,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
                     mail.send(email, messageResource.get("password.reset.subject"), message);
 
                     messages.add(messageResource.get("password.reset.notification.success"));
-                    content.insertSessionAttribute("messages", messages);
+                    content.insertSessionAttribute(REQUEST_MESSAGES, messages);
                 } else {
                     transaction.rollback();
 
@@ -330,7 +329,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
                     }
 
                     messages.add(messageResource.get("user.credentials.fail"));
-                    content.insertSessionAttribute("errors", messages);
+                    content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
                     throw new ReceiverException("Cannot send reset password link. User does not exist.");
                 }
@@ -338,21 +337,21 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
                 transaction.rollback();
 
                 messages.add(messageResource.get("password.reset.notification.fail"));
-                content.insertSessionAttribute("errors", messages);
+                content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
                 throw new ReceiverException("Send message to email error: " + e.getMessage(), e);
             } catch (DAOException e) {
                 transaction.rollback();
 
                 messages.add(messageResource.get("user.credentials.fail"));
-                content.insertSessionAttribute("errors", messages);
+                content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             } finally {
                 transaction.endTransaction();
             }
         } else {
-            content.insertSessionAttribute("errors", validator.getErrors());
+            content.insertSessionAttribute(REQUEST_ERRORS, validator.getErrors());
 
             for (Map.Entry<String, String> entry : validator.getOldInput()) {
                 content.insertSessionAttribute(entry.getKey(), entry.getValue());
@@ -422,18 +421,18 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
                 this.authenticate(content, user);
 
                 messages.add(messageResource.get("profile.password.change.success"));
-                content.insertSessionAttribute("messages", messages);
+                content.insertSessionAttribute(REQUEST_MESSAGES, messages);
             } else {
                 transaction.rollback();
 
-                content.insertSessionAttribute("errors", validator.getErrors());
+                content.insertSessionAttribute(REQUEST_ERRORS, validator.getErrors());
                 throw new ReceiverException("Invalid user data.");
             }
         } catch (DAOException e) {
             transaction.rollback();
 
             messages.add(messageResource.get("profile.password.change.fail"));
-            content.insertSessionAttribute("messages", messages);
+            content.insertSessionAttribute(REQUEST_MESSAGES, messages);
 
             throw new ReceiverException("Database Error. " + e.getMessage(), e);
         } finally {

@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_ERRORS;
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_MESSAGES;
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_LOCALE;
 
 public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver {
@@ -64,12 +66,12 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
                 Horse createdHorse = horseDAO.create(horse);
 
                 messages.add(messageResource.get("dashboard.horse.create.success"));
-                content.insertSessionAttribute("messages", messages);
+                content.insertSessionAttribute(REQUEST_MESSAGES, messages);
 
                 LOGGER.log(Level.DEBUG, "Created horse: " + createdHorse);
             } catch (DAOException e) {
                 messages.add(messageResource.get("dashboard.horse.create.fail"));
-                content.insertSessionAttribute("errors", messages);
+                content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
                 LOGGER.log(Level.DEBUG, "Old input values: " + validator.getOldInput());
                 for (Map.Entry<String, String> entry : validator.getOldInput()) {
@@ -79,7 +81,7 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
         } else {
-            content.insertSessionAttribute("errors", validator.getErrors());
+            content.insertSessionAttribute(REQUEST_ERRORS, validator.getErrors());
 
             LOGGER.log(Level.DEBUG, "Old input values: " + validator.getOldInput());
             for (Map.Entry<String, String> entry : validator.getOldInput()) {
@@ -112,7 +114,7 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
             messages.add(messageResource.get("error.undefined"));
 
             content.insertJsonAttribute("success", false);
-            content.insertJsonAttribute("errors", messages);
+            content.insertJsonAttribute(REQUEST_ERRORS, messages);
 
             throw new ReceiverException("Database Error: " + e.getMessage(), e);
         }
@@ -144,15 +146,15 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
                 horseDAO.remove(suit);
 
                 messages.add(messageResource.get("dashboard.horse.remove.success"));
-                content.insertSessionAttribute("messages", messages);
+                content.insertSessionAttribute(REQUEST_MESSAGES, messages);
             } catch (DAOException e) {
                 messages.add(messageResource.get("dashboard.horse.remove.fail"));
-                content.insertSessionAttribute("errors", messages);
+                content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
         } else {
-            content.insertSessionAttribute("errors", validator.getErrors());
+            content.insertSessionAttribute(REQUEST_ERRORS, validator.getErrors());
         }
     }
 
@@ -196,10 +198,10 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
                 horseDAO.update(horse);
 
                 messages.add(messageResource.get("dashboard.horse.update.success"));
-                content.insertSessionAttribute("messages", messages);
+                content.insertSessionAttribute(REQUEST_MESSAGES, messages);
             } catch (DAOException e) {
                 messages.add(messageResource.get("dashboard.horse.update.fail"));
-                content.insertSessionAttribute("errors", messages);
+                content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
                 for (Map.Entry<String, String> entry : validator.getOldInput()) {
                     content.insertSessionAttribute(entry.getKey(), entry.getValue());
@@ -208,7 +210,7 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
         } else {
-            content.insertSessionAttribute("errors", validator.getErrors());
+            content.insertSessionAttribute(REQUEST_ERRORS, validator.getErrors());
 
             LOGGER.log(Level.DEBUG, "Old input values: " + validator.getOldInput());
             for (Map.Entry<String, String> entry : validator.getOldInput()) {

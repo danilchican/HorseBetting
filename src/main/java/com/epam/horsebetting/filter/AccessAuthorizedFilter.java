@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_ERRORS;
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_AUTHORIZED;
 
 public class AccessAuthorizedFilter implements Filter {
@@ -44,7 +45,7 @@ public class AccessAuthorizedFilter implements Filter {
             LOGGER.log(Level.DEBUG, "User not authenticated. Redirected to login.");
 
             if(request.getRequestURI().startsWith("/ajax")) {
-                errors.put("errors", "User not authenticated.");
+                errors.put(REQUEST_ERRORS, "User not authenticated.");
                 String json = new Gson().toJson(errors);
 
                 response.setContentType("application/json");

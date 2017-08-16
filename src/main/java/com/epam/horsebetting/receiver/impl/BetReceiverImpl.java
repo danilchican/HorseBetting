@@ -19,6 +19,9 @@ import org.apache.logging.log4j.Logger;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_ERRORS;
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_MESSAGES;
+
 public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
 
     /**
@@ -69,7 +72,7 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
                 transaction.rollback();
 
                 messages.add("Can't create bet.");
-                content.insertJsonAttribute("errors", messages);
+                content.insertJsonAttribute(REQUEST_ERRORS, messages);
                 content.insertJsonAttribute("success", false);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
@@ -77,7 +80,7 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
                 transaction.endTransaction();
             }
         } else {
-            content.insertJsonAttribute("errors", validator.getErrors());
+            content.insertJsonAttribute(REQUEST_ERRORS, validator.getErrors());
             content.insertJsonAttribute("success", false);
         }
     }
@@ -123,19 +126,19 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
                 transaction.commit();
 
                 messages.add("Bet removed successfully.");
-                content.insertSessionAttribute("messages", messages);
+                content.insertSessionAttribute(REQUEST_MESSAGES, messages);
             } catch (DAOException e) {
                 transaction.rollback();
 
                 messages.add("Can't remove bet.");
-                content.insertSessionAttribute("errors", messages);
+                content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             } finally {
                 transaction.endTransaction();
             }
         } else {
-            content.insertSessionAttribute("errors", validator.getErrors());
+            content.insertSessionAttribute(REQUEST_ERRORS, validator.getErrors());
         }
     }
 }

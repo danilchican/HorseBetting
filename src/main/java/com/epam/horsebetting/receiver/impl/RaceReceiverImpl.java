@@ -23,6 +23,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_ERRORS;
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_MESSAGES;
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_LOCALE;
 
 public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
@@ -83,7 +85,7 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
                         content.insertSessionAttribute(entry.getKey(), entry.getValue());
                     }
 
-                    content.insertSessionAttribute("errors", validator.getErrors());
+                    content.insertSessionAttribute(REQUEST_ERRORS, validator.getErrors());
                     throw new ReceiverException("Race horses are not completed.");
                 }
 
@@ -106,7 +108,7 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
                 transaction.commit();
 
                 messages.add(messageResource.get("dashboard.race.create.success"));
-                content.insertSessionAttribute("messages", messages);
+                content.insertSessionAttribute(REQUEST_MESSAGES, messages);
 
                 LOGGER.log(Level.DEBUG, "Created race: " + createdRace);
             } catch (ParseException e) {
@@ -117,7 +119,7 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
                 }
 
                 messages.add(messageResource.get("dashboard.race.create.parse.fail"));
-                content.insertSessionAttribute("messages", messages);
+                content.insertSessionAttribute(REQUEST_MESSAGES, messages);
 
                 throw new ReceiverException("Cannot parse timestamps.");
             } catch (DAOException e) {
@@ -128,7 +130,7 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
                 }
 
                 messages.add(messageResource.get("dashboard.race.create.fail"));
-                content.insertSessionAttribute("errors", messages);
+                content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             } finally {
@@ -139,7 +141,7 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
                 content.insertSessionAttribute(entry.getKey(), entry.getValue());
             }
 
-            content.insertSessionAttribute("errors", validator.getErrors());
+            content.insertSessionAttribute(REQUEST_ERRORS, validator.getErrors());
             throw new ReceiverException("Race data is invalid.");
         }
     }

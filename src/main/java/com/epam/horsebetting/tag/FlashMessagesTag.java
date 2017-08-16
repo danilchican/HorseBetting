@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_ERRORS;
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_MESSAGES;
+
 @SuppressWarnings("serial")
 public class FlashMessagesTag extends TagSupport {
 
@@ -83,10 +86,10 @@ public class FlashMessagesTag extends TagSupport {
 
             switch(type) {
                 case ERROR:
-                    session.removeAttribute("errors");
+                    session.removeAttribute(REQUEST_ERRORS);
                     break;
                 case MESSAGE:
-                    session.removeAttribute("messages");
+                    session.removeAttribute(REQUEST_MESSAGES);
                     break;
             }
 

@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_ERRORS;
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_MESSAGES;
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_LOCALE;
 
 public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
@@ -62,13 +64,13 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
                 messages.add(messageResource.get("error.undefined"));
 
                 content.insertJsonAttribute("success", false);
-                content.insertJsonAttribute("errors", messages);
+                content.insertJsonAttribute(REQUEST_ERRORS, messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
         } else {
             content.insertJsonAttribute("success", false);
-            content.insertJsonAttribute("errors", validator.getErrors());
+            content.insertJsonAttribute(REQUEST_ERRORS, validator.getErrors());
         }
     }
 
@@ -106,14 +108,14 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
                 messages.add(messageResource.get("dashboard.suit.create.success"));
 
                 content.insertJsonAttribute("suit", createdSuit);
-                content.insertJsonAttribute("messages", messages);
+                content.insertJsonAttribute(REQUEST_MESSAGES, messages);
                 LOGGER.log(Level.DEBUG, "Messages: " + messages.findAll());
                 content.insertJsonAttribute("success", true);
             } catch (DAOException e) {
                 transaction.rollback();
 
                 messages.add(messageResource.get("dashboard.suit.create.fail"));
-                content.insertJsonAttribute("errors", messages);
+                content.insertJsonAttribute(REQUEST_ERRORS, messages);
                 content.insertJsonAttribute("success", false);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
@@ -121,7 +123,7 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
                 transaction.endTransaction();
             }
         } else {
-            content.insertJsonAttribute("errors", validator.getErrors());
+            content.insertJsonAttribute(REQUEST_ERRORS, validator.getErrors());
             content.insertJsonAttribute("success", false);
         }
     }
@@ -153,17 +155,17 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
                 suitDAO.update(suit);
 
                 messages.add(messageResource.get("dashboard.suit.update.success"));
-                content.insertJsonAttribute("messages", messages);
+                content.insertJsonAttribute(REQUEST_MESSAGES, messages);
                 content.insertJsonAttribute("success", true);
             } catch (DAOException e) {
                 messages.add(messageResource.get("dashboard.suit.update.fail"));
-                content.insertJsonAttribute("errors", messages);
+                content.insertJsonAttribute(REQUEST_ERRORS, messages);
                 content.insertJsonAttribute("success", false);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
         } else {
-            content.insertJsonAttribute("errors", validator.getErrors());
+            content.insertJsonAttribute(REQUEST_ERRORS, validator.getErrors());
             content.insertJsonAttribute("success", false);
         }
     }
@@ -194,17 +196,17 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
                 suitDAO.remove(suit);
 
                 messages.add(messageResource.get("dashboard.suit.remove.success"));
-                content.insertJsonAttribute("messages", messages);
+                content.insertJsonAttribute(REQUEST_MESSAGES, messages);
                 content.insertJsonAttribute("success", true);
             } catch (DAOException e) {
                 messages.add(messageResource.get("dashboard.suit.remove.fail"));
-                content.insertJsonAttribute("errors", messages);
+                content.insertJsonAttribute(REQUEST_ERRORS, messages);
                 content.insertJsonAttribute("success", false);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
         } else {
-            content.insertJsonAttribute("errors", validator.getErrors());
+            content.insertJsonAttribute(REQUEST_ERRORS, validator.getErrors());
             content.insertJsonAttribute("success", false);
         }
     }

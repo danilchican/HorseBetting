@@ -32,7 +32,7 @@ public final class RequestFieldConfig {
         public static final String PLACE_FIELD = PREFIX + "place";
         public static final String MIN_RATE_FIELD = PREFIX + "min-rate";
         public static final String TRACK_LENGTH_FIELD = PREFIX + "track-length";
-        public static final String FINISHED_FIELD = PREFIX + "is-finished";
+        public static final String STATUS_FIELD = PREFIX + "status";
         public static final String BET_END_DATE_FIELD = PREFIX + "bet-end-date";
         public static final String STARTED_AT_FIELD = PREFIX + "started-at";
         public static final String SELECTED_HORSES_FIELD = "selected-horses";
@@ -48,9 +48,12 @@ public final class RequestFieldConfig {
     public final class Common {
         public static final String LANG_FIELD = "lang";
         public static final String PAGE_FIELD = "page";
-        public static final String REQUEST_ID = "id";
         public static final String SESSION_LOCALE = "locale";
         public static final String SESSION_AUTHORIZED = "authorized";
         public static final String PASSWORD_RESET_TOKEN = "token";
+
+        public static final String REQUEST_ID = "id";
+        public static final String REQUEST_ERRORS = "errors";
+        public static final String REQUEST_MESSAGES = "messages";
     }
 }

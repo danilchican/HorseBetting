@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_ERRORS;
+
 @WebServlet(name = "AjaxController", urlPatterns = "/ajax/*")
 public class AjaxController extends HttpServlet {
 
@@ -51,7 +53,7 @@ public class AjaxController extends HttpServlet {
             LOGGER.log(Level.ERROR, e.getMessage(), e);
 
             errors.add("Route does not exist.");
-            content.insertJsonAttribute("errors", errors);
+            content.insertJsonAttribute(REQUEST_ERRORS, errors);
         }
 
         json = new Gson().toJson(content.getJsonData());
