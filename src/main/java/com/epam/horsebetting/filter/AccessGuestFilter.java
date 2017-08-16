@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_AUTHORIZED;
+
 public class AccessGuestFilter implements Filter {
 
     /**
@@ -32,7 +34,7 @@ public class AccessGuestFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) resp;
 
         HttpSession session = request.getSession();
-        Object userObj = session.getAttribute("authorized");
+        Object userObj = session.getAttribute(SESSION_AUTHORIZED);
 
         LOGGER.log(Level.DEBUG, this.getClass().getName() + " has worked.");
 

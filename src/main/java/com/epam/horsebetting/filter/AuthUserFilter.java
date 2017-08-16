@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_AUTHORIZED;
+
 public class AuthUserFilter implements Filter {
 
     /**
@@ -28,7 +30,7 @@ public class AuthUserFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpSession session = request.getSession();
 
-        Object userObj = session.getAttribute("authorized");
+        Object userObj = session.getAttribute(SESSION_AUTHORIZED);
 
         if (userObj != null) {
             int userId = Integer.parseInt(String.valueOf(userObj));

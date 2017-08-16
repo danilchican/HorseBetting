@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_AUTHORIZED;
+
 public class AccessAuthorizedFilter implements Filter {
 
     /**
@@ -32,7 +34,7 @@ public class AccessAuthorizedFilter implements Filter {
         HashMap<String, String> errors = new HashMap<>();
 
         HttpSession session = request.getSession();
-        Object userObj = session.getAttribute("authorized");
+        Object userObj = session.getAttribute(SESSION_AUTHORIZED);
 
         LOGGER.log(Level.DEBUG, this.getClass().getName() + " has worked.");
 

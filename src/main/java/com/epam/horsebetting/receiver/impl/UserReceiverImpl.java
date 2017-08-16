@@ -28,6 +28,7 @@ import java.sql.Timestamp;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_AUTHORIZED;
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_LOCALE;
 
 public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
@@ -154,10 +155,10 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      * @param content
      */
     public void logout(RequestContent content) throws ReceiverException {
-        Object authorized = content.findSessionAttribute("authorized");
+        Object authorized = content.findSessionAttribute(SESSION_AUTHORIZED);
 
         if (authorized != null) {
-            content.removeSessionAttribute("authorized");
+            content.removeSessionAttribute(SESSION_AUTHORIZED);
         }
     }
 
@@ -481,6 +482,6 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      */
     private void authenticate(RequestContent content, User user) throws ReceiverException {
         LOGGER.log(Level.DEBUG, "Authorized user: " + user);
-        content.insertSessionAttribute("authorized", user.getId());
+        content.insertSessionAttribute(SESSION_AUTHORIZED, user.getId());
     }
 }
