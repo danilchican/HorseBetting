@@ -55,7 +55,7 @@
                                     <th style="width: 1%">#</th>
                                     <th style="width: 25%"><fmt:message key="dashboard.form.races.title"/></th>
                                     <th><fmt:message key="dashboard.form.races.place"/></th>
-                                    <th style="width: 10%"><fmt:message key="dashboard.form.races.is_finished"/></th>
+                                    <th style="width: 10%"><fmt:message key="dashboard.form.races.status"/></th>
                                     <th style="width: 10%"><fmt:message key="dashboard.form.races.created_at"/></th>
                                     <th style="width: 20%"><fmt:message key="dashboard.message.action"/></th>
                                 </tr>
@@ -66,7 +66,7 @@
                                         <td>${race.getId()}</td>
                                         <td>${race.getTitle()}</td>
                                         <td>${race.getPlace()}</td>
-                                        <td>${race.getStatus() != null ? race.getStatus() : "Expect"}</td>
+                                        <td>${!race.isAvailable() ? race.getStatusTitle() : "Expect"}</td>
                                         <td>${f:formatDate(race.getCreatedAt(), locale)}</td>
                                         <td>
                                             <a href="/races/view?id=${race.getId()}"

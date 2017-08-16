@@ -1,5 +1,7 @@
 package com.epam.horsebetting.entity;
 
+import com.epam.horsebetting.type.RaceStatusType;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -43,6 +45,25 @@ public class Race extends Entity {
      */
     public String getStatus() {
         return status;
+    }
+
+    /**
+     * Get status title of race.
+     *
+     * @return status title
+     */
+    public String getStatusTitle() {
+        return RaceStatusType.findTitleByAttribute(status);
+    }
+
+    /**
+     * Is available to take a bet
+     * or to edit race.
+     *
+     * @return boolean
+     */
+    public boolean isAvailable() {
+        return status == null;
     }
 
     /**

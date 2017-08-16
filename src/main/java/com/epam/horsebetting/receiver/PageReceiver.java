@@ -144,4 +144,11 @@ public interface PageReceiver {
      * @param content
      */
     void presentDashboardRaceCreatePage(RequestContent content) throws ReceiverException;
+
+    /**
+     * Present dashboard race edit page.
+     *
+     * @param content
+     */
+    void presentDashboardRaceEditPage(RequestContent content) throws ReceiverException;
 }

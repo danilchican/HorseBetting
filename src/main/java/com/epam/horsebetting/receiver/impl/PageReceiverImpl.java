@@ -2,6 +2,7 @@ package com.epam.horsebetting.receiver.impl;
 
 import com.epam.horsebetting.config.RequestFieldConfig;
 import com.epam.horsebetting.config.MessageConfig;
+import com.epam.horsebetting.dao.ParticipantDAO;
 import com.epam.horsebetting.dao.impl.*;
 import com.epam.horsebetting.database.TransactionManager;
 import com.epam.horsebetting.entity.*;
@@ -607,5 +608,60 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
         this.setPageSubTitle(messageResource.get("page.title.dashboard.races.create"));
         this.setDefaultContentAttributes(content);
+    }
+
+    /**
+     * Present dashboard race edit page.
+     *
+     * @param content
+     */
+    @Override
+    public void presentDashboardRaceEditPage(RequestContent content) throws ReceiverException {
+        String idNum = content.findParameter(RequestFieldConfig.Common.REQUEST_ID);
+        CommonValidator validator = new CommonValidator();
+
+        if (!validator.validateId(idNum)) {
+            throw new ReceiverException("GET[id=" + idNum + "] is incorrect.");
+        }
+
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.dashboard.races.edit"));
+        this.setDefaultContentAttributes(content);
+
+        RaceDAOImpl raceDAO = new RaceDAOImpl(true);
+        ParticipantDAOImpl participantDAO = new ParticipantDAOImpl(true);
+
+        TransactionManager transaction = new TransactionManager(raceDAO, participantDAO);
+        transaction.beginTransaction();
+
+        try {
+            final int id = Integer.parseInt(idNum);
+            Race race = raceDAO.find(id);
+
+            if (race == null) {
+                transaction.rollback();
+                throw new ReceiverException("Cannot find race with id=" + id);
+            }
+
+            content.insertRequestAttribute("race", race);
+            LOGGER.log(Level.DEBUG, "Editing race: " + race);
+
+            List<Participant> participants = participantDAO.findByRaceId(race.getId());
+            content.insertRequestAttribute("participants", participants);
+
+            transaction.commit();
+
+            LOGGER.log(Level.DEBUG, "Participants list: " + Arrays.toString(participants.toArray()));
+        } catch (NumberFormatException e) {
+            transaction.rollback();
+            throw new ReceiverException("Cannot convert page to number. GET[page]=" + e.getMessage(), e);
+        } catch (DAOException e) {
+            transaction.rollback();
+            throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        } finally {
+            transaction.endTransaction();
+        }
     }
 }

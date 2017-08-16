@@ -137,7 +137,7 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <div class="input-group date" id="betStartedAtPricker">
                                                 <input id="race-started-at"
-                                                       value="<ctg:oldInputFormAttribute name="rarace-started-at" />"
+                                                       value="<ctg:oldInputFormAttribute name="race-started-at" />"
                                                        name="race-started-at" type="text"
                                                        class="form-control col-md-7 col-xs-12" required="required">
                                                 <span class="input-group-addon">
