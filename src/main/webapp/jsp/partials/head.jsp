@@ -20,7 +20,6 @@
             <ul class="nav navbar-nav">
                 <li class="${commandName eq 'index::get' ? 'active' : ''}"><a href="/"><fmt:message key="menubar.home"/></a></li>
                 <li class="${commandName eq 'races::get' ? 'active' : ''}"><a href="/races"><fmt:message key="menubar.races"/></a></li>
-                <li class="${commandName eq 'contact::get' ? 'active' : ''}"><a href="/contact"><fmt:message key="menubar.contact"/></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
