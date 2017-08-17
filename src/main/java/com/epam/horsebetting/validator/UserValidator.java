@@ -8,11 +8,15 @@ import java.util.Locale;
 public class UserValidator extends AbstractValidator {
 
     /**
+     * Constant values.
+     */
+    private static final int MIN_BALANCE_AMOUNT = 5;
+
+    /**
      * Regular expressions for variables.
      */
     private static final String EMAIL_REGEX = "\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+";
     private static final String PASSWORD_REGEX = "(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{6,}";
-    private static final int MIN_BALANCE_AMOUNT = 5;
 
     /**
      * Default constructor.
@@ -113,7 +117,7 @@ public class UserValidator extends AbstractValidator {
      * @return boolean
      */
     public boolean validateUpdateProfileBalanceForm(String amount) {
-        String message = messageManager.get(VALIDATION_PREFIX + "user.payment.incorrect")
+        String message = messageManager.get(VALIDATION_PREFIX + "user.payment" + VALIDATION_INCORRECT)
                 + " " + MIN_BALANCE_AMOUNT + "$.";
 
         try {
@@ -127,7 +131,7 @@ public class UserValidator extends AbstractValidator {
                 this.addErrorMessage(message);
                 return false;
             }
-            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "user.payment.required"));
+            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "user.payment" + VALIDATION_REQUIRED));
             return false;
         } catch (NumberFormatException e) {
             this.addErrorMessage(message);
@@ -192,7 +196,7 @@ public class UserValidator extends AbstractValidator {
             return true;
         }
 
-        this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "user.confirmation.incorrect"));
+        this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "user.confirmation" + VALIDATION_INCORRECT));
         return false;
     }
 }

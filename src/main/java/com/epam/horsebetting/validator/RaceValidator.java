@@ -121,12 +121,12 @@ public class RaceValidator extends AbstractValidator {
         int i = 0;
 
         if ((jockeys == null || coeffs == null) || jockeys.length != coeffs.length) {
-            this.addErrorMessage(messageManager.get("validation.race.jockeys.required"));
+            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "race.jockeys" + VALIDATION_REQUIRED));
             return false;
         }
 
         if (jockeys.length < MIN_JOCKEYS_COUNT) {
-            this.addErrorMessage(messageManager.get("validation.race.jockeys.least"));
+            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "race.jockeys.least"));
             return false;
         }
 
@@ -134,24 +134,24 @@ public class RaceValidator extends AbstractValidator {
 
         if (localSet.size() < jockeys.length) {
             isValidate = false;
-            this.addErrorMessage(messageManager.get("validation.race.jockeys.duplicated"));
+            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "race.jockeys.duplicated"));
         }
 
         while (i < jockeys.length && isValidate) {
             if (!jockeys[i].matches(DEFAULT_INTEGER_REGEX)) {
                 isValidate = false;
-                this.addErrorMessage(messageManager.get("validation.race.jockeys.required"));
+                this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "race.jockeys" + VALIDATION_REQUIRED));
             }
 
             if (isValidate && !coeffs[i].matches(DEFAULT_BIG_DECIMAL_REGEX)) {
                 isValidate = false;
-                this.addErrorMessage(messageManager.get("validation.race.jockeys.coefficients.incorrect"));
+                this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "race.jockeys.coefficients" + VALIDATION_INCORRECT));
             } else if (isValidate) {
                 BigDecimal num = new BigDecimal(coeffs[i]);
 
                 if (MAX_COEFFICIENT.compareTo(num) != 1 || MIN_COEFFICIENT.compareTo(num) != -1) {
                     isValidate = false;
-                    this.addErrorMessage(messageManager.get("validation.race.jockeys.coefficients.range")
+                    this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "race.jockeys.coefficients.range")
                             + " " + MIN_COEFFICIENT + ".." + MAX_COEFFICIENT);
                 }
             }
@@ -172,14 +172,14 @@ public class RaceValidator extends AbstractValidator {
     private boolean validateStatus(String status, String key) {
         if (status != null && !status.trim().isEmpty()) {
             if (!RaceStatusType.contains(status)) {
-                this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + ".required"));
+                this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + VALIDATION_REQUIRED));
                 return false;
             }
 
             return true;
         }
 
-        this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + ".required"));
+        this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + VALIDATION_REQUIRED));
         return false;
     }
 
@@ -209,10 +209,10 @@ public class RaceValidator extends AbstractValidator {
                 return true;
             }
 
-            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + ".required"));
+            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + VALIDATION_REQUIRED));
             return false;
         } catch (NumberFormatException e) {
-            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + ".incorrect"));
+            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + VALIDATION_INCORRECT));
             return false;
         }
     }
@@ -243,10 +243,10 @@ public class RaceValidator extends AbstractValidator {
                 return true;
             }
 
-            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + ".required"));
+            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + VALIDATION_REQUIRED));
             return false;
         } catch (NumberFormatException e) {
-            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + ".incorrect"));
+            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + VALIDATION_INCORRECT));
             return false;
         }
     }

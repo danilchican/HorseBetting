@@ -1,24 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e9db2c3d-90c7-4a9a-9541-77ab3b3b2a13" name="Default" comment="">
+    <list default="true" id="e9db2c3d-90c7-4a9a-9541-77ab3b3b2a13" name="Default" comment="Restructured validators.">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/BetReceiverImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/BetReceiverImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/HorseReceiverImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/HorseReceiverImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/RaceReceiverImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/RaceReceiverImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/SuitReceiverImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/SuitReceiverImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/UserReceiverImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/UserReceiverImpl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/AbstractValidator.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/AbstractValidator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/BetValidator.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/BetValidator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/CommonValidator.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/CommonValidator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/HorseValidator.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/HorseValidator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/RaceValidator.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/RaceValidator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/SuitValidator.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/SuitValidator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/UserValidator.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/UserValidator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/localization/messages_en_US.properties" afterPath="$PROJECT_DIR$/src/main/resources/localization/messages_en_US.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/localization/messages_ru_RU.properties" afterPath="$PROJECT_DIR$/src/main/resources/localization/messages_ru_RU.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/partials/top_nav.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/partials/top_nav.jsp" />
     </list>
     <ignored path="HorseBetting.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -55,23 +43,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="HorseValidator.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/HorseValidator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AbstractValidator.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AbstractValidator.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/AbstractValidator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="36" column="39" selection-start-line="36" selection-start-column="39" selection-end-line="36" selection-end-column="39" />
+            <state relative-caret-position="85">
+              <caret line="16" column="34" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -162,13 +138,13 @@
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/BetValidator.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/CommonValidator.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/SuitValidator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/RaceValidator.java" />
         <option value="$PROJECT_DIR$/src/main/resources/localization/messages_en_US.properties" />
         <option value="$PROJECT_DIR$/src/main/resources/localization/messages_ru_RU.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/AbstractValidator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/HorseValidator.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/BetReceiverImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/AbstractValidator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/RaceValidator.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/UserValidator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/HorseValidator.java" />
       </list>
     </option>
   </component>
@@ -928,14 +904,7 @@
       <workItem from="1502706048686" duration="28179000" />
       <workItem from="1502809935508" duration="16197000" />
       <workItem from="1502833371719" duration="30486000" />
-      <workItem from="1502911391385" duration="35041000" />
-    </task>
-    <task id="LOCAL-00190" summary="Moved router to package.">
-      <created>1502523982585</created>
-      <option name="number" value="00190" />
-      <option name="presentableId" value="LOCAL-00190" />
-      <option name="project" value="LOCAL" />
-      <updated>1502523982586</updated>
+      <workItem from="1502911391385" duration="35531000" />
     </task>
     <task id="LOCAL-00191" summary="Account request attributes moved to constants.">
       <created>1502528048637</created>
@@ -1273,7 +1242,14 @@
       <option name="project" value="LOCAL" />
       <updated>1502973651277</updated>
     </task>
-    <option name="localTasksCounter" value="239" />
+    <task id="LOCAL-00239" summary="Restructured validators.">
+      <created>1502991238489</created>
+      <option name="number" value="00239" />
+      <option name="presentableId" value="LOCAL-00239" />
+      <option name="project" value="LOCAL" />
+      <updated>1502991238489</updated>
+    </task>
+    <option name="localTasksCounter" value="240" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1309,7 +1285,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="782986000" />
+    <option name="totallyTimeSpent" value="783476000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1371,7 +1347,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="Created method to remove bet." />
     <MESSAGE value="Created method to view user's bet." />
     <MESSAGE value="Created MessageWrapper." />
     <MESSAGE value="Created localized messaged to suit." />
@@ -1396,7 +1371,8 @@
     <MESSAGE value="Cleared assets." />
     <MESSAGE value="Modified validators." />
     <MESSAGE value="Created race status enum &amp; modified validators." />
-    <option name="LAST_COMMIT_MESSAGE" value="Created race status enum &amp; modified validators." />
+    <MESSAGE value="Restructured validators." />
+    <option name="LAST_COMMIT_MESSAGE" value="Restructured validators." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1785,40 +1761,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/BetValidator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-163">
-          <caret line="33" column="9" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/CommonValidator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/RaceValidator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="239" column="63" selection-start-line="239" selection-start-column="63" selection-end-line="239" selection-end-column="63" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/SuitValidator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/localization/messages_ru_RU.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
@@ -1828,24 +1770,6 @@
       </provider>
       <provider editor-type-id="ResourceBundle">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/AbstractValidator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="36" column="39" selection-start-line="36" selection-start-column="39" selection-end-line="36" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/UserValidator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="152" column="17" selection-start-line="152" selection-start-column="17" selection-end-line="152" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/localization/messages_en_US.properties">
@@ -1867,13 +1791,63 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/HorseValidator.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/SuitValidator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
+        <state relative-caret-position="204">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/BetValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/CommonValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="19" column="6" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/UserValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/RaceValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="16" column="7" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/HorseValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="41" selection-start-line="7" selection-start-column="41" selection-end-line="7" selection-end-column="41" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/validator/AbstractValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="16" column="34" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>

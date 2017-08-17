@@ -8,7 +8,7 @@ import java.util.Locale;
 public class HorseValidator extends AbstractValidator {
 
     /**
-     * Horse constants.
+     * Constant values.
      */
     private static final byte MIN_AGE = 1;
     private static final byte MAX_AGE = 40;
@@ -135,10 +135,10 @@ public class HorseValidator extends AbstractValidator {
                 return true;
             }
 
-            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + ".required"));
+            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + VALIDATION_REQUIRED));
             return false;
         } catch (NumberFormatException e) {
-            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + ".incorrect"));
+            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + VALIDATION_INCORRECT));
             return false;
         }
     }
@@ -169,14 +169,14 @@ public class HorseValidator extends AbstractValidator {
 
             // TODO change male/female
             if (!gender.equals("male") && !gender.equals("female")) {
-                this.addErrorMessage(VALIDATION_PREFIX + key + ".incorrect");
+                this.addErrorMessage(VALIDATION_PREFIX + key + VALIDATION_INCORRECT);
                 return false;
             }
 
             return true;
         }
 
-        this.addErrorMessage(VALIDATION_PREFIX + key + ".required");
+        this.addErrorMessage(VALIDATION_PREFIX + key + VALIDATION_REQUIRED);
         return false;
     }
 }

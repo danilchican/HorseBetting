@@ -30,6 +30,8 @@ public abstract class AbstractValidator {
      * Prefix to get validation message from resource manager.
      */
     static final String VALIDATION_PREFIX = "validation.";
+    static final String VALIDATION_REQUIRED = ".required";
+    static final String VALIDATION_INCORRECT = ".incorrect";
 
     /**
      * Regular expressions for variables.
@@ -140,14 +142,14 @@ public abstract class AbstractValidator {
             }
 
             if (!value.matches(format)) {
-                this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + ".incorrect"));
+                this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + VALIDATION_INCORRECT));
                 return false;
             }
 
             return true;
         }
 
-        this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + ".required"));
+        this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + VALIDATION_REQUIRED));
         return false;
     }
 }
