@@ -3,7 +3,6 @@ package com.epam.horsebetting.validator;
 import com.epam.horsebetting.tag.OldInputFormAttributeTag;
 import com.epam.horsebetting.util.MessageWrapper;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -23,7 +22,10 @@ public abstract class AbstractValidator {
     /**
      * Regular expressions for variables.
      */
-    static final String DEFAULT_NAME_REGEX = "[a-zA-Zа-яА-ЯёЁ0-9 ]+";
+    static final String DEFAULT_STRING_REGEX = "[а-яА-ЯёЁ\\w\\d\\s,]+";
+    static final String DEFAULT_INTEGER_REGEX = "\\d+";
+    static final String DEFAULT_BIG_DECIMAL_REGEX = "\\d+(,\\d+)?";
+    private static final String DEFAULT_DATE_FORMAT_REGEX = "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}";
 
     /**
      * Default constructor.
@@ -79,22 +81,21 @@ public abstract class AbstractValidator {
      * @return boolean
      */
     boolean validateInteger(String number, String attributeName, String key, boolean saveInput) {
-        try {
-            if(number != null && !number.trim().isEmpty()) {
-                if(saveInput) {
-                    this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, number);
-                }
-
-                int n = Integer.parseInt(number);
-                return true;
+        if (number != null && !number.trim().isEmpty()) {
+            if (saveInput) {
+                this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, number);
             }
 
-            this.addErrorMessage(key + " is empty.");
-            return false;
-        } catch (NumberFormatException e) {
-            this.addErrorMessage(key + " is incorrect.");
-            return false;
+            if (!number.matches(DEFAULT_INTEGER_REGEX)) {
+                this.addErrorMessage(key + " is incorrect.");
+                return false;
+            }
+
+            return true;
         }
+
+        this.addErrorMessage(key + " is empty.");
+        return false;
     }
 
     /**
@@ -107,7 +108,7 @@ public abstract class AbstractValidator {
      */
     boolean validateByte(String byteNumber, String attributeName, String key) {
         try {
-            if(byteNumber != null && !byteNumber.trim().isEmpty()) {
+            if (byteNumber != null && !byteNumber.trim().isEmpty()) {
                 this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, byteNumber);
 
                 byte b = Byte.parseByte(byteNumber);
@@ -132,12 +133,41 @@ public abstract class AbstractValidator {
      * @return boolean
      */
     boolean validateDefaultName(String name, String attributeName, String key, String errorMessage, boolean saveInput) {
-        if (name != null && !name.trim().isEmpty()) {
-            if(saveInput) {
-                this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, name);
+        return validateString(name, attributeName, key, errorMessage, true, DEFAULT_STRING_REGEX);
+    }
+
+    /**
+     * Validate fate format.
+     *
+     * @param date
+     * @param attributeName
+     * @param key
+     * @param saveInput
+     * @return boolean
+     */
+    boolean validateDate(String date, String attributeName, String key, boolean saveInput) {
+        return validateString(date, attributeName, key, "should have date format.", saveInput, DEFAULT_DATE_FORMAT_REGEX);
+    }
+
+    /**
+     * Validate string by format.
+     *
+     * @param value
+     * @param attributeName
+     * @param key
+     * @param errorMessage
+     * @param saveInput
+     * @param format
+     * @return boolean
+     */
+    boolean validateString(String value, String attributeName, String key, String errorMessage,
+                           boolean saveInput, String format) {
+        if (value != null && !value.trim().isEmpty()) {
+            if (saveInput) {
+                this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, value);
             }
 
-            if (!name.matches(DEFAULT_NAME_REGEX)) {
+            if (!value.matches(format)) {
                 this.addErrorMessage(key + (errorMessage != null ? " " + errorMessage : ""));
                 return false;
             }

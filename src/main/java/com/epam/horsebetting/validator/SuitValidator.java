@@ -26,7 +26,7 @@ public class SuitValidator extends AbstractValidator {
      */
     public boolean validateName(String name) {
         if (name != null && !name.trim().isEmpty()) {
-            if (!name.matches(DEFAULT_NAME_REGEX)) {
+            if (!name.matches(DEFAULT_STRING_REGEX)) {
                 this.addErrorMessage("Name can contains only characters, numbers and spaces.");
                 return false;
             }

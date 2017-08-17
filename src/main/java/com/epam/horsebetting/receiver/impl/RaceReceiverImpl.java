@@ -169,7 +169,6 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
         RaceValidator validator = new RaceValidator();
         HashMap<Integer, BigDecimal> raceJockeys = new HashMap<>();
 
-        // TODO check max/min values of coeffs
         if (validator.validateEditRaceForm(status, participantsIds, coeffs)) {
             final int raceId = Integer.parseInt(raceNum);
 
