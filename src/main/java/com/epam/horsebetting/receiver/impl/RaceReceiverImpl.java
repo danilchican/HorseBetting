@@ -56,7 +56,7 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
         String betEndDateAttr = content.findParameter(RequestFieldConfig.Race.BET_END_DATE_FIELD);
         String startedAtAttr = content.findParameter(RequestFieldConfig.Race.STARTED_AT_FIELD);
 
-        RaceValidator validator = new RaceValidator();
+        RaceValidator validator = new RaceValidator(locale);
 
         if (validator.validateCreateRaceForm(title, place, minRateAttr, trackLengthAttr, betEndDateAttr, startedAtAttr)) {
             BigDecimal minRate = new BigDecimal(minRateAttr);
@@ -166,7 +166,7 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
         String[] participantsIds = content.findParameterValues(RequestFieldConfig.Race.SELECTED_HORSES_FIELD);
         String[] coeffs = content.findParameterValues(RequestFieldConfig.Race.HORSE_COEFFICIENTS_FIELD);
 
-        RaceValidator validator = new RaceValidator();
+        RaceValidator validator = new RaceValidator(locale);
         HashMap<Integer, BigDecimal> raceJockeys = new HashMap<>();
 
         if (validator.validateEditRaceForm(status, participantsIds, coeffs)) {

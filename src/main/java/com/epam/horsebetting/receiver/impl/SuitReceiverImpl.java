@@ -41,10 +41,10 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
     public void ajaxObtainSuitsList(RequestContent content) throws ReceiverException {
         String pageNumber = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
 
-        SuitValidator validator = new SuitValidator();
-        MessageWrapper messages = new MessageWrapper();
-
         Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
+        SuitValidator validator = new SuitValidator(locale);
+
+        MessageWrapper messages = new MessageWrapper();
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validatePage(pageNumber)) {
@@ -84,10 +84,10 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
     public void createSuit(RequestContent content) throws ReceiverException {
         String name = content.findParameter(RequestFieldConfig.Suit.NAME_FIELD);
 
-        SuitValidator validator = new SuitValidator();
-        MessageWrapper messages = new MessageWrapper();
-
         Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
+        SuitValidator validator = new SuitValidator(locale);
+
+        MessageWrapper messages = new MessageWrapper();
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateName(name)) {
@@ -139,10 +139,9 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
         String idNumber = content.findParameter(RequestFieldConfig.Suit.ID_FIELD);
         String name = content.findParameter(RequestFieldConfig.Suit.NAME_FIELD);
 
-        MessageWrapper messages = new MessageWrapper();
-        SuitValidator validator = new SuitValidator();
-
         Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
+        SuitValidator validator = new SuitValidator(locale);
+        MessageWrapper messages = new MessageWrapper();
         MessageConfig messageResource = new MessageConfig(locale);
 
         if(validator.validateSuit(idNumber, name)) {
@@ -180,11 +179,10 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
     public void removeSuit(RequestContent content) throws ReceiverException {
         String idNumber = content.findParameter(RequestFieldConfig.Suit.ID_FIELD);
 
-        SuitValidator validator = new SuitValidator();
-        MessageWrapper messages = new MessageWrapper();
-
         Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
+        SuitValidator validator = new SuitValidator(locale);
         MessageConfig messageResource = new MessageConfig(locale);
+        MessageWrapper messages = new MessageWrapper();
 
         if (validator.validateId(idNumber)) {
             final int id = Integer.parseInt(idNumber);

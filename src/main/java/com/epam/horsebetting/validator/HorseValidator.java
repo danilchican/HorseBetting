@@ -3,7 +3,24 @@ package com.epam.horsebetting.validator;
 import com.epam.horsebetting.config.RequestFieldConfig;
 import com.epam.horsebetting.tag.OldInputFormAttributeTag;
 
+import java.util.Locale;
+
 public class HorseValidator extends AbstractValidator {
+
+    /**
+     * Horse constants.
+     */
+    private static final byte MIN_AGE = 1;
+    private static final byte MAX_AGE = 40;
+
+    /**
+     * Default constructor.
+     *
+     * @param locale
+     */
+    public HorseValidator(Locale locale) {
+        super(locale);
+    }
 
     /**
      * Validate data to create horse.
@@ -17,19 +34,19 @@ public class HorseValidator extends AbstractValidator {
     public boolean validateCreateHorse(String name, String gender, String age, String suitId) {
         boolean isValidate = true;
 
-        if (!validateName(name, RequestFieldConfig.Horse.NAME_FIELD, "Name")) {
+        if (!validateName(name, RequestFieldConfig.Horse.NAME_FIELD, "horse.name")) {
             isValidate = false;
         }
 
-        if (!validateGender(gender, RequestFieldConfig.Horse.GENDER_FIELD, "Gender")) {
+        if (!validateGender(gender, RequestFieldConfig.Horse.GENDER_FIELD, "horse.gender")) {
             isValidate = false;
         }
 
-        if (!validateAge(age, RequestFieldConfig.Horse.AGE_FIELD, "Age")) {
+        if (!validateAge(age, RequestFieldConfig.Horse.AGE_FIELD, "horse.age")) {
             isValidate = false;
         }
 
-        if (!validateSuitId(suitId, RequestFieldConfig.Horse.SUIT_FIELD, "Suit id")) {
+        if (!validateSuitId(suitId, RequestFieldConfig.Horse.SUIT_FIELD, "horse.suit_id")) {
             isValidate = false;
         }
 
@@ -49,23 +66,23 @@ public class HorseValidator extends AbstractValidator {
     public boolean validateUpdateHorse(String id, String name, String gender, String age, String suitId) {
         boolean isValidate = true;
 
-        if (!validateInteger(id, RequestFieldConfig.Horse.ID_FIELD, "Horse id", false)) {
+        if (!validateInteger(id, RequestFieldConfig.Horse.ID_FIELD, "horse.id", false)) {
             isValidate = false;
         }
 
-        if (!validateName(name, RequestFieldConfig.Horse.NAME_FIELD, "Name")) {
+        if (!validateName(name, RequestFieldConfig.Horse.NAME_FIELD, "horse.name")) {
             isValidate = false;
         }
 
-        if (!validateGender(gender, RequestFieldConfig.Horse.GENDER_FIELD, "Gender")) {
+        if (!validateGender(gender, RequestFieldConfig.Horse.GENDER_FIELD, "horse.gender")) {
             isValidate = false;
         }
 
-        if (!validateAge(age, RequestFieldConfig.Horse.AGE_FIELD, "Age")) {
+        if (!validateAge(age, RequestFieldConfig.Horse.AGE_FIELD, "horse.age")) {
             isValidate = false;
         }
 
-        if (!validateSuitId(suitId, RequestFieldConfig.Horse.SUIT_FIELD, "Suit id")) {
+        if (!validateSuitId(suitId, RequestFieldConfig.Horse.SUIT_FIELD, "horse.suit_id")) {
             isValidate = false;
         }
 
@@ -79,7 +96,7 @@ public class HorseValidator extends AbstractValidator {
      * @return boolean
      */
     public boolean validateRemoveHorse(String id) {
-        return validateInteger(id, RequestFieldConfig.Horse.ID_FIELD, "Horse id", true);
+        return validateInteger(id, RequestFieldConfig.Horse.ID_FIELD, "horse.id", true);
     }
 
     /**
@@ -91,7 +108,7 @@ public class HorseValidator extends AbstractValidator {
      * @return boolean
      */
     private boolean validateName(String name, String attributeName, String key) {
-        return validateDefaultName(name, attributeName, key, "can contains only characters, numbers and spaces.", true);
+        return validateString(name, attributeName, key, true, DEFAULT_NAME_REGEX);
     }
 
     /**
@@ -103,7 +120,27 @@ public class HorseValidator extends AbstractValidator {
      * @return boolean
      */
     private boolean validateAge(String age, String attributeName, String key) {
-        return validateByte(age, attributeName, key);
+        try {
+            if (age != null && !age.trim().isEmpty()) {
+                this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, age);
+
+                byte b = Byte.parseByte(age);
+
+                if (b < MIN_AGE || b > MAX_AGE) {
+                    this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + ".less")
+                            + " " + MIN_AGE + ".." + MAX_AGE);
+                    return false;
+                }
+
+                return true;
+            }
+
+            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + ".required"));
+            return false;
+        } catch (NumberFormatException e) {
+            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + ".incorrect"));
+            return false;
+        }
     }
 
     /**
@@ -130,15 +167,16 @@ public class HorseValidator extends AbstractValidator {
         if (gender != null && !gender.trim().isEmpty()) {
             this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, gender);
 
+            // TODO change male/female
             if (!gender.equals("male") && !gender.equals("female")) {
-                this.addErrorMessage(key + " is invalid.");
+                this.addErrorMessage(VALIDATION_PREFIX + key + ".incorrect");
                 return false;
             }
 
             return true;
         }
 
-        this.addErrorMessage(key + " is required.");
+        this.addErrorMessage(VALIDATION_PREFIX + key + ".required");
         return false;
     }
 }

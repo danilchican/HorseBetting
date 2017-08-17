@@ -43,10 +43,10 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
         String ageAttr = content.findParameter(RequestFieldConfig.Horse.AGE_FIELD);
         String suitAttr = content.findParameter(RequestFieldConfig.Horse.SUIT_FIELD);
 
-        HorseValidator validator = new HorseValidator();
-        MessageWrapper messages = new MessageWrapper();
-
         Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
+        HorseValidator validator = new HorseValidator(locale);
+
+        MessageWrapper messages = new MessageWrapper();
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateCreateHorse(name, genderAttr, ageAttr, suitAttr)) {
@@ -130,10 +130,10 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
     public void removeHorse(RequestContent content) throws ReceiverException {
         String idValue = content.findParameter(RequestFieldConfig.Horse.ID_FIELD);
 
-        HorseValidator validator = new HorseValidator();
-        MessageWrapper messages = new MessageWrapper();
-
         Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
+        HorseValidator validator = new HorseValidator(locale);
+
+        MessageWrapper messages = new MessageWrapper();
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateRemoveHorse(idValue)) {
@@ -172,10 +172,10 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
         String ageAttr = content.findParameter(RequestFieldConfig.Horse.AGE_FIELD);
         String suitAttr = content.findParameter(RequestFieldConfig.Horse.SUIT_FIELD);
 
-        HorseValidator validator = new HorseValidator();
-        MessageWrapper messages = new MessageWrapper();
-
         Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
+        HorseValidator validator = new HorseValidator(locale);
+
+        MessageWrapper messages = new MessageWrapper();
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateUpdateHorse(idAttr, name, genderAttr, ageAttr, suitAttr)) {

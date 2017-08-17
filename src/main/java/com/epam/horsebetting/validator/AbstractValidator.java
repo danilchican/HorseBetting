@@ -1,9 +1,11 @@
 package com.epam.horsebetting.validator;
 
+import com.epam.horsebetting.config.MessageConfig;
 import com.epam.horsebetting.tag.OldInputFormAttributeTag;
 import com.epam.horsebetting.util.MessageWrapper;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,8 +22,19 @@ public abstract class AbstractValidator {
     private HashMap<String, String> oldInput;
 
     /**
+     * Message manager to find the right message.
+     */
+    MessageConfig messageManager;
+
+    /**
+     * Prefix to get validation message from resource manager.
+     */
+    static final String VALIDATION_PREFIX = "validation.";
+
+    /**
      * Regular expressions for variables.
      */
+    static final String DEFAULT_NAME_REGEX = "[a-zA-Zа-яА-ЯёЁ ]{4,}";
     static final String DEFAULT_STRING_REGEX = "[а-яА-ЯёЁ\\w\\d\\s,]+";
     static final String DEFAULT_INTEGER_REGEX = "\\d+";
     static final String DEFAULT_BIG_DECIMAL_REGEX = "\\d+(,|.\\d+)?";
@@ -30,9 +43,10 @@ public abstract class AbstractValidator {
     /**
      * Default constructor.
      */
-    AbstractValidator() {
+    AbstractValidator(Locale locale) {
         this.errors = new MessageWrapper();
         this.oldInput = new HashMap<>();
+        this.messageManager = new MessageConfig(locale);
     }
 
     /**
@@ -81,46 +95,7 @@ public abstract class AbstractValidator {
      * @return boolean
      */
     boolean validateInteger(String number, String attributeName, String key, boolean saveInput) {
-        if (number != null && !number.trim().isEmpty()) {
-            if (saveInput) {
-                this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, number);
-            }
-
-            if (!number.matches(DEFAULT_INTEGER_REGEX)) {
-                this.addErrorMessage(key + " is incorrect.");
-                return false;
-            }
-
-            return true;
-        }
-
-        this.addErrorMessage(key + " is empty.");
-        return false;
-    }
-
-    /**
-     * Validate byte.
-     *
-     * @param byteNumber
-     * @param attributeName
-     * @param key
-     * @return boolean
-     */
-    boolean validateByte(String byteNumber, String attributeName, String key) {
-        try {
-            if (byteNumber != null && !byteNumber.trim().isEmpty()) {
-                this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, byteNumber);
-
-                byte b = Byte.parseByte(byteNumber);
-                return true;
-            }
-
-            this.addErrorMessage(key + " is empty.");
-            return false;
-        } catch (NumberFormatException e) {
-            this.addErrorMessage(key + " is incorrect.");
-            return false;
-        }
+        return validateString(number, attributeName, key, saveInput, DEFAULT_INTEGER_REGEX);
     }
 
     /**
@@ -129,11 +104,10 @@ public abstract class AbstractValidator {
      * @param name
      * @param attributeName
      * @param key
-     * @param errorMessage
      * @return boolean
      */
-    boolean validateDefaultName(String name, String attributeName, String key, String errorMessage, boolean saveInput) {
-        return validateString(name, attributeName, key, errorMessage, saveInput, DEFAULT_STRING_REGEX);
+    boolean validateDefaultName(String name, String attributeName, String key, boolean saveInput) {
+        return validateString(name, attributeName, key, saveInput, DEFAULT_STRING_REGEX);
     }
 
     /**
@@ -146,7 +120,7 @@ public abstract class AbstractValidator {
      * @return boolean
      */
     boolean validateDate(String date, String attributeName, String key, boolean saveInput) {
-        return validateString(date, attributeName, key, "should have date format.", saveInput, DEFAULT_DATE_FORMAT_REGEX);
+        return validateString(date, attributeName, key, saveInput, DEFAULT_DATE_FORMAT_REGEX);
     }
 
     /**
@@ -155,27 +129,25 @@ public abstract class AbstractValidator {
      * @param value
      * @param attributeName
      * @param key
-     * @param errorMessage
      * @param saveInput
      * @param format
      * @return boolean
      */
-    boolean validateString(String value, String attributeName, String key, String errorMessage,
-                           boolean saveInput, String format) {
+    boolean validateString(String value, String attributeName, String key, boolean saveInput, String format) {
         if (value != null && !value.trim().isEmpty()) {
             if (saveInput) {
                 this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, value);
             }
 
             if (!value.matches(format)) {
-                this.addErrorMessage(key + (errorMessage != null ? " " + errorMessage : ""));
+                this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + ".incorrect"));
                 return false;
             }
 
             return true;
         }
 
-        this.addErrorMessage(key + " is required.");
+        this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + ".required"));
         return false;
     }
 }

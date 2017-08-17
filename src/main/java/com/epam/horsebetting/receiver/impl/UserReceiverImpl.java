@@ -48,12 +48,13 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         String password = content.findParameter(RequestFieldConfig.User.PASSWORD_FIELD);
         String passwordConfirmation = content.findParameter(RequestFieldConfig.User.CONFIRMATION_FIELD);
 
-        UserValidator validator = new UserValidator();
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+        UserValidator validator = new UserValidator(locale);
 
         if (validator.validateRegistrationForm(name, email, password, passwordConfirmation)) {
             MessageWrapper messages = new MessageWrapper();
 
-            Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+
             MessageConfig messageResource = new MessageConfig(locale);
 
             UserDAOImpl userDAO = new UserDAOImpl(true);
@@ -111,10 +112,9 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         String email = content.findParameter(RequestFieldConfig.User.EMAIL_FIELD);
         String password = content.findParameter(RequestFieldConfig.User.PASSWORD_FIELD);
 
-        UserValidator validator = new UserValidator();
-        MessageWrapper messages = new MessageWrapper();
-
         Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+        UserValidator validator = new UserValidator(locale);
+        MessageWrapper messages = new MessageWrapper();
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateLoginForm(email, password)) {
@@ -170,10 +170,9 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
     public void updateProfileSettings(RequestContent content) throws ReceiverException {
         String name = content.findParameter(RequestFieldConfig.User.NAME_FIELD);
 
-        UserValidator validator = new UserValidator();
-        MessageWrapper messages = new MessageWrapper();
-
         Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+        UserValidator validator = new UserValidator(locale);
+        MessageWrapper messages = new MessageWrapper();
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateUpdateSettingsForm(name)) {
@@ -207,10 +206,10 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         String password = content.findParameter(RequestFieldConfig.User.PASSWORD_FIELD);
         String confirmation = content.findParameter(RequestFieldConfig.User.CONFIRMATION_FIELD);
 
-        UserValidator validator = new UserValidator();
-        MessageWrapper messages = new MessageWrapper();
-
         Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+        UserValidator validator = new UserValidator(locale);
+
+        MessageWrapper messages = new MessageWrapper();
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateSecurityForm(password, confirmation)) {
@@ -243,10 +242,10 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
     public void updateProfileBalance(RequestContent content) throws ReceiverException {
         String paymentAmount = content.findParameter(RequestFieldConfig.User.PAYMENT_AMOUNT_FIELD);
 
-        UserValidator validator = new UserValidator();
-        MessageWrapper messages = new MessageWrapper();
-
         Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+        UserValidator validator = new UserValidator(locale);
+
+        MessageWrapper messages = new MessageWrapper();
         MessageConfig messageResource = new MessageConfig(locale);
 
         if (validator.validateUpdateProfileBalanceForm(paymentAmount)) {
@@ -286,8 +285,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         MessageWrapper messages = new MessageWrapper();
         Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
-
-        UserValidator validator = new UserValidator();
+        UserValidator validator = new UserValidator(locale);
 
         if (validator.validateResetPasswordForm(email)) {
             User user = new User();
@@ -381,7 +379,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         MessageWrapper messages = new MessageWrapper();
 
         EnvironmentConfig env = new EnvironmentConfig();
-        UserValidator validator = new UserValidator();
+        UserValidator validator = new UserValidator(locale);
 
         UserDAOImpl userDAO = new UserDAOImpl(true);
         PasswordRecoverDAOImpl recoverDAO = new PasswordRecoverDAOImpl(true);

@@ -1,27 +1,27 @@
 package com.epam.horsebetting.validator;
 
 import com.epam.horsebetting.config.RequestFieldConfig;
-import com.epam.horsebetting.tag.OldInputFormAttributeTag;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 
 public class UserValidator extends AbstractValidator {
 
     /**
      * Regular expressions for variables.
      */
-    private static final String NAME_REGEX = "[a-zA-Zа-яА-ЯёЁ ]{4,}";
     private static final String EMAIL_REGEX = "\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+";
     private static final String PASSWORD_REGEX = "(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{6,}";
     private static final int MIN_BALANCE_AMOUNT = 5;
 
     /**
-     * Messages to valid.
+     * Default constructor.
+     *
+     * @param locale
      */
-    private static final String NAME_MESSAGE = "must be at least 5 characters " +
-            "as well as contain symbols and spaces.";
-    private static final String PASSWORD_MESSAGE = "Your password must be at least 6 characters " +
-            "as well as contain at least one lowercase and one number.";
+    public UserValidator(Locale locale) {
+        super(locale);
+    }
 
     /**
      * Validate registration data.
@@ -35,15 +35,15 @@ public class UserValidator extends AbstractValidator {
     public boolean validateRegistrationForm(String name, String email, String password, String passwordConfirmation) {
         boolean isValidate = true;
 
-        if (!validateName(name, RequestFieldConfig.User.NAME_FIELD, "Name", true)) {
+        if (!validateName(name, RequestFieldConfig.User.NAME_FIELD, "user.name", true)) {
             isValidate = false;
         }
 
-        if (!validateEmail(email, RequestFieldConfig.User.EMAIL_FIELD, "Email")) {
+        if (!validateEmail(email, RequestFieldConfig.User.EMAIL_FIELD, "user.email")) {
             isValidate = false;
         }
 
-        if (!validatePassword(password, "Password")) {
+        if (!validatePassword(password, "user.password")) {
             isValidate = false;
         }
 
@@ -55,7 +55,7 @@ public class UserValidator extends AbstractValidator {
     }
 
     /**
-     * Validate authentication data.
+     * Validate login form.
      *
      * @param email
      * @param password
@@ -64,11 +64,11 @@ public class UserValidator extends AbstractValidator {
     public boolean validateLoginForm(String email, String password) {
         boolean isValidate = true;
 
-        if (!validateEmail(email, RequestFieldConfig.User.EMAIL_FIELD, "Email")) {
+        if (!validateEmail(email, RequestFieldConfig.User.EMAIL_FIELD, "user.email")) {
             isValidate = false;
         }
 
-        if (!validatePassword(password, "Password")) {
+        if (!validatePassword(password, "user.password")) {
             isValidate = false;
         }
 
@@ -82,11 +82,11 @@ public class UserValidator extends AbstractValidator {
      * @return boolean
      */
     public boolean validateUpdateSettingsForm(String name) {
-        return validateDefaultName(name, RequestFieldConfig.User.NAME_FIELD, "Name", NAME_MESSAGE, false);
+        return validateName(name, RequestFieldConfig.User.NAME_FIELD, "user.name", false);
     }
 
     /**
-     * Validate update security form.
+     * Validate security form.
      *
      * @param password
      * @param confirmation
@@ -95,7 +95,7 @@ public class UserValidator extends AbstractValidator {
     public boolean validateSecurityForm(String password, String confirmation) {
         boolean isValidate = true;
 
-        if (!validatePassword(password, "Password")) {
+        if (!validatePassword(password, "user.password")) {
             isValidate = false;
         }
 
@@ -107,28 +107,30 @@ public class UserValidator extends AbstractValidator {
     }
 
     /**
-     * Validate
+     * Validate profile balance form.
      *
      * @param amount
      * @return boolean
      */
     public boolean validateUpdateProfileBalanceForm(String amount) {
+        String message = messageManager.get(VALIDATION_PREFIX + "user.payment.incorrect")
+                + " " + MIN_BALANCE_AMOUNT + "$.";
+
         try {
-            if(amount != null && !amount.trim().isEmpty()) {
+            if (amount != null && !amount.trim().isEmpty()) {
                 BigDecimal b = new BigDecimal(amount);
 
-                if(b.compareTo(new BigDecimal(MIN_BALANCE_AMOUNT)) != -1) {
+                if (b.compareTo(new BigDecimal(MIN_BALANCE_AMOUNT)) != -1) {
                     return true;
                 }
 
-                this.addErrorMessage("Payment amount should be equal or greater than " + MIN_BALANCE_AMOUNT + "$.");
+                this.addErrorMessage(message);
                 return false;
             }
-
-            this.addErrorMessage("Payment amount is empty.");
+            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "user.payment.required"));
             return false;
         } catch (NumberFormatException e) {
-            this.addErrorMessage("Payment amount is incorrect.");
+            this.addErrorMessage(message);
             return false;
         }
     }
@@ -140,11 +142,11 @@ public class UserValidator extends AbstractValidator {
      * @return boolean
      */
     public boolean validateResetPasswordForm(String email) {
-        return validateEmail(email, RequestFieldConfig.User.EMAIL_FIELD, "Email");
+        return validateEmail(email, RequestFieldConfig.User.EMAIL_FIELD, "user.email");
     }
 
     /**
-     * Validate name. Not required.
+     * Validate name.
      *
      * @param name
      * @param attributeName
@@ -152,25 +154,11 @@ public class UserValidator extends AbstractValidator {
      * @return boolean
      */
     private boolean validateName(String name, String attributeName, String key, boolean saveInput) {
-        if (name != null && !name.trim().isEmpty()) {
-            if(saveInput) {
-                this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, name);
-            }
-
-            if (!name.matches(NAME_REGEX)) {
-                this.addErrorMessage(key + " " + NAME_MESSAGE);
-                return false;
-            }
-
-            return true;
-        }
-
-        this.addErrorMessage(key + " is required.");
-        return false;
+        return validateString(name, attributeName, key, saveInput, DEFAULT_NAME_REGEX);
     }
 
     /**
-     * Validate email. Required.
+     * Validate email.
      *
      * @param email
      * @param attributeName
@@ -178,44 +166,22 @@ public class UserValidator extends AbstractValidator {
      * @return boolean
      */
     private boolean validateEmail(String email, String attributeName, String key) {
-        if (email != null && !email.trim().isEmpty()) {
-            this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, email);
-
-            if (!email.matches(EMAIL_REGEX)) {
-                this.addErrorMessage(key + " is invalid.");
-                return false;
-            }
-
-            return true;
-        }
-
-        this.addErrorMessage(key + " is required.");
-        return false;
+        return validateString(email, attributeName, key, true, EMAIL_REGEX);
     }
 
     /**
-     * Validate password. Required.
+     * Validate password.
      *
      * @param password
      * @param key
      * @return boolean
      */
     private boolean validatePassword(String password, String key) {
-        if (password != null && !password.trim().isEmpty()) {
-            if (!password.matches(PASSWORD_REGEX)) {
-                this.addErrorMessage(PASSWORD_MESSAGE);
-                return false;
-            }
-
-            return true;
-        }
-
-        this.addErrorMessage(key + " is required.");
-        return false;
+        return validateString(password, RequestFieldConfig.User.PASSWORD_FIELD, key, false, PASSWORD_REGEX);
     }
 
     /**
-     * Validate password and it confirmation. Required.
+     * Validate password and confirmation.
      *
      * @param password
      * @param passwordConfirmation
@@ -226,7 +192,7 @@ public class UserValidator extends AbstractValidator {
             return true;
         }
 
-        this.addErrorMessage("Password not confirmed!");
+        this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "user.confirmation.incorrect"));
         return false;
     }
 }

@@ -17,7 +17,7 @@
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                        aria-expanded="false">
-                        <img src="${pageContext.request.contextPath}/assets/dashboard/images/img.jpg"
+                        <img src="/assets/dashboard/images/img.jpg"
                              alt="">${user.getName()}
                         <span class=" fa fa-angle-down"></span>
                     </a>

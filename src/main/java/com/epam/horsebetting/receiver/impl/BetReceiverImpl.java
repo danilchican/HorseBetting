@@ -18,9 +18,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_ERRORS;
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_MESSAGES;
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_LOCALE;
 
 public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
 
@@ -37,12 +39,14 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
      */
     @Override
     public void createBet(RequestContent content) throws ReceiverException {
-        BetValidator validator = new BetValidator();
+        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
+        BetValidator validator = new BetValidator(locale);
         ArrayList<String> messages = new ArrayList<>();
 
         String amount = content.findParameter(RequestFieldConfig.Bet.AMOUNT);
         String participant = content.findParameter(RequestFieldConfig.Bet.PARTICIPANT_ID);
 
+        // TODO chech min rate of race
         // TODO create validate participant existing
         if (validator.validateCreateBet(amount, participant)) {
             int participantId = Integer.parseInt(participant);
@@ -93,7 +97,8 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
      */
     @Override
     public void removeBet(RequestContent content) throws ReceiverException {
-        BetValidator validator = new BetValidator();
+        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
+        BetValidator validator = new BetValidator(locale);
         ArrayList<String> messages = new ArrayList<>();
 
         String idAttr = content.findParameter(RequestFieldConfig.Bet.ID);
