@@ -17,9 +17,5 @@
 <link href="${pageContext.request.contextPath}/assets/dashboard/iCheck/skins/flat/green.css" rel="stylesheet">
 <!-- bootstrap-progressbar -->
 <link href="${pageContext.request.contextPath}/assets/dashboard/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-<!-- JQVMap -->
-<link href="${pageContext.request.contextPath}/assets/dashboard/jqvmap/jqvmap.min.css" rel="stylesheet"/>
-<!-- bootstrap-daterangepicker -->
-<link href="${pageContext.request.contextPath}/assets/dashboard/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 <!-- Custom Theme Style -->
 <link href="${pageContext.request.contextPath}/assets/dashboard/production/css/custom.min.css" rel="stylesheet">

@@ -22,13 +22,8 @@
 <script src="${pageContext.request.contextPath}/assets/dashboard/flot.curvedlines/curvedLines.js"></script>
 <!-- DateJS -->
 <script src="${pageContext.request.contextPath}/assets/dashboard/DateJS/build/date.js"></script>
-<!-- JQVMap -->
-<script src="${pageContext.request.contextPath}/assets/dashboard/jqvmap/jquery.vmap.js"></script>
-<script src="${pageContext.request.contextPath}/assets/dashboard/jqvmap/maps/jquery.vmap.world.js"></script>
-<script src="${pageContext.request.contextPath}/assets/dashboard/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-<!-- bootstrap-daterangepicker -->
+<!-- moment -->
 <script src="${pageContext.request.contextPath}/assets/dashboard/moment/min/moment.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/dashboard/bootstrap-daterangepicker/daterangepicker.js"></script>
 <!-- Parsley -->
 <script src="${pageContext.request.contextPath}/assets/dashboard/parsleyjs/dist/parsley.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/dashboard/parsleyjs/dist/i18n/${locale.getLanguage()}.js"></script>
