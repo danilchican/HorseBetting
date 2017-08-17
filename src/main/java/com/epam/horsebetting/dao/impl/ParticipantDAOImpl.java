@@ -4,15 +4,24 @@ import com.epam.horsebetting.config.SQLFieldConfig;
 import com.epam.horsebetting.dao.AbstractDAO;
 import com.epam.horsebetting.dao.ParticipantDAO;
 import com.epam.horsebetting.entity.Participant;
+import com.epam.horsebetting.entity.Race;
 import com.epam.horsebetting.exception.DAOException;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ParticipantDAOImpl extends AbstractDAO<Participant> implements ParticipantDAO {
+
+    /**
+     * Logger to write logs.
+     */
+    private static final Logger LOGGER = LogManager.getLogger();
 
     /**
      * SQL queries for ParticipantDAOImpl.
@@ -23,6 +32,9 @@ public class ParticipantDAOImpl extends AbstractDAO<Participant> implements Part
     private static final String SQL_FIND_PARTICIPANT_BY_ID = "SELECT `p`.`id`, `p`.`horse_id`, " +
             "`p`.`race_id`, `p`.`coefficient`, `p`.`is_winner`, `h`.`name` AS `jockey` FROM `participants` AS `p` " +
             "LEFT JOIN `horses` AS `h` ON `p`.`horse_id`=`h`.`id` WHERE `p`.`id`=?;";
+    private static final String SQL_INSERT_PARTICIPANTS = "INSERT INTO `participants` " +
+            "(`horse_id`, `race_id`, `coefficient`)" + " VALUES (?,?,?);";
+    private static final String SQL_UPDATE_PARTICIPANTS = "UPDATE `participants` SET `coefficient`=? WHERE `id`=?;";
 
     /**
      * Default constructor connection.
@@ -95,6 +107,56 @@ public class ParticipantDAOImpl extends AbstractDAO<Participant> implements Part
         }
 
         return foundedHorses;
+    }
+
+    /**
+     * Create participants to race.
+     *
+     * @param participants
+     * @param race
+     */
+    @Override
+    public void create(HashMap<Integer, BigDecimal> participants, Race race) throws DAOException {
+        int affectedHorses[];
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_PARTICIPANTS)) {
+            for (Map.Entry<Integer, BigDecimal> participant : participants.entrySet()) {
+                statement.setInt(1, participant.getKey());
+                statement.setInt(2, race.getId());
+                statement.setBigDecimal(3, participant.getValue());
+
+                statement.addBatch();
+            }
+
+            affectedHorses = statement.executeBatch();
+            LOGGER.log(Level.DEBUG, "Count of inserted participants to race:" + Arrays.toString(affectedHorses));
+        } catch (SQLException e) {
+            throw new DAOException("Cannot save participants to race. " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Update participants of race.
+     *
+     * @param participants
+     */
+    @Override
+    public void update(HashMap<Integer, BigDecimal> participants) throws DAOException {
+        int affectedHorses[];
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_PARTICIPANTS)) {
+            for (Map.Entry<Integer, BigDecimal> participant : participants.entrySet()) {
+                statement.setBigDecimal(1, participant.getValue());
+                statement.setInt(2, participant.getKey());
+
+                statement.addBatch();
+            }
+
+            affectedHorses = statement.executeBatch();
+            LOGGER.log(Level.DEBUG, "Count of updated participants to race:" + Arrays.toString(affectedHorses));
+        } catch (SQLException e) {
+            throw new DAOException("Cannot update participants to race. " + e.getMessage(), e);
+        }
     }
 
     /**

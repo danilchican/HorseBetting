@@ -12,4 +12,12 @@ public interface RaceReceiver {
      * @throws ReceiverException
      */
     void createRace(RequestContent content) throws ReceiverException;
+
+    /**
+     * Edit an existing race.
+     *
+     * @param content
+     * @throws ReceiverException
+     */
+    void editRace(RequestContent content) throws ReceiverException;
 }

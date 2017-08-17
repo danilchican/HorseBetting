@@ -87,7 +87,6 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
             preparedStatement.setByte(2, horse.getAge());
             preparedStatement.setBoolean(3, horse.getGender());
             preparedStatement.setInt(4, horse.getSuitId());
-
             preparedStatement.setInt(5, horse.getId());
 
             if (preparedStatement.executeUpdate() != 1) {

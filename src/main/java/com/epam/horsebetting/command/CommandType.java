@@ -236,6 +236,12 @@ public enum CommandType {
             ((PageReceiverImpl) getCommand().getReceiver()).presentDashboardRaceEditPage(content);
         }
     },
+    DASHBOARD_RACES_EDIT("dashboard.races.edit::post", new DashboardEditRaceCommand(new RaceReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((RaceReceiverImpl) getCommand().getReceiver()).editRace(content);
+        }
+    },
     DASHBOARD_SUITS_INDEX("dashboard.suits::get", new DashboardSuitsPresentCommand(new PageReceiverImpl())) {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {

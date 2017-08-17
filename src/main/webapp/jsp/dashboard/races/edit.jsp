@@ -30,6 +30,10 @@
             $('#betStartedAtPricker').datetimepicker({
                 format: 'YYYY-MM-DD HH:mm:ss'
             });
+
+            $('#betCreatedAtPricker').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm:ss'
+            });
         </script>
     </jsp:attribute>
 

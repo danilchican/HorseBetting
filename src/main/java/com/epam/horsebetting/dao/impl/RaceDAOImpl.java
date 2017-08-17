@@ -28,14 +28,13 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
     private static final String SQL_ADD_RACE = "INSERT INTO `races` " +
             "(title, place, min_rate, track_length, bet_end_date, started_at)" +
             " VALUES (?,?,?,?,?,?);";
-    private static final String SQL_INSERT_HORSE_RACE = "INSERT INTO `participants` " +
-            "(`horse_id`, `race_id`, `coefficient`)" + " VALUES (?,?,?);";
     private static final String SQL_SELECT_PART_RACES = "SELECT * FROM `races` ORDER BY `started_at` ASC LIMIT ? OFFSET ?;";
     private static final String SQL_FIND_RACE_BY_TITLE = "SELECT * FROM `races` WHERE `title`=? LIMIT 1;";
     private static final String SQL_FIND_RACE_BY_ID = "SELECT * FROM `races` WHERE `id`=? LIMIT 1;";
     private static final String SQL_COUNT_RACES = "SELECT COUNT(*) AS `total` FROM `races`;";
     private static final String SQL_SELECT_NEAREST_RACES = "SELECT * FROM `races` WHERE `status` != ?" +
             " AND `started_at` > NOW() ORDER BY `started_at` ASC LIMIT ?;";
+    private static final String SQL_UPDATE_RACE = "UPDATE `races` SET `status`=? WHERE `id`=?;";
 
     /**
      * Default constructor connection.
@@ -75,6 +74,26 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
         }
 
         return createdRace;
+    }
+
+    /**
+     * Update race.
+     *
+     * @param race
+     * @throws DAOException
+     */
+    @Override
+    public void update(Race race) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_RACE)) {
+            preparedStatement.setString(1, race.getStatus());
+            preparedStatement.setInt(2, race.getId());
+
+            if (preparedStatement.executeUpdate() != 1) {
+                throw new DAOException("Can't update race.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't update race. " + e.getMessage(), e);
+        }
     }
 
     /**
@@ -183,35 +202,6 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
         }
 
         return foundedRaces;
-    }
-
-    /**
-     * Create horses to race.
-     *
-     * @param horses
-     * @param race
-     * @throws DAOException
-     */
-    @Override
-    public void createHorsesToRace(HashMap<Integer, BigDecimal> horses, Race race) throws DAOException {
-        int affectedHorses[];
-
-        // TODO rewrite to Participant class
-        try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_HORSE_RACE)) {
-            for (Map.Entry<Integer, BigDecimal> horse : horses.entrySet()) {
-                statement.setInt(1, horse.getKey());
-                statement.setInt(2, race.getId());
-                statement.setBigDecimal(3, horse.getValue());
-
-                statement.addBatch();
-            }
-
-            // TODO check execution result
-            affectedHorses = statement.executeBatch();
-            LOGGER.log(Level.DEBUG, "Count of inserted horses to race:" + Arrays.toString(affectedHorses));
-        } catch (SQLException e) {
-            throw new DAOException("Cannot save horses to race. " + e.getMessage(), e);
-        }
     }
 
     /**

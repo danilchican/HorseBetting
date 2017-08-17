@@ -31,6 +31,26 @@ public class RaceValidator extends AbstractValidator {
     }
 
     /**
+     * Validate edit race form.
+     *
+     * @param title
+     * @param jockeys
+     * @param coeffs
+     * @return boolean
+     */
+    public boolean validateEditRaceForm(String title, String[] jockeys, String[] coeffs) {
+        boolean isValidate = true;
+
+//        if (!validateTitle(title, RequestFieldConfig.Race.TITLE_FIELD, "Title")) {
+//            isValidate = false;
+//        }
+
+        // TODO finish validate
+
+        return isValidate;
+    }
+
+    /**
      * Validate jockeys.
      *
      * @param jockeys

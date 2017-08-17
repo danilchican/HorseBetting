@@ -2,6 +2,7 @@ package com.epam.horsebetting.receiver.impl;
 
 import com.epam.horsebetting.config.MessageConfig;
 import com.epam.horsebetting.config.RequestFieldConfig;
+import com.epam.horsebetting.dao.impl.ParticipantDAOImpl;
 import com.epam.horsebetting.dao.impl.RaceDAOImpl;
 import com.epam.horsebetting.database.TransactionManager;
 import com.epam.horsebetting.entity.Race;
@@ -61,6 +62,7 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
             BigDecimal minRate = new BigDecimal(minRateAttr);
             int trackLength = Integer.parseInt(trackLengthAttr);
 
+            ParticipantDAOImpl participantDAO = new ParticipantDAOImpl(true);
             RaceDAOImpl raceDAO = new RaceDAOImpl(true);
             TransactionManager transaction = new TransactionManager(raceDAO);
 
@@ -103,7 +105,7 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
                 transaction.beginTransaction();
 
                 Race createdRace = raceDAO.create(race);
-                raceDAO.createHorsesToRace(raceHorses, createdRace);
+                participantDAO.create(raceHorses, createdRace);
 
                 transaction.commit();
 
@@ -143,6 +145,95 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
 
             content.insertSessionAttribute(REQUEST_ERRORS, validator.getErrors());
             throw new ReceiverException("Race data is invalid.");
+        }
+    }
+
+    /**
+     * Edit an existing race.
+     *
+     * @param content
+     * @throws ReceiverException
+     */
+    @Override
+    public void editRace(RequestContent content) throws ReceiverException {
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+        MessageConfig messageResource = new MessageConfig(locale);
+        MessageWrapper messages = new MessageWrapper();
+
+        String status = content.findParameter(RequestFieldConfig.Race.STATUS_FIELD);
+        String raceNum = content.findParameter(RequestFieldConfig.Race.ID_FIELD);
+
+        String[] participantsIds = content.findParameterValues(RequestFieldConfig.Race.SELECTED_HORSES_FIELD);
+        String[] coeffs = content.findParameterValues(RequestFieldConfig.Race.HORSE_COEFFICIENTS_FIELD);
+
+        RaceValidator validator = new RaceValidator();
+        HashMap<Integer, BigDecimal> raceJockeys = new HashMap<>();
+
+        // TODO check max/min values of coeffs
+        if (validator.validateEditRaceForm(status, participantsIds, coeffs)) {
+            final int raceId = Integer.parseInt(raceNum);
+
+            for (int i = 0; i < participantsIds.length; i++) {
+                raceJockeys.put(Integer.parseInt(participantsIds[i]), new BigDecimal(coeffs[i]));
+            }
+
+            RaceDAOImpl raceDAO = new RaceDAOImpl(true);
+            ParticipantDAOImpl participantDAO = new ParticipantDAOImpl(true);
+
+            TransactionManager transaction = new TransactionManager(raceDAO, participantDAO);
+            transaction.beginTransaction();
+
+            try {
+                Race race = raceDAO.find(raceId);
+
+                if (race == null) {
+                    transaction.rollback();
+
+                    messages.add(messageResource.get("dashboard.race.not_found"));
+                    content.insertSessionAttribute(REQUEST_ERRORS, messages);
+
+                    throw new ReceiverException("Race[" + raceId + "] not found!");
+                }
+
+                if(race.isAvailable()) {
+                    //TODO validate status
+                    race.setStatus(status);
+                    raceDAO.update(race);
+
+                    // TODO check IDs of participants
+                    participantDAO.update(raceJockeys);
+
+                    // TODO return money to clients
+                    transaction.commit();
+
+                    messages.add(messageResource.get("dashboard.race.update.success"));
+                    content.insertSessionAttribute(REQUEST_MESSAGES, messages);
+                } else {
+                    messages.add(messageResource.get("dashboard.race.update.fail"));
+                    content.insertSessionAttribute(REQUEST_ERRORS, messages);
+                }
+
+            } catch (DAOException e) {
+                transaction.rollback();
+
+                for (Map.Entry<String, String> entry : validator.getOldInput()) {
+                    content.insertSessionAttribute(entry.getKey(), entry.getValue());
+                }
+
+                messages.add(messageResource.get("dashboard.race.update.fail"));
+                content.insertSessionAttribute(REQUEST_ERRORS, messages);
+
+                throw new ReceiverException("Database Error: " + e.getMessage(), e);
+            } finally {
+                transaction.endTransaction();
+            }
+        } else {
+            for (Map.Entry<String, String> entry : validator.getOldInput()) {
+                content.insertSessionAttribute(entry.getKey(), entry.getValue());
+            }
+
+            content.insertSessionAttribute(REQUEST_ERRORS, validator.getErrors());
+            throw new ReceiverException("Race horses are not completed.");
         }
     }
 }

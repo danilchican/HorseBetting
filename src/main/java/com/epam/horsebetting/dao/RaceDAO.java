@@ -21,6 +21,14 @@ public interface RaceDAO {
     Race create(Race race) throws DAOException;
 
     /**
+     * Update race.
+     *
+     * @param race
+     * @throws DAOException
+     */
+    void update(Race race) throws DAOException;
+
+    /**
      * Find race by id.
      *
      * @param id
@@ -55,15 +63,6 @@ public interface RaceDAO {
      * @throws DAOException
      */
     List<Race> obtainNearest(int limit, int offset) throws DAOException;
-
-    /**
-     * Create horses to race.
-     *
-     * @param horses
-     * @param race
-     * @throws DAOException
-     */
-    void createHorsesToRace(HashMap<Integer, BigDecimal> horses, Race race) throws DAOException;
 
     /**
      * Get total count of races.

@@ -1,10 +1,13 @@
 package com.epam.horsebetting.dao;
 
 import com.epam.horsebetting.entity.Participant;
+import com.epam.horsebetting.entity.Race;
 import com.epam.horsebetting.exception.DAOException;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 public interface ParticipantDAO {
@@ -34,6 +37,21 @@ public interface ParticipantDAO {
      * @return participants
      */
     List<Participant> findByRaceId(int id) throws DAOException;
+
+    /**
+     * Create participants to race.
+     *
+     * @param participants
+     * @param race
+     */
+    void create(HashMap<Integer, BigDecimal> participants, Race race) throws DAOException;
+
+    /**
+     * Update participants of race.
+     *
+     * @param participants
+     */
+    void update(HashMap<Integer, BigDecimal> participants) throws DAOException;
 
     /**
      * Extract participant data from result set to participant instance.
