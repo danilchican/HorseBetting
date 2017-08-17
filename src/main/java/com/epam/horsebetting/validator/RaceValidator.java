@@ -2,11 +2,11 @@ package com.epam.horsebetting.validator;
 
 import com.epam.horsebetting.config.RequestFieldConfig;
 import com.epam.horsebetting.tag.OldInputFormAttributeTag;
+import com.epam.horsebetting.type.RaceStatusType;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class RaceValidator extends AbstractValidator {
@@ -15,7 +15,7 @@ public class RaceValidator extends AbstractValidator {
      * Constant values.
      */
     private static final int TOTAL_ATTRIBUTES = 6;
-    private static final int MIN_JOCKEYS_COUNT = 6;
+    private static final int MIN_JOCKEYS_COUNT = 5;
     private static final int MIN_TRACK_LENGTH = 100;
     private static final BigDecimal MIN_RATE = BigDecimal.valueOf(20);
     private static final BigDecimal MAX_COEFFICIENT = BigDecimal.valueOf(30);
@@ -81,16 +81,15 @@ public class RaceValidator extends AbstractValidator {
     /**
      * Validate edit race form.
      *
-     * @param title
+     * @param status
      * @param jockeys
      * @param coeffs
      * @return boolean
      */
-    public boolean validateEditRaceForm(String title, String[] jockeys, String[] coeffs) {
+    public boolean validateEditRaceForm(String status, String[] jockeys, String[] coeffs) {
         boolean isValidate = true;
 
-        if (!validateString(title, RequestFieldConfig.Race.TITLE_FIELD,
-                "Title", DEFAULT_STRING_MESSAGE, true, DEFAULT_STRING_REGEX)) {
+        if (!validateStatus(status, "Status")) {
             isValidate = false;
         }
 
@@ -124,7 +123,7 @@ public class RaceValidator extends AbstractValidator {
 
         Set<String> localSet = new HashSet<>(Arrays.asList(jockeys));
 
-        if(localSet.size() < jockeys.length) {
+        if (localSet.size() < jockeys.length) {
             isValidate = false;
             this.addErrorMessage("Jockeys are duplicated. The race should have only unique jockeys.");
         }
@@ -138,7 +137,7 @@ public class RaceValidator extends AbstractValidator {
             if (isValidate && !coeffs[i].matches(DEFAULT_BIG_DECIMAL_REGEX)) {
                 isValidate = false;
                 this.addErrorMessage("Jockey coefficients is invalid.");
-            } else if(isValidate){
+            } else if (isValidate) {
                 BigDecimal num = new BigDecimal(coeffs[i]);
 
                 if (MAX_COEFFICIENT.compareTo(num) != 1 || MIN_COEFFICIENT.compareTo(num) != -1) {
@@ -152,6 +151,27 @@ public class RaceValidator extends AbstractValidator {
         }
 
         return isValidate;
+    }
+
+    /**
+     * Validate status of the race.
+     *
+     * @param status
+     * @param key
+     * @return boolean
+     */
+    private boolean validateStatus(String status, String key) {
+        if (status != null && !status.trim().isEmpty()) {
+            if (!RaceStatusType.contains(status)) {
+                this.addErrorMessage("Pick valid status of the race.");
+                return false;
+            }
+
+            return true;
+        }
+
+        this.addErrorMessage(key + " is empty.");
+        return false;
     }
 
     /**

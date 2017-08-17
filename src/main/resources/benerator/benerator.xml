@@ -99,7 +99,7 @@
 
         <attribute name="status" type="string" values="'completed','failed'" nullQuota="0.5"/>
 
-        <generate type="participants" count="5" consumer="db">
+        <generate type="participants" count="{ftl:${MAX_PARTICIPANT_COUNT}}" consumer="db">
             <variable name="gen" generator="new IncrementGenerator(1)"/>
             <variable name="asd" script="races.status" type="string"/>
 

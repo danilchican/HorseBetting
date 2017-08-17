@@ -24,7 +24,7 @@ public abstract class AbstractValidator {
      */
     static final String DEFAULT_STRING_REGEX = "[а-яА-ЯёЁ\\w\\d\\s,]+";
     static final String DEFAULT_INTEGER_REGEX = "\\d+";
-    static final String DEFAULT_BIG_DECIMAL_REGEX = "\\d+(,\\d+)?";
+    static final String DEFAULT_BIG_DECIMAL_REGEX = "\\d+(,|.\\d+)?";
     private static final String DEFAULT_DATE_FORMAT_REGEX = "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}";
 
     /**
@@ -133,7 +133,7 @@ public abstract class AbstractValidator {
      * @return boolean
      */
     boolean validateDefaultName(String name, String attributeName, String key, String errorMessage, boolean saveInput) {
-        return validateString(name, attributeName, key, errorMessage, true, DEFAULT_STRING_REGEX);
+        return validateString(name, attributeName, key, errorMessage, saveInput, DEFAULT_STRING_REGEX);
     }
 
     /**
