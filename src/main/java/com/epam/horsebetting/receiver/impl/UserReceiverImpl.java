@@ -298,7 +298,6 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         MessageConfig messageResource = new MessageConfig(locale);
 
         String email = content.findParameter(RequestFieldConfig.User.EMAIL_FIELD);
-
         UserValidator validator = new UserValidator(locale);
 
         if (validator.validateResetPasswordForm(email)) {
