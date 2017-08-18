@@ -2,6 +2,7 @@ package com.epam.horsebetting.validator;
 
 import com.epam.horsebetting.config.RequestFieldConfig;
 import com.epam.horsebetting.tag.OldInputFormAttributeTag;
+import com.epam.horsebetting.type.HorseGenderType;
 
 import java.util.Locale;
 
@@ -167,8 +168,7 @@ public class HorseValidator extends AbstractValidator {
         if (gender != null && !gender.trim().isEmpty()) {
             this.putOldData(OldInputFormAttributeTag.PREFIX + attributeName, gender);
 
-            // TODO change male/female
-            if (!gender.equals("male") && !gender.equals("female")) {
+            if (!HorseGenderType.contains(gender)) {
                 this.addErrorMessage(VALIDATION_PREFIX + key + VALIDATION_INCORRECT);
                 return false;
             }

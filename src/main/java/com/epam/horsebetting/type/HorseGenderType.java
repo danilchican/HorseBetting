@@ -28,6 +28,22 @@ public enum HorseGenderType {
     }
 
     /**
+     * Check if the horse gender exist.
+     *
+     * @param name
+     * @return boolean
+     */
+    public static boolean contains(String name) {
+        for (HorseGenderType type : HorseGenderType.values()) {
+            if (type.getName().equals(name)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Check if the name of gender is male.
      *
      * @param name
