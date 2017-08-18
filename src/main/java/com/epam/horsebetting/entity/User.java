@@ -29,6 +29,15 @@ public class User extends Entity {
     }
 
     /**
+     * Constructor with id.
+     *
+     * @param id
+     */
+    public User(int id) {
+        this.setId(id);
+    }
+
+    /**
      * Constructor with credentials.
      *
      * @param email

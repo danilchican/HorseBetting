@@ -56,6 +56,8 @@ public final class SQLFieldConfig {
         public static final String AMOUNT = "amount";
         public static final String CREATED_AT = "created_at";
         public static final String PARTICIPANT_NAME = "participant_name";
+        public static final String PARTICIPANT_COEFFICIENT = "participant_coeff";
+        public static final String USER_BALANCE = "user_balance";
     }
 
     public final class PasswordRecover {

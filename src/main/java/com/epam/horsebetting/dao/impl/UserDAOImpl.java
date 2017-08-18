@@ -11,11 +11,14 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
 
@@ -312,6 +315,31 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
             }
         } catch (SQLException e) {
             throw new DAOException("Can't update user's balance. " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Update users balance.
+     *
+     * @param users
+     * @throws DAOException
+     */
+    @Override
+    public void updateBalanceForGroup(List<User> users) throws DAOException {
+        int affectedUsers[];
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_USER_BALANCE)) {
+            for (User user : users) {
+                preparedStatement.setBigDecimal(1, user.getBalance());
+                preparedStatement.setInt(2, user.getId());
+
+                preparedStatement.addBatch();
+            }
+
+            affectedUsers = preparedStatement.executeBatch();
+            LOGGER.log(Level.DEBUG, "Count of updated users:" + Arrays.toString(affectedUsers));
+        } catch (SQLException e) {
+            throw new DAOException("Cannot update winners balance. " + e.getMessage(), e);
         }
     }
 

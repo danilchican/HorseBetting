@@ -106,6 +106,14 @@ public interface UserDAO {
     void updateBalance(User user) throws DAOException;
 
     /**
+     * Update users balance.
+     *
+     * @param users
+     * @throws DAOException
+     */
+    void updateBalanceForGroup(List<User> users) throws DAOException;
+
+    /**
      * Get total count of users.
      *
      * @return total count

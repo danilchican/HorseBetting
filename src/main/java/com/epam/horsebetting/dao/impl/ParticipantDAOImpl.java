@@ -46,18 +46,6 @@ public class ParticipantDAOImpl extends AbstractDAO<Participant> implements Part
     }
 
     /**
-     * Create a new participant.
-     *
-     * @param participant
-     * @return participant
-     * @throws DAOException
-     */
-    @Override
-    public Participant create(Participant participant) throws DAOException {
-        return null;
-    }
-
-    /**
      * Find a participant by id.
      *
      * @param id

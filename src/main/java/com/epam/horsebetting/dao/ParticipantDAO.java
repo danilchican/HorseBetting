@@ -13,15 +13,6 @@ import java.util.List;
 public interface ParticipantDAO {
 
     /**
-     * Create a new participant.
-     *
-     * @param participant
-     * @return participant
-     * @throws DAOException
-     */
-    Participant create(Participant participant) throws DAOException;
-
-    /**
      * Find a participant by id.
      *
      * @param id

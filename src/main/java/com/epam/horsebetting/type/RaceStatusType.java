@@ -39,4 +39,21 @@ public enum RaceStatusType {
 
         return false;
     }
+
+    /**
+     * Find race by name.
+     *
+     * @param name
+     * @return race status type or if does not exist
+     *         then throw exception.
+     */
+    public static RaceStatusType findByName(String name) throws EnumConstantNotPresentException {
+        for (RaceStatusType type : RaceStatusType.values()) {
+            if (type.getName().equals(name)) {
+                return type;
+            }
+        }
+
+        throw new EnumConstantNotPresentException(RaceStatusType.class, "Cannot find race status[name=" + name + "]");
+    }
 }

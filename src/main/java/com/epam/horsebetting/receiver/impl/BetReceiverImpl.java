@@ -46,7 +46,7 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
         String amount = content.findParameter(RequestFieldConfig.Bet.AMOUNT);
         String participant = content.findParameter(RequestFieldConfig.Bet.PARTICIPANT_ID);
 
-        // TODO chech min rate of race
+        // TODO check min rate of race
         // TODO create validate participant existing
         if (validator.validateCreateBet(amount, participant)) {
             int participantId = Integer.parseInt(participant);

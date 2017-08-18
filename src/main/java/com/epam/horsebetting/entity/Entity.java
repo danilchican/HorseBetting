@@ -32,7 +32,7 @@ public class Entity {
      * @param key
      * @return attribute
      */
-    final Object findAttribute(String key) {
+    public final Object findAttribute(String key) {
         return this.attributes.get(key);
     }
 }

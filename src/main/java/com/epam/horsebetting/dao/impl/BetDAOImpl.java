@@ -35,6 +35,10 @@ public class BetDAOImpl extends AbstractDAO<Bet> implements BetDAO {
             "WHERE `b`.`user_id`=? LIMIT ? OFFSET ?;";
     private static final String SQL_COUNT_BETS = "SELECT COUNT(*) AS `total` FROM `bets`;";
     private static final String SQL_COUNT_BETS_FOR_USER = "SELECT COUNT(*) AS `total` FROM `bets` WHERE `user_id`=?;";
+    private static final String SQL_FIND_BETS_OF_RACE = "SELECT `b`.`id`, `b`.`user_id`, `b`.`amount`, " +
+            "`p`.`coefficient` AS `participant_coeff`, `u`.`balance` AS `user_balance` " +
+            "FROM `bets` AS `b` JOIN `participants` AS `p` ON `b`.`participant_id`=`p`.`id` " +
+            "JOIN `users` AS `u`ON `b`.`user_id`=`u`.`id` WHERE `p`.`race_id`=?;";
 
     /**
      * Default constructor connection.
@@ -136,7 +140,49 @@ public class BetDAOImpl extends AbstractDAO<Bet> implements BetDAO {
                 foundedBets.add(bet);
             }
         } catch (SQLException e) {
-            throw new DAOException("Cannot retrieve horses list. " + e.getMessage(), e);
+            throw new DAOException("Cannot retrieve bets list. " + e.getMessage(), e);
+        }
+
+        return foundedBets;
+    }
+
+    /**
+     * Find all bets of race by race id.
+     *
+     * @param raceId
+     * @return bets
+     * @throws DAOException
+     */
+    @Override
+    public List<Bet> findAllOfRace(int raceId) throws DAOException {
+        List<Bet> foundedBets = new ArrayList<>();
+        ResultSet bets;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_BETS_OF_RACE)) {
+            preparedStatement.setInt(1, raceId);
+            bets = preparedStatement.executeQuery();
+
+            while (bets.next()) {
+                Bet bet = new Bet();
+
+                bet.setId(bets.getInt(SQLFieldConfig.Bet.ID));
+                bet.setUserId(bets.getInt(SQLFieldConfig.Bet.USER_ID));
+                bet.setAmount(bets.getBigDecimal(SQLFieldConfig.Bet.AMOUNT));
+
+                if (hasColumn(bets, SQLFieldConfig.Bet.PARTICIPANT_COEFFICIENT)) {
+                    bet.insertAttribute(SQLFieldConfig.Bet.PARTICIPANT_COEFFICIENT,
+                            bets.getString(SQLFieldConfig.Bet.PARTICIPANT_COEFFICIENT));
+                }
+
+                if (hasColumn(bets, SQLFieldConfig.Bet.USER_BALANCE)) {
+                    bet.insertAttribute(SQLFieldConfig.Bet.USER_BALANCE,
+                            bets.getString(SQLFieldConfig.Bet.USER_BALANCE));
+                }
+
+                foundedBets.add(bet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Cannot retrieve bets list. " + e.getMessage(), e);
         }
 
         return foundedBets;
@@ -213,6 +259,11 @@ public class BetDAOImpl extends AbstractDAO<Bet> implements BetDAO {
         if (hasColumn(dataSet, SQLFieldConfig.Bet.PARTICIPANT_NAME)) {
             bet.insertAttribute(SQLFieldConfig.Bet.PARTICIPANT_NAME,
                     dataSet.getString(SQLFieldConfig.Bet.PARTICIPANT_NAME));
+        }
+
+        if (hasColumn(dataSet, SQLFieldConfig.Bet.USER_BALANCE)) {
+            bet.insertAttribute(SQLFieldConfig.Bet.USER_BALANCE,
+                    dataSet.getString(SQLFieldConfig.Bet.USER_BALANCE));
         }
 
         return bet;

@@ -2,15 +2,20 @@ package com.epam.horsebetting.receiver.impl;
 
 import com.epam.horsebetting.config.MessageConfig;
 import com.epam.horsebetting.config.RequestFieldConfig;
+import com.epam.horsebetting.dao.impl.BetDAOImpl;
 import com.epam.horsebetting.dao.impl.ParticipantDAOImpl;
 import com.epam.horsebetting.dao.impl.RaceDAOImpl;
+import com.epam.horsebetting.dao.impl.UserDAOImpl;
 import com.epam.horsebetting.database.TransactionManager;
+import com.epam.horsebetting.entity.Bet;
 import com.epam.horsebetting.entity.Race;
+import com.epam.horsebetting.entity.User;
 import com.epam.horsebetting.exception.DAOException;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.AbstractReceiver;
 import com.epam.horsebetting.receiver.RaceReceiver;
 import com.epam.horsebetting.request.RequestContent;
+import com.epam.horsebetting.type.RaceStatusType;
 import com.epam.horsebetting.util.DateFormatter;
 import com.epam.horsebetting.util.MessageWrapper;
 import com.epam.horsebetting.validator.RaceValidator;
@@ -27,6 +32,8 @@ import java.util.*;
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_ERRORS;
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_MESSAGES;
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_LOCALE;
+import static com.epam.horsebetting.config.SQLFieldConfig.Bet.PARTICIPANT_COEFFICIENT;
+import static com.epam.horsebetting.config.SQLFieldConfig.Bet.USER_BALANCE;
 
 public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
 
@@ -177,9 +184,11 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
             }
 
             RaceDAOImpl raceDAO = new RaceDAOImpl(true);
+            BetDAOImpl betDAO = new BetDAOImpl(true);
+            UserDAOImpl userDAO = new UserDAOImpl(true);
             ParticipantDAOImpl participantDAO = new ParticipantDAOImpl(true);
 
-            TransactionManager transaction = new TransactionManager(raceDAO, participantDAO);
+            TransactionManager transaction = new TransactionManager(raceDAO, userDAO, betDAO, participantDAO);
             transaction.beginTransaction();
 
             try {
@@ -194,24 +203,39 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
                     throw new ReceiverException("Race[" + raceId + "] not found!");
                 }
 
-                if(race.isAvailable()) {
-                    //TODO validate status
+                if (race.isAvailable()) {
                     race.setStatus(status);
+                    RaceStatusType statusType = RaceStatusType.findByName(status);
+
+                    // TODO add saving winner
+                    // TODO do changing coeffs
+                    // TODO check existing IDs of participants
+                    participantDAO.update(raceJockeys);
                     raceDAO.update(race);
 
-                    // TODO check IDs of participants
-                    participantDAO.update(raceJockeys);
+                    this.actionByStatus(statusType, race, userDAO, betDAO);
 
-                    // TODO return money to clients
                     transaction.commit();
 
                     messages.add(messageResource.get("dashboard.race.update.success"));
                     content.insertSessionAttribute(REQUEST_MESSAGES, messages);
                 } else {
+                    transaction.rollback();
+
                     messages.add(messageResource.get("dashboard.race.update.fail"));
                     content.insertSessionAttribute(REQUEST_ERRORS, messages);
                 }
+            } catch (EnumConstantNotPresentException e) {
+                transaction.rollback();
 
+                for (Map.Entry<String, String> entry : validator.getOldInput()) {
+                    content.insertSessionAttribute(entry.getKey(), entry.getValue());
+                }
+
+                messages.add(messageResource.get("validation.race.status.incorrect"));
+                content.insertSessionAttribute(REQUEST_ERRORS, messages);
+
+                throw new ReceiverException("Race status not found.", e);
             } catch (DAOException e) {
                 transaction.rollback();
 
@@ -234,5 +258,86 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
             content.insertSessionAttribute(REQUEST_ERRORS, validator.getErrors());
             throw new ReceiverException("Race horses are not completed.");
         }
+    }
+
+    /**
+     * Action by status of race.
+     *
+     * @param status
+     * @param race
+     * @param userDAO
+     * @param betDAO
+     * @throws DAOException
+     */
+    private void actionByStatus(RaceStatusType status, Race race, UserDAOImpl userDAO, BetDAOImpl betDAO) throws DAOException {
+        final int raceId = race.getId();
+
+        List<Bet> bets = betDAO.findAllOfRace(raceId);
+        List<User> users;
+
+        if (bets.isEmpty()) {
+            LOGGER.log(Level.INFO, "The race[id=" + raceId + "] does not have bets.");
+            return;
+        }
+
+        switch (status) {
+            case COMPLETED:
+                users = calcBalanceForWinners(bets);
+                break;
+            case FAILED:
+                users = calcBalanceToReturnBack(bets);
+                break;
+            default:
+                throw new DAOException("Undefined status of race.");
+        }
+
+        userDAO.updateBalanceForGroup(users);
+    }
+
+    /**
+     * Calculate new balance for users
+     * by their bets.
+     *
+     * @param bets
+     * @return list of users with new balance
+     */
+    private List<User> calcBalanceForWinners(List<Bet> bets) {
+        List<User> users = new ArrayList<>();
+
+        for (Bet bet : bets) {
+            User user = new User(bet.getUserId());
+
+            BigDecimal coeff = new BigDecimal(String.valueOf(bet.findAttribute(PARTICIPANT_COEFFICIENT)));
+            BigDecimal prize = bet.getAmount().multiply(coeff);
+            BigDecimal currBalance = new BigDecimal(String.valueOf(bet.findAttribute(USER_BALANCE)));
+
+            user.setBalance(currBalance.add(prize));
+            users.add(user);
+        }
+
+        return users;
+    }
+
+    /**
+     * Calculate new balance for users
+     * if the race is failed.
+     *
+     * @param bets
+     * @return list of users with new balance
+     */
+    private List<User> calcBalanceToReturnBack(List<Bet> bets) {
+        List<User> users = new ArrayList<>();
+
+        for (Bet bet : bets) {
+            User user = new User(bet.getUserId());
+
+            BigDecimal amount = bet.getAmount();
+            BigDecimal currBalance = new BigDecimal(String.valueOf(bet.findAttribute(USER_BALANCE)));
+
+            user.setBalance(currBalance.add(amount));
+            users.add(user);
+        }
+
+        return users;
     }
 }

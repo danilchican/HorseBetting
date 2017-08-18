@@ -44,6 +44,14 @@ public interface BetDAO {
     List<Bet> obtainPart(int userId, int limit, int offset) throws DAOException;
 
     /**
+     * Find all bets of race by race id.
+     *
+     * @return bets
+     * @throws DAOException
+     */
+    List<Bet> findAllOfRace(int raceId) throws DAOException;
+
+    /**
      * Get total count of bets.
      *
      * @return total count
