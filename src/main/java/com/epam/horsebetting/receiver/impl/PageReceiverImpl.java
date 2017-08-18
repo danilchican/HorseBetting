@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_AUTHORIZED;
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_LOCALE;
 
 public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
@@ -62,9 +63,9 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentRacesPage(RequestContent content) throws ReceiverException {
-        String pageNum = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
-
         Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+
+        String pageNum = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
         CommonValidator validator = new CommonValidator(locale);
 
         if (!validator.validatePage(pageNum)) {
@@ -101,9 +102,9 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentRaceViewPage(RequestContent content) throws ReceiverException {
-        String idNum = content.findParameter(RequestFieldConfig.Common.REQUEST_ID);
-
         Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+
+        String idNum = content.findParameter(RequestFieldConfig.Common.REQUEST_ID);
         CommonValidator validator = new CommonValidator(locale);
 
         if (!validator.validateId(idNum)) {
@@ -112,6 +113,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
         RaceDAOImpl raceDAO = new RaceDAOImpl(true);
         ParticipantDAOImpl participantDAO = new ParticipantDAOImpl(true);
+
         TransactionManager transaction = new TransactionManager(raceDAO, participantDAO);
         transaction.beginTransaction();
 
@@ -124,15 +126,15 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
                 throw new ReceiverException("Cannot find race with id=" + id);
             }
 
+            List<Participant> participants = participantDAO.findByRaceId(race.getId());
+
             this.setPageSubTitle(race.getTitle());
             this.setDefaultContentAttributes(content);
 
-            List<Participant> participants = participantDAO.findByRaceId(race.getId());
+            transaction.commit();
 
             content.insertRequestAttribute("race", race);
             content.insertRequestAttribute("participants", participants);
-
-            transaction.commit();
         } catch (NumberFormatException e) {
             transaction.rollback();
             throw new ReceiverException("Cannot convert page to number. GET[page]=" + e.getMessage(), e);
@@ -206,7 +208,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         this.setDefaultContentAttributes(content);
 
         try (PasswordRecoverDAOImpl recoverDAO = new PasswordRecoverDAOImpl(false)) {
-            if(recoverDAO.findByToken(token) == null) {
+            if (recoverDAO.findByToken(token) == null) {
                 throw new ReceiverException("Token expired or does not exist.");
             }
 
@@ -230,8 +232,9 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         this.setDefaultContentAttributes(content);
 
         try (BetDAOImpl betDAO = new BetDAOImpl(false)) {
-            User authorizedUser = (User) content.findRequestAttribute("user");
-            final int id = authorizedUser.getId();
+            String userIdAttr = String.valueOf(content.findSessionAttribute(SESSION_AUTHORIZED));
+
+            final int id = Integer.parseInt(userIdAttr);
             final int totalUserBets = betDAO.getTotalForUser(id);
 
             content.insertRequestAttribute("totalUserBets", totalUserBets);
@@ -275,29 +278,36 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentProfileBetsPage(RequestContent content) throws ReceiverException {
-        String pageNum = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
-
         Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        this.setPageSubTitle(messageResource.get("page.title.profile.bets"));
+        this.setDefaultContentAttributes(content);
+
+        String userIdAttr = String.valueOf(content.findSessionAttribute(SESSION_AUTHORIZED));
+        String pageNum = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
         CommonValidator validator = new CommonValidator(locale);
 
         if (!validator.validatePage(pageNum)) {
             throw new ReceiverException("GET[page=" + pageNum + "] is incorrect.");
         }
 
-        MessageConfig messageResource = new MessageConfig(locale);
+        BetDAOImpl betDAO = new BetDAOImpl(true);
 
-        this.setPageSubTitle(messageResource.get("page.title.profile.bets"));
-        this.setDefaultContentAttributes(content);
+        TransactionManager transaction = new TransactionManager(betDAO);
+        transaction.beginTransaction();
 
-        User authorizedUser = (User) content.findRequestAttribute("user");
+        try {
+            final int id = Integer.parseInt(userIdAttr);
 
-        try (BetDAOImpl betDAO = new BetDAOImpl(false)) {
             final int limit = 10;
             final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
             final int offset = (page - 1) * limit;
+
             final int totalBets = betDAO.getTotalCount();
 
-            List<Bet> bets = betDAO.obtainPart(authorizedUser.getId(), limit, offset);
+            List<Bet> bets = betDAO.obtainPart(id, limit, offset);
+            transaction.commit();
 
             content.insertRequestAttribute("bets", bets);
             content.insertRequestAttribute("totalBets", totalBets);
@@ -305,9 +315,13 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
             LOGGER.log(Level.DEBUG, "Bets list: " + Arrays.toString(bets.toArray()));
         } catch (NumberFormatException e) {
+            transaction.rollback();
             throw new ReceiverException("Cannot convert page to number. GET[page]=" + e.getMessage(), e);
         } catch (DAOException e) {
+            transaction.rollback();
             throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        } finally {
+            transaction.endTransaction();
         }
     }
 
@@ -318,16 +332,15 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentProfileViewBetPage(RequestContent content) throws ReceiverException {
-        String idNum = content.findParameter(RequestFieldConfig.Common.REQUEST_ID);
-
         Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        String idNum = content.findParameter(RequestFieldConfig.Common.REQUEST_ID);
         CommonValidator validator = new CommonValidator(locale);
 
         if (!validator.validateId(idNum)) {
             throw new ReceiverException("GET[id=" + idNum + "] is incorrect.");
         }
-
-        MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.profile.bets.view") + "# " + idNum);
         this.setDefaultContentAttributes(content);
@@ -396,27 +409,32 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardUsersPage(RequestContent content) throws ReceiverException {
-        String pageNum = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
-
         Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        String pageNum = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
         CommonValidator validator = new CommonValidator(locale);
 
         if (!validator.validatePage(pageNum)) {
             throw new ReceiverException("GET[page=" + pageNum + "] is incorrect.");
         }
 
-        MessageConfig messageResource = new MessageConfig(locale);
-
         this.setPageSubTitle(messageResource.get("page.title.dashboard.users.index"));
         this.setDefaultContentAttributes(content);
 
-        try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
+        UserDAOImpl userDAO = new UserDAOImpl(true);
+
+        TransactionManager transaction = new TransactionManager(userDAO);
+        transaction.beginTransaction();
+
+        try {
             final int limit = 10;
             final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
             final int offset = (page - 1) * limit;
             final int totalUsers = userDAO.getTotalCount();
 
             List<User> users = userDAO.obtainPart(limit, offset);
+            transaction.commit();
 
             content.insertRequestAttribute("users", users);
             content.insertRequestAttribute("totalUsers", totalUsers);
@@ -424,9 +442,13 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
             LOGGER.log(Level.DEBUG, "Users list: " + Arrays.toString(users.toArray()));
         } catch (NumberFormatException e) {
+            transaction.rollback();
             throw new ReceiverException("Cannot convert page to number. GET[page]=" + e.getMessage(), e);
         } catch (DAOException e) {
+            transaction.rollback();
             throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        } finally {
+            transaction.endTransaction();
         }
     }
 
@@ -451,27 +473,32 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardHorsesPage(RequestContent content) throws ReceiverException {
-        String pageNum = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
-
         Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        String pageNum = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
         CommonValidator validator = new CommonValidator(locale);
 
         if (!validator.validatePage(pageNum)) {
             throw new ReceiverException("GET[page=" + pageNum + "] is incorrect.");
         }
 
-        MessageConfig messageResource = new MessageConfig(locale);
-
         this.setPageSubTitle(messageResource.get("page.title.dashboard.horses.index"));
         this.setDefaultContentAttributes(content);
 
-        try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
+        HorseDAOImpl horseDAO = new HorseDAOImpl(true);
+
+        TransactionManager transaction = new TransactionManager(horseDAO);
+        transaction.beginTransaction();
+
+        try {
             final int limit = 10;
             final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
             final int offset = (page - 1) * limit;
             final int totalHorses = horseDAO.getTotalCount();
 
             List<Horse> horses = horseDAO.obtainPart(limit, offset);
+            transaction.commit();
 
             content.insertRequestAttribute("horses", horses);
             content.insertRequestAttribute("totalHorses", totalHorses);
@@ -479,9 +506,13 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
             LOGGER.log(Level.DEBUG, "Horses list: " + Arrays.toString(horses.toArray()));
         } catch (NumberFormatException e) {
+            transaction.rollback();
             throw new ReceiverException("Cannot convert page to number. GET[page]=" + e.getMessage(), e);
         } catch (DAOException e) {
+            transaction.rollback();
             throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        } finally {
+            transaction.endTransaction();
         }
     }
 
@@ -515,16 +546,15 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardHorseEditPage(RequestContent content) throws ReceiverException {
-        String idNum = content.findParameter(RequestFieldConfig.Common.REQUEST_ID);
-
         Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        String idNum = content.findParameter(RequestFieldConfig.Common.REQUEST_ID);
         CommonValidator validator = new CommonValidator(locale);
 
         if (!validator.validateId(idNum)) {
             throw new ReceiverException("GET[id=" + idNum + "] is incorrect.");
         }
-
-        MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.dashboard.horses.edit"));
         this.setDefaultContentAttributes(content);
@@ -548,10 +578,9 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
             LOGGER.log(Level.DEBUG, "Editing horse: " + horse);
 
             List<Suit> suits = suitDAO.findAll();
-            content.insertRequestAttribute("suits", suits);
-
             transaction.commit();
 
+            content.insertRequestAttribute("suits", suits);
             LOGGER.log(Level.DEBUG, "Suits list: " + Arrays.toString(suits.toArray()));
         } catch (NumberFormatException e) {
             transaction.rollback();
@@ -571,21 +600,25 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardRacesPage(RequestContent content) throws ReceiverException {
-        String pageNum = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
-
         Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        String pageNum = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
         CommonValidator validator = new CommonValidator(locale);
 
         if (!validator.validatePage(pageNum)) {
             throw new ReceiverException("GET[page=" + pageNum + "] is incorrect.");
         }
 
-        MessageConfig messageResource = new MessageConfig(locale);
-
         this.setPageSubTitle(messageResource.get("page.title.dashboard.races.index"));
         this.setDefaultContentAttributes(content);
 
-        try (RaceDAOImpl raceDAO = new RaceDAOImpl(false)) {
+        RaceDAOImpl raceDAO = new RaceDAOImpl(true);
+
+        TransactionManager transaction = new TransactionManager(raceDAO);
+        transaction.beginTransaction();
+
+        try {
             final int limit = 10;
             final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
             final int offset = (page - 1) * limit;
@@ -593,15 +626,21 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
             List<Race> races = raceDAO.obtainPart(limit, offset);
 
+            transaction.commit();
+
             content.insertRequestAttribute("races", races);
             content.insertRequestAttribute("totalRaces", totalRaces);
             content.insertRequestAttribute("limitRaces", limit);
 
             LOGGER.log(Level.DEBUG, "Races list: " + Arrays.toString(races.toArray()));
         } catch (NumberFormatException e) {
+            transaction.rollback();
             throw new ReceiverException("Cannot convert page to number. GET[page]=" + e.getMessage(), e);
         } catch (DAOException e) {
+            transaction.rollback();
             throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        } finally {
+            transaction.endTransaction();
         }
     }
 
@@ -626,16 +665,15 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      */
     @Override
     public void presentDashboardRaceEditPage(RequestContent content) throws ReceiverException {
-        String idNum = content.findParameter(RequestFieldConfig.Common.REQUEST_ID);
-
         Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        String idNum = content.findParameter(RequestFieldConfig.Common.REQUEST_ID);
         CommonValidator validator = new CommonValidator(locale);
 
         if (!validator.validateId(idNum)) {
             throw new ReceiverException("GET[id=" + idNum + "] is incorrect.");
         }
-
-        MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.dashboard.races.edit"));
         this.setDefaultContentAttributes(content);
@@ -659,10 +697,9 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
             LOGGER.log(Level.DEBUG, "Editing race: " + race);
 
             List<Participant> participants = participantDAO.findByRaceId(race.getId());
-            content.insertRequestAttribute("participants", participants);
-
             transaction.commit();
 
+            content.insertRequestAttribute("participants", participants);
             LOGGER.log(Level.DEBUG, "Participants list: " + Arrays.toString(participants.toArray()));
         } catch (NumberFormatException e) {
             transaction.rollback();
