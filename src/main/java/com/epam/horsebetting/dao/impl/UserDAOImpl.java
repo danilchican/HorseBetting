@@ -30,16 +30,19 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     /**
      * SQL queries for UserDAOImpl.
      */
-    private static final String SQL_ADD_USER = "INSERT INTO `users` (name, email, password, role_id, balance) VALUES (?,?,?,?,?);";
     private static final String SQL_FIND_USER_BY_EMAIL = "SELECT * FROM `users` WHERE `email`=? LIMIT 1;";
     private static final String SQL_FIND_USER_BY_ID = "SELECT * FROM `users` WHERE `id`=? LIMIT 1;";
     private static final String SQL_ATTEMPT_AUTH = "SELECT * FROM `users` WHERE `email`=? AND `password`=? LIMIT 1;";
-    private static final String SQL_SELECT_ALL_USERS = "SELECT `id`, `role_id`, `name`, `email`, `balance`, `created_at` FROM `users`;";
-    private static final String SQL_SELECT_PART_USERS = "SELECT `id`, `role_id`, `name`, `email`, `balance`, `created_at` FROM `users` LIMIT ? OFFSET ?;";
     private static final String SQL_UPDATE_USER_SETTINGS = "UPDATE `users` SET `name`=? WHERE `id`=?;";
     private static final String SQL_UPDATE_USER_SECURITY = "UPDATE `users` SET `password`=? WHERE `id`=?;";
     private static final String SQL_UPDATE_USER_BALANCE = "UPDATE `users` SET `balance`=? WHERE `id`=?;";
     private static final String SQL_COUNT_USERS = "SELECT COUNT(*) AS `total` FROM `users`;";
+    private static final String SQL_ADD_USER = "INSERT INTO `users` (name, email, password, role_id, balance) " +
+            "VALUES (?,?,?,?,?);";
+    private static final String SQL_SELECT_ALL_USERS = "SELECT `id`, `role_id`, `name`, `email`, `balance`, `created_at` " +
+            "FROM `users`;";
+    private static final String SQL_SELECT_PART_USERS = "SELECT `id`, `role_id`, `name`, `email`, `balance`, `created_at` " +
+            "FROM `users` LIMIT ? OFFSET ?;";
 
     /**
      * Default constructor connection.
@@ -99,7 +102,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
                 foundedUsers.add(user);
             }
         } catch (SQLException e) {
-            throw new DAOException("Cannot retrieve users list. " + e.getMessage(), e);
+            throw new DAOException("Cannot retrieve user list. " + e.getMessage(), e);
         }
 
         return foundedUsers;
@@ -153,7 +156,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
                 user = extractFrom(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException("Can't find user by id[" + id + "]. " + e.getMessage(), e);
+            throw new DAOException("Can't find user[id=" + id + "]. " + e.getMessage(), e);
         }
 
         return user;
@@ -178,7 +181,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
                 user = extractFrom(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException("Can't find user by email[" + email + "]. " + e.getMessage(), e);
+            throw new DAOException("Can't find user[email=" + email + "]. " + e.getMessage(), e);
         }
 
         return user;
@@ -193,15 +196,8 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
      */
     @Override
     public User extractFrom(ResultSet userDataSet) throws SQLException {
-        User user = new User();
-
-        user.setId(userDataSet.getInt(SQLFieldConfig.User.ID));
-        user.setRole(RoleType.findById(userDataSet.getInt(SQLFieldConfig.User.ROLE_ID)));
-        user.setBalance(userDataSet.getBigDecimal(SQLFieldConfig.User.BALANCE));
-        user.setName(userDataSet.getString(SQLFieldConfig.User.NAME));
-        user.setEmail(userDataSet.getString(SQLFieldConfig.User.EMAIL));
+        User user = extractWithoutPassFrom(userDataSet);
         user.setPassword(userDataSet.getString(SQLFieldConfig.User.PASSWORD));
-        user.setCreatedAt(userDataSet.getTimestamp(SQLFieldConfig.User.CREATED_AT));
 
         return user;
     }

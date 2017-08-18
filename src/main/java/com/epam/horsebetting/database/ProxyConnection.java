@@ -32,6 +32,11 @@ public class ProxyConnection implements Connection {
         ConnectionPool.getInstance().releaseConnection(this);
     }
 
+    /**
+     * Real close proxy conn.
+     *
+     * @throws SQLException
+     */
     void realClose() throws SQLException {
         connection.close();
     }

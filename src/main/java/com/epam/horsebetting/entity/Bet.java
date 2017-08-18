@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import static com.epam.horsebetting.config.SQLFieldConfig.Bet.PARTICIPANT_NAME;
 
 public class Bet extends Entity {
+
     private int id;
     private int userId;
     private int participantId;

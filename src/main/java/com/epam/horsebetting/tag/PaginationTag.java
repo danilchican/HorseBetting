@@ -11,6 +11,8 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.PAGE_FIELD;
+
 @SuppressWarnings("serial")
 public class PaginationTag extends TagSupport {
 
@@ -60,7 +62,7 @@ public class PaginationTag extends TagSupport {
         String commandURI = commandURIObj == null ? "" : String.valueOf(commandURIObj);
 
         paginator.setRequestURI(commandURI);
-        String pageParam = request.getParameter("page");
+        String pageParam = request.getParameter(PAGE_FIELD);
 
         try {
             if(pageParam != null) {

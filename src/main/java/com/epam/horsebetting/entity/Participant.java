@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import static com.epam.horsebetting.config.SQLFieldConfig.Participant.JOCKEY;
 
 public class Participant extends Entity {
+
     private int id;
     private int horseId;
     private int raceId;

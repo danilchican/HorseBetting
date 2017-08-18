@@ -30,7 +30,7 @@ public class TransactionManager {
     /**
      * Constructor.
      */
-    public TransactionManager(AbstractDAO dao, AbstractDAO ... daos) {
+    public TransactionManager(AbstractDAO dao, AbstractDAO... daos) {
         this.daos = new ArrayList<>();
         connection = ConnectionPool.getInstance().fetchConnection();
 
@@ -45,8 +45,8 @@ public class TransactionManager {
         try {
             connection.setAutoCommit(false);
 
-            LOGGER.log(Level.INFO, "Transaction has been begin.");
             daos.forEach(dao -> dao.setConnection(connection));
+            LOGGER.log(Level.INFO, "Transaction has been begin.");
         } catch (SQLException e) {
             LOGGER.log(Level.ERROR, "Can't begin transaction. " + e.getMessage(), e);
         }
@@ -58,12 +58,12 @@ public class TransactionManager {
     public void endTransaction() {
         try {
             connection.setAutoCommit(true);
+
+            ConnectionPool.getInstance().releaseConnection(connection);
+            LOGGER.log(Level.INFO, "Transaction has been end.");
         } catch (SQLException e) {
             LOGGER.log(Level.ERROR, "Can't finish transaction", e);
         }
-
-        LOGGER.log(Level.INFO, "Transaction has been end.");
-        ConnectionPool.getInstance().releaseConnection(connection);
     }
 
     /**

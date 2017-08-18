@@ -17,7 +17,7 @@ public class CharacterEncodingFilter implements Filter {
     /**
      * Default character encoding.
      */
-    private static final String characterEncoding = "UTF-8";
+    public static final String CHARACTER_ENCODING = "UTF-8";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -28,9 +28,9 @@ public class CharacterEncodingFilter implements Filter {
             throws IOException, ServletException {
         String currentEncoding = request.getCharacterEncoding();
 
-        if (!characterEncoding.equalsIgnoreCase(currentEncoding)) {
-            request.setCharacterEncoding(characterEncoding);
-            response.setCharacterEncoding(characterEncoding);
+        if (!CHARACTER_ENCODING.equalsIgnoreCase(currentEncoding)) {
+            request.setCharacterEncoding(CHARACTER_ENCODING);
+            response.setCharacterEncoding(CHARACTER_ENCODING);
         }
 
         LOGGER.log(Level.DEBUG, this.getClass().getName() + " has worked.");

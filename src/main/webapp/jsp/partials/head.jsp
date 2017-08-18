@@ -23,7 +23,6 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <!-- TODO Change to Tag -->
                     <form action="/locale/change" method="get" style="margin: 15px 0 0;">
                         <select name="lang" onchange="this.form.submit()">
                             <option value="en"

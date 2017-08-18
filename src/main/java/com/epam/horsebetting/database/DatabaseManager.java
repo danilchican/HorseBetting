@@ -96,19 +96,17 @@ class DatabaseManager {
         String database = retrievePropValue(DatabaseProperties.DB_DATABASE, DEFAULT_DB_DATABASE);
         String characterEncoding = retrievePropValue(DatabaseProperties.DB_CHARACTER_ENCODING, DEFAULT_DB_CHARACTER_ENCODING);
 
-        String propName = "";
-
         boolean rewriteBatchedStatements;
+        String propName = String.valueOf(DatabaseProperties.DB_REWRITE_BATCHED_STATEMENTS);
 
         try {
-            propName = String.valueOf(DatabaseProperties.DB_REWRITE_BATCHED_STATEMENTS);
             rewriteBatchedStatements = Boolean.valueOf(dbBundle.getString(propName));
         } catch (MissingResourceException e) {
             rewriteBatchedStatements = DEFAULT_DB_REWRITE_BATCHED_STATEMENTS;
             LOGGER.log(Level.ERROR, "Can't find " + propName + " prop", e);
         }
 
-        return String.format("%s:%s://%s:%s/%s?characterEncoding=%s&rewriteBatchedStatements%s",
+        return String.format("%s:%s://%s:%s/%s?characterEncoding=%s&rewriteBatchedStatements=%s",
                 driver, connection, host, port, database, characterEncoding, rewriteBatchedStatements);
     }
 

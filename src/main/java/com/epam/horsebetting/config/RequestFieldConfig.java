@@ -49,9 +49,10 @@ public final class RequestFieldConfig {
     public final class Common {
         public static final String LANG_FIELD = "lang";
         public static final String PAGE_FIELD = "page";
+        public static final String PASSWORD_RESET_TOKEN = "token";
+
         public static final String SESSION_LOCALE = "locale";
         public static final String SESSION_AUTHORIZED = "authorized";
-        public static final String PASSWORD_RESET_TOKEN = "token";
 
         public static final String REQUEST_ID = "id";
         public static final String REQUEST_ERRORS = "errors";

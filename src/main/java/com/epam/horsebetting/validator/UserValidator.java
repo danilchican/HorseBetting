@@ -39,6 +39,7 @@ public class UserValidator extends AbstractValidator {
     public boolean validateRegistrationForm(String name, String email, String password, String passwordConfirmation) {
         boolean isValidate = true;
 
+        // TODO move string to constants
         if (!validateName(name, RequestFieldConfig.User.NAME_FIELD, "user.name", true)) {
             isValidate = false;
         }

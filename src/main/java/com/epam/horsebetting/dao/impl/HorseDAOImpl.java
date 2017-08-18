@@ -31,10 +31,10 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
     private static final String SQL_FIND_HORSE_BY_ID = "SELECT * FROM `horses` WHERE `id`=? LIMIT 1;";
     private static final String SQL_FIND_HORSE_BY_NAME = "SELECT * FROM `horses` WHERE `name`=? LIMIT 1;";
     private static final String SQL_SELECT_HORSES = "SELECT * FROM `horses` ";
-    private static final String SQL_SELECT_PART_HORSES =
-            "SELECT `h`.`id`, `h`.`name`, `h`.`suit_id`,`s`.`name` AS `suit_name`, `h`.`age`, `h`.`gender` " +
-                    "FROM `horses` AS `h` LEFT JOIN `suits` AS `s` ON `h`.`suit_id`=`s`.`id` LIMIT ? OFFSET ?;";
     private static final String SQL_COUNT_HORSES = "SELECT COUNT(*) AS `total` FROM `horses`;";
+    private static final String SQL_SELECT_PART_HORSES = "SELECT `h`.`id`, `h`.`name`, `h`.`suit_id`, " +
+            "`s`.`name` AS `suit_name`, `h`.`age`, `h`.`gender` FROM `horses` AS `h` " +
+            "LEFT JOIN `suits` AS `s` ON `h`.`suit_id`=`s`.`id` LIMIT ? OFFSET ?;";
 
     /**
      * Default constructor connection.

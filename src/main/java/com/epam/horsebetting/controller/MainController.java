@@ -36,6 +36,14 @@ public class MainController extends HttpServlet {
         processRequest(request, response);
     }
 
+    /**
+     * Process GET and POST request.
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             AbstractCommand command = CommandInitializer.init(request);
@@ -45,11 +53,10 @@ public class MainController extends HttpServlet {
             content.extractValues(request);
 
             command.execute(content);
-
             Router router = (Router) content.findRequestAttribute(ROUTER_INSTANCE_NAME);
 
             if (router == null) {
-                throw new RouteNotFoundException("Cannot find attribute[" + ROUTER_INSTANCE_NAME + "]. " + "Router is null.");
+                throw new RouteNotFoundException("Cannot find attribute[" + ROUTER_INSTANCE_NAME + "]. Router is null.");
             }
 
             LOGGER.log(Level.DEBUG, "Content router: " + router);
@@ -64,6 +71,8 @@ public class MainController extends HttpServlet {
                 case FORWARD:
                     request.getRequestDispatcher(router.getRoute()).forward(request, response);
                     break;
+                default:
+                    throw new RouteNotFoundException("Router type not founded.");
             }
         } catch (CommandTypeNotFoundException | RouteNotFoundException e) {
             LOGGER.log(Level.ERROR, e.getMessage(), e);

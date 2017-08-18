@@ -70,6 +70,8 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
             TransactionManager transaction = new TransactionManager(horseDAO);
             transaction.beginTransaction();
 
+            // todo check suit id
+
             try {
                 if (horseDAO.findByName(name) == null) {
                     Horse createdHorse = horseDAO.create(horse);
@@ -239,6 +241,8 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
 
             TransactionManager transaction = new TransactionManager(horseDAO);
             transaction.beginTransaction();
+
+            // todo check suit id
 
             try {
                 if (horseDAO.find(id) != null) {

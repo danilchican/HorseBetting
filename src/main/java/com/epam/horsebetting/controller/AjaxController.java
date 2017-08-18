@@ -17,9 +17,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_ERRORS;
+import static com.epam.horsebetting.filter.CharacterEncodingFilter.CHARACTER_ENCODING;
 
 @WebServlet(name = "AjaxController", urlPatterns = "/ajax/*")
 public class AjaxController extends HttpServlet {
+
+    /**
+     * Constants.
+     */
+    public static final String CONTENT_TYPE = "application/json";
 
     /**
      * Logger to write logs.
@@ -36,8 +42,15 @@ public class AjaxController extends HttpServlet {
         processRequest(req, resp);
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    /**
+     * Process GET and POST request.
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<String> errors = new ArrayList<>();
         String json;
 
@@ -52,14 +65,14 @@ public class AjaxController extends HttpServlet {
         } catch (CommandTypeNotFoundException e) {
             LOGGER.log(Level.ERROR, e.getMessage(), e);
 
-            errors.add("Route does not exist.");
+            errors.add("Route does not exist."); // TODO localize
             content.insertJsonAttribute(REQUEST_ERRORS, errors);
         }
 
         json = new Gson().toJson(content.getJsonData());
 
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json");
+        response.setCharacterEncoding(CHARACTER_ENCODING);
+        response.setContentType(CONTENT_TYPE);
         response.getWriter().write(json);
     }
 }

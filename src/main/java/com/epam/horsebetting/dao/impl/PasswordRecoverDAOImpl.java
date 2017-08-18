@@ -15,15 +15,10 @@ import java.sql.SQLException;
 public class PasswordRecoverDAOImpl extends AbstractDAO<PasswordRecover>  implements PasswordRecoverDAO {
 
     /**
-     * Logger to write logs.
-     */
-    private static final Logger LOGGER = LogManager.getLogger();
-
-    /**
      * SQL queries for SuitDAOImpl.
      */
-    private static final String SQL_ADD_RECOVER = "INSERT INTO `password_resets` (email, token) VALUES (?,?);";
     private static final String SQL_FIND_RECOVER_BY_TOKEN = "SELECT * FROM `password_resets` WHERE `token`=? LIMIT 1;";
+    private static final String SQL_ADD_RECOVER = "INSERT INTO `password_resets` (email, token) VALUES (?,?);";
     private static final String SQL_REMOVE_RECOVER = "DELETE FROM `password_resets` WHERE `token`=?;";
 
     /**
@@ -93,7 +88,7 @@ public class PasswordRecoverDAOImpl extends AbstractDAO<PasswordRecover>  implem
                 recover = extractFrom(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException("Can't find recover by token[" + token + "]. " + e.getMessage(), e);
+            throw new DAOException("Can't find recover[token=" + token + "]. " + e.getMessage(), e);
         }
 
         return recover;

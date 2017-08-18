@@ -4,11 +4,11 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class Race extends Entity {
+
     private int id;
     private int trackLength;
 
     private String status;
-
     private String title;
     private String place;
 

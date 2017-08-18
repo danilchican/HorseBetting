@@ -25,16 +25,15 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
     /**
      * SQL queries for RaceDAOImpl.
      */
-    private static final String SQL_ADD_RACE = "INSERT INTO `races` " +
-            "(title, place, min_rate, track_length, bet_end_date, started_at)" +
-            " VALUES (?,?,?,?,?,?);";
     private static final String SQL_SELECT_PART_RACES = "SELECT * FROM `races` ORDER BY `started_at` ASC LIMIT ? OFFSET ?;";
     private static final String SQL_FIND_RACE_BY_TITLE = "SELECT * FROM `races` WHERE `title`=? LIMIT 1;";
     private static final String SQL_FIND_RACE_BY_ID = "SELECT * FROM `races` WHERE `id`=? LIMIT 1;";
     private static final String SQL_COUNT_RACES = "SELECT COUNT(*) AS `total` FROM `races`;";
+    private static final String SQL_UPDATE_RACE = "UPDATE `races` SET `status`=? WHERE `id`=?;";
     private static final String SQL_SELECT_NEAREST_RACES = "SELECT * FROM `races` WHERE `status` != ?" +
             " AND `started_at` > NOW() ORDER BY `started_at` ASC LIMIT ?;";
-    private static final String SQL_UPDATE_RACE = "UPDATE `races` SET `status`=? WHERE `id`=?;";
+    private static final String SQL_ADD_RACE = "INSERT INTO `races` " +
+            "(title, place, min_rate, track_length, bet_end_date, started_at) VALUES (?,?,?,?,?,?);";
 
     /**
      * Default constructor connection.
@@ -115,7 +114,7 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
                 race = extractFrom(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException("Can't find race by id[" + id + "]. " + e.getMessage(), e);
+            throw new DAOException("Can't find race[id=" + id + "]. " + e.getMessage(), e);
         }
 
         return race;

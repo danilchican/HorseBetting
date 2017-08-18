@@ -45,7 +45,8 @@ public interface ParticipantDAO {
     void update(HashMap<Integer, BigDecimal> participants) throws DAOException;
 
     /**
-     * Extract participant data from result set to participant instance.
+     * Extract participant data from result set
+     * to participant instance.
      *
      * @param dataSet
      * @return participant instance

@@ -65,7 +65,7 @@ public abstract class AbstractDAO<T extends Entity> implements AutoCloseable {
             try {
                 connection.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Cannot close connection. " + e.getMessage(), e);
             }
         }
     }

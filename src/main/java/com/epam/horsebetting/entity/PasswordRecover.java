@@ -3,6 +3,7 @@ package com.epam.horsebetting.entity;
 import java.sql.Timestamp;
 
 public class PasswordRecover extends Entity {
+
     private int id;
 
     private String email;

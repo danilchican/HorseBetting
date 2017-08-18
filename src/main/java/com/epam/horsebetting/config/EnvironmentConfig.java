@@ -10,9 +10,16 @@ import java.util.ResourceBundle;
 public class EnvironmentConfig {
 
     private enum EnvironmentProperties {
-        APP_URL, APP_NAME, APP_LOCALE,
-        MAIL_HOST, MAIL_PORT, MAIL_SENDER, MAIL_PASSWORD,
-        MAIL_AUTH, MAIL_STARTTLS_ENABLE, TOKEN_EXPIRE_TIME
+        APP_URL,
+        APP_NAME,
+        APP_LOCALE,
+        MAIL_HOST,
+        MAIL_PORT,
+        MAIL_SENDER,
+        MAIL_PASSWORD,
+        MAIL_AUTH,
+        MAIL_STARTTLS_ENABLE,
+        TOKEN_EXPIRE_TIME
     }
 
     /**

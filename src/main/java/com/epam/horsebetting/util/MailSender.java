@@ -30,6 +30,11 @@ public class MailSender {
     private Session session;
 
     /**
+     * Constants.
+     */
+    private static final String EMAIL_CONTENT_TYPE = "text/html; charset=utf-8";
+
+    /**
      * Default constructor.
      */
     public MailSender() {
@@ -75,7 +80,7 @@ public class MailSender {
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
 
         message.setSubject(subject);
-        message.setContent(messageText, "text/html; charset=utf-8");
+        message.setContent(messageText, EMAIL_CONTENT_TYPE);
 
         Transport.send(message);
     }

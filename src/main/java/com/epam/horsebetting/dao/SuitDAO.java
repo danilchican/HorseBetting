@@ -60,7 +60,6 @@ public interface SuitDAO {
      */
     List<Suit> findAll() throws DAOException;
 
-
     /**
      * Find suit by name.
      *

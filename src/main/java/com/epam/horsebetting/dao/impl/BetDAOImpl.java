@@ -26,15 +26,15 @@ public class BetDAOImpl extends AbstractDAO<Bet> implements BetDAO {
      * SQL queries for BetDAOImpl.
      */
     private static final String SQL_FIND_BET_BY_ID = "SELECT * FROM `bets` WHERE `id`=? LIMIT 1;";
+    private static final String SQL_COUNT_BETS_FOR_USER = "SELECT COUNT(*) AS `total` FROM `bets` WHERE `user_id`=?;";
     private static final String SQL_REMOVE_BET_BY_ID = "DELETE FROM `bets` WHERE `id`=?;";
     private static final String SQL_ADD_BET = "INSERT INTO `bets` (user_id, participant_id, amount) VALUES (?,?,?);";
+    private static final String SQL_COUNT_BETS = "SELECT COUNT(*) AS `total` FROM `bets`;";
     private static final String SQL_SELECT_PART_BETS = "SELECT `b`.`id`, `b`.`user_id`, `b`.`participant_id`, " +
             "`b`.`amount`, `b`.`created_at`, `h`.`name` AS `participant_name` FROM `bets` AS `b` " +
             "JOIN `participants` AS `p` ON `b`.`participant_id`=`p`.`id` " +
             "JOIN `horses` AS `h` ON `p`.`horse_id`=`h`.`id` " +
             "WHERE `b`.`user_id`=? LIMIT ? OFFSET ?;";
-    private static final String SQL_COUNT_BETS = "SELECT COUNT(*) AS `total` FROM `bets`;";
-    private static final String SQL_COUNT_BETS_FOR_USER = "SELECT COUNT(*) AS `total` FROM `bets` WHERE `user_id`=?;";
     private static final String SQL_FIND_BETS_OF_RACE = "SELECT `b`.`id`, `b`.`user_id`, `b`.`amount`, " +
             "`p`.`coefficient` AS `participant_coeff`, `u`.`balance` AS `user_balance` " +
             "FROM `bets` AS `b` JOIN `participants` AS `p` ON `b`.`participant_id`=`p`.`id` " +

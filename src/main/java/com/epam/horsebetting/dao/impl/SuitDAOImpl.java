@@ -17,13 +17,13 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
     /**
      * SQL queries for SuitDAOImpl.
      */
+    private static final String SQL_SELECT_SUITS = "SELECT * FROM `suits`;";
+    private static final String SQL_FIND_SUIT_BY_ID = "SELECT * FROM `suits` WHERE `id`=? LIMIT 1;";
+    private static final String SQL_FIND_SUIT_BY_NAME = "SELECT * FROM `suits` WHERE `name`=? LIMIT 1;";
+    private static final String SQL_SELECT_PART_SUITS = "SELECT * FROM `suits` ORDER BY `id` LIMIT ? OFFSET ?;";
     private static final String SQL_ADD_SUIT = "INSERT INTO `suits` (name) VALUES (?);";
     private static final String SQL_UPDATE_SUIT = "UPDATE `suits` SET `name`=? WHERE `id`=?;";
     private static final String SQL_REMOVE_SUIT = "DELETE FROM `suits` WHERE `id`=?;";
-    private static final String SQL_FIND_SUIT_BY_ID = "SELECT * FROM `suits` WHERE `id`=? LIMIT 1;";
-    private static final String SQL_FIND_SUIT_BY_NAME = "SELECT * FROM `suits` WHERE `name`=? LIMIT 1;";
-    private static final String SQL_SELECT_SUITS = "SELECT * FROM `suits`;";
-    private static final String SQL_SELECT_PART_SUITS = "SELECT * FROM `suits` ORDER BY `id` LIMIT ? OFFSET ?;";
 
     /**
      * Default constructor connection.
@@ -80,7 +80,7 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
                 suit = extractFrom(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException("Can't find suit by id[" + id + "]. " + e.getMessage(), e);
+            throw new DAOException("Can't find suit[id=" + id + "]. " + e.getMessage(), e);
         }
 
         return suit;
@@ -173,7 +173,7 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
                 foundedSuits.add(suit);
             }
         } catch (SQLException e) {
-            throw new DAOException("Cannot retrieve suits list. " + e.getMessage(), e);
+            throw new DAOException("Cannot retrieve suit list. " + e.getMessage(), e);
         }
 
         return foundedSuits;

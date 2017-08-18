@@ -77,9 +77,7 @@ public class FlashMessagesTag extends TagSupport {
 
                 outerHtml.append("</ul>");
             } else {
-                for (String message : messages) {
-                    outerHtml.append(message);
-                }
+                messages.forEach(outerHtml::append);
             }
 
             outerHtml.append("</div>");

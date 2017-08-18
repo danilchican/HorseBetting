@@ -1,16 +1,30 @@
 package com.epam.horsebetting.entity;
 
 public class Suit extends Entity {
+
     private int id;
     private String name;
 
+    /**
+     * Default constructor.
+     */
     public Suit() {
     }
 
+    /**
+     * Constructor with id.
+     *
+     * @param id
+     */
     public Suit(int id) {
         this.id = id;
     }
 
+    /**
+     * Constructor with name.
+     *
+     * @param name
+     */
     public Suit(String name) {
         this.name = name;
     }

@@ -17,9 +17,10 @@ class CommandInitializer {
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
-     * Command method prefix.
+     * Constants.
      */
     private static final String COMMAND_METHOD_PREFIX = "::";
+    private static final String DEFAULT_DELIMITER = "/";
 
     /**
      * Index page command value.
@@ -36,14 +37,14 @@ class CommandInitializer {
     static AbstractCommand init(HttpServletRequest request) throws CommandTypeNotFoundException {
         String uri = request.getRequestURI();
 
-        if(uri.endsWith("/")) {
+        if (uri.endsWith(DEFAULT_DELIMITER)) {
             uri = uri.substring(0, uri.length() - 1);
         }
 
         /* Generate the main part of command name */
-        String commandName = (uri.length() == 1 && uri.startsWith("/"))
+        String commandName = (uri.length() == 1 && uri.startsWith(DEFAULT_DELIMITER))
                 ? INDEX_PAGE_COMMAND_VALUE :
-                uri.substring(1, uri.length()).replace('/', '.').toLowerCase();
+                uri.substring(1, uri.length()).replace(DEFAULT_DELIMITER.charAt(0), '.').toLowerCase();
 
         /* Add second part called 'method' of the request */
         commandName += COMMAND_METHOD_PREFIX + request.getMethod().toLowerCase();
