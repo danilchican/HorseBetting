@@ -11,6 +11,7 @@ import com.epam.horsebetting.receiver.AbstractReceiver;
 import com.epam.horsebetting.receiver.SuitReceiver;
 import com.epam.horsebetting.request.RequestContent;
 import com.epam.horsebetting.util.MessageWrapper;
+import com.epam.horsebetting.validator.CommonValidator;
 import com.epam.horsebetting.validator.SuitValidator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -20,9 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_ERRORS;
-import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_MESSAGES;
-import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_LOCALE;
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.*;
 
 public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
 
@@ -39,13 +38,13 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
      */
     @Override
     public void ajaxObtainSuitsList(RequestContent content) throws ReceiverException {
-        String pageNumber = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
-
-        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
-        SuitValidator validator = new SuitValidator(locale);
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
 
         MessageWrapper messages = new MessageWrapper();
         MessageConfig messageResource = new MessageConfig(locale);
+
+        String pageNumber = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
+        CommonValidator validator = new CommonValidator(locale);
 
         if (validator.validatePage(pageNumber)) {
             final int step = 10;
@@ -60,7 +59,6 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
 
                 LOGGER.log(Level.DEBUG, "Obtained suits part: " + Arrays.toString(suits.toArray()));
             } catch (DAOException e) {
-
                 messages.add(messageResource.get("error.undefined"));
 
                 content.insertJsonAttribute("success", false);
@@ -82,13 +80,13 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
      */
     @Override
     public void createSuit(RequestContent content) throws ReceiverException {
-        String name = content.findParameter(RequestFieldConfig.Suit.NAME_FIELD);
-
-        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
-        SuitValidator validator = new SuitValidator(locale);
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
 
         MessageWrapper messages = new MessageWrapper();
         MessageConfig messageResource = new MessageConfig(locale);
+
+        String name = content.findParameter(RequestFieldConfig.Suit.NAME_FIELD);
+        SuitValidator validator = new SuitValidator(locale);
 
         if (validator.validateName(name)) {
             Suit suit = new Suit(name);
@@ -100,21 +98,31 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
             transaction.beginTransaction();
 
             try {
-                Suit createdSuit = suitDAO.create(suit);
+                if (!isSuitNameUnique(suit.getName(), suitDAO)) {
+                    Suit createdSuit = suitDAO.create(suit);
 
-                transaction.commit();
-                LOGGER.log(Level.DEBUG, "Created suit: " + createdSuit);
+                    transaction.commit();
+                    LOGGER.log(Level.DEBUG, "Created suit: " + createdSuit);
 
-                messages.add(messageResource.get("dashboard.suit.create.success"));
+                    messages.add(messageResource.get("dashboard.suit.create.success"));
 
-                content.insertJsonAttribute("suit", createdSuit);
-                content.insertJsonAttribute(REQUEST_MESSAGES, messages);
-                LOGGER.log(Level.DEBUG, "Messages: " + messages.findAll());
-                content.insertJsonAttribute("success", true);
+                    content.insertJsonAttribute("suit", createdSuit);
+                    content.insertJsonAttribute(REQUEST_MESSAGES, messages);
+
+                    content.insertJsonAttribute("success", true);
+                } else {
+                    transaction.rollback();
+
+                    messages.add(messageResource.get("dashboard.suit.create.duplicated"));
+
+                    content.insertJsonAttribute(REQUEST_ERRORS, messages);
+                    content.insertJsonAttribute("success", false);
+                }
             } catch (DAOException e) {
                 transaction.rollback();
 
                 messages.add(messageResource.get("dashboard.suit.create.fail"));
+
                 content.insertJsonAttribute(REQUEST_ERRORS, messages);
                 content.insertJsonAttribute("success", false);
 
@@ -136,32 +144,53 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
      */
     @Override
     public void updateSuit(RequestContent content) throws ReceiverException {
-        String idNumber = content.findParameter(RequestFieldConfig.Suit.ID_FIELD);
-        String name = content.findParameter(RequestFieldConfig.Suit.NAME_FIELD);
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
 
-        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
-        SuitValidator validator = new SuitValidator(locale);
         MessageWrapper messages = new MessageWrapper();
         MessageConfig messageResource = new MessageConfig(locale);
 
-        if(validator.validateSuit(idNumber, name)) {
-            final int id = Integer.parseInt(idNumber);
+        String idNumber = content.findParameter(RequestFieldConfig.Suit.ID_FIELD);
+        String name = content.findParameter(RequestFieldConfig.Suit.NAME_FIELD);
+        SuitValidator validator = new SuitValidator(locale);
 
+        if (validator.validateSuit(idNumber, name)) {
+            final int id = Integer.parseInt(idNumber);
             Suit suit = new Suit(id);
             suit.setName(name);
 
-            try (SuitDAOImpl suitDAO = new SuitDAOImpl(false)) {
-                suitDAO.update(suit);
+            SuitDAOImpl suitDAO = new SuitDAOImpl(true);
 
-                messages.add(messageResource.get("dashboard.suit.update.success"));
-                content.insertJsonAttribute(REQUEST_MESSAGES, messages);
-                content.insertJsonAttribute("success", true);
+            TransactionManager transaction = new TransactionManager(suitDAO);
+            transaction.beginTransaction();
+
+            try {
+                if(canUpdateSuit(suit, suitDAO)) {
+                    suitDAO.update(suit);
+
+                    transaction.commit();
+
+                    messages.add(messageResource.get("dashboard.suit.update.success"));
+                    content.insertJsonAttribute(REQUEST_MESSAGES, messages);
+                    content.insertJsonAttribute("success", true);
+                } else {
+                    transaction.rollback();
+
+                    messages.add(messageResource.get("dashboard.suit.update.undefined"));
+                    content.insertJsonAttribute(REQUEST_ERRORS, messages);
+                    content.insertJsonAttribute("success", false);
+
+                    throw new ReceiverException("Suit with such id does not exist or name is not unique.");
+                }
             } catch (DAOException e) {
+                transaction.rollback();
+
                 messages.add(messageResource.get("dashboard.suit.update.fail"));
                 content.insertJsonAttribute(REQUEST_ERRORS, messages);
                 content.insertJsonAttribute("success", false);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
+            } finally {
+                transaction.endTransaction();
             }
         } else {
             content.insertJsonAttribute(REQUEST_ERRORS, validator.getErrors());
@@ -177,12 +206,13 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
      */
     @Override
     public void removeSuit(RequestContent content) throws ReceiverException {
-        String idNumber = content.findParameter(RequestFieldConfig.Suit.ID_FIELD);
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
 
-        Locale locale = (Locale)content.findSessionAttribute(SESSION_LOCALE);
-        SuitValidator validator = new SuitValidator(locale);
         MessageConfig messageResource = new MessageConfig(locale);
         MessageWrapper messages = new MessageWrapper();
+
+        String idNumber = content.findParameter(RequestFieldConfig.Suit.ID_FIELD);
+        SuitValidator validator = new SuitValidator(locale);
 
         if (validator.validateId(idNumber)) {
             final int id = Integer.parseInt(idNumber);
@@ -190,22 +220,75 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
 
             LOGGER.log(Level.DEBUG, "Want remove suit: " + suit);
 
-            try (SuitDAOImpl suitDAO = new SuitDAOImpl(false)) {
-                suitDAO.remove(suit);
+            SuitDAOImpl suitDAO = new SuitDAOImpl(true);
 
-                messages.add(messageResource.get("dashboard.suit.remove.success"));
-                content.insertJsonAttribute(REQUEST_MESSAGES, messages);
-                content.insertJsonAttribute("success", true);
+            TransactionManager transaction = new TransactionManager(suitDAO);
+            transaction.beginTransaction();
+
+            try {
+                if(isSuitExist(suit.getId(), suitDAO)) {
+                    suitDAO.remove(suit);
+                    transaction.commit();
+
+                    messages.add(messageResource.get("dashboard.suit.remove.success"));
+                    content.insertJsonAttribute(REQUEST_MESSAGES, messages);
+                    content.insertJsonAttribute("success", true);
+                } else {
+                    transaction.rollback();
+
+                    messages.add(messageResource.get("dashboard.suit.remove.undefined"));
+                    content.insertJsonAttribute(REQUEST_ERRORS, messages);
+                    content.insertJsonAttribute("success", false);
+                }
             } catch (DAOException e) {
+                transaction.rollback();
+
                 messages.add(messageResource.get("dashboard.suit.remove.fail"));
                 content.insertJsonAttribute(REQUEST_ERRORS, messages);
                 content.insertJsonAttribute("success", false);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
+            } finally {
+                transaction.endTransaction();
             }
         } else {
             content.insertJsonAttribute(REQUEST_ERRORS, validator.getErrors());
             content.insertJsonAttribute("success", false);
         }
+    }
+
+    /**
+     * Check if can update suit.
+     *
+     * @param suit
+     * @param suitDAO
+     * @return boolean
+     * @throws DAOException
+     */
+    private boolean canUpdateSuit(Suit suit, SuitDAOImpl suitDAO) throws DAOException {
+        return isSuitExist(suit.getId(), suitDAO) && !isSuitNameUnique(suit.getName(), suitDAO);
+    }
+
+    /**
+     * Check if the suit exist in storage.
+     *
+     * @param id
+     * @param suitDAO
+     * @return boolean
+     */
+    private boolean isSuitExist(int id, SuitDAOImpl suitDAO) throws DAOException {
+        return suitDAO.find(id) != null;
+    }
+
+    /**
+     * Check if the suit name is unique in storage.
+     *
+     * @param name
+     * @param suitDAO
+     * @return boolean
+     * @throws DAOException
+     */
+    private boolean isSuitNameUnique(String name, SuitDAOImpl suitDAO) throws DAOException {
+        return suitDAO.findByName(name) != null;
     }
 }

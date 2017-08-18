@@ -18,6 +18,14 @@ public interface SuitDAO {
      */
     Suit create(Suit suit) throws DAOException;
 
+    /**
+     * Find suit by id.
+     *
+     * @param id
+     * @return suit
+     * @throws DAOException
+     */
+    Suit find(int id) throws DAOException;
 
     /**
      * Update suit.

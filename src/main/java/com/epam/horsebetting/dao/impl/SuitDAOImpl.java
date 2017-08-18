@@ -20,6 +20,7 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
     private static final String SQL_ADD_SUIT = "INSERT INTO `suits` (name) VALUES (?);";
     private static final String SQL_UPDATE_SUIT = "UPDATE `suits` SET `name`=? WHERE `id`=?;";
     private static final String SQL_REMOVE_SUIT = "DELETE FROM `suits` WHERE `id`=?;";
+    private static final String SQL_FIND_SUIT_BY_ID = "SELECT * FROM `suits` WHERE `id`=? LIMIT 1;";
     private static final String SQL_FIND_SUIT_BY_NAME = "SELECT * FROM `suits` WHERE `name`=? LIMIT 1;";
     private static final String SQL_SELECT_SUITS = "SELECT * FROM `suits`;";
     private static final String SQL_SELECT_PART_SUITS = "SELECT * FROM `suits` ORDER BY `id` LIMIT ? OFFSET ?;";
@@ -57,6 +58,32 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
         }
 
         return createdSuit;
+    }
+
+    /**
+     * Find suit by id.
+     *
+     * @param id
+     * @return suit
+     * @throws DAOException
+     */
+    @Override
+    public Suit find(int id) throws DAOException {
+        ResultSet resultSet;
+        Suit suit = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_SUIT_BY_ID)) {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                suit = extractFrom(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't find suit by id[" + id + "]. " + e.getMessage(), e);
+        }
+
+        return suit;
     }
 
     /**
