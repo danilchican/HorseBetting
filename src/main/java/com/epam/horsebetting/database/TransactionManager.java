@@ -44,12 +44,12 @@ public class TransactionManager {
     public void beginTransaction() {
         try {
             connection.setAutoCommit(false);
+
+            LOGGER.log(Level.INFO, "Transaction has been begin.");
+            daos.forEach(dao -> dao.setConnection(connection));
         } catch (SQLException e) {
             LOGGER.log(Level.ERROR, "Can't begin transaction. " + e.getMessage(), e);
         }
-
-        LOGGER.log(Level.INFO, "Transaction has been begin.");
-        daos.forEach(dao -> dao.setConnection(connection));
     }
 
     /**

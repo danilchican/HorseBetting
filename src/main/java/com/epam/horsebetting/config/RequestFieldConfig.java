@@ -36,6 +36,7 @@ public final class RequestFieldConfig {
         public static final String BET_END_DATE_FIELD = PREFIX + "bet-end-date";
         public static final String STARTED_AT_FIELD = PREFIX + "started-at";
         public static final String SELECTED_HORSES_FIELD = "selected-horses";
+        public static final String WINNER_FIELD = PREFIX + "winner";
         public static final String HORSE_COEFFICIENTS_FIELD = "horse-coefficients";
     }
 

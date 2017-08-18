@@ -172,7 +172,6 @@
                                     <div class="form-group">
                                         <label for="race-status" class="control-label col-md-3 col-sm-3 col-xs-12">
                                             <fmt:message key="dashboard.form.races.status"/>
-                                            <c:if test="${race.isAvailable()}"><span class="required">*</span></c:if>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <select id="race-status" required="required" class="form-control"
@@ -188,6 +187,24 @@
                                                 <option value="completed"
                                                         <c:if test="${race.getStatus() eq 'completed'}">selected</c:if>>
                                                     <fmt:message key="races.status.completed"/></option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="race-status" class="control-label col-md-3 col-sm-3 col-xs-12">
+                                            <fmt:message key="form.participants.is_winner"/>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <select id="race-winner" required="required" class="form-control"
+                                                    name="race-winner"
+                                                    <c:if test="${!race.isAvailable()}">disabled</c:if>>
+                                                <option></option>
+                                                <c:forEach items="${participants}" var="participant">
+                                                    <option value="${participant.getId()}">
+                                                            ${participant.getJockeyName()}
+                                                    </option>
+                                                </c:forEach>
                                             </select>
                                         </div>
                                     </div>
@@ -211,7 +228,8 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">
                                                         <fmt:message key="form.participants.coefficient"/>
-                                                        <c:if test="${race.isAvailable()}"><span class="required">*</span></c:if>
+                                                        <c:if test="${race.isAvailable()}"><span
+                                                                class="required">*</span></c:if>
                                                     </label>
                                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                                         <input data-parsley-min="1"
