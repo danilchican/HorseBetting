@@ -19,6 +19,16 @@ public class UserValidator extends AbstractValidator {
     private static final String PASSWORD_REGEX = "(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{6,}";
 
     /**
+     * Constants of user validation data.
+     */
+    private static final String PREFIX = "user.";
+    private static final String USER_NAME = PREFIX + "name";
+    private static final String USER_EMAIL = PREFIX + "email";
+    private static final String USER_PASSWORD = PREFIX + "password";
+    private static final String USER_PAYMENT = PREFIX + "payment";
+    private static final String USER_CONFIRMATION = PREFIX + "confirmation";
+
+    /**
      * Default constructor.
      *
      * @param locale
@@ -39,16 +49,15 @@ public class UserValidator extends AbstractValidator {
     public boolean validateRegistrationForm(String name, String email, String password, String passwordConfirmation) {
         boolean isValidate = true;
 
-        // TODO move string to constants
-        if (!validateName(name, RequestFieldConfig.User.NAME_FIELD, "user.name", true)) {
+        if (!validateName(name, RequestFieldConfig.User.NAME_FIELD, USER_NAME, true)) {
             isValidate = false;
         }
 
-        if (!validateEmail(email, RequestFieldConfig.User.EMAIL_FIELD, "user.email")) {
+        if (!validateEmail(email, RequestFieldConfig.User.EMAIL_FIELD, USER_EMAIL)) {
             isValidate = false;
         }
 
-        if (!validatePassword(password, "user.password")) {
+        if (!validatePassword(password, USER_PASSWORD)) {
             isValidate = false;
         }
 
@@ -69,11 +78,11 @@ public class UserValidator extends AbstractValidator {
     public boolean validateLoginForm(String email, String password) {
         boolean isValidate = true;
 
-        if (!validateEmail(email, RequestFieldConfig.User.EMAIL_FIELD, "user.email")) {
+        if (!validateEmail(email, RequestFieldConfig.User.EMAIL_FIELD, USER_EMAIL)) {
             isValidate = false;
         }
 
-        if (!validatePassword(password, "user.password")) {
+        if (!validatePassword(password, USER_PASSWORD)) {
             isValidate = false;
         }
 
@@ -87,7 +96,7 @@ public class UserValidator extends AbstractValidator {
      * @return boolean
      */
     public boolean validateUpdateSettingsForm(String name) {
-        return validateName(name, RequestFieldConfig.User.NAME_FIELD, "user.name", false);
+        return validateName(name, RequestFieldConfig.User.NAME_FIELD, USER_NAME, false);
     }
 
     /**
@@ -100,7 +109,7 @@ public class UserValidator extends AbstractValidator {
     public boolean validateSecurityForm(String password, String confirmation) {
         boolean isValidate = true;
 
-        if (!validatePassword(password, "user.password")) {
+        if (!validatePassword(password, USER_PASSWORD)) {
             isValidate = false;
         }
 
@@ -118,7 +127,7 @@ public class UserValidator extends AbstractValidator {
      * @return boolean
      */
     public boolean validateUpdateProfileBalanceForm(String amount) {
-        String message = messageManager.get(VALIDATION_PREFIX + "user.payment" + VALIDATION_INCORRECT)
+        String message = messageManager.get(VALIDATION_PREFIX + USER_PAYMENT + VALIDATION_INCORRECT)
                 + " " + MIN_BALANCE_AMOUNT + "$.";
 
         try {
@@ -132,7 +141,7 @@ public class UserValidator extends AbstractValidator {
                 this.addErrorMessage(message);
                 return false;
             }
-            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "user.payment" + VALIDATION_REQUIRED));
+            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + USER_PAYMENT + VALIDATION_REQUIRED));
             return false;
         } catch (NumberFormatException e) {
             this.addErrorMessage(message);
@@ -147,7 +156,7 @@ public class UserValidator extends AbstractValidator {
      * @return boolean
      */
     public boolean validateResetPasswordForm(String email) {
-        return validateEmail(email, RequestFieldConfig.User.EMAIL_FIELD, "user.email");
+        return validateEmail(email, RequestFieldConfig.User.EMAIL_FIELD, USER_EMAIL);
     }
 
     /**
@@ -197,7 +206,7 @@ public class UserValidator extends AbstractValidator {
             return true;
         }
 
-        this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "user.confirmation" + VALIDATION_INCORRECT));
+        this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + USER_CONFIRMATION + VALIDATION_INCORRECT));
         return false;
     }
 }

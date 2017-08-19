@@ -4,6 +4,8 @@ import com.epam.horsebetting.config.RequestFieldConfig;
 
 import java.util.Locale;
 
+import static com.epam.horsebetting.validator.CommonValidator.COMMON_PAGE;
+
 public class SuitValidator extends AbstractValidator {
 
     /**
@@ -16,13 +18,20 @@ public class SuitValidator extends AbstractValidator {
     }
 
     /**
+     * Constants of suit validation data.
+     */
+    private static final String PREFIX = "suit.";
+    private static final String SUIT_ID = PREFIX + "id";
+    private static final String SUIT_NAME = PREFIX + "name";
+
+    /**
      * Validate number of page.
      *
      * @param page
      * @return boolean
      */
     public boolean validatePage(String page) {
-        return validateInteger(page, RequestFieldConfig.Common.PAGE_FIELD, "common.page", false);
+        return validateInteger(page, RequestFieldConfig.Common.PAGE_FIELD, COMMON_PAGE, false);
     }
 
     /**
@@ -32,7 +41,7 @@ public class SuitValidator extends AbstractValidator {
      * @return boolean
      */
     public boolean validateName(String name) {
-        return validateString(name, RequestFieldConfig.Suit.NAME_FIELD, "suit.name", false, DEFAULT_STRING_REGEX);
+        return validateString(name, RequestFieldConfig.Suit.NAME_FIELD, SUIT_NAME, false, DEFAULT_STRING_REGEX);
     }
 
     /**
@@ -42,7 +51,7 @@ public class SuitValidator extends AbstractValidator {
      * @return boolean
      */
     public boolean validateId(String id) {
-        return validateInteger(id, RequestFieldConfig.Suit.ID_FIELD, "suit.id", false);
+        return validateInteger(id, RequestFieldConfig.Suit.ID_FIELD, SUIT_ID, false);
     }
 
     /**

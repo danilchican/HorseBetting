@@ -16,6 +16,13 @@ public class CommonValidator extends AbstractValidator {
     }
 
     /**
+     * Constants of common validation data.
+     */
+    private static final String PREFIX = "common.";
+    static final String COMMON_PAGE = PREFIX + "page";
+    private static final String COMMON_ID = PREFIX + "id";
+
+    /**
      * Validate page number.
      *
      * @param pageNum
@@ -23,7 +30,7 @@ public class CommonValidator extends AbstractValidator {
      */
     public boolean validatePage(String pageNum) {
         return pageNum == null
-                || validateInteger(pageNum, RequestFieldConfig.Common.PAGE_FIELD, "common.page", false);
+                || validateInteger(pageNum, RequestFieldConfig.Common.PAGE_FIELD, COMMON_PAGE, false);
     }
 
     /**
@@ -33,6 +40,6 @@ public class CommonValidator extends AbstractValidator {
      * @return boolean
      */
     public boolean validateId(String idNum) {
-        return validateInteger(idNum, RequestFieldConfig.Common.REQUEST_ID, "common.id", false);
+        return validateInteger(idNum, RequestFieldConfig.Common.REQUEST_ID, COMMON_ID, false);
     }
 }

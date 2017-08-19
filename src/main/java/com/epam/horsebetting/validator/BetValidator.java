@@ -20,6 +20,15 @@ public class BetValidator extends AbstractValidator {
     }
 
     /**
+     * Constants of bet validation data.
+     */
+    private static final String PREFIX = "bets.";
+    private static final String BET_ID = PREFIX + "id";
+    private static final String BET_AMOUNT_GREATER = PREFIX + "amount.greater";
+    private static final String BET_AMOUNT_INCORRECT = PREFIX + "amount.incorrect";
+    private static final String BET_PARTICIPANT_ID = PREFIX + "participant_id";
+
+    /**
      * Validate create bet.
      *
      * @param amount
@@ -33,7 +42,7 @@ public class BetValidator extends AbstractValidator {
             isValidate = false;
         }
 
-        if (!validateInteger(participantId, RequestFieldConfig.Bet.PARTICIPANT_ID, "bets.participant_id", false)) {
+        if (!validateInteger(participantId, RequestFieldConfig.Bet.PARTICIPANT_ID, BET_PARTICIPANT_ID, false)) {
             isValidate = false;
         }
 
@@ -47,7 +56,7 @@ public class BetValidator extends AbstractValidator {
      * @return boolean
      */
     public boolean validateId(String id) {
-        return validateInteger(id, RequestFieldConfig.Bet.ID, "bets.id", false);
+        return validateInteger(id, RequestFieldConfig.Bet.ID, BET_ID, false);
     }
 
     /**
@@ -61,14 +70,14 @@ public class BetValidator extends AbstractValidator {
             BigDecimal n = new BigDecimal(number);
 
             if (MIN_RATE.compareTo(n) == 1) {
-                this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "bets.amount.greater")
+                this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + BET_AMOUNT_GREATER)
                         + " " + MIN_RATE + "$.");
                 return false;
             }
 
             return true;
         } catch (NumberFormatException e) {
-            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "bets.amount.incorrect"));
+            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + BET_AMOUNT_INCORRECT));
             return false;
         }
     }

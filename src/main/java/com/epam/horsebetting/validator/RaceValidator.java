@@ -33,6 +33,24 @@ public class RaceValidator extends AbstractValidator {
     private static final int STARTED_AT_INDEX = 5;
 
     /**
+     * Constants of race validation data.
+     */
+    private static final String PREFIX = "race.";
+    private static final String RACE_JOCKEYS_PREFIX = PREFIX + "jockeys";
+    private static final String RACE_JOCKEYS_LEAST = RACE_JOCKEYS_PREFIX + ".least";
+    private static final String RACE_JOCKEYS_DUPLICATED = RACE_JOCKEYS_PREFIX + ".duplicated";
+    private static final String RACE_JOCKEYS_COEFFICIENTS = RACE_JOCKEYS_PREFIX + ".coefficients";
+    private static final String RACE_JOCKEYS_COEFFICIENTS_RANGE = RACE_JOCKEYS_COEFFICIENTS + ".range";
+    private static final String RACE_TITLE = PREFIX + "title";
+    private static final String RACE_PLACE = PREFIX + "place";
+    private static final String RACE_MIN_RATE = PREFIX + "min_rate";
+    private static final String RACE_TRACK_LENGTH = PREFIX + "track_length";
+    private static final String RACE_GREATER = ".greater";
+    private static final String RACE_BET_END_DATE = PREFIX + "bet_end_date";
+    private static final String RACE_STARTED_AT = PREFIX + "started_at";
+    private static final String RACE_STATUS = PREFIX + "status";
+
+    /**
      * Default constructor.
      *
      * @param locale
@@ -55,32 +73,32 @@ public class RaceValidator extends AbstractValidator {
         }
 
         if (!validateString(attributes[TITLE_INDEX], RequestFieldConfig.Race.TITLE_FIELD,
-                "race.title", true, DEFAULT_STRING_REGEX)) {
+                RACE_TITLE, true, DEFAULT_STRING_REGEX)) {
             isValidate = false;
         }
 
         if (!validateString(attributes[PLACE_INDEX], RequestFieldConfig.Race.PLACE_FIELD,
-                "race.place", true, DEFAULT_STRING_REGEX)) {
+                RACE_PLACE, true, DEFAULT_STRING_REGEX)) {
             isValidate = false;
         }
 
         if (!validateRate(attributes[MIN_RATE_INDEX], RequestFieldConfig.Race.MIN_RATE_FIELD,
-                "race.min_rate", true)) {
+                RACE_MIN_RATE, true)) {
             isValidate = false;
         }
 
         if (!validateTrackLength(attributes[TRACK_LENGTH_INDEX], RequestFieldConfig.Race.TRACK_LENGTH_FIELD,
-                "race.track_length", true)) {
+                RACE_TRACK_LENGTH, true)) {
             isValidate = false;
         }
 
         if (!validateDate(attributes[BET_END_DATE_INDEX], RequestFieldConfig.Race.BET_END_DATE_FIELD,
-                "race.bet_end_date", true)) {
+                RACE_BET_END_DATE, true)) {
             isValidate = false;
         }
 
         if (!validateDate(attributes[STARTED_AT_INDEX], RequestFieldConfig.Race.STARTED_AT_FIELD,
-                "race.started_at", true)) {
+                RACE_STARTED_AT, true)) {
             isValidate = false;
         }
 
@@ -98,7 +116,7 @@ public class RaceValidator extends AbstractValidator {
     public boolean validateEditRaceForm(String status, String[] jockeys, String[] coeffs) {
         boolean isValidate = true;
 
-        if (!validateStatus(status, "race.status")) {
+        if (!validateStatus(status, RACE_STATUS)) {
             isValidate = false;
         }
 
@@ -121,12 +139,12 @@ public class RaceValidator extends AbstractValidator {
         int i = 0;
 
         if ((jockeys == null || coeffs == null) || jockeys.length != coeffs.length) {
-            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "race.jockeys" + VALIDATION_REQUIRED));
+            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + RACE_JOCKEYS_PREFIX + VALIDATION_REQUIRED));
             return false;
         }
 
         if (jockeys.length < MIN_JOCKEYS_COUNT) {
-            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "race.jockeys.least"));
+            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + RACE_JOCKEYS_LEAST));
             return false;
         }
 
@@ -134,24 +152,24 @@ public class RaceValidator extends AbstractValidator {
 
         if (localSet.size() < jockeys.length) {
             isValidate = false;
-            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "race.jockeys.duplicated"));
+            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + RACE_JOCKEYS_DUPLICATED));
         }
 
         while (i < jockeys.length && isValidate) {
             if (!jockeys[i].matches(DEFAULT_INTEGER_REGEX)) {
                 isValidate = false;
-                this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "race.jockeys" + VALIDATION_REQUIRED));
+                this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + RACE_JOCKEYS_PREFIX + VALIDATION_REQUIRED));
             }
 
             if (isValidate && !coeffs[i].matches(DEFAULT_BIG_DECIMAL_REGEX)) {
                 isValidate = false;
-                this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "race.jockeys.coefficients" + VALIDATION_INCORRECT));
+                this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + RACE_JOCKEYS_COEFFICIENTS + VALIDATION_INCORRECT));
             } else if (isValidate) {
                 BigDecimal num = new BigDecimal(coeffs[i]);
 
                 if (MAX_COEFFICIENT.compareTo(num) != 1 || MIN_COEFFICIENT.compareTo(num) != -1) {
                     isValidate = false;
-                    this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + "race.jockeys.coefficients.range")
+                    this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + RACE_JOCKEYS_COEFFICIENTS_RANGE)
                             + " " + MIN_COEFFICIENT + ".." + MAX_COEFFICIENT);
                 }
             }
@@ -202,7 +220,7 @@ public class RaceValidator extends AbstractValidator {
                 BigDecimal n = new BigDecimal(number);
 
                 if (MIN_RATE.compareTo(n) == 1) {
-                    this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + ".greater")
+                    this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + RACE_GREATER)
                             + " " + MIN_RATE + "$.");
                     return false;
                 }
@@ -236,7 +254,7 @@ public class RaceValidator extends AbstractValidator {
                 int n = Integer.parseInt(number);
 
                 if (n < MIN_TRACK_LENGTH) {
-                    this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + ".greater")
+                    this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + RACE_GREATER)
                             + " " + MIN_TRACK_LENGTH + "(m).");
                     return false;
                 }
