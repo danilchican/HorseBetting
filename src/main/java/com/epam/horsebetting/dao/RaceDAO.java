@@ -45,6 +45,14 @@ public interface RaceDAO {
     Race findByTitle(String title) throws DAOException;
 
     /**
+     * Find race by participant id.
+     *
+     * @param participantId
+     * @return race
+     */
+    Race findByParticipant(int participantId) throws DAOException;
+
+    /**
      * Obtain part of races.
      *
      * @param limit

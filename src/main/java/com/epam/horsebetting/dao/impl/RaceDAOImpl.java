@@ -27,6 +27,8 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
      */
     private static final String SQL_SELECT_PART_RACES = "SELECT * FROM `races` ORDER BY `started_at` ASC LIMIT ? OFFSET ?;";
     private static final String SQL_FIND_RACE_BY_TITLE = "SELECT * FROM `races` WHERE `title`=? LIMIT 1;";
+    private static final String SQL_FIND_RACE_BY_PARTICIPANT = "SELECT `r`.* FROM `races` AS `r` " +
+            "JOIN `participants` AS `p` ON `r`.`id`=`p`.`race_id` WHERE `p`.`id`=? LIMIT 1;";
     private static final String SQL_FIND_RACE_BY_ID = "SELECT * FROM `races` WHERE `id`=? LIMIT 1;";
     private static final String SQL_COUNT_RACES = "SELECT COUNT(*) AS `total` FROM `races`;";
     private static final String SQL_UPDATE_RACE = "UPDATE `races` SET `status`=? WHERE `id`=?;";
@@ -133,6 +135,31 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_RACE_BY_TITLE)) {
             preparedStatement.setString(1, title);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                race = extractFrom(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't find race: " + e.getMessage(), e);
+        }
+
+        return race;
+    }
+
+    /**
+     * Find race by participant id.
+     *
+     * @param participantId
+     * @return race
+     */
+    @Override
+    public Race findByParticipant(int participantId) throws DAOException {
+        ResultSet resultSet;
+        Race race = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_RACE_BY_PARTICIPANT)) {
+            preparedStatement.setInt(1, participantId);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {

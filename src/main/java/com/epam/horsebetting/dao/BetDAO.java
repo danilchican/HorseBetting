@@ -25,6 +25,15 @@ public interface BetDAO {
     Bet find(int id) throws DAOException;
 
     /**
+     * Find bet by id and owner.
+     *
+     * @param userId
+     * @param betId
+     * @return bet
+     */
+    Bet findByOwner(int userId, int betId) throws DAOException;
+
+    /**
      * Find bet by user id and participant id.
      *
      * @param userId

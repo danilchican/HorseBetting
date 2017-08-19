@@ -26,7 +26,8 @@ public class BetDAOImpl extends AbstractDAO<Bet> implements BetDAO {
      * SQL queries for BetDAOImpl.
      */
     private static final String SQL_FIND_BET_BY_ID = "SELECT * FROM `bets` WHERE `id`=? LIMIT 1;";
-    private static final String SQL_FIND_BET_FOR_USER = "SELECT * FROM `bets` WHERE `user_id`=? AND `participant_id`=? LIMIT 1;";
+    private static final String SQL_FIND_BET_BY_PARTICIPANT = "SELECT * FROM `bets` WHERE `user_id`=? AND `participant_id`=? LIMIT 1;";
+    private static final String SQL_FIND_BET_BY_OWNER = "SELECT * FROM `bets` WHERE `id`=? AND `user_id`=? LIMIT 1;";
     private static final String SQL_COUNT_BETS_FOR_USER = "SELECT COUNT(*) AS `total` FROM `bets` WHERE `user_id`=?;";
     private static final String SQL_REMOVE_BET_BY_ID = "DELETE FROM `bets` WHERE `id`=?;";
     private static final String SQL_ADD_BET = "INSERT INTO `bets` (user_id, participant_id, amount) VALUES (?,?,?);";
@@ -98,6 +99,34 @@ public class BetDAOImpl extends AbstractDAO<Bet> implements BetDAO {
     }
 
     /**
+     * Find bet by id and owner.
+     *
+     * @param userId
+     * @param betId
+     * @return bet
+     */
+    @Override
+    public Bet findByOwner(int userId, int betId) throws DAOException {
+        ResultSet resultSet;
+        Bet bet = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_BET_BY_OWNER)) {
+            preparedStatement.setInt(1, betId);
+            preparedStatement.setInt(2, userId);
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                bet = extractFrom(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't find bet[id=" + betId + ",userId=" + userId + "]. " + e.getMessage(), e);
+        }
+
+        return bet;
+    }
+
+    /**
      * Find bet by user id and participant id.
      *
      * @param userId
@@ -110,7 +139,7 @@ public class BetDAOImpl extends AbstractDAO<Bet> implements BetDAO {
         ResultSet resultSet;
         Bet bet = null;
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_BET_FOR_USER)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_BET_BY_PARTICIPANT)) {
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, participantId);
 

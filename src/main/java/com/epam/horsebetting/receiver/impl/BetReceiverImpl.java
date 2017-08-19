@@ -78,6 +78,8 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
                 Race race;
 
                 if(user == null) {
+                    transaction.rollback();
+
                     messages.add(messageResource.get("user.not_found"));
                     content.insertJsonAttribute(REQUEST_ERRORS, messages.findAll());
                     content.insertJsonAttribute("success", false);
@@ -86,6 +88,8 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
                 }
 
                 if (participant == null) {
+                    transaction.rollback();
+
                     messages.add(messageResource.get("dashboard.participant.undefined"));
                     content.insertJsonAttribute(REQUEST_ERRORS, messages.findAll());
                     content.insertJsonAttribute("success", false);
@@ -97,6 +101,8 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
                     race = raceDAO.find(participant.getRaceId());
 
                     if (race == null) {
+                        transaction.rollback();
+
                         messages.add(messageResource.get("dashboard.race.not_found"));
                         content.insertJsonAttribute(REQUEST_ERRORS, messages.findAll());
                         content.insertJsonAttribute("success", false);
@@ -122,6 +128,8 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
                                 content.insertJsonAttribute("message", messageResource.get("dashboard.bet.create.success"));
                                 content.insertJsonAttribute("success", true);
                             } else {
+                                transaction.rollback();
+
                                 messages.add(messageResource.get("dashboard.bet.create.balance_less"));
                                 content.insertJsonAttribute(REQUEST_ERRORS, messages.findAll());
                                 content.insertJsonAttribute("success", false);
@@ -129,6 +137,8 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
                                 throw new ReceiverException(messageResource.get("dashboard.bet.create.balance_less"));
                             }
                         } else {
+                            transaction.rollback();
+
                             messages.add(messageResource.get("dashboard.bet.create.amount_less"));
                             content.insertJsonAttribute(REQUEST_ERRORS, messages.findAll());
                             content.insertJsonAttribute("success", false);
@@ -136,6 +146,8 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
                             throw new ReceiverException(messageResource.get("dashboard.bet.create.amount_less"));
                         }
                     } else {
+                        transaction.rollback();
+
                         messages.add(messageResource.get("dashboard.bet.race.finished"));
                         content.insertJsonAttribute(REQUEST_ERRORS, messages.findAll());
                         content.insertJsonAttribute("success", false);
@@ -143,6 +155,8 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
                         throw new ReceiverException(messageResource.get("dashboard.bet.race.finished"));
                     }
                 } else {
+                    transaction.rollback();
+
                     messages.add(messageResource.get("dashboard.participant.duplicated"));
                     content.insertJsonAttribute(REQUEST_ERRORS, messages.findAll());
                     content.insertJsonAttribute("success", false);
@@ -175,44 +189,66 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
     @Override
     public void removeBet(RequestContent content) throws ReceiverException {
         Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
-        BetValidator validator = new BetValidator(locale);
-        ArrayList<String> messages = new ArrayList<>();
+        MessageWrapper messages = new MessageWrapper();
+        MessageConfig messageResource = new MessageConfig(locale);
 
         String idAttr = content.findParameter(RequestFieldConfig.Bet.ID);
+        String userIdAttr = String.valueOf(content.findSessionAttribute(SESSION_AUTHORIZED));
 
-        // TODO create validate id existing
-        // TODO remove only if race not started!!!
+        BetValidator validator = new BetValidator(locale);
+
         if (validator.validateId(idAttr)) {
-            int id = Integer.parseInt(idAttr);
+            int betId = Integer.parseInt(idAttr);
+            int userId = Integer.parseInt(userIdAttr);
 
-            User authorizedUser = (User) content.findRequestAttribute("user");
+            LOGGER.log(Level.DEBUG, "Want remove bet: id=" + betId);
 
             BetDAOImpl betDAO = new BetDAOImpl(true);
             UserDAOImpl userDAO = new UserDAOImpl(true);
+            RaceDAOImpl raceDAO = new RaceDAOImpl(true);
 
-            LOGGER.log(Level.DEBUG, "Want remove bet: id=" + id);
-
-            TransactionManager transaction = new TransactionManager(betDAO, userDAO);
+            TransactionManager transaction = new TransactionManager(betDAO, raceDAO, userDAO);
             transaction.beginTransaction();
 
             try {
-                User user = userDAO.find(authorizedUser.getId());
-                Bet bet = betDAO.find(id);
+                User user = userDAO.find(userId);
+                Bet bet = betDAO.findByOwner(user.getId(), betId);
 
-                BigDecimal balance = user.getBalance().add(bet.getAmount());
-                user.setBalance(balance);
+                if (bet == null) {
+                    transaction.rollback();
 
-                betDAO.remove(id);
-                userDAO.updateBalance(user);
+                    messages.add(messageResource.get("dashboard.bet.not_found"));
+                    content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
+                    throw new ReceiverException(messageResource.get("dashboard.bet.not_found"));
+                }
+
+                Race race = raceDAO.findByParticipant(bet.getParticipantId());
+
+                if (race == null) {
+                    transaction.rollback();
+
+                    messages.add(messageResource.get("dashboard.race.not_found"));
+                    content.insertSessionAttribute(REQUEST_ERRORS, messages);
+
+                    throw new ReceiverException(messageResource.get("dashboard.race.not_found"));
+                }
+
+                if(race.isAvailable()) {
+                    BigDecimal balance = user.getBalance().add(bet.getAmount());
+                    user.setBalance(balance);
+                    userDAO.updateBalance(user);
+                }
+
+                betDAO.remove(betId);
                 transaction.commit();
 
-                messages.add("Bet removed successfully.");
+                messages.add(messageResource.get("dashboard.bet.delete.success"));
                 content.insertSessionAttribute(REQUEST_MESSAGES, messages);
             } catch (DAOException e) {
                 transaction.rollback();
 
-                messages.add("Can't remove bet.");
+                messages.add(messageResource.get("dashboard.bet.delete.fail"));
                 content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
