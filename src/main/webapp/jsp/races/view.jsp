@@ -53,6 +53,7 @@
                                             <c:if test="${sessionScope.authorized != null}">
                                                 <td>
                                                     <button type="button"
+                                                            data-default-rate="${race.getMinRate()}"
                                                             data-participant="${participant.getId()}"
                                                             data-coefficient="${participant.getCoefficient()}"
                                                             data-jockey="${participant.getJockeyName()}"

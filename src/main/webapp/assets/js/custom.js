@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     var modal = $('#placeBetModal');
     var placeBetBtn = $('#place-bet-btn');
 
@@ -13,6 +12,9 @@ $(document).ready(function () {
     var coefficient;
 
     $('.place-bet').click(function () {
+        $('#messages').empty();
+        amount.val($(this).data('default-rate'));
+
         var jockey = $(this).data('jockey');
         coefficient = $(this).data('coefficient');
         var participant_id = $(this).data('participant');
@@ -55,6 +57,7 @@ $(document).ready(function () {
                     }
 
                     modal.modal('hide');
+                    $('#messages').empty();
                 } else {
                     if (data.errors !== undefined) {
                         var htmlErrors = '<div class="alert alert-danger"><ul>';
@@ -81,6 +84,5 @@ $(document).ready(function () {
                     alert('Ошибка сервера. Попробуйте позже.');
                 }
             });
-
     });
 });
