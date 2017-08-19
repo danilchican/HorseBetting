@@ -26,6 +26,7 @@ public class BetDAOImpl extends AbstractDAO<Bet> implements BetDAO {
      * SQL queries for BetDAOImpl.
      */
     private static final String SQL_FIND_BET_BY_ID = "SELECT * FROM `bets` WHERE `id`=? LIMIT 1;";
+    private static final String SQL_FIND_BET_FOR_USER = "SELECT * FROM `bets` WHERE `user_id`=? AND `participant_id`=? LIMIT 1;";
     private static final String SQL_COUNT_BETS_FOR_USER = "SELECT COUNT(*) AS `total` FROM `bets` WHERE `user_id`=?;";
     private static final String SQL_REMOVE_BET_BY_ID = "DELETE FROM `bets` WHERE `id`=?;";
     private static final String SQL_ADD_BET = "INSERT INTO `bets` (user_id, participant_id, amount) VALUES (?,?,?);";
@@ -91,6 +92,36 @@ public class BetDAOImpl extends AbstractDAO<Bet> implements BetDAO {
             }
         } catch (SQLException e) {
             throw new DAOException("Can't find bet by id[" + id + "]. " + e.getMessage(), e);
+        }
+
+        return bet;
+    }
+
+    /**
+     * Find bet by user id and participant id.
+     *
+     * @param userId
+     * @param participantId
+     * @return bet
+     * @throws DAOException
+     */
+    @Override
+    public Bet findForUserByParticipant(int userId, int participantId) throws DAOException {
+        ResultSet resultSet;
+        Bet bet = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_BET_FOR_USER)) {
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, participantId);
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                bet = extractFrom(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't find bet[userId" + userId + ",participantId=" + participantId + "]. "
+                    + e.getMessage(), e);
         }
 
         return bet;
