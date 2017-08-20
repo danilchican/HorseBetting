@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_USER;
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_AUTHORIZED;
 
 public class AuthUserFilter implements Filter {
@@ -26,7 +27,8 @@ public class AuthUserFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
+            throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpSession session = request.getSession();
 
@@ -37,7 +39,7 @@ public class AuthUserFilter implements Filter {
 
             try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
                 User user = userDAO.find(userId);
-                request.setAttribute("user", user);
+                request.setAttribute(REQUEST_USER, user);
             } catch (DAOException e) {
                 throw new ServletException("Cannot retrieve data about authorized user.", e);
             }

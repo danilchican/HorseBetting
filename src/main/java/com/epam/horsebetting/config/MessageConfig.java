@@ -8,6 +8,8 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import static com.epam.horsebetting.config.EnvironmentConfig.DEFAULT_DELIMITER;
+
 public class MessageConfig {
 
     /**
@@ -30,7 +32,7 @@ public class MessageConfig {
      * Default constructor.
      */
     public MessageConfig(Locale locale) {
-        this.bundle = ResourceBundle.getBundle(BUNDLE_MESSAGES_DIR + "/" + BUNDLE_MESSAGES_NAME, locale);
+        this.bundle = ResourceBundle.getBundle(BUNDLE_MESSAGES_DIR + DEFAULT_DELIMITER + BUNDLE_MESSAGES_NAME, locale);
     }
 
     /**

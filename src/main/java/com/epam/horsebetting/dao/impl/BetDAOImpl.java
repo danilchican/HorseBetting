@@ -312,7 +312,7 @@ public class BetDAOImpl extends AbstractDAO<Bet> implements BetDAO {
             result = preparedStatement.executeQuery();
 
             while (result.next()) {
-                totalCount = result.getInt(SQLFieldConfig.TOTAL);
+                totalCount = result.getInt(SQLFieldConfig.Common.TOTAL);
                 LOGGER.log(Level.DEBUG, "Count of bets: " + totalCount);
             }
         } catch (SQLException e) {
@@ -339,7 +339,7 @@ public class BetDAOImpl extends AbstractDAO<Bet> implements BetDAO {
             result = preparedStatement.executeQuery();
 
             while (result.next()) {
-                totalCount = result.getInt(SQLFieldConfig.TOTAL);
+                totalCount = result.getInt(SQLFieldConfig.Common.TOTAL);
                 LOGGER.log(Level.DEBUG, "Count of user's bets: " + totalCount);
             }
         } catch (SQLException e) {

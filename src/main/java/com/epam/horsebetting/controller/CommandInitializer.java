@@ -9,6 +9,8 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static com.epam.horsebetting.config.EnvironmentConfig.DEFAULT_DELIMITER;
+
 class CommandInitializer {
 
     /**
@@ -20,7 +22,6 @@ class CommandInitializer {
      * Constants.
      */
     private static final String COMMAND_METHOD_PREFIX = "::";
-    private static final String DEFAULT_DELIMITER = "/";
 
     /**
      * Index page command value.

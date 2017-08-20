@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_USER;
+
 public class AccessAdministratorFilter implements Filter {
 
     /**
@@ -22,11 +24,12 @@ public class AccessAdministratorFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
+            throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
 
-        Object userObj = request.getAttribute("user");
+        Object userObj = request.getAttribute(REQUEST_USER);
 
         LOGGER.log(Level.DEBUG, this.getClass().getName() + " has worked.");
 

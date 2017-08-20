@@ -11,6 +11,8 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.REFERER;
+
 public class ChangeLocaleCommand extends AbstractCommand {
 
     /**
@@ -36,7 +38,7 @@ public class ChangeLocaleCommand extends AbstractCommand {
     @Override
     public void execute(RequestContent request) throws CommandTypeNotFoundException {
         String commandName = String.valueOf(request.findRequestAttribute(COMMAND_INSTANCE_NAME));
-        String refererUrl = request.findHeader("referer");
+        String refererUrl = request.findHeader(REFERER);
         LOGGER.log(Level.DEBUG, "Referer: " + refererUrl);
 
         refererUrl = (refererUrl != null) ? refererUrl : "/";

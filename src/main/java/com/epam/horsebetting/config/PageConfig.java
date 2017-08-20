@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import static com.epam.horsebetting.config.EnvironmentConfig.DEFAULT_DELIMITER;
+
 public class PageConfig {
 
     public enum PageConfigType {
@@ -44,7 +46,8 @@ public class PageConfig {
      * Default private constructor.
      */
     private PageConfig() {
-        this.jspBundle = ResourceBundle.getBundle(EnvironmentConfig.BUNDLE_ENVIRONMENT_DIR + "/" + BUNDLE_NAVIGATION_NAME);
+        this.jspBundle = ResourceBundle.getBundle(EnvironmentConfig.BUNDLE_ENVIRONMENT_DIR
+                + DEFAULT_DELIMITER + BUNDLE_NAVIGATION_NAME);
     }
 
     /**

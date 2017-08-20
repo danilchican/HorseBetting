@@ -11,6 +11,8 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.REFERER;
+
 public class DashboardUpdateHorseCommand extends AbstractCommand {
 
     /**
@@ -43,7 +45,7 @@ public class DashboardUpdateHorseCommand extends AbstractCommand {
             router = new Router("/dashboard/horses", Router.RouteType.REDIRECT);
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e);
-            router = new Router(request.findHeader("referer"), Router.RouteType.REDIRECT);
+            router = new Router(request.findHeader(REFERER), Router.RouteType.REDIRECT);
         }
 
         request.insertRequestAttribute(Router.ROUTER_INSTANCE_NAME, router);

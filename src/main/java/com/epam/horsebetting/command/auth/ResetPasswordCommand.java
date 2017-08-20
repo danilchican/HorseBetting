@@ -11,6 +11,8 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.REFERER;
+
 public class ResetPasswordCommand extends AbstractCommand {
 
     /**
@@ -42,7 +44,7 @@ public class ResetPasswordCommand extends AbstractCommand {
             receiver.action(CommandType.findByTag(commandName), request);
             router = new Router("/profile", Router.RouteType.REDIRECT);
         } catch (ReceiverException e) {
-            router = new Router(request.findHeader("referer"), Router.RouteType.REDIRECT);
+            router = new Router(request.findHeader(REFERER), Router.RouteType.REDIRECT);
             LOGGER.log(Level.ERROR, e);
         }
 

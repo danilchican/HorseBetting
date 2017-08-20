@@ -354,7 +354,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
             result = preparedStatement.executeQuery();
 
             while (result.next()) {
-                totalCount = result.getInt(SQLFieldConfig.TOTAL);
+                totalCount = result.getInt(SQLFieldConfig.Common.TOTAL);
                 LOGGER.log(Level.DEBUG, "Count of users: " + totalCount);
             }
         } catch (SQLException e) {

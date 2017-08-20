@@ -1,8 +1,10 @@
 package com.epam.horsebetting.controller;
 
 import com.epam.horsebetting.command.AbstractCommand;
+import com.epam.horsebetting.config.MessageConfig;
 import com.epam.horsebetting.exception.CommandTypeNotFoundException;
 import com.epam.horsebetting.request.RequestContent;
+import com.epam.horsebetting.util.MessageWrapper;
 import com.google.gson.Gson;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -15,8 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_ERRORS;
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_LOCALE;
 import static com.epam.horsebetting.filter.CharacterEncodingFilter.CHARACTER_ENCODING;
 
 @WebServlet(name = "AjaxController", urlPatterns = "/ajax/*")
@@ -51,9 +55,10 @@ public class AjaxController extends HttpServlet {
      * @throws IOException
      */
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ArrayList<String> errors = new ArrayList<>();
-        String json;
+        MessageWrapper errors = new MessageWrapper();
+        Locale locale = (Locale)request.getSession().getAttribute(SESSION_LOCALE);
 
+        MessageConfig messageResource = new MessageConfig(locale);
         RequestContent content = new RequestContent();
 
         try {
@@ -65,11 +70,12 @@ public class AjaxController extends HttpServlet {
         } catch (CommandTypeNotFoundException e) {
             LOGGER.log(Level.ERROR, e.getMessage(), e);
 
-            errors.add("Route does not exist."); // TODO localize
-            content.insertJsonAttribute(REQUEST_ERRORS, errors);
+            errors.add(messageResource.get("route.not_found"));
+            content.insertJsonAttribute(REQUEST_ERRORS, errors.findAll());
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
 
-        json = new Gson().toJson(content.getJsonData());
+        String json = new Gson().toJson(content.getJsonData());
 
         response.setCharacterEncoding(CHARACTER_ENCODING);
         response.setContentType(CONTENT_TYPE);

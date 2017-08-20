@@ -11,6 +11,8 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.REFERER;
+
 public class RemoveBetCommand extends AbstractCommand {
 
     /**
@@ -36,7 +38,7 @@ public class RemoveBetCommand extends AbstractCommand {
     @Override
     public void execute(RequestContent request) throws CommandTypeNotFoundException {
         String commandName = String.valueOf(request.findRequestAttribute(COMMAND_INSTANCE_NAME));
-        Router router = new Router(request.findHeader("referer"), Router.RouteType.REDIRECT);
+        Router router = new Router(request.findHeader(REFERER), Router.RouteType.REDIRECT);
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);

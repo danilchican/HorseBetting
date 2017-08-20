@@ -13,6 +13,8 @@ import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
+import static com.epam.horsebetting.config.EnvironmentConfig.DEFAULT_DELIMITER;
+
 class DatabaseManager {
 
     private enum DatabaseProperties {
@@ -60,7 +62,7 @@ class DatabaseManager {
      */
     DatabaseManager() {
         dbBundle = ResourceBundle.getBundle(EnvironmentConfig.BUNDLE_ENVIRONMENT_DIR +
-                "/" + EnvironmentConfig.BUNDLE_ENVIRONMENT_NAME);
+                DEFAULT_DELIMITER + EnvironmentConfig.BUNDLE_ENVIRONMENT_NAME);
     }
 
     /**

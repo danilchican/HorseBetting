@@ -3,6 +3,7 @@ package com.epam.horsebetting.receiver.impl;
 import com.epam.horsebetting.config.RequestFieldConfig;
 import com.epam.horsebetting.config.MessageConfig;
 import com.epam.horsebetting.dao.impl.HorseDAOImpl;
+import com.epam.horsebetting.dao.impl.SuitDAOImpl;
 import com.epam.horsebetting.database.TransactionManager;
 import com.epam.horsebetting.entity.Horse;
 import com.epam.horsebetting.exception.DAOException;
@@ -65,14 +66,22 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
 
             LOGGER.log(Level.DEBUG, "Want create horse: " + horse);
 
+            SuitDAOImpl suitDAO = new SuitDAOImpl(true);
             HorseDAOImpl horseDAO = new HorseDAOImpl(true);
 
             TransactionManager transaction = new TransactionManager(horseDAO);
             transaction.beginTransaction();
 
-            // todo check suit id
-
             try {
+                if (suitDAO.find(suitId) == null) {
+                    transaction.rollback();
+
+                    messages.add(messageResource.get("dashboard.suit.not_found"));
+                    content.insertSessionAttribute(REQUEST_ERRORS, messages);
+
+                    throw new ReceiverException(messageResource.get("dashboard.suit.not_found"));
+                }
+
                 if (horseDAO.findByName(name) == null) {
                     Horse createdHorse = horseDAO.create(horse);
                     transaction.commit();
@@ -237,14 +246,22 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
 
             LOGGER.log(Level.DEBUG, "Want update horse: " + horse);
 
+            SuitDAOImpl suitDAO = new SuitDAOImpl(true);
             HorseDAOImpl horseDAO = new HorseDAOImpl(true);
 
             TransactionManager transaction = new TransactionManager(horseDAO);
             transaction.beginTransaction();
 
-            // todo check suit id
-
             try {
+                if (suitDAO.find(suitId) == null) {
+                    transaction.rollback();
+
+                    messages.add(messageResource.get("dashboard.suit.not_found"));
+                    content.insertSessionAttribute(REQUEST_ERRORS, messages);
+
+                    throw new ReceiverException(messageResource.get("dashboard.suit.not_found"));
+                }
+
                 if (horseDAO.find(id) != null) {
                     horseDAO.update(horse);
                     transaction.commit();

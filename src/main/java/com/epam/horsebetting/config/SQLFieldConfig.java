@@ -2,8 +2,6 @@ package com.epam.horsebetting.config;
 
 public final class SQLFieldConfig {
 
-    public static final String TOTAL = "total";
-
     public final class User {
         public static final String ID = "id";
         public static final String ROLE_ID = "role_id";
@@ -65,5 +63,9 @@ public final class SQLFieldConfig {
         public static final String EMAIL = "email";
         public static final String TOKEN = "token";
         public static final String CREATED_AT = "created_at";
+    }
+
+    public final class Common {
+        public static final String TOTAL = "total";
     }
 }

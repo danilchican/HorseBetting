@@ -235,7 +235,7 @@ public class HorseDAOImpl extends AbstractDAO<Horse> implements HorseDAO {
             result = preparedStatement.executeQuery();
 
             while (result.next()) {
-                totalCount = result.getInt(SQLFieldConfig.TOTAL);
+                totalCount = result.getInt(SQLFieldConfig.Common.TOTAL);
                 LOGGER.log(Level.DEBUG, "Count of horses: " + totalCount);
             }
         } catch (SQLException e) {

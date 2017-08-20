@@ -245,7 +245,7 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
             result = preparedStatement.executeQuery();
 
             while (result.next()) {
-                totalCount = result.getInt(SQLFieldConfig.TOTAL);
+                totalCount = result.getInt(SQLFieldConfig.Common.TOTAL);
                 LOGGER.log(Level.DEBUG, "Count of races: " + totalCount);
             }
         } catch (SQLException e) {

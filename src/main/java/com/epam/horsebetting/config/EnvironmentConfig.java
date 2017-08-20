@@ -43,6 +43,11 @@ public class EnvironmentConfig {
     public static final String BUNDLE_ENVIRONMENT_NAME = "env";
 
     /**
+     * Constants.
+     */
+    public static final String DEFAULT_DELIMITER = "/";
+
+    /**
      * Default app variables.
      */
     private static final String DEFAULT_APP_URL = "http://localhost:8080";
@@ -64,7 +69,7 @@ public class EnvironmentConfig {
      * Default constructor with getting bundle.
      */
     public EnvironmentConfig() {
-        dbBundle = ResourceBundle.getBundle(BUNDLE_ENVIRONMENT_DIR + "/" + BUNDLE_ENVIRONMENT_NAME);
+        dbBundle = ResourceBundle.getBundle(BUNDLE_ENVIRONMENT_DIR + DEFAULT_DELIMITER + BUNDLE_ENVIRONMENT_NAME);
     }
 
     /**
