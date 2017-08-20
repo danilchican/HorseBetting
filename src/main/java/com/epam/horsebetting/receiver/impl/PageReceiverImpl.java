@@ -78,12 +78,12 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         this.setDefaultContentAttributes(content);
 
         try (RaceDAOImpl raceDAO = new RaceDAOImpl(false)) {
-            final int limit = 15;
+            final int limit = 10;
             final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
             final int offset = (page - 1) * limit;
             final int totalRaces = raceDAO.getTotalCount();
 
-            List<Race> races = raceDAO.obtainNearest(limit, offset);
+            List<Race> races = raceDAO.obtainPart(limit, offset);
 
             content.insertRequestAttribute("races", races);
             content.insertRequestAttribute("totalRaces", totalRaces);
