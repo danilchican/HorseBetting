@@ -14,17 +14,24 @@
         </c:if>
     </jsp:attribute>
     <jsp:body>
+        <c:set var="raceStatus" value="${!race.isAvailable() ? race.getStatus() : 'expect'}"/>
         <div class="container">
             <h1>${race.getTitle()}</h1>
             <div class="col-md-12">
                 <p><b><fmt:message key="dashboard.form.races.place"/>:</b> ${race.getPlace()}</p>
                 <p><b><fmt:message key="dashboard.form.races.min_rate"/>:</b> ${race.getMinRate()}$</p>
                 <p><b><fmt:message key="dashboard.form.races.track_length"/>:</b> ${race.getTrackLength()}</p>
-                <p><b><fmt:message
-                        key="dashboard.form.races.started_at"/>:</b> ${f:formatDate(race.getStartedAt(), locale)}
+                <p>
+                    <b><fmt:message key="dashboard.form.races.started_at"/>:</b> ${f:formatDate(race.getStartedAt(), locale)}
                 </p>
-                <p><b><fmt:message
-                        key="dashboard.form.races.bet_end_date"/>:</b> ${f:formatDate(race.getBetEndDate(), locale)}
+                <p>
+                    <b><fmt:message key="dashboard.form.races.bet_end_date"/>:</b> ${f:formatDate(race.getBetEndDate(), locale)}
+                </p>
+                <p>
+                    <b><fmt:message key="dashboard.form.races.status"/>:</b>
+                    <span class="label label-<fmt:message key="label.status.${raceStatus}"/>">
+                        <fmt:message key="races.status.${raceStatus}"/>
+                    </span>
                 </p>
             </div>
             <div class="col-md-7">
@@ -39,8 +46,11 @@
                                         <th>#</th>
                                         <th><fmt:message key="form.participants.jockey"/></th>
                                         <th><fmt:message key="form.participants.coefficient"/></th>
-                                        <c:if test="${sessionScope.authorized != null}">
+                                        <c:if test="${sessionScope.authorized != null && race.isAvailable()}">
                                             <th><fmt:message key="form.participants.place_bet"/></th>
+                                        </c:if>
+                                        <c:if test="${race.isFinished()}">
+                                            <th class="table-winner-th"><fmt:message key="form.participants.is_winner"/></th>
                                         </c:if>
                                     </tr>
                                     </thead>
@@ -50,7 +60,7 @@
                                             <td>${participant.getId()}</td>
                                             <td>${participant.getJockeyName()}</td>
                                             <td>${participant.getCoefficient()}</td>
-                                            <c:if test="${sessionScope.authorized != null}">
+                                            <c:if test="${sessionScope.authorized != null && race.isAvailable()}">
                                                 <td>
                                                     <button type="button"
                                                             data-default-rate="${race.getMinRate()}"
@@ -62,6 +72,9 @@
                                                     </button>
                                                 </td>
                                             </c:if>
+                                            <c:if test="${race.isFinished()}">
+                                                <td class="table-winner-td">${participant.isWinner() ? 'X' : ''}</td>
+                                            </c:if>
                                         </tr>
                                     </c:forEach>
                                     </tbody>
@@ -70,7 +83,7 @@
                         </div>
                     </c:when>
                     <c:otherwise>
-                        <h4>Haven't any participant of race</h4>
+                        <h4><fmt:message key="participants.empty"/></h4>
                     </c:otherwise>
                 </c:choose>
             </div>

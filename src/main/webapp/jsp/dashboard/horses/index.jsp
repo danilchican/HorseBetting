@@ -87,7 +87,7 @@
                                 </tbody>
                             </table>
                             <c:if test="${totalHorses == 0}">
-                                <p>Haven't any horses.</p>
+                                <p><fmt:message key="horses.empty"/></p>
                             </c:if>
                             <!-- end horse list -->
                             <ctg:pagination total="${totalHorses}" limit="${limitHorses}"/>

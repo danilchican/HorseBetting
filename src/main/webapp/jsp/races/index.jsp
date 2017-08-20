@@ -45,7 +45,7 @@
                 </div>
             </c:when>
             <c:otherwise>
-                <h4>Haven't any races</h4>
+                <h4><fmt:message key="races.empty"/></h4>
             </c:otherwise>
         </c:choose>
     </div>

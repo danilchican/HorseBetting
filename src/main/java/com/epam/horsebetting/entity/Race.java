@@ -1,5 +1,7 @@
 package com.epam.horsebetting.entity;
 
+import com.epam.horsebetting.type.RaceStatusType;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -53,6 +55,15 @@ public class Race extends Entity {
      */
     public boolean isAvailable() {
         return status == null;
+    }
+
+    /**
+     * Check if the race is finished.
+     *
+     * @return boolean
+     */
+    public boolean isFinished() {
+        return RaceStatusType.COMPLETED.getName().equals(status);
     }
 
     /**

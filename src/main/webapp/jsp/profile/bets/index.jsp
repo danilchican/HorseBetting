@@ -3,6 +3,7 @@
 <%@ taglib prefix="f" uri="http://horsebetting.com/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="layout" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 <fmt:setLocale value="${locale}" scope="session"/>
 <fmt:setBundle basename="/localization/lang"/>
 
@@ -52,7 +53,7 @@
             </div>
         </c:when>
         <c:otherwise>
-            <h4>Haven't any bets</h4>
+            <h4><fmt:message key="bets.empty"/></h4>
         </c:otherwise>
     </c:choose>
 </layout:account>

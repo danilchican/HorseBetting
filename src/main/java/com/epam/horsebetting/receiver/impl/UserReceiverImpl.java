@@ -262,15 +262,14 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
             String userIdAttr = String.valueOf(content.findSessionAttribute(SESSION_AUTHORIZED));
             int userId = Integer.parseInt(userIdAttr);
 
-            User authorizedUser = new User(userId);
-
-            BigDecimal amount = new BigDecimal(paymentAmount);
-            BigDecimal balance = authorizedUser.getBalance().add(amount);
-
-            authorizedUser.setBalance(balance);
-
             try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
-                userDAO.updateBalance(authorizedUser);
+                User user = userDAO.find(userId);
+
+                BigDecimal amount = new BigDecimal(paymentAmount);
+                BigDecimal balance = user.getBalance().add(amount);
+
+                user.setBalance(balance);
+                userDAO.updateBalance(user);
 
                 messages.add(messageResource.get("profile.payment.replenish.success"));
                 content.insertSessionAttribute(REQUEST_MESSAGES, messages);

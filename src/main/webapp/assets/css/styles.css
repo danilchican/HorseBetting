@@ -3,6 +3,16 @@ body {
     padding-top: 70px;
     padding-bottom: 30px;
 }
+
 .panel-default {
     overflow: hidden;
+}
+
+.label {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.table-winner-th,
+.table-winner-td {
+    text-align: center;
 }

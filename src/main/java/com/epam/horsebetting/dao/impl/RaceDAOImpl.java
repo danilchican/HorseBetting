@@ -32,8 +32,8 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
     private static final String SQL_FIND_RACE_BY_ID = "SELECT * FROM `races` WHERE `id`=? LIMIT 1;";
     private static final String SQL_COUNT_RACES = "SELECT COUNT(*) AS `total` FROM `races`;";
     private static final String SQL_UPDATE_RACE = "UPDATE `races` SET `status`=? WHERE `id`=?;";
-    private static final String SQL_SELECT_NEAREST_RACES = "SELECT * FROM `races` WHERE `status` != ?" +
-            " AND `started_at` > NOW() ORDER BY `started_at` ASC LIMIT ?;";
+    private static final String SQL_SELECT_NEAREST_RACES = "SELECT * FROM `races` WHERE `status` IS NULL " +
+            "AND `started_at` > NOW() ORDER BY `started_at` ASC LIMIT ? OFFSET ?;";
     private static final String SQL_ADD_RACE = "INSERT INTO `races` " +
             "(title, place, min_rate, track_length, bet_end_date, started_at) VALUES (?,?,?,?,?,?);";
 
@@ -215,8 +215,8 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
         ResultSet races;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_NEAREST_RACES)) {
-            preparedStatement.setBoolean(1, true);
-            preparedStatement.setInt(2, limit);
+            preparedStatement.setInt(1, limit);
+            preparedStatement.setInt(2, offset);
             races = preparedStatement.executeQuery();
 
             while (races.next()) {

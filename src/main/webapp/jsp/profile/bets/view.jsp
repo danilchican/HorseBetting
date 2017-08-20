@@ -7,6 +7,7 @@
 <fmt:setBundle basename="/localization/lang"/>
 
 <layout:account>
+    <c:set var="raceStatus" value="${!race.isAvailable() ? race.getStatus() : 'expect'}"/>
     <h3><fmt:message key="block.bets.title"/> #${bet.getId()}</h3>
     <div class="col-md-12">
         <p><b><fmt:message key="form.bets.amount"/>:</b> ${bet.getAmount()}$</p>
@@ -19,8 +20,19 @@
                 href="/races/view?id=${race.getId()}">${race.getTitle()}</a>
         </p>
         <p><b><fmt:message key="dashboard.form.races.place"/>:</b> ${race.getPlace()}</p>
+        <p>
+            <b><fmt:message key="dashboard.form.races.status"/>:</b>
+            <span class="label label-<fmt:message key="label.status.${raceStatus}"/>">
+                <fmt:message key="races.status.${raceStatus}"/>
+            </span>
+        </p>
         <p><b><fmt:message key="form.bets.participant"/>:</b> ${participant.getJockeyName()}</p>
         <p><b><fmt:message key="form.bets.created_at"/>:</b> ${f:formatDate(bet.getCreatedAt(), locale)}</p>
-        <!-- TODO if race is finished then display `is_winner` else display `in progress` text -->
+        <c:forEach items="${jockeys}" var="jockey">
+            <c:if test="${jockey.isWinner() && jockey.getId() == participant.getId()}">
+                <br/>
+                <p style="color: red"><fmt:message key="profile.bet.success"/></p>
+            </c:if>
+        </c:forEach>
     </div>
 </layout:account>

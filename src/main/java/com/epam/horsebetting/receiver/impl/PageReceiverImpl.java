@@ -375,10 +375,13 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
                 throw new ReceiverException("Cannot find race with id=" + participant.getRaceId());
             }
 
+            List<Participant> participants = participantDAO.findByRaceId(race.getId());
+
             transaction.commit();
 
             content.insertRequestAttribute("bet", bet);
             content.insertRequestAttribute("race", race);
+            content.insertRequestAttribute("jockeys", participants);
             content.insertRequestAttribute("participant", participant);
         } catch (DAOException e) {
             transaction.rollback();

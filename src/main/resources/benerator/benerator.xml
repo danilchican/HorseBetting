@@ -27,12 +27,12 @@
               password="{ftl:${DB_PASSWORD}}"
               catalog="{ftl:${DB_DATABASE}}"/>
 
-    <bean id="idGen" spec="new IncrementGenerator(1)"/>
+    <bean id="idGen" spec="new IncrementGenerator(2)"/>
     <bean id="winnerGen" spec="new IncrementGenerator(1)"/>
 
     <bean id="datetime_gen" class="DateTimeGenerator">
-        <property name="minDate" value="2017-01-01"/>
-        <property name="maxDate" value="2018-12-31"/>
+        <property name="minDate" value="2017-05-01"/>
+        <property name="maxDate" value="2018-05-25"/>
         <property name="dateDistribution" value="random"/>
         <property name="minTime" value="00:00:00"/>
         <property name="maxTime" value="23:59:00"/>
@@ -47,7 +47,7 @@
 
     <comment>Generating users</comment>
     <generate type="users" consumer="db">
-        <id name="id" generator="idGen"/>
+        <id mode="ignored"/>
         <reference name="role_id" targetType="roles" source="db" values="1"/>
         <attribute name="name" type="string" unique="true" values="'Vladislav'"/>
         <attribute name="email" type="string" unique="true" values="'danilchican@mail.ru'"/>
@@ -97,18 +97,18 @@
                    script="this.get('created_at') + (86400000 * RandomUtil.randomInt(3, 20))"/>
         <attribute name="bet_end_date" type="timestamp" script="this.get('started_at') - 86400000 * 2"/>
 
-        <attribute name="status" type="string" values="'completed','failed'" nullQuota="0.5"/>
+        <attribute name="status" type="string" values="'completed','failed'" nullQuota="0.6"/>
 
         <generate type="participants" count="{ftl:${MAX_PARTICIPANT_COUNT}}" consumer="db">
             <variable name="gen" generator="new IncrementGenerator(1)"/>
-            <variable name="asd" script="races.status" type="string"/>
+            <variable name="asd" script="races.status == 'completed'" type="boolean"/>
 
             <id name="id" mode="ignored"/>
             <reference name="horse_id" source="db" unique="true" targetType="horses" distribution="random"/>
             <reference name="race_id" source="db" targetType="horses" script="races.id"/>
             <attribute name="coefficient" type="big_decimal" min="1.2" max="10.00" granularity="0.03"
                        distribution="random"/>
-            <attribute name="is_winner" type="boolean" condition="asd == 'finished'"
+            <attribute name="is_winner" type="boolean" condition="asd == true"
                        script="{gen % 5 == 0 ? true : false}"/>
             <attribute name="is_winner" type="boolean" condition="asd != true" constant="false"/>
         </generate>
