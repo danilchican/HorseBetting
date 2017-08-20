@@ -169,6 +169,7 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
 
         String status = content.findParameter(RequestFieldConfig.Race.STATUS_FIELD);
         String raceNum = content.findParameter(RequestFieldConfig.Race.ID_FIELD);
+        String winnerNum = content.findParameter(RequestFieldConfig.Race.WINNER_FIELD);
 
         String[] participantsIds = content.findParameterValues(RequestFieldConfig.Race.SELECTED_HORSES_FIELD);
         String[] coeffs = content.findParameterValues(RequestFieldConfig.Race.HORSE_COEFFICIENTS_FIELD);
@@ -176,7 +177,7 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
         RaceValidator validator = new RaceValidator(locale);
         HashMap<Integer, BigDecimal> raceJockeys = new HashMap<>();
 
-        if (validator.validateEditRaceForm(status, participantsIds, coeffs)) {
+        if (validator.validateEditRaceForm(status, winnerNum, raceNum, participantsIds, coeffs)) {
             final int raceId = Integer.parseInt(raceNum);
 
             for (int i = 0; i < participantsIds.length; i++) {
@@ -204,16 +205,30 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
                 }
 
                 if (race.isAvailable()) {
-                    race.setStatus(status);
-                    RaceStatusType statusType = RaceStatusType.findByName(status);
+                    if (RaceStatusType.contains(status)) {
+                        RaceStatusType statusType = RaceStatusType.findByName(status);
+                        int winnerId = 0;
 
-                    // TODO add saving winner
-                    // TODO do changing coeffs
-                    // TODO check existing IDs of participants
-                    participantDAO.update(raceJockeys);
-                    raceDAO.update(race);
+                        if (statusType == RaceStatusType.COMPLETED) {
+                            if (!validator.validateRequiredWinner(winnerNum)) {
+                                transaction.rollback();
 
-                    this.actionByStatus(statusType, race, userDAO, betDAO);
+                                content.insertSessionAttribute(REQUEST_ERRORS, validator.getErrors());
+                                throw new ReceiverException("Race winner is incorrect.");
+                            }
+
+                            winnerId = Integer.parseInt(winnerNum);
+
+                            participantDAO.updateWinner(raceId, winnerId);
+                            participantDAO.update(raceJockeys);
+                        }
+
+                        this.actionByStatus(statusType, race, winnerId, userDAO, betDAO);
+                        race.setStatus(statusType.getName());
+                        raceDAO.updateStatus(race);
+                    } else {
+                        participantDAO.update(raceJockeys);
+                    }
 
                     transaction.commit();
 
@@ -265,30 +280,29 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
      *
      * @param status
      * @param race
+     * @param winnerId
      * @param userDAO
      * @param betDAO
-     * @throws DAOException
+     * @throws ReceiverException
      */
-    private void actionByStatus(RaceStatusType status, Race race, UserDAOImpl userDAO, BetDAOImpl betDAO) throws DAOException {
+    private void actionByStatus(RaceStatusType status, Race race, int winnerId, UserDAOImpl userDAO, BetDAOImpl betDAO)
+            throws ReceiverException, DAOException {
         final int raceId = race.getId();
 
-        List<Bet> bets = betDAO.findAllOfRace(raceId);
+        List<Bet> bets;
         List<User> users;
-
-        if (bets.isEmpty()) {
-            LOGGER.log(Level.INFO, "The race[id=" + raceId + "] does not have bets.");
-            return;
-        }
 
         switch (status) {
             case COMPLETED:
+                bets = betDAO.findAllWinnerBetsOfRace(raceId, winnerId);
                 users = calcBalanceForWinners(bets);
                 break;
             case FAILED:
+                bets = betDAO.findAllOfRace(raceId);
                 users = calcBalanceToReturnBack(bets);
                 break;
             default:
-                throw new DAOException("Undefined status of race.");
+                throw new ReceiverException("Undefined status of race.");
         }
 
         userDAO.updateBalanceForGroup(users);

@@ -45,6 +45,14 @@ public interface ParticipantDAO {
     void update(HashMap<Integer, BigDecimal> participants) throws DAOException;
 
     /**
+     * Update winner of race.
+     *
+     * @param raceId
+     * @param winnerId
+     */
+    void updateWinner(int raceId, int winnerId) throws DAOException;
+
+    /**
      * Extract participant data from result set
      * to participant instance.
      *

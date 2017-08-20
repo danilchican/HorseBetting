@@ -29,6 +29,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.*;
+import static com.epam.horsebetting.util.DateFormatter.HOUR_TIME;
 
 public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
@@ -410,10 +411,9 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
                 throw new ReceiverException("Cannot find recover by token[" + token + "].");
             }
 
-            final int oneHour = 36_000_00;
             final int minutesPerHour = 60;
 
-            Timestamp currDate = new Timestamp(new Date().getTime() + oneHour);
+            Timestamp currDate = new Timestamp(new Date().getTime() + HOUR_TIME);
 
             final int maxExpireMinutes = Integer.parseInt(env.obtainTokenExpirationTime()) * minutesPerHour;
             final int currentDiffMinutes = (int) DateFormatter.calcDateDiff(recover.getCreatedAt(), currDate, TimeUnit.MINUTES);

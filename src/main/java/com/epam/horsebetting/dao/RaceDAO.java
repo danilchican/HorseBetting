@@ -21,12 +21,12 @@ public interface RaceDAO {
     Race create(Race race) throws DAOException;
 
     /**
-     * Update race.
+     * Update race status.
      *
      * @param race
      * @throws DAOException
      */
-    void update(Race race) throws DAOException;
+    void updateStatus(Race race) throws DAOException;
 
     /**
      * Find race by id.

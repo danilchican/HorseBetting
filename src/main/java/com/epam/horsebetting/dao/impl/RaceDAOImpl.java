@@ -78,22 +78,22 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
     }
 
     /**
-     * Update race.
+     * Update race status.
      *
      * @param race
      * @throws DAOException
      */
     @Override
-    public void update(Race race) throws DAOException {
+    public void updateStatus(Race race) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_RACE)) {
             preparedStatement.setString(1, race.getStatus());
             preparedStatement.setInt(2, race.getId());
 
             if (preparedStatement.executeUpdate() != 1) {
-                throw new DAOException("Can't update race.");
+                throw new DAOException("Can't update race status.");
             }
         } catch (SQLException e) {
-            throw new DAOException("Can't update race. " + e.getMessage(), e);
+            throw new DAOException("Can't update race status. " + e.getMessage(), e);
         }
     }
 

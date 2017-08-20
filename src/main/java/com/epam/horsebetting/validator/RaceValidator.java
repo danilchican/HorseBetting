@@ -49,6 +49,8 @@ public class RaceValidator extends AbstractValidator {
     private static final String RACE_BET_END_DATE = PREFIX + "bet_end_date";
     private static final String RACE_STARTED_AT = PREFIX + "started_at";
     private static final String RACE_STATUS = PREFIX + "status";
+    private static final String RACE_WINNER = PREFIX + "winner";
+    private static final String RACE_ID = PREFIX + "id";
 
     /**
      * Default constructor.
@@ -113,10 +115,18 @@ public class RaceValidator extends AbstractValidator {
      * @param coeffs
      * @return boolean
      */
-    public boolean validateEditRaceForm(String status, String[] jockeys, String[] coeffs) {
+    public boolean validateEditRaceForm(String status, String winnerNum, String raceNum, String[] jockeys, String[] coeffs) {
         boolean isValidate = true;
 
         if (!validateStatus(status, RACE_STATUS)) {
+            isValidate = false;
+        }
+
+        if (!validateWinner(winnerNum, RACE_WINNER)) {
+            isValidate = false;
+        }
+
+        if (!validateInteger(raceNum, RequestFieldConfig.Race.ID_FIELD, RACE_ID, false)) {
             isValidate = false;
         }
 
@@ -181,6 +191,16 @@ public class RaceValidator extends AbstractValidator {
     }
 
     /**
+     * Validate required winner.
+     *
+     * @param winnerNum
+     * @return boolean
+     */
+    public boolean validateRequiredWinner(String winnerNum) {
+        return validateInteger(winnerNum, RequestFieldConfig.Race.WINNER_FIELD, RACE_WINNER, false);
+    }
+
+    /**
      * Validate status of the race.
      *
      * @param status
@@ -190,15 +210,12 @@ public class RaceValidator extends AbstractValidator {
     private boolean validateStatus(String status, String key) {
         if (status != null && !status.trim().isEmpty()) {
             if (!RaceStatusType.contains(status)) {
-                this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + VALIDATION_REQUIRED));
+                this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + VALIDATION_INCORRECT));
                 return false;
             }
-
-            return true;
         }
 
-        this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + VALIDATION_REQUIRED));
-        return false;
+        return true;
     }
 
     /**
@@ -263,6 +280,26 @@ public class RaceValidator extends AbstractValidator {
 
             this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + VALIDATION_REQUIRED));
             return false;
+        } catch (NumberFormatException e) {
+            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + VALIDATION_INCORRECT));
+            return false;
+        }
+    }
+
+    /**
+     * Validate winner number.
+     *
+     * @param number
+     * @param key
+     * @return boolean
+     */
+    private boolean validateWinner(String number, String key) {
+        try {
+            if (number != null && !number.trim().isEmpty()) {
+                int n = Integer.parseInt(number);
+            }
+
+            return true;
         } catch (NumberFormatException e) {
             this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + VALIDATION_INCORRECT));
             return false;

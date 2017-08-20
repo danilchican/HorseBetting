@@ -174,7 +174,7 @@
                                             <fmt:message key="dashboard.form.races.status"/>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <select id="race-status" required="required" class="form-control"
+                                            <select id="race-status" class="form-control"
                                                     name="race-status"
                                                     <c:if test="${!race.isAvailable()}">disabled</c:if>>
                                                 <c:set var="oldSuitId"><ctg:oldInputFormAttribute
@@ -196,7 +196,7 @@
                                             <fmt:message key="form.participants.is_winner"/>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <select id="race-winner" required="required" class="form-control"
+                                            <select id="race-winner" class="form-control"
                                                     name="race-winner"
                                                     <c:if test="${!race.isAvailable()}">disabled</c:if>>
                                                 <option></option>

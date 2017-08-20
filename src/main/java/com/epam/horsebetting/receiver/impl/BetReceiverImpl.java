@@ -24,11 +24,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.*;
+import static com.epam.horsebetting.util.DateFormatter.HOUR_TIME;
 
 public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
 
@@ -60,9 +60,8 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
 
             final int participantId = Integer.parseInt(participantAttr);
             final int userId = Integer.parseInt(userIdAttr);
-            final int oneHour = 36_000_00;
 
-            Timestamp currDate = new Timestamp(new Date().getTime() + oneHour);
+            Timestamp currDate = new Timestamp(new Date().getTime() + HOUR_TIME);
 
             BetDAOImpl betDAO = new BetDAOImpl(true);
             UserDAOImpl userDAO = new UserDAOImpl(true);

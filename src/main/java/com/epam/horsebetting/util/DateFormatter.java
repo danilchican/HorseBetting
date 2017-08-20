@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 public class DateFormatter {
 
     public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final int HOUR_TIME = 36_000_00;
 
     /**
      * Format date by locale.

@@ -26,7 +26,8 @@ public class ParticipantDAOImpl extends AbstractDAO<Participant> implements Part
     /**
      * SQL queries for ParticipantDAOImpl.
      */
-    private static final String SQL_UPDATE_PARTICIPANTS = "UPDATE `participants` SET `coefficient`=? WHERE `id`=?;";
+    private static final String SQL_UPDATE_PARTICIPANTS = "UPDATE `participants` SET `coefficient`=? WHERE `id`=?";
+    private static final String SQL_UPDATE_WINNER = "UPDATE `participants` SET `is_winner`=true WHERE `race_id`=? AND `id`=?;";
     private static final String SQL_INSERT_PARTICIPANTS = "INSERT INTO `participants` " +
             "(`horse_id`, `race_id`, `coefficient`)" + " VALUES (?,?,?);";
     private static final String SQL_FIND_PARTICIPANTS_BY_RACE_ID = "SELECT `p`.`id`, `p`.`horse_id`, " +
@@ -141,9 +142,29 @@ public class ParticipantDAOImpl extends AbstractDAO<Participant> implements Part
             }
 
             affectedHorses = statement.executeBatch();
-            LOGGER.log(Level.DEBUG, "Count of updated participants to race:" + Arrays.toString(affectedHorses));
+            LOGGER.log(Level.DEBUG, "Count of updated participants of race:" + Arrays.toString(affectedHorses));
         } catch (SQLException e) {
-            throw new DAOException("Cannot update participants to race. " + e.getMessage(), e);
+            throw new DAOException("Cannot update participants of race. " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Update winner of race.
+     *
+     * @param raceId
+     * @param winnerId
+     */
+    @Override
+    public void updateWinner(int raceId, int winnerId) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_WINNER)) {
+            preparedStatement.setInt(1, raceId);
+            preparedStatement.setInt(2, winnerId);
+
+            if (preparedStatement.executeUpdate() != 1) {
+                throw new DAOException("Can't update race winner.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't update race winner. " + e.getMessage(), e);
         }
     }
 
