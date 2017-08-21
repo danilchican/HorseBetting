@@ -18,6 +18,7 @@ public class User extends Entity {
     private String name;
     private String email;
     private String password;
+    private String rememberToken;
     private Timestamp createdAt;
 
     /**
@@ -113,6 +114,15 @@ public class User extends Entity {
     }
 
     /**
+     * Get remember token.
+     *
+     * @return remember token
+     */
+    public String getRememberToken() {
+        return rememberToken;
+    }
+
+    /**
      * Get user created time.
      *
      * @return user created time
@@ -182,6 +192,15 @@ public class User extends Entity {
      */
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
+    }
+
+    /**
+     * Set remember token of user.
+     *
+     * @param rememberToken
+     */
+    public void setRememberToken(String rememberToken) {
+        this.rememberToken = rememberToken;
     }
 
     /**

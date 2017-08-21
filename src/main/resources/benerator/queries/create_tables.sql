@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS `horsebetting`.`users` (
   `email` VARCHAR(255) NOT NULL,
   `password` VARCHAR(60) NOT NULL,
   `balance` DECIMAL(16,2) NOT NULL,
+  `remember_token` VARCHAR(60) NULL DEFAULT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC),
