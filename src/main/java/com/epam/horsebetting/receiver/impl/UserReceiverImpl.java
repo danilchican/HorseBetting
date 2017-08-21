@@ -31,7 +31,8 @@ import java.util.concurrent.TimeUnit;
 
 import static com.epam.horsebetting.config.EnvironmentConfig.DEFAULT_DELIMITER;
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.*;
-import static com.epam.horsebetting.util.DateFormatter.HOUR_TIME;
+import static com.epam.horsebetting.util.DateFormatter.MILLISECONDS_PER_HOUR;
+import static com.epam.horsebetting.util.DateFormatter.SECONDS_PER_HOUR;
 
 public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
@@ -451,7 +452,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
             final int minutesPerHour = 60;
 
-            Timestamp currDate = new Timestamp(new Date().getTime() + HOUR_TIME);
+            Timestamp currDate = new Timestamp(new Date().getTime() + MILLISECONDS_PER_HOUR);
 
             final int maxExpireMinutes = Integer.parseInt(env.obtainTokenExpirationTime()) * minutesPerHour;
             final int currentDiffMinutes = (int) DateFormatter.calcDateDiff(recover.getCreatedAt(), currDate, TimeUnit.MINUTES);
@@ -521,7 +522,6 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      */
     private boolean setRememberTokenCookie(RequestContent content, String rememberToken) throws ReceiverException {
         EnvironmentConfig env = new EnvironmentConfig();
-        final int SECONDS_PER_HOUR = 3600;
 
         try {
             int age = Integer.parseInt(env.obtainRememberTokenExpTime());

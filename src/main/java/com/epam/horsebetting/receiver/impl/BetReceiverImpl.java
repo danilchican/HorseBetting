@@ -28,7 +28,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.*;
-import static com.epam.horsebetting.util.DateFormatter.HOUR_TIME;
+import static com.epam.horsebetting.util.DateFormatter.MILLISECONDS_PER_HOUR;
 
 public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
 
@@ -61,7 +61,7 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
             final int participantId = Integer.parseInt(participantAttr);
             final int userId = Integer.parseInt(userIdAttr);
 
-            Timestamp currDate = new Timestamp(new Date().getTime() + HOUR_TIME);
+            Timestamp currDate = new Timestamp(new Date().getTime() + MILLISECONDS_PER_HOUR);
 
             BetDAOImpl betDAO = new BetDAOImpl(true);
             UserDAOImpl userDAO = new UserDAOImpl(true);
