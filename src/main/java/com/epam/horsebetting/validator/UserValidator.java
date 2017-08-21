@@ -27,6 +27,9 @@ public class UserValidator extends AbstractValidator {
     private static final String USER_PASSWORD = PREFIX + "password";
     private static final String USER_PAYMENT = PREFIX + "payment";
     private static final String USER_CONFIRMATION = PREFIX + "confirmation";
+    private static final String USER_REMEMBER = PREFIX + "remember";
+
+    private static final String SWITCH_ON = "on";
 
     /**
      * Default constructor.
@@ -73,9 +76,10 @@ public class UserValidator extends AbstractValidator {
      *
      * @param email
      * @param password
+     * @param remember
      * @return boolean
      */
-    public boolean validateLoginForm(String email, String password) {
+    public boolean validateLoginForm(String email, String password, String remember) {
         boolean isValidate = true;
 
         if (!validateEmail(email, RequestFieldConfig.User.EMAIL_FIELD, USER_EMAIL)) {
@@ -86,7 +90,24 @@ public class UserValidator extends AbstractValidator {
             isValidate = false;
         }
 
+        if (!validateRememberField(remember, USER_REMEMBER)) {
+            isValidate = false;
+        }
+
         return isValidate;
+    }
+
+    private boolean validateRememberField(String remember, String key) {
+        if (remember != null) {
+            if(SWITCH_ON.equals(remember)) {
+                return true;
+            }
+
+            this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + key + VALIDATION_INCORRECT));
+            return false;
+        }
+
+        return true;
     }
 
     /**

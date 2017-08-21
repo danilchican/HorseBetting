@@ -116,10 +116,11 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
         String email = content.findParameter(RequestFieldConfig.User.EMAIL_FIELD);
         String password = content.findParameter(RequestFieldConfig.User.PASSWORD_FIELD);
+        String remember = content.findParameter(RequestFieldConfig.User.REMEMBER_FIELD);
 
         UserValidator validator = new UserValidator(locale);
 
-        if (validator.validateLoginForm(email, password)) {
+        if (validator.validateLoginForm(email, password, remember)) {
             try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
                 User user = userDAO.attempt(email, password);
 

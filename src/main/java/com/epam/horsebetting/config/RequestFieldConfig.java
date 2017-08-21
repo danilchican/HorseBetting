@@ -9,6 +9,7 @@ public final class RequestFieldConfig {
         public static final String PASSWORD_FIELD = "password";
         public static final String CONFIRMATION_FIELD = "confirmation";
         public static final String PAYMENT_AMOUNT_FIELD = "payment-amount";
+        public static final String REMEMBER_FIELD = "remember";
     }
 
     public final class Suit {
