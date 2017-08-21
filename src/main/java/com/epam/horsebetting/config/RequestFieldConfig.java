@@ -53,6 +53,8 @@ public final class RequestFieldConfig {
         public static final String PASSWORD_RESET_TOKEN = "token";
         public static final String REFERER = "referer";
 
+        public static final String COOKIE_REMEMBER_TOKEN = "remember_token";
+
         public static final String SESSION_LOCALE = "locale";
         public static final String SESSION_AUTHORIZED = "authorized";
 

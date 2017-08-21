@@ -114,6 +114,14 @@ public interface UserDAO {
     void updateBalanceForGroup(List<User> users) throws DAOException;
 
     /**
+     * Set remember token of user.
+     *
+     * @param user
+     * @throws DAOException
+     */
+    void setRememberToken(User user) throws DAOException;
+
+    /**
      * Get total count of users.
      *
      * @return total count

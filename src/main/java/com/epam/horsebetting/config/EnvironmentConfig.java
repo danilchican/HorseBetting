@@ -19,7 +19,8 @@ public class EnvironmentConfig {
         MAIL_PASSWORD,
         MAIL_AUTH,
         MAIL_STARTTLS_ENABLE,
-        TOKEN_EXPIRE_TIME
+        TOKEN_EXPIRE_TIME,
+        REMEMBER_TOKEN_EXPIRE_TIME
     }
 
     /**
@@ -54,6 +55,7 @@ public class EnvironmentConfig {
     private static final String DEFAULT_APP_NAME = "No Name App";
     private static final String DEFAULT_APP_LOCALE = "ru";
     private static final String DEFAULT_TOKEN_EXPIRE_TIME = "1";
+    private static final String DEFAULT_REMEMBER_TOKEN_EXPIRE_TIME = "600";
 
     /**
      * Default mail variables.
@@ -106,6 +108,15 @@ public class EnvironmentConfig {
      */
     public String obtainTokenExpirationTime() {
         return retrievePropValue(EnvironmentProperties.TOKEN_EXPIRE_TIME, DEFAULT_TOKEN_EXPIRE_TIME);
+    }
+
+    /**
+     * Find remember token expiration time.
+     *
+     * @return remember token expiration time
+     */
+    public String obtainRememberTokenExpTime() {
+        return retrievePropValue(EnvironmentProperties.REMEMBER_TOKEN_EXPIRE_TIME, DEFAULT_REMEMBER_TOKEN_EXPIRE_TIME);
     }
 
     /**

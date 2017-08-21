@@ -9,6 +9,7 @@ public final class SQLFieldConfig {
         public static final String EMAIL = "email";
         public static final String PASSWORD = "password";
         public static final String BALANCE = "balance";
+        public static final String REMEMBER_TOKEN = "remember_token";
         public static final String CREATED_AT = "created_at";
     }
 

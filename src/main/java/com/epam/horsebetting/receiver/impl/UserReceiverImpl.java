@@ -23,11 +23,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.mail.*;
+import javax.servlet.http.Cookie;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import static com.epam.horsebetting.config.EnvironmentConfig.DEFAULT_DELIMITER;
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.*;
 import static com.epam.horsebetting.util.DateFormatter.HOUR_TIME;
 
@@ -121,22 +123,54 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         UserValidator validator = new UserValidator(locale);
 
         if (validator.validateLoginForm(email, password, remember)) {
-            try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
-                User user = userDAO.attempt(email, password);
+
+            UserDAOImpl userDAO = new UserDAOImpl(true);
+
+            TransactionManager transaction = new TransactionManager(userDAO);
+            transaction.beginTransaction();
+
+            try {
+                User user = userDAO.attempt(email, HashManager.make(password));
 
                 if (user == null) {
+                    transaction.rollback();
                     messages.add(messageResource.get("user.credentials.fail"));
                     content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
                     throw new ReceiverException("Cannot authenticate user. User is null.");
                 }
 
+                String rememberToken = user.getRememberToken();
+
+                if(remember != null) {
+                    if(rememberToken == null) {
+                        String hashData = user.getId() + user.getEmail() + user.getPassword() + new Date().getTime();
+                        rememberToken = HashManager.make(hashData);
+
+                        user.setRememberToken(rememberToken);
+                        userDAO.setRememberToken(user);
+                    }
+
+                    if(!this.setRememberTokenCookie(content, rememberToken)) {
+                        transaction.rollback();
+                        messages.add(messageResource.get("cookie.remember_token.fail"));
+                        content.insertSessionAttribute(REQUEST_ERRORS, messages);
+
+                        throw new ReceiverException("Cannot set remember token as Cookie.");
+                    }
+                }
+
+                transaction.commit();
+
                 this.authenticate(content, user);
             } catch (DAOException e) {
+                transaction.rollback();
                 messages.add(messageResource.get("user.credentials.fail"));
                 content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
+            } finally {
+                transaction.endTransaction();
             }
         } else {
             content.insertSessionAttribute(REQUEST_ERRORS, validator.getErrors());
@@ -156,9 +190,13 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
      */
     public void logout(RequestContent content) throws ReceiverException {
         Object authorized = content.findSessionAttribute(SESSION_AUTHORIZED);
+        Cookie rememberCookie = new Cookie(COOKIE_REMEMBER_TOKEN, null);
+        rememberCookie.setMaxAge(0);
+        rememberCookie.setPath(DEFAULT_DELIMITER);
 
         if (authorized != null) {
             content.removeSessionAttribute(SESSION_AUTHORIZED);
+            content.insertCookie(COOKIE_REMEMBER_TOKEN, rememberCookie);
         }
     }
 
@@ -472,6 +510,33 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
         content.insertSessionAttribute(SESSION_LOCALE, locale);
         LOGGER.log(Level.INFO, "The new locale was set: " + locale);
+    }
+
+    /**
+     * Set remember token cookie.
+     *
+     * @param content
+     * @param rememberToken
+     * @return boolean
+     */
+    private boolean setRememberTokenCookie(RequestContent content, String rememberToken) throws ReceiverException {
+        EnvironmentConfig env = new EnvironmentConfig();
+        final int SECONDS_PER_HOUR = 3600;
+
+        try {
+            int age = Integer.parseInt(env.obtainRememberTokenExpTime());
+            age *= SECONDS_PER_HOUR;
+
+            Cookie rememberCookie = new Cookie(COOKIE_REMEMBER_TOKEN, rememberToken);
+            rememberCookie.setMaxAge(age);
+            rememberCookie.setPath(DEFAULT_DELIMITER);
+            content.insertCookie(COOKIE_REMEMBER_TOKEN, rememberCookie);
+
+            return true;
+        } catch(NumberFormatException e) {
+            LOGGER.log(Level.ERROR, "Cannot parse remember token expiration time: " + e.getMessage());
+            return false;
+        }
     }
 
     /**

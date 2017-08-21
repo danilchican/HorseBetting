@@ -62,7 +62,7 @@ public class MainController extends HttpServlet {
             LOGGER.log(Level.DEBUG, "Content router: " + router);
 
             content.removeRequestAttribute(ROUTER_INSTANCE_NAME);
-            content.insertValues(request);
+            content.insertValues(request, response);
 
             switch (router.getType()) {
                 case REDIRECT:

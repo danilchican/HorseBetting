@@ -4,7 +4,9 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
@@ -41,6 +43,11 @@ public class RequestContent {
     private HashMap<String, String> requestHeaders;
 
     /**
+     * Cookie attributes.
+     */
+    private HashMap<String, Cookie> cookieAttributes;
+
+    /**
      * Session attribute names to remove.
      */
     private ArrayList<String> sessionAttrsToRemove;
@@ -58,6 +65,7 @@ public class RequestContent {
         this.requestParameters = new HashMap<>();
         this.requestArrayParameters = new HashMap<>();
         this.requestHeaders = new HashMap<>();
+        this.cookieAttributes = new HashMap<>();
 
         this.sessionAttributes = new HashMap<>();
         this.jsonData = new HashMap<>();
@@ -77,7 +85,7 @@ public class RequestContent {
             String paramName = (String) requestParameterNames.nextElement();
             String[] values = request.getParameterValues(paramName);
 
-            if(values.length > 1) {
+            if (values.length > 1) {
                 requestArrayParameters.put(paramName, values);
             } else {
                 requestParameters.put(paramName, values[0]);
@@ -118,37 +126,38 @@ public class RequestContent {
     }
 
     /**
-     * Remove attributes from session.
-     *
-     * @param session
-     */
-    private void removeSessionAttributes(HttpSession session) {
-        this.sessionAttrsToRemove.forEach(session::removeAttribute);
-    }
-
-    /**
      * Insert values to maps from request.
      *
      * @param request
      */
-    public void insertValues(HttpServletRequest request) {
+    public void insertValues(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
 
-        for (Map.Entry<String, Object> entry : requestAttributes.entrySet()) {
-            String key = entry.getKey();
-            Object value = entry.getValue();
-
-            request.setAttribute(key, value);
-        }
-
-        for (Map.Entry<String, Object> entry : sessionAttributes.entrySet()) {
-            String key = entry.getKey();
-            Object value = entry.getValue();
-
-            session.setAttribute(key, value);
-        }
+        this.requestAttributes.forEach(request::setAttribute);
+        this.sessionAttributes.forEach(session::setAttribute);
+        this.cookieAttributes.forEach((key, cookie) -> response.addCookie(cookie));
 
         this.removeSessionAttributes(session);
+    }
+
+    /**
+     * Find cookie value by key.
+     *
+     * @param key
+     * @return cookie object
+     */
+    public Cookie findCookie(String key) {
+        return this.cookieAttributes.get(key);
+    }
+
+    /**
+     * Insert new cookie.
+     *
+     * @param key
+     * @param value
+     */
+    public void insertCookie(String key, Cookie value) {
+        this.cookieAttributes.put(key, value);
     }
 
     /**
@@ -256,5 +265,14 @@ public class RequestContent {
      */
     public HashMap<String, Object> getJsonData() {
         return this.jsonData;
+    }
+
+    /**
+     * Remove attributes from session.
+     *
+     * @param session
+     */
+    private void removeSessionAttributes(HttpSession session) {
+        this.sessionAttrsToRemove.forEach(session::removeAttribute);
     }
 }

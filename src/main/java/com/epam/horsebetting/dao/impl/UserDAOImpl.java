@@ -36,12 +36,13 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     private static final String SQL_UPDATE_USER_SETTINGS = "UPDATE `users` SET `name`=? WHERE `id`=?;";
     private static final String SQL_UPDATE_USER_SECURITY = "UPDATE `users` SET `password`=? WHERE `id`=?;";
     private static final String SQL_UPDATE_USER_BALANCE = "UPDATE `users` SET `balance`=? WHERE `id`=?;";
+    private static final String SQL_UPDATE_USER_REMEMBER_TOKEN = "UPDATE `users` SET `remember_token`=? WHERE `id`=?;";
     private static final String SQL_COUNT_USERS = "SELECT COUNT(*) AS `total` FROM `users`;";
     private static final String SQL_ADD_USER = "INSERT INTO `users` (name, email, password, role_id, balance) " +
             "VALUES (?,?,?,?,?);";
-    private static final String SQL_SELECT_ALL_USERS = "SELECT `id`, `role_id`, `name`, `email`, `balance`, `created_at` " +
+    private static final String SQL_SELECT_ALL_USERS = "SELECT `id`, `role_id`, `name`, `email`, `balance`, `remember_token`, `created_at` " +
             "FROM `users`;";
-    private static final String SQL_SELECT_PART_USERS = "SELECT `id`, `role_id`, `name`, `email`, `balance`, `created_at` " +
+    private static final String SQL_SELECT_PART_USERS = "SELECT `id`, `role_id`, `name`, `email`, `balance`, `remember_token`, `created_at` " +
             "FROM `users` LIMIT ? OFFSET ?;";
 
     /**
@@ -220,6 +221,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
         user.setBalance(userDataSet.getBigDecimal(SQLFieldConfig.User.BALANCE));
         user.setName(userDataSet.getString(SQLFieldConfig.User.NAME));
         user.setEmail(userDataSet.getString(SQLFieldConfig.User.EMAIL));
+        user.setRememberToken(userDataSet.getString(SQLFieldConfig.User.REMEMBER_TOKEN));
         user.setCreatedAt(userDataSet.getTimestamp(SQLFieldConfig.User.CREATED_AT));
 
         return user;
@@ -240,7 +242,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_ATTEMPT_AUTH)) {
             preparedStatement.setString(1, email);
-            preparedStatement.setString(2, HashManager.make(password));
+            preparedStatement.setString(2, password);
 
             resultSet = preparedStatement.executeQuery();
 
@@ -336,6 +338,26 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
             LOGGER.log(Level.DEBUG, "Count of updated users:" + Arrays.toString(affectedUsers));
         } catch (SQLException e) {
             throw new DAOException("Cannot update winners balance. " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Set remember token of user.
+     *
+     * @param user
+     * @throws DAOException
+     */
+    @Override
+    public void setRememberToken(User user) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_USER_REMEMBER_TOKEN)) {
+            preparedStatement.setString(1, user.getRememberToken());
+            preparedStatement.setInt(2, user.getId());
+
+            if (preparedStatement.executeUpdate() != 1) {
+                throw new DAOException("Can't update user's remember_token.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't update user's remember_token. " + e.getMessage(), e);
         }
     }
 
