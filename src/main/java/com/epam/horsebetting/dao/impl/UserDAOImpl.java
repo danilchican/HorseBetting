@@ -31,6 +31,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
      * SQL queries for UserDAOImpl.
      */
     private static final String SQL_FIND_USER_BY_EMAIL = "SELECT * FROM `users` WHERE `email`=? LIMIT 1;";
+    private static final String SQL_FIND_USER_BY_REMEMBER_TOKEN = "SELECT * FROM `users` WHERE `remember_token`=? LIMIT 1;";
     private static final String SQL_FIND_USER_BY_ID = "SELECT * FROM `users` WHERE `id`=? LIMIT 1;";
     private static final String SQL_ATTEMPT_AUTH = "SELECT * FROM `users` WHERE `email`=? AND `password`=? LIMIT 1;";
     private static final String SQL_UPDATE_USER_SETTINGS = "UPDATE `users` SET `name`=? WHERE `id`=?;";
@@ -183,6 +184,31 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
             }
         } catch (SQLException e) {
             throw new DAOException("Can't find user[email=" + email + "]. " + e.getMessage(), e);
+        }
+
+        return user;
+    }
+
+    /**
+     * Find user by remember token.
+     *
+     * @param rememberToken
+     * @return user
+     */
+    @Override
+    public User findByRememberToken(String rememberToken) throws DAOException {
+        ResultSet resultSet;
+        User user = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USER_BY_REMEMBER_TOKEN)) {
+            preparedStatement.setString(1, rememberToken);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                user = extractFrom(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't find user[rememberToken=" + rememberToken + "]. " + e.getMessage(), e);
         }
 
         return user;

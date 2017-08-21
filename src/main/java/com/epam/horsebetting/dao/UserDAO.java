@@ -53,6 +53,14 @@ public interface UserDAO {
     User findByEmail(String email) throws DAOException;
 
     /**
+     * Find user by remember token.
+     *
+     * @param rememberToken
+     * @return user
+     */
+    User findByRememberToken(String rememberToken) throws DAOException;
+
+    /**
      * Extract user's data from result set to user instance.
      *
      * @param userDataSet
