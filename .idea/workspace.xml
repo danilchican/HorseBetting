@@ -4,11 +4,6 @@
     <list default="true" id="e9db2c3d-90c7-4a9a-9541-77ab3b3b2a13" name="Default" comment="Created method to get user by remember token.">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/filter/AuthUserFilter.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/filter/AuthUserFilter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/BetReceiverImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/BetReceiverImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/UserReceiverImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/UserReceiverImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/util/DateFormatter.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/util/DateFormatter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/config/local.env.properties" afterPath="$PROJECT_DIR$/src/main/resources/config/local.env.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
     </list>
     <ignored path="HorseBetting.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -1199,14 +1194,7 @@
       <workItem from="1503044137258" duration="5494000" />
       <workItem from="1503049720157" duration="1289000" />
       <workItem from="1503051051263" duration="41752000" />
-      <workItem from="1503145666096" duration="56137000" />
-    </task>
-    <task id="LOCAL-00213" summary="Created method to view user's bet.">
-      <created>1502724691226</created>
-      <option name="number" value="00213" />
-      <option name="presentableId" value="LOCAL-00213" />
-      <option name="project" value="LOCAL" />
-      <updated>1502724691226</updated>
+      <workItem from="1503145666096" duration="56197000" />
     </task>
     <task id="LOCAL-00214" summary="Created method to view user's bet.">
       <created>1502724755839</created>
@@ -1544,7 +1532,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503337342072</updated>
     </task>
-    <option name="localTasksCounter" value="262" />
+    <task id="LOCAL-00262" summary="Some changes.">
+      <created>1503337422494</created>
+      <option name="number" value="00262" />
+      <option name="presentableId" value="LOCAL-00262" />
+      <option name="project" value="LOCAL" />
+      <updated>1503337422494</updated>
+    </task>
+    <option name="localTasksCounter" value="263" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1580,7 +1575,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="890357000" />
+    <option name="totallyTimeSpent" value="890417000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1697,14 +1692,14 @@
     <MESSAGE value="Fixed front bags." />
     <MESSAGE value="Fixed removing bet." />
     <MESSAGE value="Fixed editing race." />
-    <MESSAGE value="Some changes." />
     <MESSAGE value="Fixed view &amp; bugs." />
     <MESSAGE value="Fixed races view." />
     <MESSAGE value="Added remember token field to user." />
     <MESSAGE value="Created validation for remember checkbox." />
     <MESSAGE value="Created generation &amp; removing remember token after login &amp; logout commands." />
     <MESSAGE value="Created method to get user by remember token." />
-    <option name="LAST_COMMIT_MESSAGE" value="Created method to get user by remember token." />
+    <MESSAGE value="Some changes." />
+    <option name="LAST_COMMIT_MESSAGE" value="Some changes." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
