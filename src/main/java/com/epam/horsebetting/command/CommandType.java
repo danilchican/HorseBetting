@@ -170,6 +170,12 @@ public enum CommandType {
             ((PageReceiverImpl) getCommand().getReceiver()).presentDashboardUsersPage(content);
         }
     },
+    DASHBOARD_USERS_VIEW("dashboard.users.view::get", new DashboardUserProfilePresendCommand(new PageReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((PageReceiverImpl) getCommand().getReceiver()).presentDashboardUserProfilePage(content);
+        }
+    },
     DASHBOARD_HORSES_INDEX("dashboard.horses::get", new DashboardHorsesPresentCommand(new PageReceiverImpl())) {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {

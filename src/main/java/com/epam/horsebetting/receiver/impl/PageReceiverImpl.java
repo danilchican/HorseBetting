@@ -456,6 +456,49 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
     }
 
     /**
+     * Present dashboard user profile page.
+     *
+     * @param content
+     */
+    @Override
+    public void presentDashboardUserProfilePage(RequestContent content) throws ReceiverException {
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+        MessageConfig messageResource = new MessageConfig(locale);
+
+        String idNum = content.findParameter(RequestFieldConfig.Common.REQUEST_ID);
+        CommonValidator validator = new CommonValidator(locale);
+
+        if (!validator.validateId(idNum)) {
+            throw new ReceiverException("GET[id=" + idNum + "] is incorrect.");
+        }
+
+        this.setPageSubTitle(messageResource.get("page.title.dashboard.users.profile"));
+        this.setDefaultContentAttributes(content);
+
+        UserDAOImpl userDAO = new UserDAOImpl(true);
+
+        TransactionManager transaction = new TransactionManager(userDAO);
+        transaction.beginTransaction();
+
+        try {
+            int userId = Integer.parseInt(idNum);
+            User user = userDAO.find(userId);
+
+            transaction.commit();
+
+            content.insertRequestAttribute("user", user);
+        } catch (NumberFormatException e) {
+            transaction.rollback();
+            throw new ReceiverException("Cannot convert user id. GET[id]=" + e.getMessage(), e);
+        } catch (DAOException e) {
+            transaction.rollback();
+            throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        } finally {
+            transaction.endTransaction();
+        }
+    }
+
+    /**
      * Present dashboard suits page.
      *
      * @param content

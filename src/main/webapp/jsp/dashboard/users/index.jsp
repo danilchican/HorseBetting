@@ -42,7 +42,7 @@
                                                 <div class="left col-xs-7">
                                                     <h2>${user.getName()}</h2>
                                                     <p><strong><fmt:message
-                                                            key="dashboard.form.users.role"/>:</strong> ${user.getRoleName()}
+                                                            key="dashboard.form.users.group"/>:</strong> ${user.getRoleName()}
                                                     </p>
                                                     <ul class="list-unstyled">
                                                         <li><strong><fmt:message
@@ -69,10 +69,10 @@
                                                     <button type="button" class="btn btn-success btn-xs"><i
                                                             class="fa fa-user">
                                                     </i> <i class="fa fa-comments-o"></i></button>
-                                                    <button type="button" class="btn btn-primary btn-xs">
+                                                    <a href="/dashboard/users/view?id=${user.getId()}" class="btn btn-primary btn-xs">
                                                         <i class="fa fa-user"> </i> <fmt:message
                                                             key="dashboard.form.users.view_profile"/>
-                                                    </button>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>

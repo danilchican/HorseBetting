@@ -104,6 +104,13 @@ public interface PageReceiver {
     void presentDashboardUsersPage(RequestContent content) throws ReceiverException;
 
     /**
+     * Present dashboard user profile page.
+     *
+     * @param content
+     */
+    void presentDashboardUserProfilePage(RequestContent content) throws ReceiverException;
+
+    /**
      * Present dashboard suits page.
      *
      * @param content
