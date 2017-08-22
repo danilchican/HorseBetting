@@ -22,6 +22,8 @@ public class UserValidator extends AbstractValidator {
      * Constants of user validation data.
      */
     private static final String PREFIX = "user.";
+    private static final String USER_ID = PREFIX + "id";
+    private static final String USER_ROLE = PREFIX + "role";
     private static final String USER_NAME = PREFIX + "name";
     private static final String USER_EMAIL = PREFIX + "email";
     private static final String USER_PASSWORD = PREFIX + "password";
@@ -65,6 +67,27 @@ public class UserValidator extends AbstractValidator {
         }
 
         if (!validateConfirmation(password, passwordConfirmation)) {
+            isValidate = false;
+        }
+
+        return isValidate;
+    }
+
+    /**
+     * Validate update role form in dashboard.
+     *
+     * @param userId
+     * @param roleId
+     * @return boolean
+     */
+    public boolean validateUpdateRoleForm(String userId, String roleId) {
+        boolean isValidate = true;
+
+        if (!validateInteger(userId, RequestFieldConfig.User.ID_FIELD, USER_ID, false)) {
+            isValidate = false;
+        }
+
+        if (!validateInteger(roleId, RequestFieldConfig.User.ROLE_FIELD, USER_ROLE, false)) {
             isValidate = false;
         }
 

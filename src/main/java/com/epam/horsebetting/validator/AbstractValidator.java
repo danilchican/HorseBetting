@@ -101,18 +101,6 @@ public abstract class AbstractValidator {
     }
 
     /**
-     * Validate default name.
-     *
-     * @param name
-     * @param attributeName
-     * @param key
-     * @return boolean
-     */
-    boolean validateDefaultName(String name, String attributeName, String key, boolean saveInput) {
-        return validateString(name, attributeName, key, saveInput, DEFAULT_STRING_REGEX);
-    }
-
-    /**
      * Validate fate format.
      *
      * @param date
