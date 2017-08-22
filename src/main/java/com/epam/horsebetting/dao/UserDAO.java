@@ -1,5 +1,6 @@
 package com.epam.horsebetting.dao;
 
+import com.epam.horsebetting.entity.Role;
 import com.epam.horsebetting.entity.User;
 import com.epam.horsebetting.exception.DAOException;
 
@@ -27,6 +28,14 @@ public interface UserDAO {
     List<User> findAll() throws DAOException;
 
     /**
+     * Find all user's roles.
+     *
+     * @return list of roles
+     * @throws DAOException
+     */
+    List<Role> findAllRoles() throws DAOException;
+
+    /**
      * Obtain part of users.
      *
      * @param limit
@@ -43,6 +52,14 @@ public interface UserDAO {
      * @return user
      */
     User find(int id) throws DAOException;
+
+    /**
+     * Find Role by id.
+     *
+     * @param id
+     * @return role
+     */
+    Role findRole(int id) throws DAOException;
 
     /**
      * Find user by email.
@@ -88,6 +105,15 @@ public interface UserDAO {
      * @throws DAOException
      */
     User attempt(String email, String password) throws DAOException;
+
+    /**
+     * Update user's role.
+     *
+     * @param userId
+     * @param roleId
+     * @throws DAOException
+     */
+    void updateRole(int userId, int roleId) throws DAOException;
 
     /**
      * Update user's settings.

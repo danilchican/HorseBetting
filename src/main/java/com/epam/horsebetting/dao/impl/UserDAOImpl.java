@@ -3,6 +3,7 @@ package com.epam.horsebetting.dao.impl;
 import com.epam.horsebetting.config.SQLFieldConfig;
 import com.epam.horsebetting.dao.AbstractDAO;
 import com.epam.horsebetting.dao.UserDAO;
+import com.epam.horsebetting.entity.Role;
 import com.epam.horsebetting.entity.User;
 import com.epam.horsebetting.exception.DAOException;
 import com.epam.horsebetting.type.RoleType;
@@ -33,9 +34,12 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     private static final String SQL_FIND_USER_BY_EMAIL = "SELECT * FROM `users` WHERE `email`=? LIMIT 1;";
     private static final String SQL_FIND_USER_BY_REMEMBER_TOKEN = "SELECT * FROM `users` WHERE `remember_token`=? LIMIT 1;";
     private static final String SQL_FIND_USER_BY_ID = "SELECT * FROM `users` WHERE `id`=? LIMIT 1;";
+    private static final String SQL_FIND_ROLE_BY_ID = "SELECT * FROM `roles` WHERE `id`=? LIMIT 1;";
+    private static final String SQL_SELECT_ALL_ROLES = "SELECT * FROM `roles`;";
     private static final String SQL_ATTEMPT_AUTH = "SELECT * FROM `users` WHERE `email`=? AND `password`=? LIMIT 1;";
     private static final String SQL_UPDATE_USER_SETTINGS = "UPDATE `users` SET `name`=? WHERE `id`=?;";
     private static final String SQL_UPDATE_USER_SECURITY = "UPDATE `users` SET `password`=? WHERE `id`=?;";
+    private static final String SQL_UPDATE_USER_ROLE = "UPDATE `users` SET `role_id`=? WHERE `id`=?;";
     private static final String SQL_UPDATE_USER_BALANCE = "UPDATE `users` SET `balance`=? WHERE `id`=?;";
     private static final String SQL_UPDATE_USER_REMEMBER_TOKEN = "UPDATE `users` SET `remember_token`=? WHERE `id`=?;";
     private static final String SQL_COUNT_USERS = "SELECT COUNT(*) AS `total` FROM `users`;";
@@ -111,6 +115,33 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     }
 
     /**
+     * Find all user's roles.
+     *
+     * @return list of roles
+     * @throws DAOException
+     */
+    @Override
+    public List<Role> findAllRoles() throws DAOException {
+        List<Role> foundedRoles = new ArrayList<>();
+        ResultSet roles;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL_ROLES)) {
+            roles = preparedStatement.executeQuery();
+
+            while (roles.next()) {
+                Role role = new Role();
+                role.setId(roles.getInt(SQLFieldConfig.Role.ID));
+                role.setName(roles.getString(SQLFieldConfig.Role.NAME));
+                foundedRoles.add(role);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Cannot retrieve role list. " + e.getMessage(), e);
+        }
+
+        return foundedRoles;
+    }
+
+    /**
      * Obtain part of users.
      *
      * @param limit
@@ -162,6 +193,33 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
         }
 
         return user;
+    }
+
+    /**
+     * Find Role by id.
+     *
+     * @param id
+     * @return role
+     */
+    @Override
+    public Role findRole(int id) throws DAOException {
+        ResultSet resultSet;
+        Role role = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ROLE_BY_ID)) {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                role = new Role();
+                role.setId(resultSet.getInt(SQLFieldConfig.Role.ID));
+                role.setName(resultSet.getString(SQLFieldConfig.Role.NAME));
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't find role[id=" + id + "]. " + e.getMessage(), e);
+        }
+
+        return role;
     }
 
     /**
@@ -280,6 +338,27 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
         }
 
         return user;
+    }
+
+    /**
+     * Update user's role.
+     *
+     * @param userId
+     * @param roleId
+     * @throws DAOException
+     */
+    @Override
+    public void updateRole(int userId, int roleId) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_USER_ROLE)) {
+            preparedStatement.setInt(1, roleId);
+            preparedStatement.setInt(2, userId);
+
+            if (preparedStatement.executeUpdate() != 1) {
+                throw new DAOException("Can't update user's role.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't update user's role. " + e.getMessage(), e);
+        }
     }
 
     /**

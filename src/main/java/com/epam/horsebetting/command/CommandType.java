@@ -176,6 +176,12 @@ public enum CommandType {
             ((PageReceiverImpl) getCommand().getReceiver()).presentDashboardUserProfilePage(content);
         }
     },
+    DASHBOARD_USERS_UPDATE_ROLE("dashboard.users.role.update::post", new DashboardUpdateUserRoleCommand(new UserReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) throws ReceiverException {
+            ((UserReceiverImpl) getCommand().getReceiver()).updateRole(content);
+        }
+    },
     DASHBOARD_HORSES_INDEX("dashboard.horses::get", new DashboardHorsesPresentCommand(new PageReceiverImpl())) {
         @Override
         public void doReceiver(RequestContent content) throws ReceiverException {

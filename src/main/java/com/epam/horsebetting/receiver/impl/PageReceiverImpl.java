@@ -2,7 +2,6 @@ package com.epam.horsebetting.receiver.impl;
 
 import com.epam.horsebetting.config.RequestFieldConfig;
 import com.epam.horsebetting.config.MessageConfig;
-import com.epam.horsebetting.dao.ParticipantDAO;
 import com.epam.horsebetting.dao.impl.*;
 import com.epam.horsebetting.database.TransactionManager;
 import com.epam.horsebetting.entity.*;
@@ -483,10 +482,12 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         try {
             int userId = Integer.parseInt(idNum);
             User user = userDAO.find(userId);
+            List<Role> roles = userDAO.findAllRoles();
 
             transaction.commit();
 
             content.insertRequestAttribute("user", user);
+            content.insertRequestAttribute("roles", roles);
         } catch (NumberFormatException e) {
             transaction.rollback();
             throw new ReceiverException("Cannot convert user id. GET[id]=" + e.getMessage(), e);

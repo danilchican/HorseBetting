@@ -4,7 +4,9 @@ public final class RequestFieldConfig {
 
     public final class User {
         private static final String PREFIX = "user-";
+        public static final String ID_FIELD = PREFIX + "id";
         public static final String NAME_FIELD = PREFIX + "name";
+        public static final String ROLE_FIELD = PREFIX + "role";
         public static final String EMAIL_FIELD = "email";
         public static final String PASSWORD_FIELD = "password";
         public static final String CONFIRMATION_FIELD = "confirmation";

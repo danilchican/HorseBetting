@@ -63,6 +63,13 @@ public interface UserReceiver {
     void resetPassword(RequestContent content) throws ReceiverException;
 
     /**
+     * Update user role.
+     *
+     * @param content
+     */
+    void updateRole(RequestContent content) throws ReceiverException;
+
+    /**
      * Change locale.
      *
      * @param content

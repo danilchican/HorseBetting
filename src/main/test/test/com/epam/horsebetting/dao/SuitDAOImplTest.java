@@ -1,5 +1,6 @@
 package test.com.epam.horsebetting.dao;
 
+import com.epam.horsebetting.config.SQLFieldConfig;
 import com.epam.horsebetting.dao.impl.SuitDAOImpl;
 import com.epam.horsebetting.database.ConnectionPool;
 import com.epam.horsebetting.database.ProxyConnection;
@@ -48,7 +49,7 @@ public class SuitDAOImplTest {
         suit.setName("SuitMockito");
 
         when(resultSet.first()).thenReturn(true);
-        when(resultSet.getString(2)).thenReturn(suit.getName());
+        when(resultSet.getString(SQLFieldConfig.Suit.NAME)).thenReturn(suit.getName());
         when(stmt.executeQuery()).thenReturn(resultSet);
     }
 

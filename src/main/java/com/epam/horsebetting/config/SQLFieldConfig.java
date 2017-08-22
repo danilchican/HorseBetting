@@ -2,6 +2,11 @@ package com.epam.horsebetting.config;
 
 public final class SQLFieldConfig {
 
+    public final class Role {
+        public static final String ID = "id";
+        public static final String NAME = "name";
+    }
+
     public final class User {
         public static final String ID = "id";
         public static final String ROLE_ID = "role_id";

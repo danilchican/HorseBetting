@@ -7,6 +7,7 @@ import com.epam.horsebetting.dao.impl.PasswordRecoverDAOImpl;
 import com.epam.horsebetting.dao.impl.UserDAOImpl;
 import com.epam.horsebetting.database.TransactionManager;
 import com.epam.horsebetting.entity.PasswordRecover;
+import com.epam.horsebetting.entity.Role;
 import com.epam.horsebetting.entity.User;
 import com.epam.horsebetting.exception.DAOException;
 import com.epam.horsebetting.exception.ReceiverException;
@@ -143,8 +144,8 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
                 String rememberToken = user.getRememberToken();
 
-                if(remember != null) {
-                    if(rememberToken == null) {
+                if (remember != null) {
+                    if (rememberToken == null) {
                         String hashData = user.getId() + user.getEmail() + user.getPassword() + new Date().getTime();
                         rememberToken = HashManager.make(hashData);
 
@@ -152,7 +153,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
                         userDAO.setRememberToken(user);
                     }
 
-                    if(!this.setRememberTokenCookie(content, rememberToken)) {
+                    if (!this.setRememberTokenCookie(content, rememberToken)) {
                         transaction.rollback();
                         messages.add(messageResource.get("cookie.remember_token.fail"));
                         content.insertSessionAttribute(REQUEST_ERRORS, messages);
@@ -493,6 +494,72 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
     }
 
     /**
+     * Update user role.
+     *
+     * @param content
+     */
+    @Override
+    public void updateRole(RequestContent content) throws ReceiverException {
+        Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+        MessageConfig messageResource = new MessageConfig(locale);
+        MessageWrapper messages = new MessageWrapper();
+
+        String userIdAttr = content.findParameter(RequestFieldConfig.User.ID_FIELD);
+        String userRoleIdAttr = content.findParameter(RequestFieldConfig.User.ROLE_FIELD);
+
+        UserValidator validator = new UserValidator(locale);
+        UserDAOImpl userDAO = new UserDAOImpl(true);
+
+        TransactionManager transaction = new TransactionManager(userDAO);
+        transaction.beginTransaction();
+
+        if (validator.validateUpdateRoleForm(userIdAttr, userRoleIdAttr)) {
+            try {
+                int userId = Integer.parseInt(userIdAttr);
+                int roleId = Integer.parseInt(userRoleIdAttr);
+
+                User user = userDAO.find(userId);
+                Role role = userDAO.findRole(roleId);
+
+                if(user == null) {
+                    transaction.rollback();
+                    messages.add(messageResource.get("user.not_found"));
+                    content.insertSessionAttribute(REQUEST_ERRORS, messages);
+
+                    throw new ReceiverException("Cannot find user. User is null.");
+                }
+
+                if(role == null) {
+                    transaction.rollback();
+                    messages.add(messageResource.get("validation.user.role.incorrect"));
+                    content.insertSessionAttribute(REQUEST_ERRORS, messages);
+
+                    throw new ReceiverException("Cannot find role[id=" + roleId + "].");
+                }
+
+                userDAO.updateRole(userId, roleId);
+                transaction.commit();
+
+                messages.add(messageResource.get("dashboard.user.role.update.success"));
+                content.insertSessionAttribute(REQUEST_MESSAGES, messages);
+            } catch (DAOException e) {
+                transaction.rollback();
+
+                messages.add(messageResource.get("profile.password.change.fail"));
+                content.insertSessionAttribute(REQUEST_MESSAGES, messages);
+
+                throw new ReceiverException("Database Error. " + e.getMessage(), e);
+            } finally {
+                transaction.endTransaction();
+            }
+        } else {
+            content.insertSessionAttribute(REQUEST_ERRORS, validator.getErrors());
+            throw new ReceiverException("Invalid user data.");
+        }
+
+    }
+
+    /**
      * Change locale.
      *
      * @param content
@@ -533,7 +600,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
             content.insertCookie(COOKIE_REMEMBER_TOKEN, rememberCookie);
 
             return true;
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             LOGGER.log(Level.ERROR, "Cannot parse remember token expiration time: " + e.getMessage());
             return false;
         }
