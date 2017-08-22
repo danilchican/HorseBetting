@@ -227,12 +227,12 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
+        String userIdAttr = String.valueOf(content.findSessionAttribute(SESSION_AUTHORIZED));
+
         this.setPageSubTitle(messageResource.get("page.title.profile.index"));
         this.setDefaultContentAttributes(content);
 
         try (BetDAOImpl betDAO = new BetDAOImpl(false)) {
-            String userIdAttr = String.valueOf(content.findSessionAttribute(SESSION_AUTHORIZED));
-
             final int id = Integer.parseInt(userIdAttr);
             final int totalUserBets = betDAO.getTotalForUser(id);
 
@@ -285,6 +285,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
 
         String userIdAttr = String.valueOf(content.findSessionAttribute(SESSION_AUTHORIZED));
         String pageNum = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
+
         CommonValidator validator = new CommonValidator(locale);
 
         if (!validator.validatePage(pageNum)) {
@@ -433,6 +434,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
             final int limit = 10;
             final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
             final int offset = (page - 1) * limit;
+
             final int totalUsers = userDAO.getTotalCount();
 
             List<User> users = userDAO.obtainPart(limit, offset);
@@ -482,11 +484,11 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         try {
             int userId = Integer.parseInt(idNum);
             User user = userDAO.find(userId);
-            List<Role> roles = userDAO.findAllRoles();
 
+            List<Role> roles = userDAO.findAllRoles();
             transaction.commit();
 
-            content.insertRequestAttribute("user", user);
+            content.insertRequestAttribute("viewedUser", user);
             content.insertRequestAttribute("roles", roles);
         } catch (NumberFormatException e) {
             transaction.rollback();
@@ -542,6 +544,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
             final int limit = 10;
             final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
             final int offset = (page - 1) * limit;
+
             final int totalHorses = horseDAO.getTotalCount();
 
             List<Horse> horses = horseDAO.obtainPart(limit, offset);
@@ -669,10 +672,10 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
             final int limit = 10;
             final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
             final int offset = (page - 1) * limit;
+
             final int totalRaces = raceDAO.getTotalCount();
 
             List<Race> races = raceDAO.obtainPart(limit, offset);
-
             transaction.commit();
 
             content.insertRequestAttribute("races", races);

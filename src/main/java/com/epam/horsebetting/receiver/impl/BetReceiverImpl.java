@@ -81,7 +81,7 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
 
                     messages.add(messageResource.get("user.not_found"));
                     content.insertJsonAttribute(REQUEST_ERRORS, messages.findAll());
-                    content.insertJsonAttribute("success", false);
+                    content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
 
                     throw new ReceiverException(messageResource.get("user.not_found"));
                 }
@@ -91,7 +91,7 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
 
                     messages.add(messageResource.get("dashboard.participant.undefined"));
                     content.insertJsonAttribute(REQUEST_ERRORS, messages.findAll());
-                    content.insertJsonAttribute("success", false);
+                    content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
 
                     throw new ReceiverException(messageResource.get("dashboard.participant.undefined"));
                 }
@@ -104,7 +104,7 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
 
                         messages.add(messageResource.get("dashboard.race.not_found"));
                         content.insertJsonAttribute(REQUEST_ERRORS, messages.findAll());
-                        content.insertJsonAttribute("success", false);
+                        content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
 
                         throw new ReceiverException(messageResource.get("dashboard.race.not_found"));
                     }
@@ -125,13 +125,13 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
                                 transaction.commit();
 
                                 content.insertJsonAttribute("message", messageResource.get("dashboard.bet.create.success"));
-                                content.insertJsonAttribute("success", true);
+                                content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, true);
                             } else {
                                 transaction.rollback();
 
                                 messages.add(messageResource.get("dashboard.bet.create.balance_less"));
                                 content.insertJsonAttribute(REQUEST_ERRORS, messages.findAll());
-                                content.insertJsonAttribute("success", false);
+                                content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
 
                                 throw new ReceiverException(messageResource.get("dashboard.bet.create.balance_less"));
                             }
@@ -140,7 +140,7 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
 
                             messages.add(messageResource.get("dashboard.bet.create.amount_less"));
                             content.insertJsonAttribute(REQUEST_ERRORS, messages.findAll());
-                            content.insertJsonAttribute("success", false);
+                            content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
 
                             throw new ReceiverException(messageResource.get("dashboard.bet.create.amount_less"));
                         }
@@ -149,7 +149,7 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
 
                         messages.add(messageResource.get("dashboard.bet.race.finished"));
                         content.insertJsonAttribute(REQUEST_ERRORS, messages.findAll());
-                        content.insertJsonAttribute("success", false);
+                        content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
 
                         throw new ReceiverException(messageResource.get("dashboard.bet.race.finished"));
                     }
@@ -158,7 +158,7 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
 
                     messages.add(messageResource.get("dashboard.participant.duplicated"));
                     content.insertJsonAttribute(REQUEST_ERRORS, messages.findAll());
-                    content.insertJsonAttribute("success", false);
+                    content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
 
                     throw new ReceiverException(messageResource.get("dashboard.participant.duplicated"));
                 }
@@ -167,7 +167,7 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
 
                 messages.add(messageResource.get("dashboard.bet.create.fail"));
                 content.insertJsonAttribute(REQUEST_ERRORS, messages.findAll());
-                content.insertJsonAttribute("success", false);
+                content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             } finally {
@@ -175,7 +175,7 @@ public class BetReceiverImpl extends AbstractReceiver implements BetReceiver {
             }
         } else {
             content.insertJsonAttribute(REQUEST_ERRORS, validator.getErrors());
-            content.insertJsonAttribute("success", false);
+            content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
         }
     }
 

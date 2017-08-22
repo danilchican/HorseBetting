@@ -32,7 +32,7 @@
                                              alt="Avatar">
                                     </div>
                                 </div>
-                                <h3>${user.getName()}</h3>
+                                <h3>${viewedUser.getName()}</h3>
 
                                 <ul class="list-unstyled user_data">
                                     <li><i class="fa fa-map-marker user-profile-icon"></i> San Francisco, California,
@@ -40,23 +40,22 @@
                                     </li>
                                     <li>
                                         <form action="/dashboard/users/role/update" method="post">
-                                            <input type="hidden" name="user-id">
+                                            <input type="hidden" name="user-id" value="${viewedUser.getId()}">
+                                            <i class="fa fa-briefcase user-profile-icon"></i>
                                             <select name="user-role" id="user-role" onchange="this.form.submit()">
                                                 <c:forEach items="${roles}" var="role">
                                                     <option value="${role.getId()}"
-                                                            <c:if test="${role.getId() == user.getRoleId()}">selected</c:if>>
+                                                            <c:if test="${role.getId() == viewedUser.getRoleId()}">selected</c:if>>
                                                             ${role.getName()}
                                                     </option>
                                                 </c:forEach>
                                             </select>
                                         </form>
-
-                                        <i class="fa fa-briefcase user-profile-icon"></i> ${user.getRoleName()}
                                     </li>
 
                                     <li class="m-top-xs">
                                         <i class="fa fa-external-link user-profile-icon"></i>
-                                        <a href="mailto:${user.getEmail()}" target="_blank">${user.getEmail()}</a>
+                                        <a href="mailto:${viewedUser.getEmail()}" target="_blank">${viewedUser.getEmail()}</a>
                                     </li>
                                 </ul>
                             </div>

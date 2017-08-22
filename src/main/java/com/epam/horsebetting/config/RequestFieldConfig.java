@@ -64,5 +64,7 @@ public final class RequestFieldConfig {
         public static final String REQUEST_USER = "user";
         public static final String REQUEST_ERRORS = "errors";
         public static final String REQUEST_MESSAGES = "messages";
+
+        public static final String AJAX_REQUEST_SUCCESS = "success";
     }
 }

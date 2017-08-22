@@ -35,7 +35,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     private static final String SQL_FIND_USER_BY_REMEMBER_TOKEN = "SELECT * FROM `users` WHERE `remember_token`=? LIMIT 1;";
     private static final String SQL_FIND_USER_BY_ID = "SELECT * FROM `users` WHERE `id`=? LIMIT 1;";
     private static final String SQL_FIND_ROLE_BY_ID = "SELECT * FROM `roles` WHERE `id`=? LIMIT 1;";
-    private static final String SQL_SELECT_ALL_ROLES = "SELECT * FROM `roles`;";
+    private static final String SQL_SELECT_ALL_ROLES = "SELECT * FROM `roles` ORDER BY `id` ASC;";
     private static final String SQL_ATTEMPT_AUTH = "SELECT * FROM `users` WHERE `email`=? AND `password`=? LIMIT 1;";
     private static final String SQL_UPDATE_USER_SETTINGS = "UPDATE `users` SET `name`=? WHERE `id`=?;";
     private static final String SQL_UPDATE_USER_SECURITY = "UPDATE `users` SET `password`=? WHERE `id`=?;";

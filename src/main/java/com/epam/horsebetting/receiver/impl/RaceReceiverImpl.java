@@ -197,7 +197,6 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
 
                 if (race == null) {
                     transaction.rollback();
-
                     messages.add(messageResource.get("dashboard.race.not_found"));
                     content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
@@ -212,8 +211,8 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
                         if (statusType == RaceStatusType.COMPLETED) {
                             if (!validator.validateRequiredWinner(winnerNum)) {
                                 transaction.rollback();
-
                                 content.insertSessionAttribute(REQUEST_ERRORS, validator.getErrors());
+
                                 throw new ReceiverException("Race winner is incorrect.");
                             }
 

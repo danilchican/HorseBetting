@@ -54,20 +54,20 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
             try (SuitDAOImpl suitDAO = new SuitDAOImpl(false)) {
                 List<Suit> suits = suitDAO.obtainPart(step, offset);
 
-                content.insertJsonAttribute("success", true);
+                content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, true);
                 content.insertJsonAttribute("suits", suits);
 
                 LOGGER.log(Level.DEBUG, "Obtained suits part: " + Arrays.toString(suits.toArray()));
             } catch (DAOException e) {
                 messages.add(messageResource.get("error.undefined"));
 
-                content.insertJsonAttribute("success", false);
+                content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
                 content.insertJsonAttribute(REQUEST_ERRORS, messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             }
         } else {
-            content.insertJsonAttribute("success", false);
+            content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
             content.insertJsonAttribute(REQUEST_ERRORS, validator.getErrors());
         }
     }
@@ -109,14 +109,14 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
                     content.insertJsonAttribute("suit", createdSuit);
                     content.insertJsonAttribute(REQUEST_MESSAGES, messages);
 
-                    content.insertJsonAttribute("success", true);
+                    content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, true);
                 } else {
                     transaction.rollback();
 
                     messages.add(messageResource.get("dashboard.suit.create.duplicated"));
 
                     content.insertJsonAttribute(REQUEST_ERRORS, messages);
-                    content.insertJsonAttribute("success", false);
+                    content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
                 }
             } catch (DAOException e) {
                 transaction.rollback();
@@ -124,7 +124,7 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
                 messages.add(messageResource.get("dashboard.suit.create.fail"));
 
                 content.insertJsonAttribute(REQUEST_ERRORS, messages);
-                content.insertJsonAttribute("success", false);
+                content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             } finally {
@@ -132,7 +132,7 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
             }
         } else {
             content.insertJsonAttribute(REQUEST_ERRORS, validator.getErrors());
-            content.insertJsonAttribute("success", false);
+            content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
         }
     }
 
@@ -151,10 +151,12 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
 
         String idNumber = content.findParameter(RequestFieldConfig.Suit.ID_FIELD);
         String name = content.findParameter(RequestFieldConfig.Suit.NAME_FIELD);
+
         SuitValidator validator = new SuitValidator(locale);
 
         if (validator.validateSuit(idNumber, name)) {
             final int id = Integer.parseInt(idNumber);
+
             Suit suit = new Suit(id);
             suit.setName(name);
 
@@ -171,13 +173,13 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
 
                     messages.add(messageResource.get("dashboard.suit.update.success"));
                     content.insertJsonAttribute(REQUEST_MESSAGES, messages);
-                    content.insertJsonAttribute("success", true);
+                    content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, true);
                 } else {
                     transaction.rollback();
 
                     messages.add(messageResource.get("dashboard.suit.update.undefined"));
                     content.insertJsonAttribute(REQUEST_ERRORS, messages);
-                    content.insertJsonAttribute("success", false);
+                    content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
 
                     throw new ReceiverException("Suit with such id does not exist or name is not unique.");
                 }
@@ -186,7 +188,7 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
 
                 messages.add(messageResource.get("dashboard.suit.update.fail"));
                 content.insertJsonAttribute(REQUEST_ERRORS, messages);
-                content.insertJsonAttribute("success", false);
+                content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             } finally {
@@ -194,7 +196,7 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
             }
         } else {
             content.insertJsonAttribute(REQUEST_ERRORS, validator.getErrors());
-            content.insertJsonAttribute("success", false);
+            content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
         }
     }
 
@@ -232,20 +234,20 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
 
                     messages.add(messageResource.get("dashboard.suit.remove.success"));
                     content.insertJsonAttribute(REQUEST_MESSAGES, messages);
-                    content.insertJsonAttribute("success", true);
+                    content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, true);
                 } else {
                     transaction.rollback();
 
                     messages.add(messageResource.get("dashboard.suit.remove.undefined"));
                     content.insertJsonAttribute(REQUEST_ERRORS, messages);
-                    content.insertJsonAttribute("success", false);
+                    content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
                 }
             } catch (DAOException e) {
                 transaction.rollback();
 
                 messages.add(messageResource.get("dashboard.suit.remove.fail"));
                 content.insertJsonAttribute(REQUEST_ERRORS, messages);
-                content.insertJsonAttribute("success", false);
+                content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
             } finally {
@@ -253,7 +255,7 @@ public class SuitReceiverImpl extends AbstractReceiver implements SuitReceiver {
             }
         } else {
             content.insertJsonAttribute(REQUEST_ERRORS, validator.getErrors());
-            content.insertJsonAttribute("success", false);
+            content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
         }
     }
 

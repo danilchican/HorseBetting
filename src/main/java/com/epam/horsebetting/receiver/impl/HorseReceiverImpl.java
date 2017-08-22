@@ -22,9 +22,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_ERRORS;
-import static com.epam.horsebetting.config.RequestFieldConfig.Common.REQUEST_MESSAGES;
-import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_LOCALE;
+import static com.epam.horsebetting.config.RequestFieldConfig.Common.*;
 
 public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver {
 
@@ -69,7 +67,7 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
             SuitDAOImpl suitDAO = new SuitDAOImpl(true);
             HorseDAOImpl horseDAO = new HorseDAOImpl(true);
 
-            TransactionManager transaction = new TransactionManager(horseDAO);
+            TransactionManager transaction = new TransactionManager(horseDAO, suitDAO);
             transaction.beginTransaction();
 
             try {
@@ -141,12 +139,12 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
         try (HorseDAOImpl horseDAO = new HorseDAOImpl(false)) {
             List<Horse> horses = horseDAO.findAll();
 
-            content.insertJsonAttribute("success", true);
+            content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, true);
             content.insertJsonAttribute("horses", horses);
         } catch (DAOException e) {
             messages.add(messageResource.get("error.undefined"));
 
-            content.insertJsonAttribute("success", false);
+            content.insertJsonAttribute(AJAX_REQUEST_SUCCESS, false);
             content.insertJsonAttribute(REQUEST_ERRORS, messages);
 
             throw new ReceiverException("Database Error: " + e.getMessage(), e);
@@ -171,8 +169,8 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
         if (validator.validateRemoveHorse(idValue)) {
             int id = Integer.parseInt(idValue);
 
-            Horse suit = new Horse(id);
-            LOGGER.log(Level.DEBUG, "Want remove horse: " + suit);
+            Horse horse = new Horse(id);
+            LOGGER.log(Level.DEBUG, "Want remove horse: " + horse);
 
             HorseDAOImpl horseDAO = new HorseDAOImpl(true);
 
@@ -181,7 +179,7 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
 
             try {
                 if (horseDAO.find(id) != null) {
-                    horseDAO.remove(suit);
+                    horseDAO.remove(horse);
                     transaction.commit();
 
                     messages.add(messageResource.get("dashboard.horse.remove.success"));
@@ -197,7 +195,7 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
             } catch (DAOException e) {
                 transaction.rollback();
 
-                messages.add(messageResource.get("dashboard.horse.fail"));
+                messages.add(messageResource.get("dashboard.horse.remove.fail"));
                 content.insertSessionAttribute(REQUEST_ERRORS, messages);
 
                 throw new ReceiverException("Database Error: " + e.getMessage(), e);
@@ -249,7 +247,7 @@ public class HorseReceiverImpl extends AbstractReceiver implements HorseReceiver
             SuitDAOImpl suitDAO = new SuitDAOImpl(true);
             HorseDAOImpl horseDAO = new HorseDAOImpl(true);
 
-            TransactionManager transaction = new TransactionManager(horseDAO);
+            TransactionManager transaction = new TransactionManager(horseDAO, suitDAO);
             transaction.beginTransaction();
 
             try {

@@ -61,19 +61,20 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
             MessageWrapper messages = new MessageWrapper();
             MessageConfig messageResource = new MessageConfig(locale);
 
+            User user = new User(email, password);
+            user.setName(name);
+
             UserDAOImpl userDAO = new UserDAOImpl(true);
-            User newUser = new User(email, password);
-            newUser.setName(name);
 
             TransactionManager transaction = new TransactionManager(userDAO);
             transaction.beginTransaction();
 
             try {
-                if (!isUserExists(userDAO, newUser)) {
-                    User user = userDAO.create(newUser);
+                if (!isUserExists(userDAO, user)) {
+                    User createdUser = userDAO.create(user);
 
                     transaction.commit();
-                    this.authenticate(content, user);
+                    this.authenticate(content, createdUser);
                 } else {
                     transaction.rollback();
 
@@ -125,7 +126,6 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         UserValidator validator = new UserValidator(locale);
 
         if (validator.validateLoginForm(email, password, remember)) {
-
             UserDAOImpl userDAO = new UserDAOImpl(true);
 
             TransactionManager transaction = new TransactionManager(userDAO);
@@ -163,7 +163,6 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
                 }
 
                 transaction.commit();
-
                 this.authenticate(content, user);
             } catch (DAOException e) {
                 transaction.rollback();
@@ -193,6 +192,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
     public void logout(RequestContent content) throws ReceiverException {
         Object authorized = content.findSessionAttribute(SESSION_AUTHORIZED);
         Cookie rememberCookie = new Cookie(COOKIE_REMEMBER_TOKEN, null);
+
         rememberCookie.setMaxAge(0);
         rememberCookie.setPath(DEFAULT_DELIMITER);
 
@@ -215,11 +215,10 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         MessageConfig messageResource = new MessageConfig(locale);
 
         String name = content.findParameter(RequestFieldConfig.User.NAME_FIELD);
-
+        String userIdAttr = String.valueOf(content.findSessionAttribute(SESSION_AUTHORIZED));
         UserValidator validator = new UserValidator(locale);
 
         if (validator.validateUpdateSettingsForm(name)) {
-            String userIdAttr = String.valueOf(content.findSessionAttribute(SESSION_AUTHORIZED));
             int userId = Integer.parseInt(userIdAttr);
 
             User authorizedUser = new User(userId);
@@ -256,11 +255,11 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
         String password = content.findParameter(RequestFieldConfig.User.PASSWORD_FIELD);
         String confirmation = content.findParameter(RequestFieldConfig.User.CONFIRMATION_FIELD);
+        String userIdAttr = String.valueOf(content.findSessionAttribute(SESSION_AUTHORIZED));
 
         UserValidator validator = new UserValidator(locale);
 
         if (validator.validateSecurityForm(password, confirmation)) {
-            String userIdAttr = String.valueOf(content.findSessionAttribute(SESSION_AUTHORIZED));
             int userId = Integer.parseInt(userIdAttr);
 
             User authorizedUser = new User(userId);
@@ -296,11 +295,10 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         MessageConfig messageResource = new MessageConfig(locale);
 
         String paymentAmount = content.findParameter(RequestFieldConfig.User.PAYMENT_AMOUNT_FIELD);
-
+        String userIdAttr = String.valueOf(content.findSessionAttribute(SESSION_AUTHORIZED));
         UserValidator validator = new UserValidator(locale);
 
         if (validator.validateUpdateProfileBalanceForm(paymentAmount)) {
-            String userIdAttr = String.valueOf(content.findSessionAttribute(SESSION_AUTHORIZED));
             int userId = Integer.parseInt(userIdAttr);
 
             try (UserDAOImpl userDAO = new UserDAOImpl(false)) {
@@ -423,6 +421,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
     @Override
     public void resetPassword(RequestContent content) throws ReceiverException {
         Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+
         MessageConfig messageResource = new MessageConfig(locale);
         MessageWrapper messages = new MessageWrapper();
 
@@ -452,7 +451,6 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
             }
 
             final int minutesPerHour = 60;
-
             Timestamp currDate = new Timestamp(new Date().getTime() + MILLISECONDS_PER_HOUR);
 
             final int maxExpireMinutes = Integer.parseInt(env.obtainTokenExpirationTime()) * minutesPerHour;
@@ -501,6 +499,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
     @Override
     public void updateRole(RequestContent content) throws ReceiverException {
         Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
+
         MessageConfig messageResource = new MessageConfig(locale);
         MessageWrapper messages = new MessageWrapper();
 
@@ -508,12 +507,13 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         String userRoleIdAttr = content.findParameter(RequestFieldConfig.User.ROLE_FIELD);
 
         UserValidator validator = new UserValidator(locale);
-        UserDAOImpl userDAO = new UserDAOImpl(true);
-
-        TransactionManager transaction = new TransactionManager(userDAO);
-        transaction.beginTransaction();
 
         if (validator.validateUpdateRoleForm(userIdAttr, userRoleIdAttr)) {
+            UserDAOImpl userDAO = new UserDAOImpl(true);
+
+            TransactionManager transaction = new TransactionManager(userDAO);
+            transaction.beginTransaction();
+
             try {
                 int userId = Integer.parseInt(userIdAttr);
                 int roleId = Integer.parseInt(userRoleIdAttr);
@@ -595,10 +595,11 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
             age *= SECONDS_PER_HOUR;
 
             Cookie rememberCookie = new Cookie(COOKIE_REMEMBER_TOKEN, rememberToken);
+
             rememberCookie.setMaxAge(age);
             rememberCookie.setPath(DEFAULT_DELIMITER);
-            content.insertCookie(COOKIE_REMEMBER_TOKEN, rememberCookie);
 
+            content.insertCookie(COOKIE_REMEMBER_TOKEN, rememberCookie);
             return true;
         } catch (NumberFormatException e) {
             LOGGER.log(Level.ERROR, "Cannot parse remember token expiration time: " + e.getMessage());
