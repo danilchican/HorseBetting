@@ -3,10 +3,8 @@ package com.epam.horsebetting.dao;
 import com.epam.horsebetting.entity.Race;
 import com.epam.horsebetting.exception.DAOException;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 
 public interface RaceDAO {

@@ -7,19 +7,16 @@ import com.epam.horsebetting.entity.Role;
 import com.epam.horsebetting.entity.User;
 import com.epam.horsebetting.exception.DAOException;
 import com.epam.horsebetting.type.RoleType;
-import com.epam.horsebetting.util.HashManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
 

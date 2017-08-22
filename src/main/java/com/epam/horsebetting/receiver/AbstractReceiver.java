@@ -3,9 +3,6 @@ package com.epam.horsebetting.receiver;
 import com.epam.horsebetting.command.CommandType;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.request.RequestContent;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public abstract class AbstractReceiver {
 

@@ -1,12 +1,10 @@
 package com.epam.horsebetting.entity;
 
 import com.epam.horsebetting.type.RoleType;
-import com.epam.horsebetting.util.DateFormatter;
 import com.epam.horsebetting.util.HashManager;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 
 public class User extends Entity {
 

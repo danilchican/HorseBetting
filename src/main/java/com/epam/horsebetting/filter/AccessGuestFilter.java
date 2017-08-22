@@ -1,8 +1,5 @@
 package com.epam.horsebetting.filter;
 
-import com.epam.horsebetting.dao.impl.UserDAOImpl;
-import com.epam.horsebetting.entity.User;
-import com.epam.horsebetting.exception.DAOException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.HashMap;
 
 import static com.epam.horsebetting.config.RequestFieldConfig.Common.SESSION_AUTHORIZED;
 

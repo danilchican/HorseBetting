@@ -5,8 +5,6 @@ import com.epam.horsebetting.dao.AbstractDAO;
 import com.epam.horsebetting.dao.PasswordRecoverDAO;
 import com.epam.horsebetting.entity.PasswordRecover;
 import com.epam.horsebetting.exception.DAOException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

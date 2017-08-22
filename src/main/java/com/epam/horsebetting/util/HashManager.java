@@ -1,9 +1,6 @@
 package com.epam.horsebetting.util;
 
-import com.epam.horsebetting.entity.User;
 import org.apache.commons.codec.digest.DigestUtils;
-
-import java.util.Date;
 
 public class HashManager {
 
