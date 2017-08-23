@@ -6,7 +6,7 @@
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
-            <a href="/dashboard" class="site_title"><i class="fa fa-magnet"></i> <span>HorseBetting</span></a>
+            <a href="/dashboard" class="site_title"><i class="fa fa-magnet"></i> <span>${pageTitle}</span></a>
         </div>
 
         <div class="clearfix"></div>

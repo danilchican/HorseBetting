@@ -7,5 +7,4 @@ window.$ = window.jQuery = require('jquery');
 
 require('bootstrap');
 require('fastclick');
-require('nprogress');
 require('gauge.js');

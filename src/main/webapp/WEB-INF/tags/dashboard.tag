@@ -19,7 +19,7 @@
 
         <!-- footer content -->
         <footer>
-            <div class="pull-right">HorseBetting.com</div>
+            <div class="pull-right">${pageTitle}</div>
             <div class="clearfix"></div>
         </footer>
         <!-- /footer content -->
@@ -28,6 +28,5 @@
 
 <jsp:include page="${pageContext.request.contextPath}/jsp/dashboard/partials/footer.jsp"/>
 <jsp:invoke fragment="includeScripts" />
-
 </body>
 </html>

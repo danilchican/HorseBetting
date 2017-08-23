@@ -17,7 +17,7 @@ public class SuitDAOImpl extends AbstractDAO<Suit> implements SuitDAO {
     /**
      * SQL queries for SuitDAOImpl.
      */
-    private static final String SQL_SELECT_SUITS = "SELECT * FROM `suits`;";
+    private static final String SQL_SELECT_SUITS = "SELECT * FROM `suits` ORDER BY `id` ASC;";
     private static final String SQL_FIND_SUIT_BY_ID = "SELECT * FROM `suits` WHERE `id`=? LIMIT 1;";
     private static final String SQL_FIND_SUIT_BY_NAME = "SELECT * FROM `suits` WHERE `name`=? LIMIT 1;";
     private static final String SQL_SELECT_PART_SUITS = "SELECT * FROM `suits` ORDER BY `id` LIMIT ? OFFSET ?;";

@@ -86,7 +86,7 @@ public class Horse extends Entity {
      * @return gender name
      */
     public String getGenderAsName() {
-        return isMale() ? "Male" : "Female";
+        return isMale() ? "male" : "female";
     }
 
     /**

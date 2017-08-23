@@ -19,7 +19,6 @@
     "jquery": "^2.2.3",
     "bootstrap": "^3.3.7",
     "fastclick": "^1.0.6",
-    "nprogress": "^0.2.0",
     "gauge.js": "*"
   },
   "scripts": {
