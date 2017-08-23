@@ -14,5 +14,7 @@ And you're done!
 * MySQL
 * Tomcat 8.5
 * Mockito (testing tool)
+* VueJS
+* Bootstrap 3
 * Databene benerator v0.9.8
 * Gentelella (dashboard template)

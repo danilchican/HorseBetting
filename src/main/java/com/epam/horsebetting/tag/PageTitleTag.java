@@ -56,7 +56,7 @@ public class PageTitleTag extends TagSupport {
             JspWriter out = pageContext.getOut();
 
             if(!subTitle.isEmpty()) {
-                resultTitle.append(" - ").append(subTitle);
+                resultTitle.append(" | ").append(subTitle);
             }
 
             out.write(resultTitle.toString());

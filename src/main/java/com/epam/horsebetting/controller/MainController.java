@@ -56,25 +56,24 @@ public class MainController extends HttpServlet {
             Router router = (Router) content.findRequestAttribute(ROUTER_INSTANCE_NAME);
 
             if (router == null) {
-                throw new RouteNotFoundException("Cannot find attribute[" + ROUTER_INSTANCE_NAME + "]. Router is null.");
+                LOGGER.log(Level.ERROR, "Cannot find attribute[" + ROUTER_INSTANCE_NAME + "]. Router is null.");
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            } else {
+                LOGGER.log(Level.DEBUG, "Content router: " + router);
+
+                content.removeRequestAttribute(ROUTER_INSTANCE_NAME);
+                content.insertValues(request, response);
+
+                switch (router.getType()) {
+                    case REDIRECT:
+                        response.sendRedirect(getServletContext().getContextPath() + router.getRoute());
+                        break;
+                    case FORWARD:
+                        request.getRequestDispatcher(router.getRoute()).forward(request, response);
+                        break;
+                }
             }
-
-            LOGGER.log(Level.DEBUG, "Content router: " + router);
-
-            content.removeRequestAttribute(ROUTER_INSTANCE_NAME);
-            content.insertValues(request, response);
-
-            switch (router.getType()) {
-                case REDIRECT:
-                    response.sendRedirect(getServletContext().getContextPath() + router.getRoute());
-                    break;
-                case FORWARD:
-                    request.getRequestDispatcher(router.getRoute()).forward(request, response);
-                    break;
-                default:
-                    throw new RouteNotFoundException("Router type not founded.");
-            }
-        } catch (CommandTypeNotFoundException | RouteNotFoundException e) {
+        } catch (CommandTypeNotFoundException e) {
             LOGGER.log(Level.ERROR, e.getMessage(), e);
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }

@@ -7,6 +7,17 @@
 <fmt:setBundle basename="/localization/lang"/>
 
 <layout:app>
+    <div class="jumbotron">
+        <div class="container">
+            <h1><fmt:message key="dashboard.message.welcome"/>!</h1>
+            <p><fmt:message key="index.about"/></p>
+            <p>
+                <a class="btn btn-primary btn-lg" href="/auth/register" role="button">
+                    <fmt:message key="button.join"/> &raquo
+                </a>
+            </p>
+        </div>
+    </div>
     <div class="container">
         <c:if test="${not empty races}">
             <div class="row">
