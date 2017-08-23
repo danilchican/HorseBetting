@@ -3,8 +3,7 @@ package com.epam.horsebetting.type;
 public enum RoleType {
     GUEST(0, "Guest"),
     ADMINISTRATOR(1, "Administrator"),
-    MODERATOR(2, "Moderator"),
-    CLIENT(3, "Client");
+    CLIENT(2, "Client");
 
     /**
      * Role id.

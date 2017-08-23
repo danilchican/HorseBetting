@@ -180,30 +180,6 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `horsebetting`.`news`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `horsebetting`.`news` ;
-
-CREATE TABLE IF NOT EXISTS `horsebetting`.`news` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` INT(10) UNSIGNED NOT NULL,
-  `title` VARCHAR(255) NOT NULL,
-  `slug` VARCHAR(45) NOT NULL,
-  `content` TEXT NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  UNIQUE INDEX `slug_UNIQUE` (`slug` ASC),
-  INDEX `news_user_id_foreign_idx` (`user_id` ASC),
-  CONSTRAINT `news_user_id_foreign`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `horsebetting`.`users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `horsebetting`.`password_resets`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `horsebetting`.`password_resets` ;
