@@ -41,9 +41,9 @@ public class ProfilePresentCommand extends AbstractCommand {
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);
-            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.PROFILE_INDEX);
+            page = PageConfig.getInstance().takePage(PageConfig.Page.PROFILE_INDEX);
         } catch (ReceiverException e) {
-            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.NOT_FOUND);
+            page = PageConfig.getInstance().takePage(PageConfig.Page.NOT_FOUND);
             LOGGER.log(Level.ERROR, e);
         }
 

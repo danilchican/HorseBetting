@@ -7,6 +7,5 @@
     <a href="/profile" class="list-group-item ${commandName eq 'profile::get' ? 'active' : ''}"><fmt:message key="account.menu.sidebar.main_info"/></a>
     <a href="/profile/payment" class="list-group-item ${commandName eq 'profile.payment::get' ? 'active' : ''}"><fmt:message key="account.menu.sidebar.replenish"/></a>
     <a href="/profile/bets" class="list-group-item ${commandName eq 'profile.bets::get' ? 'active' : ''}"><fmt:message key="account.menu.sidebar.bets"/></a>
-    <a href="/profile/comments" class="list-group-item ${commandName eq 'profile.comments::get' ? 'active' : ''}"><span class="badge pull-right">0</span> <fmt:message key="account.menu.sidebar.comments"/></a>
     <a href="/profile/settings" class="list-group-item ${commandName eq 'profile.settings::get' ? 'active' : ''}"><fmt:message key="account.menu.sidebar.settings"/></a>
 </div>

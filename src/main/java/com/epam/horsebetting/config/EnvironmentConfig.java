@@ -52,7 +52,7 @@ public class EnvironmentConfig {
      * Default app variables.
      */
     private static final String DEFAULT_APP_URL = "http://localhost:8080";
-    private static final String DEFAULT_APP_NAME = "No Name App";
+    private static final String DEFAULT_APP_NAME = "HorseBetting";
     private static final String DEFAULT_APP_LOCALE = "ru";
     private static final String DEFAULT_TOKEN_EXPIRE_TIME = "1";
     private static final String DEFAULT_REMEMBER_TOKEN_EXPIRE_TIME = "600";

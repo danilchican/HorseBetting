@@ -2,7 +2,7 @@ package com.epam.horsebetting.entity;
 
 import java.util.HashMap;
 
-public class Entity {
+public abstract class Entity {
 
     /**
      * Attributes for entity from JOIN query.

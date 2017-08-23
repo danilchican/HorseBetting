@@ -1,5 +1,6 @@
 package com.epam.horsebetting.filter;
 
+import com.epam.horsebetting.config.PageConfig;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,6 +32,7 @@ public class AccessGuestFilter implements Filter {
 
         HttpSession session = request.getSession();
         Object userObj = session.getAttribute(SESSION_AUTHORIZED);
+        String page;
 
         LOGGER.log(Level.DEBUG, this.getClass().getName() + " has worked.");
 
@@ -38,7 +40,8 @@ public class AccessGuestFilter implements Filter {
             chain.doFilter(req, resp);
         } else {
             LOGGER.log(Level.DEBUG, "User already authenticated. Redirected to profile.");
-            response.sendRedirect("/profile");
+            page = PageConfig.getInstance().takeAddress(PageConfig.Page.PROFILE_INDEX);
+            response.sendRedirect(page);
         }
     }
 

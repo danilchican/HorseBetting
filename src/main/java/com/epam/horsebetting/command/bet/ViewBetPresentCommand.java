@@ -41,9 +41,9 @@ public class ViewBetPresentCommand extends AbstractCommand {
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);
-            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.PROFILE_BETS_VIEW);
+            page = PageConfig.getInstance().takePage(PageConfig.Page.PROFILE_BETS_VIEW);
         } catch (ReceiverException e) {
-            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.NOT_FOUND);
+            page = PageConfig.getInstance().takePage(PageConfig.Page.NOT_FOUND);
             LOGGER.log(Level.ERROR, e);
         }
 

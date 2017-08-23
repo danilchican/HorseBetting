@@ -1,5 +1,6 @@
 package com.epam.horsebetting.listener;
 
+import com.epam.horsebetting.config.EnvironmentConfig;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,7 +22,9 @@ public class HttpSessionListenerImpl implements HttpSessionListener {
 
     @Override
     public void sessionCreated(HttpSessionEvent event) {
-        Locale locale = new Locale("ru", "RU");
+        EnvironmentConfig env = new EnvironmentConfig();
+
+        Locale locale = new Locale(env.obtainLocale());
         event.getSession().setAttribute(SESSION_LOCALE, locale);
         LOGGER.log(Level.INFO, "Created locale by default: " + locale);
     }

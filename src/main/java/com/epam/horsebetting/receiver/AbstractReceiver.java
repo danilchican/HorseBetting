@@ -1,15 +1,11 @@
 package com.epam.horsebetting.receiver;
 
 import com.epam.horsebetting.command.CommandType;
+import com.epam.horsebetting.config.EnvironmentConfig;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.request.RequestContent;
 
 public abstract class AbstractReceiver {
-
-    /**
-     * Page title.
-     */
-    private static final String PAGE_TITLE = "HorseBetting.com";
 
     /**
      * Page sub title.
@@ -32,7 +28,8 @@ public abstract class AbstractReceiver {
      * @param content
      */
     protected void setDefaultContentAttributes(RequestContent content) {
-        content.insertRequestAttribute("pageTitle", PAGE_TITLE);
+        EnvironmentConfig env = new EnvironmentConfig();
+        content.insertRequestAttribute("pageTitle", env.obtainAppName());
         content.insertRequestAttribute("pageSubTitle", pageSubTitle);
     }
 

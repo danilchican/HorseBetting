@@ -87,7 +87,7 @@ public class AuthUserFilter implements Filter {
                         LOGGER.log(Level.INFO, "User authorized via remember token.");
                     }
                 } catch (DAOException e) {
-                    throw new ServletException("Cannot retrieve data about authorized user.", e);
+                    throw new ServletException("Cannot retrieve data about authorized user. " + e.getMessage(), e);
                 }
             }
         }

@@ -2,6 +2,7 @@ package com.epam.horsebetting.command.user;
 
 import com.epam.horsebetting.command.AbstractCommand;
 import com.epam.horsebetting.command.CommandType;
+import com.epam.horsebetting.config.PageConfig;
 import com.epam.horsebetting.exception.CommandTypeNotFoundException;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.AbstractReceiver;
@@ -36,7 +37,8 @@ public class UpdateProfileBalanceCommand extends AbstractCommand {
     @Override
     public void execute(RequestContent request) throws CommandTypeNotFoundException {
         String commandName = String.valueOf(request.findRequestAttribute(COMMAND_INSTANCE_NAME));
-        Router router = new Router("/profile/payment", Router.RouteType.REDIRECT);
+        String page = PageConfig.getInstance().takeAddress(PageConfig.Page.PROFILE_PAYMENT);
+        Router router = new Router(page, Router.RouteType.REDIRECT);
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);

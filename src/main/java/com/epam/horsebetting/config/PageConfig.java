@@ -11,7 +11,7 @@ import static com.epam.horsebetting.config.EnvironmentConfig.DEFAULT_DELIMITER;
 
 public class PageConfig {
 
-    public enum PageConfigType {
+    public enum Page {
         WELCOME, AUTH_LOGIN, AUTH_REGISTER, NOT_FOUND,
         RACES_INDEX, RACES_VIEW, RESET_PASSWORD, RESET_LINK_PASSWORD,
         PROFILE_INDEX, PROFILE_SETTINGS, PROFILE_PAYMENT,
@@ -43,6 +43,12 @@ public class PageConfig {
     private static final String DEFAULT_NOT_FOUND_PATH = "/jsp/errors/404.jsp";
 
     /**
+     * Constants.
+     */
+    public static final String ROOT = "/";
+    private static final String URL_POSTFIX = ".URL";
+
+    /**
      * Default private constructor.
      */
     private PageConfig() {
@@ -70,7 +76,7 @@ public class PageConfig {
      * @param page
      * @return path
      */
-    public String takePage(PageConfigType page) {
+    public String takePage(Page page) {
         try {
             return jspBundle.getString(page.toString());
         } catch (MissingResourceException e) {
@@ -78,5 +84,22 @@ public class PageConfig {
         }
 
         return DEFAULT_NOT_FOUND_PATH;
+    }
+
+    /**
+     * Get url path by page name.
+     *
+     * @param page
+     * @return url path
+     */
+    public String takeAddress(Page page) {
+        try {
+            String pageKey = page.toString() + URL_POSTFIX;
+            return jspBundle.getString(pageKey);
+        } catch (MissingResourceException e) {
+            LOGGER.log(Level.ERROR, "Can't find page name: " + page, e);
+        }
+
+        return ROOT;
     }
 }

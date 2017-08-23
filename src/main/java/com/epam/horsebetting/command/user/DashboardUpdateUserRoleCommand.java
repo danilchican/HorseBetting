@@ -37,7 +37,8 @@ public class DashboardUpdateUserRoleCommand extends AbstractCommand {
     @Override
     public void execute(RequestContent request) throws CommandTypeNotFoundException {
         String commandName = String.valueOf(request.findRequestAttribute(COMMAND_INSTANCE_NAME));
-        Router router = new Router(request.findHeader(RequestFieldConfig.Common.REFERER), Router.RouteType.REDIRECT);
+        String page = request.findHeader(RequestFieldConfig.Common.REFERER);
+        Router router = new Router(page, Router.RouteType.REDIRECT);
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);

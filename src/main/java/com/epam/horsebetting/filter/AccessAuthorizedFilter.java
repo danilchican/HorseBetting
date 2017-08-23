@@ -1,6 +1,7 @@
 package com.epam.horsebetting.filter;
 
 import com.epam.horsebetting.config.MessageConfig;
+import com.epam.horsebetting.config.PageConfig;
 import com.google.gson.Gson;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -27,6 +28,11 @@ public class AccessAuthorizedFilter implements Filter {
      */
     private static final Logger LOGGER = LogManager.getLogger();
 
+    /**
+     * Constants.
+     */
+    private static final String AJAX_PREFIX = "/ajax";
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -44,6 +50,7 @@ public class AccessAuthorizedFilter implements Filter {
 
         HttpSession session = request.getSession();
         Object userObj = session.getAttribute(SESSION_AUTHORIZED);
+        String page;
 
         LOGGER.log(Level.DEBUG, this.getClass().getName() + " has worked.");
 
@@ -52,7 +59,7 @@ public class AccessAuthorizedFilter implements Filter {
         } else {
             LOGGER.log(Level.DEBUG, "User not authenticated. Redirected to login.");
 
-            if(request.getRequestURI().startsWith("/ajax")) {
+            if(request.getRequestURI().startsWith(AJAX_PREFIX)) {
                 errors.put(REQUEST_ERRORS, messageResource.get("user.not_auth"));
                 String json = new Gson().toJson(errors);
 
@@ -61,7 +68,8 @@ public class AccessAuthorizedFilter implements Filter {
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 response.getWriter().write(json);
             } else {
-                response.sendRedirect("/auth/login");
+                page = PageConfig.getInstance().takeAddress(PageConfig.Page.AUTH_LOGIN);
+                response.sendRedirect(page);
             }
         }
     }

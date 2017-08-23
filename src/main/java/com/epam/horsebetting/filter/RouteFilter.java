@@ -21,6 +21,11 @@ public class RouteFilter implements Filter {
      */
     private static final String URI_REGEX = "((\\/[\\w\\-]*)+)(\\/)?(\\?[\\w\\-]+\\=[\\w\\-]*)?(\\&[\\w\\-]+\\=[\\w\\-]*)*$";
 
+    /**
+     * Constants.
+     */
+    private static final String ASSETS_ROOT = "/assets";
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -36,7 +41,7 @@ public class RouteFilter implements Filter {
 
         LOGGER.log(Level.DEBUG, this.getClass().getName() + " has worked.");
 
-        if (urlQuery.startsWith("/assets")) {
+        if (urlQuery.startsWith(ASSETS_ROOT)) {
             chain.doFilter(req, resp);
         } else if (urlQuery.matches(URI_REGEX)) {
             chain.doFilter(req, resp);

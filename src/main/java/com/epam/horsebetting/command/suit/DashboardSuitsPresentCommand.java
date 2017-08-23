@@ -41,9 +41,9 @@ public class DashboardSuitsPresentCommand extends AbstractCommand {
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);
-            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.DASHBOARD_SUITS_INDEX);
+            page = PageConfig.getInstance().takePage(PageConfig.Page.DASHBOARD_SUITS_INDEX);
         } catch (ReceiverException e) {
-            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.NOT_FOUND);
+            page = PageConfig.getInstance().takePage(PageConfig.Page.NOT_FOUND);
             LOGGER.log(Level.ERROR, e);
         }
 

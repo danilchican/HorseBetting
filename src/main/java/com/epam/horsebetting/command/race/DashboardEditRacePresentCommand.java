@@ -41,9 +41,9 @@ public class DashboardEditRacePresentCommand extends AbstractCommand {
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);
-            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.DASHBOARD_RACES_EDIT);
+            page = PageConfig.getInstance().takePage(PageConfig.Page.DASHBOARD_RACES_EDIT);
         } catch (ReceiverException e) {
-            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.NOT_FOUND);
+            page = PageConfig.getInstance().takePage(PageConfig.Page.NOT_FOUND);
             LOGGER.log(Level.ERROR, e);
         }
 

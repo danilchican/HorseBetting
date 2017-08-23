@@ -41,9 +41,9 @@ public class DashboardUserProfilePresendCommand extends AbstractCommand {
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);
-            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.DASHBOARD_USERS_VIEW);
+            page = PageConfig.getInstance().takePage(PageConfig.Page.DASHBOARD_USERS_VIEW);
         } catch (ReceiverException e) {
-            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.NOT_FOUND);
+            page = PageConfig.getInstance().takePage(PageConfig.Page.NOT_FOUND);
             LOGGER.log(Level.ERROR, e);
         }
 

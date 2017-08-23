@@ -2,6 +2,7 @@ package com.epam.horsebetting.command.auth;
 
 import com.epam.horsebetting.command.AbstractCommand;
 import com.epam.horsebetting.command.CommandType;
+import com.epam.horsebetting.config.PageConfig;
 import com.epam.horsebetting.exception.CommandTypeNotFoundException;
 import com.epam.horsebetting.exception.ReceiverException;
 import com.epam.horsebetting.receiver.AbstractReceiver;
@@ -36,6 +37,8 @@ public class SendMailToResetPasswordCommand extends AbstractCommand {
     @Override
     public void execute(RequestContent request) throws CommandTypeNotFoundException {
         String commandName = String.valueOf(request.findRequestAttribute(COMMAND_INSTANCE_NAME));
+        String page = PageConfig.getInstance().takeAddress(PageConfig.Page.RESET_PASSWORD);
+        Router router = new Router(page, Router.RouteType.REDIRECT);
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);
@@ -43,7 +46,6 @@ public class SendMailToResetPasswordCommand extends AbstractCommand {
             LOGGER.log(Level.ERROR, e);
         }
 
-        Router router = new Router("/password/reset", Router.RouteType.REDIRECT);
         request.insertRequestAttribute(Router.ROUTER_INSTANCE_NAME, router);
     }
 }

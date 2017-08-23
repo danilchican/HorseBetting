@@ -51,16 +51,6 @@
                     </li>
                     <li><a href="/dashboard/bets"><i class="fa fa-bar-chart-o"></i> <fmt:message
                             key="dashboard.menu.bets"/></a></li>
-                    <li><a><i class="fa fa-newspaper-o"></i> <fmt:message key="dashboard.menu.news"/> <span
-                            class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="/dashboard/news/create"><fmt:message key="dashboard.menu.news.create"/></a>
-                            </li>
-                            <li><a href="/dashboard/news"><fmt:message key="dashboard.menu.news.index"/></a></li>
-                        </ul>
-                    </li>
-                    <li><a href="/dashboard/comments"><i class="fa fa-bullhorn"></i> <fmt:message
-                            key="dashboard.menu.comments"/></a></li>
                 </ul>
             </div>
         </div>

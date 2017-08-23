@@ -41,10 +41,10 @@ public class IndexPageCommand extends AbstractCommand {
         String page;
 
         try {
-            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.WELCOME);
+            page = PageConfig.getInstance().takePage(PageConfig.Page.WELCOME);
             receiver.action(CommandType.findByTag(commandName), request);
         } catch (ReceiverException e) {
-            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.NOT_FOUND);
+            page = PageConfig.getInstance().takePage(PageConfig.Page.NOT_FOUND);
             LOGGER.log(Level.ERROR, e);
         }
 

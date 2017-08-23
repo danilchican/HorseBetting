@@ -1,5 +1,6 @@
 package com.epam.horsebetting.filter;
 
+import com.epam.horsebetting.config.PageConfig;
 import com.epam.horsebetting.entity.User;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -30,6 +31,7 @@ public class AccessAdministratorFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) resp;
 
         Object userObj = request.getAttribute(REQUEST_USER);
+        String page;
 
         LOGGER.log(Level.DEBUG, this.getClass().getName() + " has worked.");
 
@@ -40,11 +42,13 @@ public class AccessAdministratorFilter implements Filter {
                 chain.doFilter(req, resp);
             } else {
                 LOGGER.log(Level.DEBUG, "User haven't permissions. Redirected to profile.");
-                response.sendRedirect("/profile");
+                page = PageConfig.getInstance().takeAddress(PageConfig.Page.PROFILE_INDEX);
+                response.sendRedirect(page);
             }
         } else {
             LOGGER.log(Level.DEBUG, "User not authenticated. Redirected to login.");
-            response.sendRedirect("/auth/login");
+            page = PageConfig.getInstance().takeAddress(PageConfig.Page.AUTH_LOGIN);
+            response.sendRedirect(page);
         }
     }
 

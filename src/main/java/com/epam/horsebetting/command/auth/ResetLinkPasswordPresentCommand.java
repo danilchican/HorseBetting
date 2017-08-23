@@ -41,9 +41,9 @@ public class ResetLinkPasswordPresentCommand extends AbstractCommand {
 
         try {
             receiver.action(CommandType.findByTag(commandName), request);
-            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.RESET_LINK_PASSWORD);
+            page = PageConfig.getInstance().takePage(PageConfig.Page.RESET_LINK_PASSWORD);
         } catch (ReceiverException e) {
-            page = PageConfig.getInstance().takePage(PageConfig.PageConfigType.NOT_FOUND);
+            page = PageConfig.getInstance().takePage(PageConfig.Page.NOT_FOUND);
             LOGGER.log(Level.ERROR, e);
         }
 
