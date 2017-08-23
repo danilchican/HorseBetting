@@ -55,20 +55,17 @@
                                                     </ul>
                                                 </div>
                                                 <div class="right col-xs-5 text-center">
-                                                    <img src="/assets/dashboard/images/img.jpg" alt=""
+                                                    <img src="/assets/dashboard/images/img.jpg" style="float:right"
                                                          class="img-circle img-responsive">
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 bottom text-center">
-                                                <div class="col-xs-12 col-sm-7 emphasis"
+                                                <div class="col-xs-12 col-sm-8 emphasis"
                                                      style="text-align: left; padding-top: 4px;">
                                                     <i class="fa fa-sign-in"></i> <strong><fmt:message
                                                         key="dashboard.form.users.reg_date"/>:</strong> ${f:formatDate(user.getRegistrationDate(),locale)}
                                                 </div>
-                                                <div class="col-xs-12 col-sm-5 emphasis">
-                                                    <button type="button" class="btn btn-success btn-xs"><i
-                                                            class="fa fa-user">
-                                                    </i> <i class="fa fa-comments-o"></i></button>
+                                                <div class="col-xs-12 col-sm-4 emphasis">
                                                     <a href="/dashboard/users/view?id=${user.getId()}" class="btn btn-primary btn-xs">
                                                         <i class="fa fa-user"> </i> <fmt:message
                                                             key="dashboard.form.users.view_profile"/>

@@ -1,6 +1,8 @@
 package com.epam.horsebetting.entity;
 
 import static com.epam.horsebetting.config.SQLFieldConfig.Horse.SUIT_NAME;
+import static com.epam.horsebetting.type.HorseGenderType.FEMALE;
+import static com.epam.horsebetting.type.HorseGenderType.MALE;
 
 public class Horse extends Entity {
 
@@ -86,7 +88,7 @@ public class Horse extends Entity {
      * @return gender name
      */
     public String getGenderAsName() {
-        return isMale() ? "male" : "female";
+        return isMale() ? MALE.getName() : FEMALE.getName();
     }
 
     /**
