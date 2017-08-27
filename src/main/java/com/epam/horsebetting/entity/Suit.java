@@ -69,7 +69,6 @@ public class Suit extends Entity {
     public String toString() {
         return "Suit{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                "}";
+                ", name='" + name + "'}";
     }
 }

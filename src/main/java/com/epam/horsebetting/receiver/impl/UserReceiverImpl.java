@@ -572,7 +572,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         String language = content.findParameter(RequestFieldConfig.Common.LANG_FIELD);
         LOGGER.log(Level.DEBUG, "Received language: " + language);
 
-        Locale locale = (language != null && language.equals("en"))
+        Locale locale = (language != null && "en".equals(language))
                 ? new Locale("en", "US")
                 : new Locale("ru", "RU");
 

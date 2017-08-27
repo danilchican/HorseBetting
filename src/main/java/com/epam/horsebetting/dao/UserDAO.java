@@ -20,14 +20,6 @@ public interface UserDAO {
     User create(User user) throws DAOException;
 
     /**
-     * Find all users.
-     *
-     * @return list of users
-     * @throws DAOException
-     */
-    List<User> findAll() throws DAOException;
-
-    /**
      * Find all user's roles.
      *
      * @return list of roles

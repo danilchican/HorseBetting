@@ -224,7 +224,7 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
                 foundedRaces.add(race);
             }
         } catch (SQLException e) {
-            throw new DAOException("Cannot retrieve races list. " + e.getMessage(), e);
+            throw new DAOException("Cannot retrieve nearest races list. " + e.getMessage(), e);
         }
 
         return foundedRaces;
@@ -256,7 +256,8 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
     }
 
     /**
-     * Extract race data from result set to race instance.
+     * Extract race data
+     * from result set to race instance.
      *
      * @param raceDataSet
      * @return race instance

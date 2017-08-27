@@ -29,8 +29,7 @@ public class CommonValidator extends AbstractValidator {
      * @return boolean
      */
     public boolean validatePage(String pageNum) {
-        return pageNum == null
-                || validateInteger(pageNum, RequestFieldConfig.Common.PAGE_FIELD, COMMON_PAGE, false);
+        return pageNum == null || validateInteger(pageNum, RequestFieldConfig.Common.PAGE_FIELD, COMMON_PAGE, false);
     }
 
     /**

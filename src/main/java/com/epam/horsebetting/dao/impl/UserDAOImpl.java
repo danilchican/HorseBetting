@@ -40,12 +40,9 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     private static final String SQL_UPDATE_USER_BALANCE = "UPDATE `users` SET `balance`=? WHERE `id`=?;";
     private static final String SQL_UPDATE_USER_REMEMBER_TOKEN = "UPDATE `users` SET `remember_token`=? WHERE `id`=?;";
     private static final String SQL_COUNT_USERS = "SELECT COUNT(*) AS `total` FROM `users`;";
-    private static final String SQL_ADD_USER = "INSERT INTO `users` (name, email, password, role_id, balance) " +
-            "VALUES (?,?,?,?,?);";
-    private static final String SQL_SELECT_ALL_USERS = "SELECT `id`, `role_id`, `name`, `email`, `balance`, `remember_token`, `created_at` " +
-            "FROM `users`;";
-    private static final String SQL_SELECT_PART_USERS = "SELECT `id`, `role_id`, `name`, `email`, `balance`, `remember_token`, `created_at` " +
-            "FROM `users` LIMIT ? OFFSET ?;";
+    private static final String SQL_ADD_USER = "INSERT INTO `users` (name, email, password, role_id, balance) VALUES (?,?,?,?,?);";
+    private static final String SQL_SELECT_PART_USERS =
+            "SELECT `id`, `role_id`, `name`, `email`, `balance`, `remember_token`, `created_at` FROM `users` LIMIT ? OFFSET ?;";
 
     /**
      * Default constructor connection.
@@ -84,31 +81,6 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
         }
 
         return createdUser;
-    }
-
-    /**
-     * Find all users.
-     *
-     * @return list of users
-     * @throws DAOException
-     */
-    @Override
-    public List<User> findAll() throws DAOException {
-        List<User> foundedUsers = new ArrayList<>();
-        ResultSet users;
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL_USERS)) {
-            users = preparedStatement.executeQuery();
-
-            while (users.next()) {
-                User user = extractWithoutPassFrom(users);
-                foundedUsers.add(user);
-            }
-        } catch (SQLException e) {
-            throw new DAOException("Cannot retrieve user list. " + e.getMessage(), e);
-        }
-
-        return foundedUsers;
     }
 
     /**

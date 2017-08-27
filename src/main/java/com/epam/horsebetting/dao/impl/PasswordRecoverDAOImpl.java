@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class PasswordRecoverDAOImpl extends AbstractDAO<PasswordRecover>  implements PasswordRecoverDAO {
 
     /**
-     * SQL queries for SuitDAOImpl.
+     * SQL queries for PasswordRecoverDAOImpl.
      */
     private static final String SQL_FIND_RECOVER_BY_TOKEN = "SELECT * FROM `password_resets` WHERE `token`=? LIMIT 1;";
     private static final String SQL_ADD_RECOVER = "INSERT INTO `password_resets` (email, token) VALUES (?,?);";

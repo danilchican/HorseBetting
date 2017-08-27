@@ -47,8 +47,9 @@ public class PageTitleTag extends TagSupport {
 
     @Override
     public int doStartTag() throws JspException {
+        final String DELIMITER = " | ";
         LOGGER.log(Level.DEBUG, this.getClass().getName() + "[title: " + title + ", subTitle: " + subTitle + "]");
-
+        
         try{
             StringBuilder resultTitle = new StringBuilder();
             resultTitle.append(title);
@@ -56,7 +57,7 @@ public class PageTitleTag extends TagSupport {
             JspWriter out = pageContext.getOut();
 
             if(!subTitle.isEmpty()) {
-                resultTitle.append(" | ").append(subTitle);
+                resultTitle.append(DELIMITER).append(subTitle);
             }
 
             out.write(resultTitle.toString());

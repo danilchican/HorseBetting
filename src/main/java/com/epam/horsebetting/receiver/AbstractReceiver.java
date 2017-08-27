@@ -13,6 +13,12 @@ public abstract class AbstractReceiver {
     private String pageSubTitle;
 
     /**
+     * Constants.
+     */
+    private static final String PAGE_TITLE = "pageTitle";
+    private static final String PAGE_SUBTITLE = "pageSubTitle";
+
+    /**
      * Execute receiver action.
      *
      * @param type
@@ -29,8 +35,8 @@ public abstract class AbstractReceiver {
      */
     protected void setDefaultContentAttributes(RequestContent content) {
         EnvironmentConfig env = new EnvironmentConfig();
-        content.insertRequestAttribute("pageTitle", env.obtainAppName());
-        content.insertRequestAttribute("pageSubTitle", pageSubTitle);
+        content.insertRequestAttribute(PAGE_TITLE, env.obtainAppName());
+        content.insertRequestAttribute(PAGE_SUBTITLE, pageSubTitle);
     }
 
     /**

@@ -53,7 +53,7 @@ public class SuitDAOImplTest {
         when(stmt.executeQuery()).thenReturn(resultSet);
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void createNullSuitTest() throws DAOException {
         new SuitDAOImpl(false).create(null);
     }

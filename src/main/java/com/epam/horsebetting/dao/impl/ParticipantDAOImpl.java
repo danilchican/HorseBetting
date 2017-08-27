@@ -29,7 +29,7 @@ public class ParticipantDAOImpl extends AbstractDAO<Participant> implements Part
     private static final String SQL_UPDATE_PARTICIPANTS = "UPDATE `participants` SET `coefficient`=? WHERE `id`=?";
     private static final String SQL_UPDATE_WINNER = "UPDATE `participants` SET `is_winner`=true WHERE `race_id`=? AND `id`=?;";
     private static final String SQL_INSERT_PARTICIPANTS = "INSERT INTO `participants` " +
-            "(`horse_id`, `race_id`, `coefficient`)" + " VALUES (?,?,?);";
+            "(`horse_id`, `race_id`, `coefficient`) VALUES (?,?,?);";
     private static final String SQL_FIND_PARTICIPANTS_BY_RACE_ID = "SELECT `p`.`id`, `p`.`horse_id`, " +
             "`p`.`race_id`, `p`.`coefficient`, `p`.`is_winner`, `h`.`name` AS `jockey` FROM `participants` AS `p` " +
             "LEFT JOIN `horses` AS `h` ON `p`.`horse_id`=`h`.`id` WHERE `p`.`race_id`=?;";

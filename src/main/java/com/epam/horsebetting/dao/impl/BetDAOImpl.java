@@ -44,7 +44,7 @@ public class BetDAOImpl extends AbstractDAO<Bet> implements BetDAO {
     private static final String SQL_FIND_WINNER_BETS_OF_RACE = "SELECT `b`.`id`, `b`.`user_id`, `b`.`amount`, " +
             "`p`.`coefficient` AS `participant_coeff`, `u`.`balance` AS `user_balance` " +
             "FROM `bets` AS `b` JOIN `participants` AS `p` ON `b`.`participant_id`=`p`.`id` " +
-            "JOIN `users` AS `u`ON `b`.`user_id`=`u`.`id` WHERE `p`.`race_id`=? AND `p`.`id`=? AND `p`.`is_winner`=1;";
+            "JOIN `users` AS `u`ON `b`.`user_id`=`u`.`id` WHERE `p`.`race_id`=? AND `p`.`id`=? AND `p`.`is_winner`=?;";
 
     /**
      * Default constructor connection.
@@ -222,30 +222,17 @@ public class BetDAOImpl extends AbstractDAO<Bet> implements BetDAO {
     @Override
     public List<Bet> findAllWinnerBetsOfRace(int raceId, int winnerId) throws DAOException {
         List<Bet> foundedBets = new ArrayList<>();
+        final boolean isWinner = true;
         ResultSet bets;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_WINNER_BETS_OF_RACE)) {
             preparedStatement.setInt(1, raceId);
             preparedStatement.setInt(2, winnerId);
+            preparedStatement.setBoolean(3, isWinner);
             bets = preparedStatement.executeQuery();
 
             while (bets.next()) {
-                Bet bet = new Bet();
-
-                bet.setId(bets.getInt(SQLFieldConfig.Bet.ID));
-                bet.setUserId(bets.getInt(SQLFieldConfig.Bet.USER_ID));
-                bet.setAmount(bets.getBigDecimal(SQLFieldConfig.Bet.AMOUNT));
-
-                if (hasColumn(bets, SQLFieldConfig.Bet.PARTICIPANT_COEFFICIENT)) {
-                    bet.insertAttribute(SQLFieldConfig.Bet.PARTICIPANT_COEFFICIENT,
-                            bets.getString(SQLFieldConfig.Bet.PARTICIPANT_COEFFICIENT));
-                }
-
-                if (hasColumn(bets, SQLFieldConfig.Bet.USER_BALANCE)) {
-                    bet.insertAttribute(SQLFieldConfig.Bet.USER_BALANCE,
-                            bets.getString(SQLFieldConfig.Bet.USER_BALANCE));
-                }
-
+                Bet bet = extractIndividualFrom(bets);
                 foundedBets.add(bet);
             }
         } catch (SQLException e) {
@@ -272,22 +259,7 @@ public class BetDAOImpl extends AbstractDAO<Bet> implements BetDAO {
             bets = preparedStatement.executeQuery();
 
             while (bets.next()) {
-                Bet bet = new Bet();
-
-                bet.setId(bets.getInt(SQLFieldConfig.Bet.ID));
-                bet.setUserId(bets.getInt(SQLFieldConfig.Bet.USER_ID));
-                bet.setAmount(bets.getBigDecimal(SQLFieldConfig.Bet.AMOUNT));
-
-                if (hasColumn(bets, SQLFieldConfig.Bet.PARTICIPANT_COEFFICIENT)) {
-                    bet.insertAttribute(SQLFieldConfig.Bet.PARTICIPANT_COEFFICIENT,
-                            bets.getString(SQLFieldConfig.Bet.PARTICIPANT_COEFFICIENT));
-                }
-
-                if (hasColumn(bets, SQLFieldConfig.Bet.USER_BALANCE)) {
-                    bet.insertAttribute(SQLFieldConfig.Bet.USER_BALANCE,
-                            bets.getString(SQLFieldConfig.Bet.USER_BALANCE));
-                }
-
+                Bet bet = extractIndividualFrom(bets);
                 foundedBets.add(bet);
             }
         } catch (SQLException e) {
@@ -368,6 +340,33 @@ public class BetDAOImpl extends AbstractDAO<Bet> implements BetDAO {
         if (hasColumn(dataSet, SQLFieldConfig.Bet.PARTICIPANT_NAME)) {
             bet.insertAttribute(SQLFieldConfig.Bet.PARTICIPANT_NAME,
                     dataSet.getString(SQLFieldConfig.Bet.PARTICIPANT_NAME));
+        }
+
+        if (hasColumn(dataSet, SQLFieldConfig.Bet.USER_BALANCE)) {
+            bet.insertAttribute(SQLFieldConfig.Bet.USER_BALANCE,
+                    dataSet.getString(SQLFieldConfig.Bet.USER_BALANCE));
+        }
+
+        return bet;
+    }
+
+    /**
+     * Extract individual bet with some params.
+     *
+     * @param dataSet
+     * @return bet instance
+     * @throws SQLException
+     */
+    private Bet extractIndividualFrom (ResultSet dataSet) throws SQLException {
+        Bet bet = new Bet();
+
+        bet.setId(dataSet.getInt(SQLFieldConfig.Bet.ID));
+        bet.setUserId(dataSet.getInt(SQLFieldConfig.Bet.USER_ID));
+        bet.setAmount(dataSet.getBigDecimal(SQLFieldConfig.Bet.AMOUNT));
+
+        if (hasColumn(dataSet, SQLFieldConfig.Bet.PARTICIPANT_COEFFICIENT)) {
+            bet.insertAttribute(SQLFieldConfig.Bet.PARTICIPANT_COEFFICIENT,
+                    dataSet.getString(SQLFieldConfig.Bet.PARTICIPANT_COEFFICIENT));
         }
 
         if (hasColumn(dataSet, SQLFieldConfig.Bet.USER_BALANCE)) {

@@ -48,9 +48,15 @@ class DatabaseManager {
     private static final String DEFAULT_DB_PASSWORD = "root";
     private static final String DEFAULT_DB_USE_SSL = "false";
     private static final String DEFAULT_DB_CHARACTER_ENCODING = "utf-8";
-
     private static final boolean DEFAULT_DB_REWRITE_BATCHED_STATEMENTS = true;
     private static final int DEFAULT_DB_POOL_SIZE = 10;
+
+    /**
+     * Constants.
+     */
+    private static final String USER_PROP = "user";
+    private static final String PASSWORD_PROP = "password";
+    private static final String USE_SSL_PROP = "useSSL";
 
     /**
      * Resource bundle for retrieving database settings.
@@ -74,13 +80,13 @@ class DatabaseManager {
         Properties props = new Properties();
 
         String propertyValue = retrievePropValue(DatabaseProperties.DB_USERNAME, DEFAULT_DB_USERNAME);
-        props.put("user", propertyValue);
+        props.put(USER_PROP, propertyValue);
 
         propertyValue = retrievePropValue(DatabaseProperties.DB_PASSWORD, DEFAULT_DB_PASSWORD);
-        props.put("password", propertyValue);
+        props.put(PASSWORD_PROP, propertyValue);
 
         propertyValue = retrievePropValue(DatabaseProperties.DB_USE_SSL, DEFAULT_DB_USE_SSL);
-        props.put("useSSL", propertyValue);
+        props.put(USE_SSL_PROP, propertyValue);
 
         return props;
     }
