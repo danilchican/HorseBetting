@@ -16,5 +16,6 @@ And you're done!
 * Mockito (testing tool)
 * VueJS
 * Bootstrap 3
+* Webpack
 * Databene benerator v0.9.8
 * Gentelella (dashboard template)
