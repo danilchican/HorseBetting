@@ -79,71 +79,41 @@
                                     <div id="myTabContent" class="tab-content">
                                         <div role="tabpanel" class="tab-pane fade active in" id="user-bets"
                                              aria-labelledby="home-tab">
-                                            <!-- TODO display last bets -->
-                                            <!-- TODO check bets empty -->
-                                            <!-- start user projects -->
-                                            <table class="data table table-striped no-margin">
-                                                <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Project Name</th>
-                                                    <th>Client Company</th>
-                                                    <th class="hidden-phone">Hours Spent</th>
-                                                    <th>Contribution</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>New Company Takeover Review</td>
-                                                    <td>Deveint Inc</td>
-                                                    <td class="hidden-phone">18</td>
-                                                    <td class="vertical-align-mid">
-                                                        <div class="progress">
-                                                            <div class="progress-bar progress-bar-success"
-                                                                 data-transitiongoal="35"></div>
+                                            <c:choose>
+                                                <c:when test="${not empty bets}">
+                                                    <!-- start user projects -->
+                                                    <table class="data table table-striped no-margin">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th><fmt:message key="form.bets.participant"/></th>
+                                                            <th><fmt:message key="form.bets.amount"/> ($)</th>
+                                                            <th><fmt:message key="form.bets.created_at"/></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <c:forEach items="${bets}" var="bet">
+                                                            <tr>
+                                                                <td>${bet.getId()}</td>
+                                                                <td>${bet.getParticipantName()}</td>
+                                                                <td>${bet.getAmount()}</td>
+                                                                <td>${f:formatDate(bet.getCreatedAt(), locale)}</td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                    <!-- end user projects -->
+
+                                                    <div class="col-md-12" style="text-align: center">
+                                                        <div class="row">
+                                                            <ctg:pagination total="${totalBets}" limit="${limitBets}"/>
                                                         </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>New Partner Contracts Consultanci</td>
-                                                    <td>Deveint Inc</td>
-                                                    <td class="hidden-phone">13</td>
-                                                    <td class="vertical-align-mid">
-                                                        <div class="progress">
-                                                            <div class="progress-bar progress-bar-danger"
-                                                                 data-transitiongoal="15"></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>Partners and Inverstors report</td>
-                                                    <td>Deveint Inc</td>
-                                                    <td class="hidden-phone">30</td>
-                                                    <td class="vertical-align-mid">
-                                                        <div class="progress">
-                                                            <div class="progress-bar progress-bar-success"
-                                                                 data-transitiongoal="45"></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>New Company Takeover Review</td>
-                                                    <td>Deveint Inc</td>
-                                                    <td class="hidden-phone">28</td>
-                                                    <td class="vertical-align-mid">
-                                                        <div class="progress">
-                                                            <div class="progress-bar progress-bar-success"
-                                                                 data-transitiongoal="75"></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                            <!-- end user projects -->
+                                                    </div>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <h4><fmt:message key="bets.empty"/></h4>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </div>
                                 </div>

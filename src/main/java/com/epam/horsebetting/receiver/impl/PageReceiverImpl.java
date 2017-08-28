@@ -305,7 +305,7 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
             final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
             final int offset = (page - 1) * limit;
 
-            final int totalBets = betDAO.getTotalCount();
+            final int totalBets = betDAO.getTotalForUser(id);
 
             List<Bet> bets = betDAO.obtainPart(id, limit, offset);
             transaction.commit();
@@ -498,29 +498,42 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
         MessageConfig messageResource = new MessageConfig(locale);
 
         String idNum = content.findParameter(RequestFieldConfig.Common.REQUEST_ID);
+        String pageNum = content.findParameter(RequestFieldConfig.Common.PAGE_FIELD);
         CommonValidator validator = new CommonValidator(locale);
 
-        if (!validator.validateId(idNum)) {
-            throw new ReceiverException("GET[id=" + idNum + "] is incorrect.");
+        if (!validator.validateId(idNum) || !validator.validatePage(pageNum)) {
+            throw new ReceiverException("GET[id=" + idNum + " or page=" + pageNum + "] is incorrect.");
         }
 
         this.setPageSubTitle(messageResource.get("page.title.dashboard.users.profile"));
         this.setDefaultContentAttributes(content);
 
         UserDAOImpl userDAO = new UserDAOImpl(true);
+        BetDAOImpl betDAO = new BetDAOImpl(true);
 
-        TransactionManager transaction = new TransactionManager(userDAO);
+        TransactionManager transaction = new TransactionManager(userDAO, betDAO);
         transaction.beginTransaction();
 
         try {
-            int userId = Integer.parseInt(idNum);
+            final int userId = Integer.parseInt(idNum);
+            final int totalBets = betDAO.getTotalForUser(userId);
+
+            final int limit = 10;
+            final int page = pageNum != null ? Integer.parseInt(pageNum) : 1;
+            final int offset = (page - 1) * limit;
+
             User user = userDAO.find(userId);
 
             List<Role> roles = userDAO.findAllRoles();
+            List<Bet> bets = betDAO.obtainPart(userId, limit, offset);
+
             transaction.commit();
 
             content.insertRequestAttribute("viewedUser", user);
             content.insertRequestAttribute("roles", roles);
+            content.insertRequestAttribute("bets", bets);
+            content.insertRequestAttribute("totalBets", totalBets);
+            content.insertRequestAttribute("limitBets", limit);
         } catch (NumberFormatException e) {
             transaction.rollback();
             throw new ReceiverException("Cannot convert user id. GET[id]=" + e.getMessage(), e);
