@@ -48,8 +48,6 @@
                             <li><a href="/dashboard/races"><fmt:message key="dashboard.menu.races.index"/></a></li>
                         </ul>
                     </li>
-                    <li><a href="/dashboard/bets"><i class="fa fa-bar-chart-o"></i> <fmt:message
-                            key="dashboard.menu.bets"/></a></li>
                 </ul>
             </div>
         </div>
