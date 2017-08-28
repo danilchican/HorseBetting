@@ -40,6 +40,15 @@ public class MessageWrapper {
     }
 
     /**
+     * Size of message list.
+     *
+     * @return size
+     */
+    public int size() {
+        return messages.size();
+    }
+
+    /**
      * Find all messages in list.
      *
      * @return messages
