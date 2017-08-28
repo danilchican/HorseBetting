@@ -4,6 +4,7 @@ import com.epam.horsebetting.config.SQLFieldConfig;
 import com.epam.horsebetting.dao.impl.SuitDAOImpl;
 import com.epam.horsebetting.database.ConnectionPool;
 import com.epam.horsebetting.database.ProxyConnection;
+import com.epam.horsebetting.database.TransactionManager;
 import com.epam.horsebetting.entity.Suit;
 import com.epam.horsebetting.exception.DAOException;
 import com.mysql.jdbc.PreparedStatement;
@@ -60,7 +61,17 @@ public class SuitDAOImplTest {
 
     @Test
     public void createSuitTest() throws DAOException {
-        Suit s = new SuitDAOImpl(false).create(suit);
-        Assert.assertEquals(s.getName(), suit.getName());
+        SuitDAOImpl suitDAO = new SuitDAOImpl(true);
+        TransactionManager transactionManager = new TransactionManager(suitDAO);
+
+        transactionManager.beginTransaction();
+
+        try {
+            Suit s = suitDAO.create(suit);
+            Assert.assertEquals(s.getName(), suit.getName());
+        } finally {
+            transactionManager.rollback();
+            transactionManager.endTransaction();
+        }
     }
 }

@@ -16,29 +16,25 @@ public class ConnectionPoolTest {
     }
 
     @Test
-    public void fetchConnection() throws Exception {
-        ProxyConnection connection = connectionPool.fetchConnection();
-        assertNotNull(connection);
-    }
-
-    @Test
-    public void releaseConnection() throws Exception {
-        ProxyConnection connection = connectionPool.fetchConnection();
-
-        try {
-            connectionPool.releaseConnection(connection);
-        } catch (Throwable t) {
-            fail(t.getMessage());
-        }
-    }
-
-    @Test
-    public void getInstance() throws Exception {
+    public void getInstanceTest() throws Exception {
         assertEquals(connectionPool, ConnectionPool.getInstance());
     }
 
     @Test
-    public void closePool() throws Exception {
+    public void fetchConnectionTest() throws Exception {
+        ProxyConnection connection = connectionPool.fetchConnection();
+        assertNotNull(connection);
+        connectionPool.releaseConnection(connection);
+    }
+
+    @Test
+    public void releaseConnectionTest() throws Exception {
+        ProxyConnection connection = connectionPool.fetchConnection();
+        connectionPool.releaseConnection(connection);
+    }
+
+    @Test
+    public void destroyPoolTest() throws Exception {
         connectionPool.destroy();
     }
 }
