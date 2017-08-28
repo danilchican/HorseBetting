@@ -20,7 +20,9 @@
                                     *</label>
                                 <div class="col-md-6">
                                     <input id="user-name" type="text" class="form-control"
-                                           value="<ctg:oldInputFormAttribute name="user-name" />" name="user-name" required
+                                           value="<ctg:oldInputFormAttribute name="user-name" />"
+                                           name="user-name"
+                                           required
                                            autofocus>
                                 </div>
                             </div>

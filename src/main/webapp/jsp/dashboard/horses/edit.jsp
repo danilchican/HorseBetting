@@ -40,7 +40,8 @@
                             <div class="x_content">
                                 <jsp:include page="${pageContext.request.contextPath}/jsp/partials/messages.jsp"/>
                                 <br/>
-                                <form id="demo-form2" method="post" action="/dashboard/horses/update" data-parsley-validate
+                                <form id="demo-form2" method="post" action="/dashboard/horses/update"
+                                      data-parsley-validate
                                       class="form-horizontal form-label-left">
 
                                     <input type="hidden" name="horse-id" value="${horse.getId()}">
@@ -103,14 +104,16 @@
                                                 <label class="btn btn-default <c:if test="${(empty horseGender && horse.isMale()) or (!empty horseGender && horseGender eq 'male')}">active</c:if>"
                                                        data-toggle-class="btn-primary"
                                                        data-toggle-passive-class="btn-default">
-                                                    <input type="radio" required="required" name="horse-gender" value="male"
+                                                    <input type="radio" required="required" name="horse-gender"
+                                                           value="male"
                                                            <c:if test="${(empty horseGender && horse.isMale()) or (!empty horseGender && horseGender eq 'male')}">checked</c:if> >
                                                     &nbsp; <fmt:message key="dashboard.form.gender.male"/> &nbsp;
                                                 </label>
                                                 <label class="btn btn-primary <c:if test="${(empty horseGender && horse.isFemale()) or (!empty horseGender && horseGender eq 'female')}">active</c:if>"
                                                        data-toggle-class="btn-primary"
                                                        data-toggle-passive-class="btn-default">
-                                                    <input type="radio" required="required" name="horse-gender" value="female"
+                                                    <input type="radio" required="required" name="horse-gender"
+                                                           value="female"
                                                            <c:if test="${(empty horseGender && horse.isFemale()) or (!empty horseGender && horseGender eq 'female')}">checked</c:if> >
                                                     <fmt:message key="dashboard.form.gender.female"/>
                                                 </label>

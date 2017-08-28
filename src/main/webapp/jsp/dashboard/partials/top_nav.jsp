@@ -17,9 +17,8 @@
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                        aria-expanded="false">
-                        <img src="/assets/dashboard/images/img.jpg"
-                             alt="">${user.getName()}
-                        <span class=" fa fa-angle-down"></span>
+                        <img src="/assets/dashboard/images/img.jpg" alt="User profile photo">${user.getName()}
+                        <span class="fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
                         <li><a href="/profile"><fmt:message key="account.profile"/></a></li>
@@ -29,8 +28,7 @@
                         <li><a href="#"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="fa fa-sign-out pull-right"></i> <fmt:message key="account.logout"/></a>
-                            <form action="/auth/logout" id="logout-form" method="post"
-                                  style="display: none;"></form>
+                            <form action="/auth/logout" id="logout-form" method="post" style="display: none;"></form>
                         </li>
                     </ul>
                 </li>

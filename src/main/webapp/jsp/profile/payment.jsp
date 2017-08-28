@@ -17,7 +17,8 @@
                     <label for="payment-amount"><fmt:message key="form.profile.payment_amount"/></label>
                     <div class="input-group">
                         <span class="input-group-addon">$</span>
-                        <input type="number" id="payment-amount" name="payment-amount" step="0.01" min="5" max="5000.00" value="5"
+                        <input type="number" id="payment-amount" name="payment-amount" step="0.01" min="5" max="5000.00"
+                               value="5"
                                class="form-control">
                     </div>
                     <small style="color:#828282;"><i><fmt:message key="profile.payment.min_amount"/>: 5$</i></small>

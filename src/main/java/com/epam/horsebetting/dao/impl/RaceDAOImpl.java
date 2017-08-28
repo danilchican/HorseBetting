@@ -36,7 +36,7 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
             "AND `started_at` > NOW() ORDER BY `started_at` ASC LIMIT ? OFFSET ?;";
     private static final String SQL_ADD_RACE = "INSERT INTO `races` " +
             "(title, place, min_rate, track_length, bet_end_date, started_at) VALUES (?,?,?,?,?,?);";
-
+    private static final String SQL_STATISTICS = "SELECT `r`.`status`, COUNT(*) AS `total` FROM `races` AS `r` GROUP BY `r`.`status`";
     /**
      * Default constructor connection.
      *
@@ -228,6 +228,33 @@ public class RaceDAOImpl extends AbstractDAO<Race> implements RaceDAO {
         }
 
         return foundedRaces;
+    }
+
+    /**
+     * Calculate statics of races.
+     *
+     * @return races
+     * @throws DAOException
+     */
+    @Override
+    public HashMap<String, Integer> calcStatistics() throws DAOException {
+        HashMap<String, Integer> statistics = new HashMap<>();
+        ResultSet dataSet;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_STATISTICS)) {
+            dataSet = preparedStatement.executeQuery();
+
+            while (dataSet.next()) {
+                String key = dataSet.getString(SQLFieldConfig.Race.STATUS);
+                String value = dataSet.getString(SQLFieldConfig.Common.TOTAL);
+
+                statistics.put(key, Integer.parseInt(value));
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Cannot retrieve statistics of races. " + e.getMessage(), e);
+        }
+
+        return statistics;
     }
 
     /**

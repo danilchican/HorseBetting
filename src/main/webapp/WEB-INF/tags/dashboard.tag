@@ -10,23 +10,23 @@
 </head>
 
 <body class="nav-md">
-<div class="container body">
-    <div class="main_container" id="app">
+    <div class="container body">
+        <div class="main_container" id="app">
 
-        <jsp:include page="${pageContext.request.contextPath}/jsp/dashboard/partials/sidebar.jsp"/>
-        <jsp:include page="${pageContext.request.contextPath}/jsp/dashboard/partials/top_nav.jsp"/>
-        <jsp:doBody/>
+            <jsp:include page="${pageContext.request.contextPath}/jsp/dashboard/partials/sidebar.jsp"/>
+            <jsp:include page="${pageContext.request.contextPath}/jsp/dashboard/partials/top_nav.jsp"/>
+            <jsp:doBody/>
 
-        <!-- footer content -->
-        <footer>
-            <div class="pull-right">${pageTitle}</div>
-            <div class="clearfix"></div>
-        </footer>
-        <!-- /footer content -->
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">${pageTitle}</div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
     </div>
-</div>
 
-<jsp:include page="${pageContext.request.contextPath}/jsp/dashboard/partials/footer.jsp"/>
-<jsp:invoke fragment="includeScripts" />
+    <jsp:include page="${pageContext.request.contextPath}/jsp/dashboard/partials/footer.jsp"/>
+    <jsp:invoke fragment="includeScripts" />
 </body>
 </html>

@@ -33,7 +33,8 @@
                                 <div class="col-md-6 col-md-offset-4">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" name="remember"> <fmt:message key="block.remember.title"/>
+                                            <input type="checkbox" name="remember"> <fmt:message
+                                                key="block.remember.title"/>
                                         </label>
                                     </div>
                                 </div>
@@ -42,7 +43,8 @@
                                 <div class="col-md-8 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary"><fmt:message
                                             key="button.login"/></button>
-                                    <a class="btn btn-link" href="/password/reset"><fmt:message key="button.password.forgot"/></a>
+                                    <a class="btn btn-link" href="/password/reset"><fmt:message
+                                            key="button.password.forgot"/></a>
                                 </div>
                             </div>
                         </form>

@@ -23,5 +23,4 @@
             </div>
         </div>
     </div>
-    <!-- /container -->
 </layout:app>

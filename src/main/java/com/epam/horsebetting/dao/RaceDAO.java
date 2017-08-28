@@ -5,6 +5,7 @@ import com.epam.horsebetting.exception.DAOException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 public interface RaceDAO {
@@ -69,6 +70,14 @@ public interface RaceDAO {
      * @throws DAOException
      */
     List<Race> obtainNearest(int limit, int offset) throws DAOException;
+
+    /**
+     * Calculate statics of races.
+     *
+     * @return races
+     * @throws DAOException
+     */
+    HashMap<String, Integer> calcStatistics() throws DAOException;
 
     /**
      * Get total count of races.

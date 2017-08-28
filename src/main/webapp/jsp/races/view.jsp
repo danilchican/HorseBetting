@@ -22,10 +22,12 @@
                 <p><b><fmt:message key="dashboard.form.races.min_rate"/>:</b> ${race.getMinRate()}$</p>
                 <p><b><fmt:message key="dashboard.form.races.track_length"/>:</b> ${race.getTrackLength()}</p>
                 <p>
-                    <b><fmt:message key="dashboard.form.races.started_at"/>:</b> ${f:formatDate(race.getStartedAt(), locale)}
+                    <b><fmt:message
+                            key="dashboard.form.races.started_at"/>:</b> ${f:formatDate(race.getStartedAt(), locale)}
                 </p>
                 <p>
-                    <b><fmt:message key="dashboard.form.races.bet_end_date"/>:</b> ${f:formatDate(race.getBetEndDate(), locale)}
+                    <b><fmt:message
+                            key="dashboard.form.races.bet_end_date"/>:</b> ${f:formatDate(race.getBetEndDate(), locale)}
                 </p>
                 <p>
                     <b><fmt:message key="dashboard.form.races.status"/>:</b>
@@ -50,7 +52,8 @@
                                             <th><fmt:message key="form.participants.place_bet"/></th>
                                         </c:if>
                                         <c:if test="${race.isFinished()}">
-                                            <th class="table-winner-th"><fmt:message key="form.participants.is_winner"/></th>
+                                            <th class="table-winner-th"><fmt:message
+                                                    key="form.participants.is_winner"/></th>
                                         </c:if>
                                     </tr>
                                     </thead>

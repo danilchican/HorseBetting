@@ -16,9 +16,5 @@
                 <li><b><fmt:message key="profile.bets.count"/>:</b> ${totalUserBets}</li>
             </ul>
         </div>
-        <div class="row">
-            <%--<h3>Топ 10 ставок</h3>--%>
-            <!-- TODO Create top 10 bets -->
-        </div>
     </div>
 </layout:account>

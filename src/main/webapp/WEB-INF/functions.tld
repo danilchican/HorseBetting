@@ -16,5 +16,4 @@
         <function-class>com.epam.horsebetting.util.DateFormatter</function-class>
         <function-signature>java.lang.String format(java.sql.Timestamp,java.util.Locale))</function-signature>
     </function>
-
 </taglib>

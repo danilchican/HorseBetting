@@ -94,7 +94,7 @@ public interface PageReceiver {
      *
      * @param content
      */
-    void presentDashboardPage(RequestContent content);
+    void presentDashboardPage(RequestContent content) throws ReceiverException;
 
     /**
      * Present dashboard users page.

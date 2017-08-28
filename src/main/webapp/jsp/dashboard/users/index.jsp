@@ -35,6 +35,7 @@
                     <div class="x_panel">
                         <div class="x_content">
                             <div class="row">
+                                <!-- TODO check empty users -->
                                 <c:forEach items="${users}" var="user">
                                     <div class="col-md-6 col-sm-6 col-xs-12 profile_details">
                                         <div class="well profile_view">
@@ -66,7 +67,8 @@
                                                         key="dashboard.form.users.reg_date"/>:</strong> ${f:formatDate(user.getRegistrationDate(),locale)}
                                                 </div>
                                                 <div class="col-xs-12 col-sm-4 emphasis">
-                                                    <a href="/dashboard/users/view?id=${user.getId()}" class="btn btn-primary btn-xs">
+                                                    <a href="/dashboard/users/view?id=${user.getId()}"
+                                                       class="btn btn-primary btn-xs">
                                                         <i class="fa fa-user"> </i> <fmt:message
                                                             key="dashboard.form.users.view_profile"/>
                                                     </a>

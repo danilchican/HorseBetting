@@ -16,6 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -397,12 +398,42 @@ public class PageReceiverImpl extends AbstractReceiver implements PageReceiver {
      * @param content
      */
     @Override
-    public void presentDashboardPage(RequestContent content) {
+    public void presentDashboardPage(RequestContent content) throws ReceiverException {
         Locale locale = (Locale) content.findSessionAttribute(SESSION_LOCALE);
         MessageConfig messageResource = new MessageConfig(locale);
 
         this.setPageSubTitle(messageResource.get("page.title.dashboard.index"));
         this.setDefaultContentAttributes(content);
+
+        UserDAOImpl userDAO = new UserDAOImpl(true);
+        HorseDAOImpl horseDAO = new HorseDAOImpl(true);
+        RaceDAOImpl raceDAO = new RaceDAOImpl(true);
+        BetDAOImpl betDAO = new BetDAOImpl(true);
+
+        TransactionManager transaction = new TransactionManager(userDAO, horseDAO, raceDAO, betDAO);
+        transaction.beginTransaction();
+
+        try {
+            final int totalUsers = userDAO.getTotalCount();
+            final int totalHorses = horseDAO.getTotalCount();
+            final int totalRaces = raceDAO.getTotalCount();
+            final int totalBets = betDAO.getTotalCount();
+
+            HashMap<String, Integer> raceStats = raceDAO.calcStatistics();
+
+            transaction.commit();
+
+            content.insertRequestAttribute("totalUsers", totalUsers);
+            content.insertRequestAttribute("totalHorses", totalHorses);
+            content.insertRequestAttribute("totalRaces", totalRaces);
+            content.insertRequestAttribute("totalBets", totalBets);
+            content.insertRequestAttribute("raceStats", raceStats);
+        } catch (DAOException e) {
+            transaction.rollback();
+            throw new ReceiverException("Database Error. " + e.getMessage(), e);
+        } finally {
+            transaction.endTransaction();
+        }
     }
 
     /**

@@ -46,6 +46,7 @@
                                 <button type="button" class="btn btn-round btn-success"><fmt:message
                                         key="dashboard.button.horses.create"/></button>
                             </a>
+                            <!-- TODO check empty list -->
                             <!-- start horse list -->
                             <table class="table table-striped projects">
                                 <thead>
@@ -98,5 +99,4 @@
         </div>
     </div>
     <!-- /page content -->
-
 </layout:dashboard>

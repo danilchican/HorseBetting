@@ -49,5 +49,4 @@
             </c:otherwise>
         </c:choose>
     </div>
-    <!-- /container -->
 </layout:app>

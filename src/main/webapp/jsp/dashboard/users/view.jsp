@@ -43,7 +43,8 @@
                                     <li>
                                         <form action="/dashboard/users/role/update" method="post">
                                             <input type="hidden" name="user-id" value="${viewedUser.getId()}">
-                                            <i class="fa fa-briefcase user-profile-icon"></i> <strong><fmt:message key="dashboard.form.users.group"/>:</strong>
+                                            <i class="fa fa-briefcase user-profile-icon"></i> <strong><fmt:message
+                                                key="dashboard.form.users.group"/>:</strong>
                                             <select name="user-role" id="user-role" onchange="this.form.submit()">
                                                 <c:forEach items="${roles}" var="role">
                                                     <option value="${role.getId()}"
@@ -78,6 +79,8 @@
                                     <div id="myTabContent" class="tab-content">
                                         <div role="tabpanel" class="tab-pane fade active in" id="user-bets"
                                              aria-labelledby="home-tab">
+                                            <!-- TODO display last bets -->
+                                            <!-- TODO check bets empty -->
                                             <!-- start user projects -->
                                             <table class="data table table-striped no-margin">
                                                 <thead>

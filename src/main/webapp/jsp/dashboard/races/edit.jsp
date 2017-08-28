@@ -17,7 +17,6 @@
             }
         </style>
     </jsp:attribute>
-
     <jsp:attribute name="includeScripts">
         <!-- Parsley -->
         <script src="${pageContext.request.contextPath}/assets/dashboard/parsleyjs/dist/parsley.min.js"></script>
@@ -39,7 +38,6 @@
             });
         </script>
     </jsp:attribute>
-
     <jsp:body>
         <!-- page content -->
         <div class="right_col" role="main">

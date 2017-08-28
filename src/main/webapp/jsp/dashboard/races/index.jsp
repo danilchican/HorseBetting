@@ -48,6 +48,7 @@
                                 <button type="button" class="btn btn-round btn-success"><fmt:message
                                         key="dashboard.button.races.create"/></button>
                             </a>
+                            <!-- TODO check empty list -->
                             <!-- start project list -->
                             <table class="table table-striped projects">
                                 <thead>
