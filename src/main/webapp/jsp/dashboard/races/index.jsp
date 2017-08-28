@@ -15,17 +15,6 @@
                 <div class="title_left">
                     <h3>${pageSubTitle}</h3>
                 </div>
-
-                <div class="title_right">
-                    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search for...">
-                            <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div class="clearfix"></div>
@@ -48,45 +37,51 @@
                                 <button type="button" class="btn btn-round btn-success"><fmt:message
                                         key="dashboard.button.races.create"/></button>
                             </a>
-                            <!-- TODO check empty list -->
-                            <!-- start project list -->
-                            <table class="table table-striped projects">
-                                <thead>
-                                <tr>
-                                    <th style="width: 1%">#</th>
-                                    <th style="width: 25%"><fmt:message key="dashboard.form.races.title"/></th>
-                                    <th><fmt:message key="dashboard.form.races.place"/></th>
-                                    <th style="width: 10%"><fmt:message key="dashboard.form.races.status"/></th>
-                                    <th style="width: 10%"><fmt:message key="dashboard.form.races.created_at"/></th>
-                                    <th style="width: 20%"><fmt:message key="dashboard.message.action"/></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <c:forEach items="${races}" var="race">
-                                    <tr>
-                                        <td>${race.getId()}</td>
-                                        <td>${race.getTitle()}</td>
-                                        <td>${race.getPlace()}</td>
-                                        <td>
-                                            <fmt:message
-                                                    key="races.status.${!race.isAvailable() ? race.getStatus() : 'expect'}"/>
-                                        </td>
-                                        <td>${f:formatDate(race.getCreatedAt(), locale)}</td>
-                                        <td>
-                                            <a href="/races/view?id=${race.getId()}"
-                                               class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> <fmt:message
-                                                    key="button.view"/>
-                                            </a>
-                                            <a href="/dashboard/races/edit?id=${race.getId()}"
-                                               class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> <fmt:message
-                                                    key="button.edit"/>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-                            <!-- end project list -->
+                            <c:choose>
+                                <c:when test="${not empty races}">
+                                    <!-- start project list -->
+                                    <table class="table table-striped projects">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 1%">#</th>
+                                            <th style="width: 25%"><fmt:message key="dashboard.form.races.title"/></th>
+                                            <th><fmt:message key="dashboard.form.races.place"/></th>
+                                            <th style="width: 10%"><fmt:message key="dashboard.form.races.status"/></th>
+                                            <th style="width: 10%"><fmt:message key="dashboard.form.races.created_at"/></th>
+                                            <th style="width: 20%"><fmt:message key="dashboard.message.action"/></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <c:forEach items="${races}" var="race">
+                                            <tr>
+                                                <td>${race.getId()}</td>
+                                                <td>${race.getTitle()}</td>
+                                                <td>${race.getPlace()}</td>
+                                                <td>
+                                                    <fmt:message
+                                                            key="races.status.${!race.isAvailable() ? race.getStatus() : 'expect'}"/>
+                                                </td>
+                                                <td>${f:formatDate(race.getCreatedAt(), locale)}</td>
+                                                <td>
+                                                    <a href="/races/view?id=${race.getId()}"
+                                                       class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> <fmt:message
+                                                            key="button.view"/>
+                                                    </a>
+                                                    <a href="/dashboard/races/edit?id=${race.getId()}"
+                                                       class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> <fmt:message
+                                                            key="button.edit"/>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
+                                    <!-- end project list -->
+                                </c:when>
+                                <c:otherwise>
+                                    <p><fmt:message key="races.empty"/></p>
+                                </c:otherwise>
+                            </c:choose>
                             <ctg:pagination total="${totalRaces}" limit="${limitRaces}"/>
                         </div>
                     </div>
