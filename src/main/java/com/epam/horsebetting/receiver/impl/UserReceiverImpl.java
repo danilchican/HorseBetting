@@ -503,6 +503,7 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
         MessageConfig messageResource = new MessageConfig(locale);
         MessageWrapper messages = new MessageWrapper();
 
+        Object userSessionIdAttr = content.findSessionAttribute(RequestFieldConfig.Common.SESSION_AUTHORIZED);
         String userIdAttr = content.findParameter(RequestFieldConfig.User.ID_FIELD);
         String userRoleIdAttr = content.findParameter(RequestFieldConfig.User.ROLE_FIELD);
 
@@ -516,7 +517,16 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
             try {
                 int userId = Integer.parseInt(userIdAttr);
+                int userSessionId = Integer.parseInt(String.valueOf(userSessionIdAttr));
                 int roleId = Integer.parseInt(userRoleIdAttr);
+
+                if(userId == userSessionId) {
+                    transaction.rollback();
+                    messages.add(messageResource.get("user.role.update.forbidden"));
+                    content.insertSessionAttribute(REQUEST_ERRORS, messages);
+
+                    throw new ReceiverException("Cannot change role of user. User is currently authorized.");
+                }
 
                 User user = userDAO.find(userId);
                 Role role = userDAO.findRole(roleId);
