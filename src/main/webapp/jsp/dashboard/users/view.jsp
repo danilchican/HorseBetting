@@ -106,7 +106,7 @@
 
                                                     <div class="col-md-12" style="text-align: center">
                                                         <div class="row">
-                                                            <ctg:pagination total="${totalBets}" limit="${limitBets}"/>
+                                                            <ctg:pagination postfix="?id=${viewedUser.getId()}" total="${totalBets}" limit="${limitBets}"/>
                                                         </div>
                                                     </div>
                                                 </c:when>

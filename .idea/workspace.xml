@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e9db2c3d-90c7-4a9a-9541-77ab3b3b2a13" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/tag/PaginationTag.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/tag/PaginationTag.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/tag/Paginator.java" afterPath="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/tag/Paginator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/custom_tags.tld" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/custom_tags.tld" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/users/view.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/users/view.jsp" />
     </list>
     <ignored path="HorseBetting.iws" />
@@ -71,46 +67,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PageReceiverImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="516" column="13" selection-start-line="516" selection-start-column="13" selection-end-line="516" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PaginationTag.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/tag/PaginationTag.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="68" column="29" selection-start-line="68" selection-start-column="29" selection-end-line="68" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Paginator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/tag/Paginator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2389">
-              <caret line="154" column="9" selection-start-line="154" selection-start-column="9" selection-end-line="154" selection-end-column="9" />
-              <folding>
-                <element signature="e#1176#1177#0" expanded="true" />
-                <element signature="e#1214#1215#0" expanded="true" />
-                <element signature="e#2180#2181#0" expanded="true" />
-                <element signature="e#2217#2218#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="view.jsp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="view.jsp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/users/view.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="116" column="46" selection-start-line="116" selection-start-column="46" selection-end-line="116" selection-end-column="46" />
+            <state relative-caret-position="231">
+              <caret line="109" column="45" selection-start-line="109" selection-start-column="45" selection-end-line="109" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -195,10 +156,10 @@
         <option value="$PROJECT_DIR$/src/main/resources/localization/messages_ru_RU.properties" />
         <option value="$PROJECT_DIR$/src/main/resources/localization/messages_en_US.properties" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/custom_tags.tld" />
-        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/tag/PaginationTag.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/tag/Paginator.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/jsp/dashboard/users/view.jsp" />
+        <option value="$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java" />
       </list>
     </option>
   </component>
@@ -1244,14 +1205,7 @@
       <workItem from="1503051051263" duration="41752000" />
       <workItem from="1503145666096" duration="82267000" />
       <workItem from="1503492202386" duration="31775000" />
-      <workItem from="1503841627207" duration="22024000" />
-    </task>
-    <task id="LOCAL-00235" summary="Cleared assets.">
-      <created>1502960263989</created>
-      <option name="number" value="00235" />
-      <option name="presentableId" value="LOCAL-00235" />
-      <option name="project" value="LOCAL" />
-      <updated>1502960263989</updated>
+      <workItem from="1503841627207" duration="22104000" />
     </task>
     <task id="LOCAL-00236" summary="Cleared assets.">
       <created>1502960463552</created>
@@ -1589,7 +1543,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503921271910</updated>
     </task>
-    <option name="localTasksCounter" value="284" />
+    <task id="LOCAL-00284" summary="Modified paginator classes.">
+      <created>1503922197559</created>
+      <option name="number" value="00284" />
+      <option name="presentableId" value="LOCAL-00284" />
+      <option name="project" value="LOCAL" />
+      <updated>1503922197560</updated>
+    </task>
+    <option name="localTasksCounter" value="285" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1625,7 +1586,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="970286000" />
+    <option name="totallyTimeSpent" value="970366000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -1649,7 +1610,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4324759" sideWeight="0.5121029" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3279743" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42282957" sideWeight="0.48789713" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42282957" sideWeight="0.48789713" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5755627" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38424438" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1724,7 +1685,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="Fixed view &amp; bugs." />
     <MESSAGE value="Fixed races view." />
     <MESSAGE value="Added remember token field to user." />
     <MESSAGE value="Created validation for remember checkbox." />
@@ -1749,7 +1709,8 @@
     <MESSAGE value="Finished dashboard index page." />
     <MESSAGE value="Removed sidebar menu item." />
     <MESSAGE value="Displaying bets of user in dashboard." />
-    <option name="LAST_COMMIT_MESSAGE" value="Displaying bets of user in dashboard." />
+    <MESSAGE value="Modified paginator classes." />
+    <option name="LAST_COMMIT_MESSAGE" value="Modified paginator classes." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2223,16 +2184,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/receiver/impl/PageReceiverImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="516" column="13" selection-start-line="516" selection-start-column="13" selection-end-line="516" selection-end-column="13" />
+        <state relative-caret-position="157">
+          <caret line="526" column="37" selection-start-line="526" selection-start-column="37" selection-end-line="526" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/users/view.jsp">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/tag/PaginationTag.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="116" column="46" selection-start-line="116" selection-start-column="46" selection-end-line="116" selection-end-column="46" />
+        <state relative-caret-position="136">
+          <caret line="68" column="29" selection-start-line="68" selection-start-column="29" selection-end-line="68" selection-end-column="29" />
           <folding />
         </state>
       </provider>
@@ -2250,10 +2211,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/epam/horsebetting/tag/PaginationTag.java">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/dashboard/users/view.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="68" column="29" selection-start-line="68" selection-start-column="29" selection-end-line="68" selection-end-column="29" />
+        <state relative-caret-position="231">
+          <caret line="109" column="45" selection-start-line="109" selection-start-column="45" selection-end-line="109" selection-end-column="45" />
           <folding />
         </state>
       </provider>
