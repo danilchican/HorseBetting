@@ -24,6 +24,11 @@ class Paginator {
     private int countLinks = 3;
 
     /**
+     * Postfix of the request URI.
+     */
+    private String postfix;
+
+    /**
      * Class name of pagination list.
      */
     private String className = "pagination";
@@ -52,6 +57,15 @@ class Paginator {
     Paginator(int limit, int total) {
         this.limit = limit;
         this.total = total;
+    }
+
+    /**
+     * Set postfix of the request uri.
+     *
+     * @param postfix
+     */
+    void setPostfix(String postfix) {
+        this.postfix = postfix;
     }
 
     /**
@@ -109,6 +123,16 @@ class Paginator {
     }
 
     /**
+     * Get request URI.
+     *
+     * @return request uri with postfix
+     */
+    private String getRequestURI() {
+        return this.requestURI +
+                ((postfix != null) ? postfix + "&" : "?") + "page=";
+    }
+
+    /**
      * Generate html code of navigation.
      *
      * @return
@@ -125,7 +149,7 @@ class Paginator {
         generatePreviousLink(builder);
 
         if (startLink > 1) {
-            builder.append("<li><a href=\"").append(this.requestURI).append("?page=1\">1</a></li>");
+            builder.append("<li><a href=\"").append(this.getRequestURI()).append("1\">1</a></li>");
             builder.append("<li class=\"").append(disabledClass).append("\">");
             builder.append("<span>...</span></li>");
         }
@@ -137,8 +161,8 @@ class Paginator {
             if (isCurrentPage) {
                 builder.append(" class=\"").append(activeClass).append("\"><a>");
             } else {
-                builder.append("><a href=\"").append(this.requestURI);
-                builder.append("?page=").append(i).append("\">");
+                builder.append("><a href=\"").append(this.getRequestURI());
+                builder.append(i).append("\">");
             }
 
             builder.append(i).append("</a></li>");
@@ -146,7 +170,7 @@ class Paginator {
 
         if (endLink < totalPages) {
             builder.append("<li class=\"").append(disabledClass).append("\"><span>...</span></li>");
-            builder.append("<li><a href=\"").append(this.requestURI).append("?page=").append(totalPages);
+            builder.append("<li><a href=\"").append(this.getRequestURI()).append(totalPages);
             builder.append("\">").append(totalPages).append("</a></li>");
         }
 
@@ -174,7 +198,7 @@ class Paginator {
             builder.append(" class=\"").append(disabledClass);
             builder.append("\"><a>");
         } else {
-            builder.append("><a href=\"").append(this.requestURI).append("?page=");
+            builder.append("><a href=\"").append(this.getRequestURI());
             builder.append(previousPage).append("\">");
         }
 

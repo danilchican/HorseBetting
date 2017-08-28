@@ -32,6 +32,11 @@ public class PaginationTag extends TagSupport {
     private int limit;
 
     /**
+     * Postfix of the request URI.
+     */
+    private String postfix;
+
+    /**
      * Set total count of all entities.
      *
      * @param total
@@ -49,6 +54,15 @@ public class PaginationTag extends TagSupport {
         this.limit = limit;
     }
 
+    /**
+     * Set postfix of the request URI.
+     *
+     * @param postfix
+     */
+    public void setPostfix(String postfix) {
+        this.postfix = postfix;
+    }
+
     @Override
     public int doStartTag() throws JspException {
         if(limit >= total) {
@@ -62,6 +76,11 @@ public class PaginationTag extends TagSupport {
         String commandURI = commandURIObj == null ? "" : String.valueOf(commandURIObj);
 
         paginator.setRequestURI(commandURI);
+
+        if(postfix != null) {
+            paginator.setPostfix(postfix);
+        }
+
         String pageParam = request.getParameter(PAGE_FIELD);
 
         try {

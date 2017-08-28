@@ -55,6 +55,11 @@
         <tag-class>com.epam.horsebetting.tag.PaginationTag</tag-class>
         <body-content>scriptless</body-content>
         <attribute>
+            <name>postfix</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <name>total</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
