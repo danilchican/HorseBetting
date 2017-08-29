@@ -447,6 +447,9 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
             if (recover == null) {
                 transaction.rollback();
+
+                messages.add(messageResource.get("profile.password.change.token_expired"));
+                content.insertSessionAttribute(REQUEST_ERRORS, messages);
                 throw new ReceiverException("Cannot find recover by token[" + token + "].");
             }
 
@@ -458,6 +461,9 @@ public class UserReceiverImpl extends AbstractReceiver implements UserReceiver {
 
             if (currentDiffMinutes > maxExpireMinutes) {
                 transaction.rollback();
+
+                messages.add(messageResource.get("profile.password.change.token_expired"));
+                content.insertSessionAttribute(REQUEST_ERRORS, messages);
                 throw new ReceiverException("Token expired.");
             }
 

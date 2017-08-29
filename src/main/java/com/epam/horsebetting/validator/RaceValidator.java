@@ -177,7 +177,7 @@ public class RaceValidator extends AbstractValidator {
             } else if (isValidate) {
                 BigDecimal num = new BigDecimal(coeffs[i]);
 
-                if (MAX_COEFFICIENT.compareTo(num) != 1 || MIN_COEFFICIENT.compareTo(num) != -1) {
+                if (MAX_COEFFICIENT.compareTo(num) == -1 || MIN_COEFFICIENT.compareTo(num) == 1) {
                     isValidate = false;
                     this.addErrorMessage(messageManager.get(VALIDATION_PREFIX + RACE_JOCKEYS_COEFFICIENTS_RANGE)
                             + " " + MIN_COEFFICIENT + ".." + MAX_COEFFICIENT);

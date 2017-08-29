@@ -71,7 +71,7 @@ public class RaceReceiverImpl extends AbstractReceiver implements RaceReceiver {
 
             ParticipantDAOImpl participantDAO = new ParticipantDAOImpl(true);
             RaceDAOImpl raceDAO = new RaceDAOImpl(true);
-            TransactionManager transaction = new TransactionManager(raceDAO);
+            TransactionManager transaction = new TransactionManager(raceDAO, participantDAO);
 
             try {
                 Date parsedDate = dateFormat.parse(betEndDateAttr);

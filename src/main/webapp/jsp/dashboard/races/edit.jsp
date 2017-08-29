@@ -202,7 +202,7 @@
                                                     <c:if test="${!race.isAvailable()}">disabled</c:if>>
                                                 <option></option>
                                                 <c:forEach items="${participants}" var="participant">
-                                                    <option value="${participant.getId()}">
+                                                    <option value="${participant.getId()}" <c:if test="${participant.isWinner() && race.isFinished()}">selected</c:if>>
                                                             ${participant.getJockeyName()}
                                                     </option>
                                                 </c:forEach>
